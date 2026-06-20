@@ -11,7 +11,7 @@
         <input v-model="form.password" placeholder="Senha" type="password" />
       </div>
 
-      <button @click="salvar">Salvar</button>
+      <button @click="novo">Salvar</button>
       <p class="link">
           <router-link to="/">Voltar</router-link>
       </p>
@@ -20,27 +20,17 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-import { api } from "../services/api";
+import { useAuth } from "../composables/userAuth";
 
-const form = reactive({
-  name: "",
-  email: "",
-  password: "",
-  nome: ""
-});
+const { formCadastro, cadastrar, clearCadastro } = useAuth();
 
-async function salvar() {
+async function novo() {
   try {
-    await api.post("/users", form);
+    await cadastrar();
     alert("Usuário criado com sucesso!");
 
-    form.name = "";
-    form.nome = "";
-    form.email = "";
-    form.password = "";
+    clearCadastro();
   } catch (error) {
-    console.log(error);
     alert("Erro ao criar usuário");
   }
 }
