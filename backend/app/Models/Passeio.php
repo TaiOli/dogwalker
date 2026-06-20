@@ -17,4 +17,14 @@ class Passeio extends Model
         'valor',
         'status',
     ];
+
+    public function dog()
+    {
+        return $this->belongsTo(Dog::class);
+    }
+
+    public function tutor()
+    {
+        return $this->belongsTo(User::class, 'tutor_id');
+    }
 }
