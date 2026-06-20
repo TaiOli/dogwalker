@@ -12,6 +12,9 @@
       </div>
 
       <button @click="salvar">Salvar</button>
+      <p class="link">
+          <router-link to="/">Voltar</router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -105,5 +108,11 @@ button {
 
 button:hover {
   background: #369b6f;
+}
+
+.link a {
+  color: #42b983;
+  font-weight: bold;
+  text-decoration: none;
 }
 </style>
