@@ -5,13 +5,13 @@
       <p>Criar conta de usuário</p>
 
       <div class="form">
-        <input v-model="form.name" placeholder="Nome de usuário" />
-        <input v-model="form.nome" placeholder="Nome completo" />
-        <input v-model="form.email" placeholder="Email" />
-        <input v-model="form.password" placeholder="Senha" type="password" />
+        <BaseInput v-model="formCadastro.name" placeholder="Nome de usuário" />
+        <BaseInput v-model="formCadastro.nome" placeholder="Nome completo" />
+        <BaseInput v-model="formCadastro.email" placeholder="Email" />
+        <BaseInput v-model="formCadastro.password" placeholder="Senha" type="password" />
       </div>
 
-      <button @click="novo">Salvar</button>
+      <BaseButton label="Salvar" @click="novo"/>
       <p class="link">
           <router-link to="/">Voltar</router-link>
       </p>
@@ -20,6 +20,8 @@
 </template>
 
 <script setup>
+import BaseButton from "../components/atoms/BaseButton.vue";
+import BaseInput from "../components/atoms/BaseInput.vue";
 import { useAuth } from "../composables/userAuth";
 
 const { formCadastro, cadastrar, clearCadastro } = useAuth();
@@ -71,33 +73,6 @@ p {
   margin: 5px 0 25px;
   color: #7f8c8d;
   font-size: 14px;
-}
-
-input {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  outline: none;
-  background: white;
-}
-
-input:focus {
-  border-color: #42b983;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background: #42b983;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  background: #369b6f;
 }
 
 .link a {
