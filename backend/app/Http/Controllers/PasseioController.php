@@ -3,20 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Passeio;
-use Illuminate\Http\Request;
+use App\Http\Requests\StorePasseioRequest;
 
 class PasseioController extends Controller
 {
-    public function store(Request $request)
+    public function store(StorePasseioRequest $request)
     {
         $passeio = Passeio::create([
-            'dog_id' => $request->dog_id,
-            'tutor_id' => $request->tutor_id,
-            'data' => $request->data,
-            'hora' => $request->hora,
-            'duracao' => $request->duracao,
-            'local' => $request->local,
-            'valor' => $request->valor,
+            ...$request->validated(),
             'status' => 'pendente',
         ]);
 
