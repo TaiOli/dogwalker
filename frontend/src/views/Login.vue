@@ -1,28 +1,28 @@
 <template>
   <div class="container">
     <div class="card">
+
       <h2>🐶 Dog Walker</h2>
       <p>Entrar no sistema</p>
 
-      <div class="form">
-        <BaseInput v-model="formLogin.email" placeholder="Email" />
-        <BaseInput v-model="formLogin.password" type="password" placeholder="Senha" />
+      <AuthForm
+        :form="formLogin"
+        labelButton="Entrar"
+        @submit="acessoLogin"
+      />
 
-        <BaseButton label="Entrar" @click="acessoLogin"/>
-
-        <p class="link">
-          Não tem conta?
-          <router-link to="/cadastro-usuario">Criar conta</router-link>
-        </p>
-      </div>
+      <p class="link">
+        Não tem conta?
+        <router-link to="/cadastro-usuario">Criar conta</router-link>
+      </p>
     </div>
   </div>
 </template>
 
 <script setup>
-import BaseButton from "../components/atoms/BaseButton.vue";
-import BaseInput from "../components/atoms/BaseInput.vue";
 import { useAuth } from "../composables/userAuth";
+import AuthForm from "../components/molecules/UserAuthForm.vue/index.js";
+
 const { formLogin, login, clearLogin } = useAuth();
 
 async function acessoLogin() {
