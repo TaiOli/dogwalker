@@ -5,7 +5,7 @@
       <h2>🐶 Dog Walker</h2>
       <p>Entrar no sistema</p>
 
-      <AuthForm
+      <UserAuthForm
         :form="formLogin"
         labelButton="Entrar"
         @submit="acessoLogin"
@@ -21,7 +21,7 @@
 
 <script setup>
 import { useAuth } from "../composables/userAuth";
-import AuthForm from "../components/molecules/UserAuthForm.vue";
+import UserAuthForm from "../components/molecules/UserAuthForm.vue";
 
 const { formLogin, login, clearLogin } = useAuth();
 
