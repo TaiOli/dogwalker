@@ -10,9 +10,29 @@
     </div>
 
     <nav class="nav">
-      <router-link to="/home">🏠 <span v-if="!collapsed">Dashboard</span></router-link>
-      <router-link to="/dogs">🐕 <span v-if="!collapsed">Dogs</span></router-link>
-      <router-link to="/walks">🚶 <span v-if="!collapsed">Passeios</span></router-link>
+
+      <router-link to="/home">
+        🏠 <span v-if="!collapsed">Dashboard</span>
+      </router-link>
+
+      <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
+      <router-link v-if="tutor()" to="/dogs">
+        🐕 <span v-if="!collapsed">Meus cachorros</span>
+      </router-link>
+
+      <router-link v-if="tutor()" to="/scheduletour">
+        ➕ <span v-if="!collapsed">Solicitar passeio</span>
+      </router-link>
+
+      <!-- VISUALIZAÇÃO SOMENTE PASSEADOR -->
+      <router-link v-if="walker()" to="/walks">
+        🚶 <span v-if="!collapsed">Passeios disponíveis</span>
+      </router-link>
+
+      <router-link v-if="walker()" to="/mytours">
+        📋 <span v-if="!collapsed">Meus passeios</span>
+      </router-link>
+
     </nav>
   </aside>
 </template>
@@ -23,7 +43,12 @@ import { useRouter } from "vue-router";
 import { useAuth } from "../../composables/userAuth";
 
 const router = useRouter();
-const { clearLogin } = useAuth();
+
+const {
+  tutor,
+  walker,
+  logout
+} = useAuth();
 
 const collapsed = ref(false);
 
@@ -49,6 +74,10 @@ function toggle() {
   width: 70px;
 }
 
+.sidebar.collapsed .header {
+  justify-content: center;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -68,8 +97,10 @@ h2 {
   background: transparent;
   border: none;
   color: white;
-  font-size: 20px;
   cursor: pointer;
+  font-size: 17px;
+  margin-left: 10px;
+  
 }
 
 .nav {
@@ -77,6 +108,10 @@ h2 {
   flex-direction: column;
   gap: 10px;
   margin-top: 20px;
+}
+
+.nav span{
+    font-size: 15px;
 }
 
 a {
@@ -87,23 +122,10 @@ a {
   align-items: center;
   gap: 10px;
   border-radius: 6px;
+  white-space: nowrap;
 }
 
 a:hover {
   background: #34495e;
-}
-
-/* mobile */
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-  }
-
-  .sidebar.collapsed {
-    transform: translateX(-100%);
-  }
 }
 </style>
