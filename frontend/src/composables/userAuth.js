@@ -22,7 +22,10 @@ export function useAuth() {
     name: "",
     nome: "",
     email: "",
-    password: ""
+    password: "",
+    telefone: "",
+    tipo_usuario: "tutor",
+    foto: ""
   });
 
   async function cadastrar() {
@@ -35,6 +38,8 @@ export function useAuth() {
     formCadastro.nome = "";
     formCadastro.email = "";
     formCadastro.password = "";
+    formCadastro.tipo_usuario = "";
+    formCadastro.telefone = "";
   }
 
   return {
