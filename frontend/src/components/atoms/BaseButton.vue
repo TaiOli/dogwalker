@@ -1,14 +1,14 @@
 <script setup>
 defineProps({
-    label:String
+  label: String
 });
 
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["click"]);
 </script>
 
 <template>
-    <button>
-        {{ label }}
+    <button @click="$emit('click')">
+      {{ label }}
     </button>
 </template>
 
