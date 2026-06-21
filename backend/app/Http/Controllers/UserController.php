@@ -32,9 +32,12 @@ class UserController extends Controller
             ], 401);
         }
 
+        $token = $user->createToken('auth-token')->plainTextToken;
+
         return response()->json([
             'message' => 'Login realizado com sucesso',
-            'user' => $user
+            'user' => $user,
+            'token' => $token
         ]);
     }
 }
