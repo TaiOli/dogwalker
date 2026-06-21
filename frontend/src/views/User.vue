@@ -4,24 +4,17 @@
       <h2>🐶 Dog Walker</h2>
       <p>Criar conta de usuário</p>
 
-      <div class="form">
-        <BaseInput v-model="formCadastro.name" placeholder="Nome de usuário" />
-        <BaseInput v-model="formCadastro.nome" placeholder="Nome completo" />
-        <BaseInput v-model="formCadastro.email" placeholder="Email" />
-        <BaseInput v-model="formCadastro.password" placeholder="Senha" type="password" />
-      </div>
-
-      <BaseButton label="Salvar" @click="novo"/>
-      <p class="link">
-          <router-link to="/">Voltar</router-link>
-      </p>
+      <UserCadastroForm
+        :form="formCadastro"
+        labelButton="Salvar"
+        @submit="novo"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import BaseButton from "../components/atoms/BaseButton.vue";
-import BaseInput from "../components/atoms/BaseInput.vue";
+import UserCadastroForm from "../components/molecules/UserCadastroForm.vue";
 import { useAuth } from "../composables/userAuth";
 
 const { formCadastro, cadastrar, clearCadastro } = useAuth();
