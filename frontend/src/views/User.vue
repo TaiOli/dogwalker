@@ -9,6 +9,10 @@
         labelButton="Salvar"
         @submit="novo"
       />
+
+      <p class="link">
+        <router-link to="/">Voltar</router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -47,13 +51,6 @@ async function novo() {
   display: flex;
   flex-direction: column;
   text-align: center;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 15px;
 }
 
 h2 {
