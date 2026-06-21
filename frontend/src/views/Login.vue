@@ -21,7 +21,7 @@
 
 <script setup>
 import { useAuth } from "../composables/userAuth";
-import AuthForm from "../components/molecules/UserAuthForm.vue/index.js";
+import AuthForm from "../components/molecules/UserAuthForm.vue";
 
 const { formLogin, login, clearLogin } = useAuth();
 
@@ -67,13 +67,6 @@ h2 {
 p {
   color: #7f8c8d;
   font-size: 15px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 20px 0;
 }
 
 .link {
