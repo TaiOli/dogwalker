@@ -18,8 +18,8 @@
 </template>
 
 <script setup>
-import UserCadastroForm from "../components/molecules/UserCadastroForm.vue";
 import { useAuth } from "../composables/userAuth";
+import UserCadastroForm from "../components/molecules/UserCadastroForm.vue";
 
 const { formCadastro, cadastrar, clearCadastro } = useAuth();
 
