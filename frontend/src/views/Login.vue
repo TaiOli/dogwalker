@@ -22,17 +22,25 @@
 <script setup>
 import { useAuth } from "../composables/userAuth";
 import UserAuthForm from "../components/molecules/UserAuthForm.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter(); 
 
 const { formLogin, login, clearLogin } = useAuth();
 
 async function acessoLogin() {
   try {
     const data = await login();
+
     alert("Login realizado com sucesso!");
     console.log(data.user);
 
-    clearLogin();
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    clearLogin(); 
+    router.push("/home"); 
   } catch (error) {
+    console.log(error);
     alert("Email ou senha inválidos");
   }
 }
