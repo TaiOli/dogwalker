@@ -3,6 +3,7 @@ import User from "../views/User.vue";
 import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard.vue";
 import CadastrarCachorro from "../views/RegisterDog.vue";
+import SolicitarPasseio from "../views/Scheduletour.vue";
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
   {
     path: "/dogs",
     component: CadastrarCachorro
+  },
+  { 
+    path: "/scheduletour", 
+    component: SolicitarPasseio 
   }
 ];
 
