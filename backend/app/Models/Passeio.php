@@ -9,7 +9,7 @@ class Passeio extends Model
     protected $fillable = [
         'dog_id',
         'tutor_id',
-        'passeio_id',
+        'passeador_id',
         'data',
         'hora',
         'duracao',
