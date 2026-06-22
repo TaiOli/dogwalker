@@ -27,7 +27,7 @@ class StorePasseioRequest extends FormRequest
             'passeador_id' => 'nullable|exists:users,id',
             'data' => 'required|date|after_or_equal:today',
             'hora' => 'required',
-            'duracao' => 'required|integer|min:10|max:240',
+            'duracao' => 'required|date_format:H:i',
             'local' => 'required|string|max:255',
             'valor' => 'required|numeric|min:0',
         ];  
