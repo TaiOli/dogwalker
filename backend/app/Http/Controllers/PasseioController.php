@@ -16,7 +16,7 @@ class PasseioController extends Controller
 
         return response()->json([
             'message' => 'Passeio solicitado com sucesso',
-            'walk' => $passeio
+            'passeio' => $passeio
         ]);
     }
 }
