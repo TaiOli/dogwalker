@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDogRequest;
 use App\Models\Dog;
+use Illuminate\Http\Request;
 
 class DogController extends Controller
 {
@@ -18,5 +19,10 @@ class DogController extends Controller
             'message' => 'Cachorro cadastrado com sucesso',
             'dog' => $dog
         ]);
+    }
+
+    public function myDogs(Request $request)
+    {
+        return Dog::where('user_id', $request->user()->id)->get();
     }
 }
