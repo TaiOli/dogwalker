@@ -15,7 +15,8 @@ const emit = defineEmits(["click"]);
 <style scoped>
 button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
+  font-size: 14px;
   border: none;
   background: #42b983;
   color: white;
