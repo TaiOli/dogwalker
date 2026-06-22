@@ -10,7 +10,8 @@ class DogController extends Controller
     public function store(StoreDogRequest $request)
     {
         $dog = Dog::create([
-            ...$request->validated()
+            ...$request->validated(),
+            'user_id' => $request->user()->id
         ]);
 
         return response()->json([
