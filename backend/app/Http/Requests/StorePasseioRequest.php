@@ -24,7 +24,7 @@ class StorePasseioRequest extends FormRequest
     {
         return [
             'dog_id' => 'required|exists:dogs,id',
-            'passeio_id' => 'nullable|exists:users,id',
+            'passeador_id' => 'nullable|exists:users,id',
             'data' => 'required|date|after_or_equal:today',
             'hora' => 'required',
             'duracao' => 'required|integer|min:10|max:240',
