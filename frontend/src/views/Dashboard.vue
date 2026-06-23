@@ -3,6 +3,7 @@
 
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
     <div v-if="tutor">
+      <h2 class="title">📋 Meus Agendamentos</h2>
       <div class="grid">
         <div v-for="p in passeios" :key="p.id" class="card">
 
@@ -22,6 +23,7 @@
 
     <!-- VISUALIZAÇÃO SOMENTE PASSEADOR -->
     <div v-else-if="walker">
+      <h2 class="title">🚶 Passeios Disponíveis</h2>
       <div class="grid">
         <div v-for="p in passeiosFiltrados" :key="p.id" class="card">
 
@@ -108,8 +110,8 @@ onMounted(load)
   font-size:15px;
 }
 
-.h3{
-  font-size:18px;
+.title{
+  font-size:20px;
 }
 
 .card {
