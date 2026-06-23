@@ -4,6 +4,7 @@ import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard.vue";
 import CadastrarCachorro from "../views/RegisterDog.vue";
 import SolicitarPasseio from "../views/Scheduletour.vue";
+import Walks from "../views/Walks.vue"
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
   { 
     path: "/scheduletour", 
     component: SolicitarPasseio 
+  },
+  {
+    path: "/walks",
+    component: Walks
   }
 ];
 
