@@ -27,8 +27,8 @@ class PasseioController extends Controller
     public function index()
     {
         return Passeio::with(['dog', 'tutor'])
-            ->whereNull('passeador_id')
-            ->where('status', 'pendente')
+            ->whereIn('status', ['pendente', 'aceito'])
+            ->latest()
             ->get();
     }
 
@@ -74,7 +74,7 @@ class PasseioController extends Controller
 
         if ($user->tipo_usuario === 'passeador') {
             return Passeio::with(['dog'])
-                ->where('passeador_id', $user->id)
+                ->whereIn('status', ['pendente', 'aceito'])
                 ->latest()
                 ->get();
         }

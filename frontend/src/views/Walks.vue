@@ -1,38 +1,36 @@
 <template>
   <div class="container">
 
-  <h2>🚶 Passeios Disponíveis :</h2>
+    <h2>🚶 Passeios Disponíveis</h2>
 
-  <div class="passeios" v-if="passeios.length === 0">
-    Nenhum passeio disponível.
-  </div>
+    <div v-if="passeios.length === 0">
+      Nenhum passeio disponível.
+    </div>
 
-  <div v-else class="cards">
-    <div v-for="passeio in passeios" :key="passeio.id" class="card">
+    <div class="cards">
+      <div v-for="p in passeios" :key="p.id" class="card">
 
-      <h3>🐶 {{ passeio.dog.nome }}</h3>
+        <h3>🐶 {{ p.dog?.nome }}</h3>
+        <p>📅 {{ p.data }} - {{ p.hora }}</p>
+        <p>📍 {{ p.local }}</p>
 
-      <p>📅 {{ passeio.data }}</p>
-      <p>🕐 {{ passeio.hora }}</p>
-      <p>📍 {{ passeio.local }}</p>
-      <p>💰 R$ {{ passeio.valor }}</p>
-
-      <div class="actions">
-        <button class="btn-aceitar" @click="aceitar(passeio.id)">
+        <div class="actions">
+          <button class="btn-aceitar" @click="aceitar(p.id)">
             Aceitar
-        </button>
+          </button>
 
-        <button class="btn-recusar" @click="recusar(passeio.id)">
+          <button class="btn-recusar" @click="recusar(p.id)">
             Recusar
-        </button>
+          </button>
         </div>
+
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script setup>
-import { onMounted, computed } from "vue"
+import { onMounted } from "vue"
 import { useWalks } from "../composables/useWalks"
 
 const {
@@ -42,23 +40,22 @@ const {
   recusarPasseio
 } = useWalks()
 
-const debugPasseios = computed(() => passeios.value)
+onMounted(loadPasseios)
 
-onMounted(async () => {
-  await loadPasseios()
-})
-
+// 🔥 ACEITAR
 async function aceitar(id) {
   await aceitarPasseio(id)
-  alert("Passeio aceito!")
-  loadPasseios()
+
+  // 🔥 atualiza lista do backend (IMPORTANTE)
+  await loadPasseios()
 }
 
+// 🔥 RECUSAR
 async function recusar(id) {
-  const response = await recusarPasseio(id)
+  await recusarPasseio(id)
+
+  // 🔥 atualiza lista do backend (IMPORTANTE)
   await loadPasseios()
-  console.log("Passeios após reload:", passeios.value)
-  alert("Passeio recusado!")
 }
 </script>
 
