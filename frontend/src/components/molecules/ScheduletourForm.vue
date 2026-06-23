@@ -1,3 +1,61 @@
+<template>
+  <div class="form">
+
+    <div class="mb-3">
+      <label class="form-label text-start w-100">🐶 Cachorro</label>
+      <BaseSelect
+        v-model="form.dog_id"
+        :options="dogs"
+        labelKey="nome"
+        valueKey="id"
+      />
+    </div>
+
+    <div class="row g-3">
+
+      <div class="col-12 col-md-6">
+        <label class="form-label text-start w-100">📅 Data</label>
+        <BaseInput v-model="form.data" type="date" />
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label text-start w-100">⏰ Hora</label>
+        <BaseInput v-model="form.hora" type="time" />
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label text-start w-100">⏳ Duração</label>
+        <BaseInput v-model="form.duracao" type="time" />
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label text-start w-100">💰 Valor</label>
+        <BaseInput
+          v-model="form.valor"
+          type="number"
+          step="0.01"
+          min="0"
+        />
+      </div>
+
+      <div class="col-12">
+        <label class="form-label text-start w-100">📍 Local</label>
+        <BaseInput v-model="form.local" placeholder="Digite o local" />
+      </div>
+
+    </div>
+
+    <!-- BOTÃO -->
+    <div class="mt-4 d-grid">
+      <BaseButton
+        label="Solicitar passeio"
+        @click="emit('submit')"
+      />
+    </div>
+
+  </div>
+</template>
+
 <script setup>
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
@@ -9,35 +67,10 @@ const props = defineProps({
 })
 
 const emit = defineEmits(["submit"])
-
 </script>
-
-<template>
-  <div class="form">
-
-    <BaseSelect
-      v-model="form.dog_id"
-      :options="dogs"
-      labelKey="nome"
-      valueKey="id"
-      label="Selecione"
-    />
-
-    <BaseInput v-model="form.data" type="date" />
-    <BaseInput v-model="form.hora" type="time" />
-    <BaseInput v-model="form.duracao" type="time" />
-    <BaseInput v-model="form.local" placeholder="Local" />
-    <BaseInput v-model="form.valor" placeholder="Valor a pagar" type="number" step="0.01" min="0"/>
-    <BaseButton label="Solicitar passeio" @click="emit('submit')" />
-
-  </div>
-</template>
 
 <style scoped>
 .form {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
 </style>

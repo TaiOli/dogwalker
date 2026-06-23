@@ -2,27 +2,37 @@
   <div class="container py-4">
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2>Cadastro do dog</h2>
+      <h2 class="mt-3">Cadastro do dog</h2>
 
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dogModal">
         Novo
       </button>
     </div>
 
-    <!-- FILTRO DE BUSCA -->
+    <!-- FILTRO -->
     <div class="mb-4">
-      <input v-model="search" type="text" class="form-control" placeholder="🔎 Buscar cachorro por nome, raça..."/>
+      <input
+        v-model="search"
+        type="text"
+        class="form-control"
+        placeholder="🔎 Buscar cachorro por nome, raça..."
+      />
     </div>
 
     <!-- LISTA -->
-    <h2 class="mt-5 mb-5">🐕 Meus Doguinhos :</h2>
+    <h2 class="mt-5 mb-4">🐕 Meus Doguinhos :</h2>
+
     <div v-if="filteredDogs.length === 0" class="text-center text-muted">
       Nenhum cachorro encontrado.
     </div>
 
-    <div class="row g-3">
-      <div v-for="dog in filteredDogs" :key="dog.id" class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="card h-100 shadow-sm">
+    <div class="row g-4">
+      <div
+        v-for="dog in filteredDogs"
+        :key="dog.id"
+        class="col-12 col-sm-6 col-md-4 col-lg-3"
+      >
+        <div class="card h-100 shadow-sm dog-card">
 
           <img :src="dog.foto" class="card-img-top dog-img" alt="dog"/>
 
@@ -40,7 +50,7 @@
 
     <!-- MODAL -->
     <div class="modal fade" id="dogModal" tabindex="-1">
-      <div class="modal-dialog">
+      <div class="modal-dialog  modal-lg">
         <div class="modal-content">
 
           <div class="modal-header">
@@ -49,7 +59,11 @@
           </div>
 
           <div class="modal-body">
-            <DogForm :form="formDog" labelButton="Salvar" @submit="salvar"/>
+            <DogForm
+              :form="formDog"
+              labelButton="Salvar"
+              @submit="salvar"
+            />
           </div>
 
         </div>
@@ -105,12 +119,26 @@ onMounted(loadDogs)
 
 <style scoped>
 .dog-img {
-  height: 180px;
+  height: 300px;
   object-fit: cover;
 }
 
-h2{
+.dog-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+  padding: 18px;
+}
+
+h2 {
   text-align: left;
-  font-size: 22px;
+  font-size: 25px;
 }
 </style>

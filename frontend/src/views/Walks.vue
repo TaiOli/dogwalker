@@ -1,137 +1,81 @@
 <template>
-  <div class="container">
+  <div class="container py-4">
 
-    <h2>🚶 Passeios Disponíveis</h2>
+    <h2 class="mb-4 mt-5 text-start">🚶 Passeios Disponíveis:</h2>
 
-    <div v-if="passeios.length === 0">
+    <div v-if="passeios.length === 0" class="alert alert-info">
       Nenhum passeio disponível.
     </div>
 
-    <div class="cards">
-      <div v-for="p in passeios" :key="p.id" class="card">
+    <div class="row g-4">
 
-        <h3>🐶 {{ p.dog?.nome }}</h3>
-        <p>📅 {{ p.data }} - {{ p.hora }}</p>
-        <p>📍 {{ p.local }}</p>
+      <div v-for="p in passeios" :key="p.id" class="col-12 col-md-6 col-lg-4 col-xl-3">
+        <div class="card shadow-sm h-100">
 
-        <div class="actions">
-          <button class="btn-aceitar" @click="aceitar(p.id)">
-            Aceitar
-          </button>
+          <div class="card-body d-flex flex-column">
 
-          <button class="btn-recusar" @click="recusar(p.id)">
-            Recusar
-          </button>
+            <h5 class="card-title">
+              🐶 {{ p.dog?.nome }}
+            </h5>
+
+            <p class="card-text mb-2">
+              📅 {{ p.data }} - {{ p.hora }}
+            </p>
+
+            <p class="card-text">
+              📍 {{ p.local }}
+            </p>
+
+            <div class="d-flex gap-2 mt-auto pt-3">
+
+              <button class="btn btn-success flex-fill" @click="aceitar(p.id)">
+                Aceitar
+              </button>
+
+              <button class="btn btn-danger flex-fill" @click="recusar(p.id)">
+                Recusar
+              </button>
+
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue"
-import { useWalks } from "../composables/useWalks"
+import { onMounted } from "vue";
+import { useWalks } from "../composables/useWalks";
 
 const {
   passeios,
   loadPasseios,
   aceitarPasseio,
   recusarPasseio
-} = useWalks()
+} = useWalks();
 
-onMounted(loadPasseios)
+onMounted(loadPasseios);
 
 async function aceitar(id) {
-  await aceitarPasseio(id)
-
-  await loadPasseios()
+  await aceitarPasseio(id);
+  await loadPasseios();
 }
 
 async function recusar(id) {
-  const confirmar = confirm("Tem certeza que deseja recusar este passeio?")
+  const confirmar = confirm(
+    "Tem certeza que deseja recusar este passeio?"
+  );
 
-  if (!confirmar) return
+  if (!confirmar) return;
 
-  await recusarPasseio(id)
-  await loadPasseios()
+  await recusarPasseio(id);
+  await loadPasseios();
 }
 </script>
 
 <style scoped>
-.container {
-  width: 100%;
-  padding: 40px;
-}
-
-.passeios{
-  text-align: left;
-  margin-top:30px;
-  font-size: 14px;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-top: 50px;
-}
-
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.card h3 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.card p {
-  margin: 0;
-  font-size: 14px;
-}
-
-button {
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.btn-aceitar {
-  flex: 1;
-  background: #42b983;
-}
-
-.btn-recusar {
-  flex: 1;
-  background: #e74c3c;
-}
-
-.btn-aceitar:hover {
-  background: #369b6f;
-}
-
-.btn-recusar:hover {
-  background: #c0392b;
-}
-
 h2{
-    text-align: left;
-    font-size: 20px;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  margin-top: auto;
+  font-size: 25px;
 }
 </style>

@@ -1,40 +1,43 @@
 <template>
   <aside :class="['sidebar', { collapsed }]">
-    
-    <div class="header">
-      <h2 v-if="!collapsed">🐶 Dog Walker</h2>
 
-      <button class="toggle" @click="toggle">
+    <div class="header">
+
+      <h2 v-if="!collapsed" class="m-0">
+        🐶 Dog Walker
+      </h2>
+
+      <button class="toggle btn btn-outline-light btn-md" @click="toggle">
         ☰
       </button>
+
     </div>
 
-    <nav class="nav">
+    <nav class="nav flex-column mt-3">
 
-      <router-link to="/home">
+      <router-link to="/home" class="nav-item">
         🏠 <span v-if="!collapsed">Dashboard</span>
       </router-link>
 
-      <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
-      <router-link v-if="tutor" to="/dogs">
+      <router-link v-if="tutor" to="/dogs" class="nav-item">
         🐕 <span v-if="!collapsed">Meus cachorros</span>
       </router-link>
 
-      <router-link v-if="tutor" to="/scheduletour">
+      <router-link v-if="tutor" to="/scheduletour" class="nav-item">
         ➕ <span v-if="!collapsed">Solicitar passeio</span>
       </router-link>
 
-      <!-- VISUALIZAÇÃO SOMENTE PASSEADOR -->
-      <router-link v-if="walker" to="/walks">
+      <router-link v-if="walker" to="/walks" class="nav-item text-nowrap">
         🚶 <span v-if="!collapsed">Passeios disponíveis</span>
       </router-link>
 
     </nav>
+
   </aside>
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref } from "vue"
 import { useAuth } from "../../composables/userAuth"
 
 const auth = useAuth()
@@ -42,7 +45,7 @@ const auth = useAuth()
 const tutor = auth.tutor
 const walker = auth.walker
 
-const collapsed = ref(false);
+const collapsed = ref(false)
 
 function toggle() {
   collapsed.value = !collapsed.value
@@ -66,58 +69,29 @@ function toggle() {
   width: 70px;
 }
 
-.sidebar.collapsed .header {
-  justify-content: center;
-}
-
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  width: 100%;
-  margin-bottom: 20px;
+  align-items: center;
 }
 
-h2 {
-  margin: 0;
-  color: white;
-  font-size: 18px;
-  white-space: nowrap;
-}
-
-.toggle {
-  background: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 17px;
-  margin-left: 10px;
-  
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.nav span{
-    font-size: 15px;
-}
-
-a {
+.nav-item {
   color: white;
   text-decoration: none;
   padding: 10px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   gap: 10px;
-  border-radius: 6px;
-  white-space: nowrap;
+  transition: 0.2s;
+  font-size: 20px;
 }
 
-a:hover {
+.nav-item:hover {
   background: #34495e;
+}
+
+.toggle {
+  font-size: 14px;
 }
 </style>

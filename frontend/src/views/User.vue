@@ -1,8 +1,13 @@
 <template>
-  <div class="container">
-    <div class="content">
+  <div class="page">
+
+    <div class="cadastro-wrapper text-center">
+
       <h2>🐶 Dog Walker</h2>
-      <p>Criar conta de usuário</p>
+
+      <p class="text-muted mb-4">
+        Criar conta de usuário
+      </p>
 
       <UserCadastroForm
         :form="formCadastro"
@@ -10,10 +15,14 @@
         @submit="novo"
       />
 
-      <p class="link">
-        <router-link to="/">Voltar</router-link>
+      <p class="mt-3">
+        <router-link to="/" class="text-decoration-none fw-bold text-success">
+          Voltar
+        </router-link>
       </p>
+
     </div>
+
   </div>
 </template>
 
@@ -36,38 +45,22 @@ async function novo() {
 </script>
 
 <style scoped>
-.container {
-  height: 100vh;
+.page {
+  min-height: 100vh;
   width: 100%;
+  background: #f4f6f8;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background: #f4f6f8;
+  padding: 40px 15px;
+  overflow-y: auto; 
 }
 
-.content {
+.cadastro-wrapper {
   width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
+  max-width: 650px;
 }
 
 h2 {
-  margin: 0;
   font-size: 28px;
-  color: #2c3e50;
-}
-
-p {
-  margin: 5px 0 25px;
-  color: #7f8c8d;
-  font-size: 14px;
-}
-
-.link a {
-  color: #42b983;
-  font-weight: bold;
-  text-decoration: none;
 }
 </style>

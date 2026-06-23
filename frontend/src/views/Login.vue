@@ -1,21 +1,33 @@
 <template>
-  <div class="container">
-    <div class="card">
+  <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
+    
+    <div class="login-card shadow p-4">
+      
+      <div class="card-body text-center">
 
-      <h2>🐶 Dog Walker</h2>
-      <p>Entrar no sistema</p>
+        <h2 class="mb-3">🐶 Dog Walker</h2>
 
-      <UserAuthForm
-        :form="formLogin"
-        labelButton="Entrar"
-        @submit="acessoLogin"
-      />
+        <p class="text-muted mb-4">
+          Entrar no sistema
+        </p>
 
-      <p class="link">
-        Não tem conta?
-        <router-link to="/cadastro-usuario">Criar conta</router-link>
-      </p>
+        <UserAuthForm
+          :form="formLogin"
+          labelButton="Entrar"
+          @submit="acessoLogin"
+        />
+
+        <p class="mt-3 text-muted">
+          Não tem conta?
+          <router-link to="/cadastro-usuario" class="text-decoration-none fw-bold">
+            Criar conta
+          </router-link>
+        </p>
+
+      </div>
+
     </div>
+
   </div>
 </template>
 
@@ -33,14 +45,13 @@ async function acessoLogin() {
     const data = await login();
 
     alert("Login realizado com sucesso!");
-    console.log(data.user);
 
     localStorage.setItem("user", JSON.stringify(data.user));
     localStorage.setItem("token", data.token);
 
     clearLogin();
+
     router.push("/home");
-    
   } catch (error) {
     console.log(error);
     alert("Email ou senha inválidos");
@@ -49,49 +60,8 @@ async function acessoLogin() {
 </script>
 
 <style scoped>
-.container {
-  min-height: 100vh;
+.login-card {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f4f6f8;
-}
-
-.card {
-  width: 100%;
-  max-width: 380px;
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-h2 {
-  margin: 0;
-  font-size: 28px;
-  color: #2c3e50;
-}
-
-p {
-  color: #7f8c8d;
-  font-size: 15px;
-}
-
-.link {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #7f8c8d;
-}
-
-.link a {
-  color: #42b983;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.link a:hover {
-  text-decoration: underline;
+  max-width: 550px;
 }
 </style>

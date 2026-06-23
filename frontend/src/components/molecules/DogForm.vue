@@ -12,21 +12,37 @@ const emit = defineEmits(["submit"]);
 
 <template>
   <div class="form">
-    <BaseInput v-model="form.nome" placeholder="Nome do cachorro"/>
-    <BaseInput v-model="form.idade" placeholder="Idade" type="number"/>
-    <BaseInput v-model="form.porte" placeholder="Porte (pequeno, médio, grande)"/>
-    <BaseInput v-model="form.raca" placeholder="Raça"/>
-    <BaseInput v-model="form.observacoes" placeholder="Observações"/>
-    <BaseInput v-model="form.foto" placeholder="URL da foto"/>
 
-    <BaseButton :label="labelButton" @click="emit('submit')"/>
+    <div class="mb-2">
+      <BaseInput v-model="form.nome" placeholder="Nome do cachorro" />
+    </div>
+
+    <div class="mb-2">
+      <BaseInput v-model="form.idade" placeholder="Idade" type="number" />
+    </div>
+
+    <div class="mb-2">
+      <BaseInput v-model="form.porte" placeholder="Porte (pequeno, médio, grande)" />
+    </div>
+
+    <div class="mb-2">
+      <BaseInput v-model="form.raca" placeholder="Raça" />
+    </div>
+
+    <div class="mb-2">
+      <BaseInput v-model="form.observacoes" placeholder="Observações" />
+    </div>
+
+    <div class="mb-3">
+      <BaseInput v-model="form.foto" placeholder="URL da foto" />
+    </div>
+
+    <BaseButton class="w-100" :label="labelButton" @click="emit('submit')"/>
   </div>
 </template>
 
 <style scoped>
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  width: 100%;
 }
 </style>

@@ -1,17 +1,23 @@
 <template>
-    <div class="container">
-      <div class="form-wrapper">
+  <div class="container py-4 mt-5">
 
-        <h2>🚶 Solicitar Passeio</h2>
-        <p>Escolha seu cachorro</p>
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-11 col-xl-10">
 
-        <ScheduletourForm
-          :form="form"
-          :dogs="dogs"
-          @submit="salvar"
-        />
+        <h2 class="page-title mb-4">🚶 Solicitar Passeio</h2>
+
+        <div class="card shadow-sm p-3">
+
+          <ScheduletourForm
+            :form="form"
+            :dogs="dogs"
+            @submit="salvar"
+          />
+
+        </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -27,39 +33,29 @@ const {
   clearPasseio
 } = useScheduletour()
 
-onMounted(async () => {
-  await loadDogs()
+onMounted(() => {
+  loadDogs()
 })
 
 async function salvar() {
-  await solicitarPasseio()
-  alert("Passeio solicitado com sucesso!")
-  clearPasseio()
+  try {
+    await solicitarPasseio()
+
+    alert("Passeio solicitado com sucesso!")
+
+    clearPasseio()
+
+  } catch (error) {
+    console.log(error)
+    alert("Erro ao solicitar passeio")
+  }
 }
 </script>
 
 <style scoped>
-.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 40px;
-}
-
-.form-wrapper {
-  width: 100%;
-  max-width: 600px;
-}
-
-h2 {
-  margin-bottom: 8px;
-}
-
-p {
-  margin-bottom: 20px;
-  color: #666;
-  font-size: 15px;
+.page-title {
+  text-align: left;
+  font-size: 25px;
+  font-weight: 600;
 }
 </style>

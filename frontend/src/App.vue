@@ -20,7 +20,9 @@ const route = useRoute()
 const isLogged = computed(() => !!auth.user.value)
 
 // se está na página de login
-const isLoginPage = computed(() => route.path === "/")
+const isLoginPage = computed(() =>
+  ["/", "/cadastro-usuario"].includes(route.path)
+)
 </script>
 
 <style>

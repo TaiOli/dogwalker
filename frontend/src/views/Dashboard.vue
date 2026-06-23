@@ -7,7 +7,7 @@
       <div class="grid">
         <div v-for="p in passeios" :key="p.id" class="card">
 
-          <button class="close" @click="remover(p.id)">✖</button>
+          <button class="close" @click="remover(p.id)">x</button>
 
           <h4>🐶 {{ p.dog?.nome }}</h4>
           <p>{{ p.data }} - {{ p.hora }}</p>
@@ -111,7 +111,7 @@ onMounted(load)
 }
 
 .title{
-  font-size:20px;
+  font-size:25px;
 }
 
 .card {
@@ -144,21 +144,22 @@ onMounted(load)
 
 .close {
   position: absolute;
-  top: 8px;
-  right: 8px; 
-  width: 26px;
-  height: 26px;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
   border: none;
   border-radius: 50%;
   background: #e74c3c;
   color: white;
+  font-size: 16px;
   font-weight: bold;
-  font-size: 14px;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 .close:hover {
