@@ -42,19 +42,18 @@ const {
 
 onMounted(loadPasseios)
 
-// 🔥 ACEITAR
 async function aceitar(id) {
   await aceitarPasseio(id)
 
-  // 🔥 atualiza lista do backend (IMPORTANTE)
   await loadPasseios()
 }
 
-// 🔥 RECUSAR
 async function recusar(id) {
-  await recusarPasseio(id)
+  const confirmar = confirm("Tem certeza que deseja recusar este passeio?")
 
-  // 🔥 atualiza lista do backend (IMPORTANTE)
+  if (!confirmar) return
+
+  await recusarPasseio(id)
   await loadPasseios()
 }
 </script>
