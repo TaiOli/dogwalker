@@ -56,7 +56,41 @@ class PasseioController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Passeio recusado'
+            'message' => 'Passeio recusado',
+            'status' => $passeio->fresh()->status
+        ]);
+    }
+
+    public function meusPasseios(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->tipo_usuario === 'tutor') {
+            return Passeio::with(['dog'])
+                ->where('tutor_id', $user->id)
+                ->latest()
+                ->get();
+        }
+
+        if ($user->tipo_usuario === 'passeador') {
+            return Passeio::with(['dog'])
+                ->where('passeador_id', $user->id)
+                ->latest()
+                ->get();
+        }
+
+        return [];
+    }
+
+    // Exclui Passeio
+    public function destroy($id)
+    {
+        $passeio = Passeio::findOrFail($id);
+
+        $passeio->delete();
+
+        return response()->json([
+            'message' => 'Passeio removido com sucesso'
         ]);
     }
 }
