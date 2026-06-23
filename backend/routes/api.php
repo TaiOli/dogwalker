@@ -15,5 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/passeios', [PasseioController::class, 'store']);
     Route::get('/passeios', [PasseioController::class, 'index']);
     Route::put('/passeios/{id}/aceitar', [PasseioController::class, 'aceitar']);
-    Route::put('/passeios/{id}/recusar', [PasseioController::class, 'recusar']);
+    Route::patch('/passeios/{id}/recusar', [PasseioController::class, 'recusar']);
+    Route::get('/meus-passeios',[PasseioController::class, 'meusPasseios']);
+    Route::delete('/passeios/{id}', [PasseioController::class, 'destroy']);
 });
