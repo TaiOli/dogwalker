@@ -68,6 +68,7 @@ class PasseioController extends Controller
         if ($user->tipo_usuario === 'tutor') {
             return Passeio::with(['dog'])
                 ->where('tutor_id', $user->id)
+                ->whereIn('status', ['pendente', 'aceito']) 
                 ->latest()
                 ->get();
         }
