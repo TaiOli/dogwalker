@@ -1,7 +1,7 @@
 <template>
   <div class="container">
 
-    <!-- VISUALIZAÇÃO SOMENTE PASSEADOR -->
+    <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
     <div v-if="tutor">
       <div class="grid">
         <div v-for="p in passeios" :key="p.id" class="card">
@@ -63,7 +63,11 @@ async function load() {
     }
   })
 
-  passeios.value = await res.json()
+  const data = await res.json()
+
+  passeios.value = data.filter(p =>
+    p.status === "pendente" || p.status === "aceito"
+  )
 }
 
 async function remover(id) {
@@ -139,7 +143,7 @@ onMounted(load)
 .close {
   position: absolute;
   top: 8px;
-  right: 8px; /* 👈 aqui muda */
+  right: 8px; 
   width: 26px;
   height: 26px;
   border: none;
