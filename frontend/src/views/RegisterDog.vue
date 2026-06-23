@@ -1,60 +1,116 @@
 <template>
-  <div class="container">
-    <h2>🐕 Cadastrar cachorro</h2>
-    <p>Preencha os dados do pet</p>
+  <div class="container py-4">
 
-    <div class="form-wrapper">
-      <DogForm
-        :form="formDog"
-        labelButton="Salvar"
-        @submit="salvar"
-      />
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Cadastro do dog</h2>
+
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dogModal">
+        Novo
+      </button>
     </div>
+
+    <!-- FILTRO DE BUSCA -->
+    <div class="mb-4">
+      <input v-model="search" type="text" class="form-control" placeholder="🔎 Buscar cachorro por nome, raça..."/>
+    </div>
+
+    <!-- LISTA -->
+    <h2 class="mt-5 mb-5">🐕 Meus Doguinhos :</h2>
+    <div v-if="filteredDogs.length === 0" class="text-center text-muted">
+      Nenhum cachorro encontrado.
+    </div>
+
+    <div class="row g-3">
+      <div v-for="dog in filteredDogs" :key="dog.id" class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100 shadow-sm">
+
+          <img :src="dog.foto" class="card-img-top dog-img" alt="dog"/>
+
+          <div class="card-body">
+            <h5 class="card-title">{{ dog.nome }}</h5>
+
+            <p class="mb-1">🐾 {{ dog.raca }}</p>
+            <p class="mb-1">🎂 {{ dog.idade }} anos</p>
+            <p class="mb-1">📦 {{ dog.porte }}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal fade" id="dogModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Cadastrar cachorro</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <DogForm :form="formDog" labelButton="Salvar" @submit="salvar"/>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script setup>
-import DogForm from "../components/molecules/DogForm.vue";
-import { useDog } from "../composables/useDog";
+import { ref, computed, onMounted } from "vue"
+import DogForm from "../components/molecules/DogForm.vue"
+import { useDog } from "../composables/useDog"
+import { api } from "../services/api"
 
-const { formDog, cadastrarDog, clearDog } = useDog();
+const { formDog, cadastrarDog, clearDog } = useDog()
+
+const dogs = ref([])
+const search = ref("")
+
+const filteredDogs = computed(() => {
+  return dogs.value.filter(dog =>
+    dog.nome.toLowerCase().includes(search.value.toLowerCase()) ||
+    dog.raca?.toLowerCase().includes(search.value.toLowerCase())
+  )
+})
+
+async function loadDogs() {
+  const res = await api.get("/dogs/my")
+  dogs.value = res.data
+}
 
 async function salvar() {
   try {
-    await cadastrarDog();
+    await cadastrarDog()
 
-    alert("Cachorro cadastrado com sucesso!");
+    clearDog()
+    await loadDogs()
 
-    clearDog();
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("dogModal")
+    )
+    modal.hide()
+
   } catch (error) {
-    console.log(error.response?.data);
-    alert("Erro ao cadastrar cachorro");
+    console.log(error)
+    alert("Erro ao cadastrar cachorro")
   }
 }
+
+onMounted(loadDogs)
 </script>
 
 <style scoped>
-.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 40px;
+.dog-img {
+  height: 180px;
+  object-fit: cover;
 }
 
-.form-wrapper {
-  width: 100%;
-  max-width: 600px;
-}
-
-h2 {
-  margin-bottom: 8px;
-}
-
-p {
-  margin-bottom: 20px;
-  color: #666;
-  font-size: 15px;
+h2{
+  text-align: left;
+  font-size: 22px;
 }
 </style>
