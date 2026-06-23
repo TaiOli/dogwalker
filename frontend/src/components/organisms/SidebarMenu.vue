@@ -29,10 +29,6 @@
         🚶 <span v-if="!collapsed">Passeios disponíveis</span>
       </router-link>
 
-      <router-link v-if="walker" to="/mytours">
-        📋 <span v-if="!collapsed">Meus passeios</span>
-      </router-link>
-
     </nav>
   </aside>
 </template>
