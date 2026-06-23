@@ -16,20 +16,20 @@
       </router-link>
 
       <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
-      <router-link v-if="tutor()" to="/dogs">
+      <router-link v-if="tutor" to="/dogs">
         🐕 <span v-if="!collapsed">Meus cachorros</span>
       </router-link>
 
-      <router-link v-if="tutor()" to="/scheduletour">
+      <router-link v-if="tutor" to="/scheduletour">
         ➕ <span v-if="!collapsed">Solicitar passeio</span>
       </router-link>
 
       <!-- VISUALIZAÇÃO SOMENTE PASSEADOR -->
-      <router-link v-if="walker()" to="/walks">
+      <router-link v-if="walker" to="/walks">
         🚶 <span v-if="!collapsed">Passeios disponíveis</span>
       </router-link>
 
-      <router-link v-if="walker()" to="/mytours">
+      <router-link v-if="walker" to="/mytours">
         📋 <span v-if="!collapsed">Meus passeios</span>
       </router-link>
 
@@ -38,17 +38,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth } from "../../composables/userAuth";
 
 const router = useRouter();
 
-const {
-  tutor,
-  walker,
-  logout
-} = useAuth();
+const auth = useAuth()
+const tutor = computed(() => auth.tutor.value)
+const walker = computed(() => auth.walker.value)
 
 const collapsed = ref(false);
 
@@ -59,7 +57,7 @@ function toggle() {
 
 <style scoped>
 .sidebar {
-  width: 220px;
+  width: 280px;
   height: 100vh;
   background: #2c3e50;
   color: white;
