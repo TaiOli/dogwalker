@@ -1,4 +1,5 @@
 import { reactive } from "vue";
+import { getRandomDogImage } from "../services/dogApi";
 import { api } from "../services/api";
 
 export function useDog() {
@@ -13,7 +14,18 @@ export function useDog() {
   });
 
   async function cadastrarDog() {
-    return await api.post("/dogs", formDog);
+
+    let foto = formDog.foto;
+
+    // Se não informou foto, busca uma aleatória
+    if (!foto || foto.trim() === "") {
+      foto = await getRandomDogImage();
+    }
+
+    return await api.post("/dogs", {
+      ...formDog,
+      foto
+    });
   }
 
   function clearDog() {
