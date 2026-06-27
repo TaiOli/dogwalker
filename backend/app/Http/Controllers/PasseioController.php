@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Passeio;
 use App\Http\Requests\StorePasseioRequest;
+use App\Services\PasseioService;
 use Illuminate\Http\Request;
 
 class PasseioController extends Controller
 {
+    public function __construct(
+        private PasseioService  $passeioService
+    ) {}
+
     // Criar Passeio
     public function store(StorePasseioRequest $request)
     {
-        $passeio = Passeio::create([
-            ...$request->validated(),
-            'tutor_id' => $request->user()->id,
-            'status' => 'pendente',
-        ]);
+        $passeio = $this->passeioService->create(
+            $request->validated(),
+            $request->user()->id
+        );
 
         return response()->json([
             'message' => 'Passeio solicitado com sucesso',
@@ -26,20 +29,15 @@ class PasseioController extends Controller
     // Listar Passeio
     public function index()
     {
-        return Passeio::with(['dog', 'tutor'])
-            ->whereIn('status', ['pendente', 'aceito'])
-            ->latest()
-            ->get();
+        return $this->passeioService->listarDisponiveis();
     }
 
     public function aceitar($id, Request $request)
     {
-        $passeio = Passeio::findOrFail($id);
-
-        $passeio->update([
-            'passeador_id' => $request->user()->id,
-            'status' => 'aceito'
-        ]);
+        $passeio = $this->passeioService->aceitar(
+            $id,
+            $request->user()->id
+        );
 
         return response()->json([
             'message' => 'Passeio aceito com sucesso',
@@ -49,46 +47,25 @@ class PasseioController extends Controller
 
     public function recusar($id)
     {
-        $passeio = Passeio::findOrFail($id);
-
-        $passeio->update([
-            'status' => 'recusado'
-        ]);
+        $passeio = $this->passeioService->recusar($id);
 
         return response()->json([
             'message' => 'Passeio recusado',
-            'status' => $passeio->fresh()->status
+            'status' => $passeio->status
         ]);
     }
 
     public function meusPasseios(Request $request)
     {
-        $user = $request->user();
-
-        if ($user->tipo_usuario === 'tutor') {
-            return Passeio::with(['dog'])
-                ->where('tutor_id', $user->id)
-                ->whereIn('status', ['pendente', 'aceito']) 
-                ->latest()
-                ->get();
-        }
-
-        if ($user->tipo_usuario === 'passeador') {
-            return Passeio::with(['dog'])
-                ->whereIn('status', ['pendente', 'aceito'])
-                ->latest()
-                ->get();
-        }
-
-        return [];
+        return $this->passeioService->meusPasseios(
+            $request->user()
+        );
     }
 
-    // Exclui Passeio
+    // Excluir Passeio
     public function destroy($id)
     {
-        $passeio = Passeio::findOrFail($id);
-
-        $passeio->delete();
+        $this->passeioService->excluir($id);
 
         return response()->json([
             'message' => 'Passeio removido com sucesso'
