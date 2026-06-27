@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDogRequest;
-use App\Models\Dog;
+use App\Services\DogService;
 use Illuminate\Http\Request;
 
 class DogController extends Controller
 {
+    public function __construct(
+        private DogService $dogService
+    ) {}
+
     public function store(StoreDogRequest $request)
     {
-        $dog = Dog::create([
-            ...$request->validated(),
-            'user_id' => $request->user()->id
-        ]);
+        $dog = $this->dogService->create(
+            $request->validated(),
+            $request->user()->id
+        );
 
         return response()->json([
             'message' => 'Cachorro cadastrado com sucesso',
@@ -23,6 +27,8 @@ class DogController extends Controller
 
     public function myDogs(Request $request)
     {
-        return Dog::where('user_id', $request->user()->id)->get();
+        return $this->dogService->myDogs(
+            $request->user()->id
+        );
     }
 }
