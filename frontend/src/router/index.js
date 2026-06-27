@@ -5,6 +5,8 @@ import Dashboard from "../views/Dashboard.vue";
 import CadastrarCachorro from "../views/RegisterDog.vue";
 import SolicitarPasseio from "../views/Scheduletour.vue";
 import Walks from "../views/Walks.vue"
+import WalkerProfile from "../views/WalkerProfile.vue";
+import MeuPerfil from "../views/MeuPerfil.vue"
 
 const routes = [
   {
@@ -30,6 +32,14 @@ const routes = [
   {
     path: "/walks",
     component: Walks
+  },
+  {
+    path: "/walkers/:id",
+    component: WalkerProfile
+  },
+  {
+    path: "/meu-perfil",
+    component: MeuPerfil
   }
 ];
 
