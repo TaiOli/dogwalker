@@ -2,7 +2,7 @@
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-        <div class="card shadow-sm border-0 p-4 mt-4 mb-5">
+        <div class="card shadow-sm border-0 p-4 mb-5">
 
           <div class="text-center mb-4">
             <h2>🚶 Solicitar Passeio</h2>

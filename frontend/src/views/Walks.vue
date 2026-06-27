@@ -1,7 +1,7 @@
 <template>
   <div class="container py-4">
 
-    <h2 class="mb-4 mt-5 text-start">🚶 Passeios Disponíveis:</h2>
+    <h2 class="mb-4 text-start">🚶 Passeios Disponíveis:</h2>
 
     <div v-if="passeios.length === 0" class="alert alert-info">
       Nenhum passeio disponível.

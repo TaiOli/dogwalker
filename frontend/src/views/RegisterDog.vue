@@ -2,7 +2,7 @@
   <div class="container py-4">
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2 class="mt-3">Cadastro do dog</h2>
+      <h2>Cadastro do dog</h2>
 
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dogModal">
         Novo

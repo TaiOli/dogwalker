@@ -1,131 +1,56 @@
 <template>
-  <div class="app-layout">
+  <div>
+    <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
+    <div v-if="tutor">
+      <h2 class="title">👨‍🦱 Passeadores Disponíveis</h2>
 
-    <div class="main">
-
-      <div class="topbar">
-
-        <div></div>
-
-        <div class="dropdown">
-
+      <div class="grid mb-5">
+        <div
+          v-for="walker in passeadores"
+          :key="walker.id"
+          class="card"
+        >
           <img
-             :src="getFoto(auth.user.value?.foto)"
-            class="profile-photo dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+            :src="getFoto(walker.foto)"
+            class="walker-photo"
           />
-
-          <ul class="dropdown-menu dropdown-menu-end">
-
-            <li>
-              <router-link class="dropdown-item" to="/meu-perfil">
-                👤 Meu Perfil
-              </router-link>
-            </li>
-
-            <li><hr class="dropdown-divider"></li>
-
-            <li>
-              <a
-                class="dropdown-item text-danger"
-                href="#"
-                @click.prevent="logout"
-              >
-                🚪 Sair
-              </a>
-            </li>
-
-          </ul>
+          <h4>{{ walker.nome }}</h4>
+          <p>📱 {{ walker.telefone }}</p>
+          <p>⭐ {{ walker.media_avaliacao ?? "Sem avaliações" }}</p>
+          <router-link
+            :to="`/walkers/${walker.id}`"
+            class="btn btn-success w-100"
+          >
+            Ver Perfil
+          </router-link>
         </div>
       </div>
 
-      <div class="container">
-
-        <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
-        <div v-if="tutor">
-
-          <h2 class="title">👨‍🦱 Passeadores Disponíveis</h2>
-
-          <div class="grid mb-5">
-
-            <div
-              v-for="walker in passeadores"
-              :key="walker.id"
-              class="card"
-            >
-
-              <img
-                :src="getFoto(walker.foto)"
-                class="walker-photo"
-              />
-
-              <h4>{{ walker.nome }}</h4>
-
-              <p>📱 {{ walker.telefone }}</p>
-
-              <p>
-                ⭐ {{ walker.media_avaliacao ?? "Sem avaliações" }}
-              </p>
-
-              <router-link
-                :to="`/walkers/${walker.id}`"
-                class="btn btn-success w-100"
-              >
-                Ver Perfil
-              </router-link>
-
-            </div>
-          </div>
-
-          <!-- AGENDAMENTOS -->
-          <h2 class="title">📋 Meus Agendamentos</h2>
-
-          <div class="grid">
-
-            <div
-              v-for="p in passeios"
-              :key="p.id"
-              class="card"
-            >
-
-              <button
-                class="close"
-                @click="remover(p.id)"
-              >
-                ×
-              </button>
-
-              <h4>🐶 {{ p.dog?.nome }}</h4>
-
-              <p>{{ p.data }} - {{ p.hora }}</p>
-
-              <p>{{ p.local }}</p>
-
-              <span class="status" :class="p.status">
-                {{ p.status }}
-              </span>
-
-            </div>
-          </div>
+      <h2 class="title">📋 Meus Agendamentos</h2>
+      <div class="grid">
+        <div
+          v-for="p in passeios"
+          :key="p.id"
+          class="card"
+        >
+          <button class="close" @click="remover(p.id)">×</button>
+          <h4>🐶 {{ p.dog?.nome }}</h4>
+          <p>{{ p.data }} - {{ p.hora }}</p>
+          <p>{{ p.local }}</p>
+          <span class="status" :class="p.status">{{ p.status }}</span>
         </div>
+      </div>
+    </div>
 
-        <!-- VISUALIZAÇÃO SOMENTE PASSEADOR -->
-        <div v-else-if="walker">
-          <h2 class="title">🚶 Passeios Disponíveis</h2>
-          <div class="grid">
-            <div v-for="p in passeiosFiltrados" :key="p.id" class="card">
-
-              <h4>🐶 {{ p.dog?.nome }}</h4>
-              <p>{{ p.data }} - {{ p.hora }}</p>
-              <p>{{ p.local }}</p>
-
-              <span class="status" :class="p.status">
-                {{ p.status }}
-              </span>
-
-            </div>
-          </div>
+    <!-- VISUALIZAÇÃO SOMENTE PASSEADOR -->
+    <div v-else-if="walker">
+      <h2 class="title">🚶 Passeios Disponíveis</h2>
+      <div class="grid">
+        <div v-for="p in passeiosFiltrados" :key="p.id" class="card">
+          <h4>🐶 {{ p.dog?.nome }}</h4>
+          <p>{{ p.data }} - {{ p.hora }}</p>
+          <p>{{ p.local }}</p>
+          <span class="status" :class="p.status">{{ p.status }}</span>
         </div>
       </div>
     </div>
@@ -136,12 +61,9 @@
 import { onMounted, ref, computed } from "vue"
 import { useAuth } from "../composables/userAuth"
 import { api } from "../services/api"
-import SidebarMenu from "../components/organisms/SidebarMenu.vue"
 import { getFoto } from "../utils/image.js"
-import { useRouter } from "vue-router"
 
 const auth = useAuth()
-const router = useRouter()
 
 const tutor = computed(() => auth.tutor.value)
 const walker = computed(() => auth.walker.value)
@@ -161,9 +83,7 @@ async function loadPasseios() {
       Authorization: `Bearer ${localStorage.getItem("token")}`
     }
   })
-
   const data = await res.json()
-
   passeios.value = data.filter(p => 
     p.status === "pendente" || p.status === "aceito"
   )
@@ -180,16 +100,8 @@ async function remover(id) {
   passeios.value = passeios.value.filter(p => p.id !== id)
 }
 
-async function logout() {
-  localStorage.removeItem("token")
-  localStorage.removeItem("user")
-  auth.clearAuth?.()
-  router.push("/")
-}
-
 onMounted(async () => {
   await loadPasseios()
-
   if (tutor.value) {
     await loadWalkers()
   }
@@ -197,38 +109,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.app-layout {
-  display: flex;
-  height: 100vh;
-}
-
-.sidebar {
-  width: 260px;
-  background: #2c3e50;
-}
-
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #f5f6f8;
-}
-
-.topbar {
-  height: 60px;
-  background: white;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 20px;
-  border-bottom: 1px solid #eee;
-}
-
-.container {
-  width: 100%;
-  padding: 40px;
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -236,12 +116,10 @@ onMounted(async () => {
   margin-top: 20px;
 }
 
-.passeios{
-  font-size:15px;
-}
-
-.title{
-  font-size:25px;
+.title {
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
 .card {
@@ -257,39 +135,20 @@ onMounted(async () => {
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.profile-photo {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-
-  cursor: pointer;
-  border: 2px solid #2ecc71;
-
-  display: block;
+  margin-bottom: 10px;
 }
 
 .status {
   padding: 4px 8px;
   border-radius: 6px;
   font-size: 12px;
+  display: inline-block;
+  margin-top: 10px;
 }
 
-.pendente { 
-background: #f1c40f; 
-}
-
-.aceito { 
-background: #2ecc71; 
-color: white; 
-}
-
-.recusado { 
-background: #e74c3c; 
-color: white; 
-}
+.pendente { background: #f1c40f; }
+.aceito { background: #2ecc71; color: white; }
+.recusado { background: #e74c3c; color: white; }
 
 .close {
   position: absolute;
@@ -303,10 +162,6 @@ color: white;
   color: white;
   font-size: 16px;
   font-weight: bold;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   transition: 0.2s ease;
 }
