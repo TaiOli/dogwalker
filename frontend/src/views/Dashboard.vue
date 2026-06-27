@@ -138,8 +138,10 @@ import { useAuth } from "../composables/userAuth"
 import { api } from "../services/api"
 import SidebarMenu from "../components/organisms/SidebarMenu.vue"
 import { getFoto } from "../utils/image.js"
+import { useRouter } from "vue-router"
 
 const auth = useAuth()
+const router = useRouter()
 
 const tutor = computed(() => auth.tutor.value)
 const walker = computed(() => auth.walker.value)
@@ -176,6 +178,13 @@ async function remover(id) {
   const confirmar = confirm("Deseja realmente excluir este agendamento?")
   if (!confirmar) return
   passeios.value = passeios.value.filter(p => p.id !== id)
+}
+
+async function logout() {
+  localStorage.removeItem("token")
+  localStorage.removeItem("user")
+  auth.clearAuth?.()
+  router.push("/")
 }
 
 onMounted(async () => {
