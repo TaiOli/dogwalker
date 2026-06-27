@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StoreUserRequest;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
+    public function __construct(
+        private UserService $userService
+    ) {}
+
     public function store(StoreUserRequest $request)
     {
-        $user = User::create([
-            ...$request->validated(),
-            'password' => Hash::make($request->password),
-        ]);
+        $user = $this->userService->create(
+            $request->validated()
+        );
 
         return response()->json([
             'message' => 'Usuário criado com sucesso',
@@ -24,20 +26,20 @@ class UserController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $result = $this->userService->login(
+            $request->validated()
+        );
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$result) {
             return response()->json([
                 'message' => 'Credenciais inválidas'
             ], 401);
         }
 
-        $token = $user->createToken('auth-token')->plainTextToken;
-
         return response()->json([
             'message' => 'Login realizado com sucesso',
-            'user' => $user,
-            'token' => $token
+            'user' => $result['user'],
+            'token' => $result['token']
         ]);
     }
 }
