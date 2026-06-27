@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Services\UserService;
@@ -41,5 +42,17 @@ class UserController extends Controller
             'user' => $result['user'],
             'token' => $result['token']
         ]);
+    }
+
+    public function walkers()
+    {
+        return $this->userService->walkers();
+    }
+
+    public function show($id)
+    {
+        return response()->json(
+            $this->userService->show($id)
+        );
     }
 }
