@@ -29,7 +29,7 @@ class StoreUserRequest extends FormRequest
             'nome' => 'required|string',
             'telefone' => 'nullable|string',
             'tipo_usuario' => 'required|in:tutor,passeador',
-            'foto' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }
