@@ -39,8 +39,27 @@ export function useAuth() {
     foto: ""
   });
 
-  async function cadastrar() {
-    const res = await api.post("/users", formCadastro)
+ async function cadastrar() {
+
+    const formData = new FormData()
+
+    formData.append("name", formCadastro.name)
+    formData.append("nome", formCadastro.nome)
+    formData.append("email", formCadastro.email)
+    formData.append("password", formCadastro.password)
+    formData.append("telefone", formCadastro.telefone || "")
+    formData.append("tipo_usuario", formCadastro.tipo_usuario)
+
+    if (formCadastro.foto) {
+      formData.append("foto", formCadastro.foto)
+    }
+
+    const res = await api.post("/users", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    })
+
     return res.data
   }
 
