@@ -49,23 +49,46 @@ class PasseioService
     public function meusPasseios($user)
     {
         if ($user->tipo_usuario === 'tutor') {
-            return Passeio::with('dog')
-                ->where('tutor_id', $user->id)
-                ->whereIn('status', ['pendente', 'aceito'])
-                ->latest()
-                ->get();
+
+            return Passeio::where('tutor_id', $user->id)
+                ->with(['dog', 'passeador'])
+                ->get()
+                ->map(function ($p) {
+
+                    $avaliacaoTutor = \App\Models\Avaliacao::where('passeio_id', $p->id)
+                        ->where('tipo_avaliador', 'tutor')
+                        ->first();
+
+                    $p->avaliacao_do_tutor = $avaliacaoTutor;
+                    $p->avaliado_pelo_tutor = (bool) $avaliacaoTutor;
+
+                    return $p;
+                });
+
         }
 
         if ($user->tipo_usuario === 'passeador') {
-            return Passeio::with('dog')
-                ->whereIn('status', ['pendente', 'aceito'])
-                ->latest()
-                ->get();
+
+            return Passeio::where('passeador_id', $user->id)
+                ->whereIn('status', ['aceito', 'finalizado'])
+                ->with(['dog', 'tutor'])
+                ->get()
+                ->map(function ($p) {
+
+                    $avaliacaoPasseador = \App\Models\Avaliacao::where('passeio_id', $p->id)
+                        ->where('tipo_avaliador', 'passeador')
+                        ->first();
+
+                    $p->avaliacao_do_passeador = $avaliacaoPasseador;
+                    $p->avaliado_pelo_passeador = (bool) $avaliacaoPasseador;
+
+                    return $p;
+                });
+
         }
 
         return collect();
     }
-
     public function excluir(int $id)
     {
         $passeio = Passeio::findOrFail($id);

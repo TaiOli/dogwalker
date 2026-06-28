@@ -5,15 +5,15 @@
         <div class="card shadow-sm p-4 text-center">
 
           <img
-            :src="getFoto(walker.foto)"
+            :src="getFoto(tutor.foto)"
             class="profile-photo mx-auto mb-3"
-            alt="Foto do passeador"
+            alt="Foto do tutor"
           >
 
-          <h2>{{ walker.nome }}</h2>
+          <h2>{{ tutor.nome }}</h2>
 
           <p class="text-muted mb-4">
-            Passeador
+            Tutor
           </p>
 
           <hr>
@@ -21,22 +21,22 @@
           <div class="text-start">
             <p>
               <strong>📧 Email:</strong><br>
-              {{ walker.email }}
+              {{ tutor.email }}
             </p>
 
             <p>
               <strong>📱 Telefone:</strong><br>
-              {{ walker.telefone }}
+              {{ tutor.telefone }}
             </p>
           </div>
 
           <hr>
 
           <div class="text-start">
-            <h5 class="mb-3">💬 Avaliações de Tutores</h5>
+            <h5 class="mb-3">💬 Avaliações de Passeadores</h5>
 
             <div v-if="!avaliacoes.length" class="alert alert-info">
-              Este passeador ainda não recebeu avaliações.
+              Este tutor ainda não recebeu avaliações.
             </div>
 
             <div
@@ -57,7 +57,7 @@
               </p>
 
               <p class="text-muted small mb-0">
-                — {{ av.tutor?.nome ?? "Tutor" }} em {{ formatarData(av.created_at) }}
+                — {{ av.passeador?.nome ?? "Passeador" }} em {{ formatarData(av.created_at) }}
               </p>
             </div>
           </div>
@@ -76,10 +76,10 @@ import { getFoto } from "../utils/image"
 
 const route = useRoute()
 
-const walker = ref({})
+const tutor = ref({})
 
-// Lista de avaliações recebidas pelo passeador (já filtradas por tipo_avaliador=tutor no backend)
-const avaliacoes = computed(() => walker.value.avaliacoes_recebidas ?? [])
+// Avaliações que passeadores fizeram sobre esse tutor (já filtradas no backend por tipo_avaliador=passeador)
+const avaliacoes = computed(() => tutor.value.avaliacoes_feitas ?? [])
 
 function formatarData(data) {
   if (!data) return ""
@@ -88,8 +88,8 @@ function formatarData(data) {
 }
 
 onMounted(async () => {
-  const response = await api.get(`/walkers/${route.params.id}`)
-  walker.value = response.data
+  const response = await api.get(`/tutors/${route.params.id}`)
+  tutor.value = response.data
 })
 </script>
 
@@ -99,12 +99,12 @@ onMounted(async () => {
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #198754;
+  border: 4px solid #3498db;
 }
 
 .avaliacao-item {
   background: #f0f9ff;
-  border-left: 3px solid #198754;
+  border-left: 3px solid #3498db;
   border-radius: 8px;
   padding: 12px;
 }

@@ -7,6 +7,7 @@ import SolicitarPasseio from "../views/Scheduletour.vue";
 import Walks from "../views/Walks.vue"
 import WalkerProfile from "../views/WalkerProfile.vue";
 import MeuPerfil from "../views/MeuPerfil.vue"
+import TutorProfile from "../views/TutorProfile.vue";
 
 const routes = [
   {
@@ -36,6 +37,10 @@ const routes = [
   {
     path: "/walkers/:id",
     component: WalkerProfile
+  },
+  {
+    path: '/tutors/:id',
+    component: TutorProfile
   },
   {
     path: "/meu-perfil",

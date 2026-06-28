@@ -50,4 +50,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Passeio::class, 'tutor_id');
     }
+
+    public function avaliacoesRecebidas()
+    {
+        return $this->hasMany(Avaliacao::class, 'passeador_id');
+    }
+
+    public function avaliacoesFeitas()
+    {
+        return $this->hasMany(Avaliacao::class, 'tutor_id');
+    }
 }

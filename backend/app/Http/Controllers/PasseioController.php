@@ -62,6 +62,20 @@ class PasseioController extends Controller
         );
     }
 
+    public function finalizar($id)
+    {
+        $passeio = \App\Models\Passeio::findOrFail($id);
+
+        $passeio->update([
+            'status' => 'finalizado'
+        ]);
+
+        return response()->json([
+            'message' => 'Passeio finalizado com sucesso',
+            'passeio' => $passeio
+        ]);
+    }
+
     // Excluir Passeio
     public function destroy($id)
     {

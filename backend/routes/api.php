@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AvaliacaoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DogController;
@@ -13,6 +14,7 @@ Route::post('/login', [UserController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/walkers', [UserController::class, 'walkers']);
     Route::get('/walkers/{id}', [UserController::class, 'show']);
+    Route::get('/tutors/{id}', [UserController::class, 'showTutor']);
     Route::post('/dogs', [DogController::class, 'store']);
     Route::get('/dogs/my', [DogController::class, 'myDogs']);
     Route::post('/passeios', [PasseioController::class, 'store']);
@@ -21,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/passeios/{id}/recusar', [PasseioController::class, 'recusar']);
     Route::get('/meus-passeios',[PasseioController::class, 'meusPasseios']);
     Route::delete('/passeios/{id}', [PasseioController::class, 'destroy']);
+    Route::post('/avaliacoes', [AvaliacaoController::class, 'store']);
     Route::get('/me', function (Request $request) {
         $user = $request->user();
 

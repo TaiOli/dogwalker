@@ -22,18 +22,35 @@
               📅 {{ p.data }} - {{ p.hora }}
             </p>
 
-            <p class="card-text">
+            <p class="card-text mb-2">
               📍 {{ p.local }}
             </p>
 
+            <!-- VER PERFIL DO TUTOR -->
+            <router-link
+              v-if="p.tutor"
+              :to="`/tutors/${p.tutor.id}`"
+              class="btn btn-outline-secondary btn-sm mb-2"
+            >
+              👤 Ver Perfil do Tutor
+            </router-link>
+
             <div class="d-flex gap-2 mt-auto pt-3">
 
-              <button class="btn btn-success flex-fill" @click="aceitar(p.id)">
-                Aceitar
+              <button
+                class="btn btn-success flex-fill"
+                @click="aceitar(p.id)"
+                :disabled="carregandoId === p.id"
+              >
+                {{ carregandoId === p.id ? "⏳" : "Aceitar" }}
               </button>
 
-              <button class="btn btn-danger flex-fill" @click="recusar(p.id)">
-                Recusar
+              <button
+                class="btn btn-danger flex-fill"
+                @click="recusar(p.id)"
+                :disabled="carregandoId === p.id"
+              >
+                {{ carregandoId === p.id ? "⏳" : "Recusar" }}
               </button>
 
             </div>
@@ -45,7 +62,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useWalks } from "../composables/useWalks";
 
 const {
@@ -55,11 +72,24 @@ const {
   recusarPasseio
 } = useWalks();
 
+const carregandoId = ref(null)
+
 onMounted(loadPasseios);
 
 async function aceitar(id) {
-  await aceitarPasseio(id);
-  await loadPasseios();
+  carregandoId.value = id
+
+  try {
+    await aceitarPasseio(id)
+
+    passeios.value = passeios.value.filter(p => p.id !== id)
+
+  } catch (err) {
+    console.error("Erro ao aceitar:", err)
+    alert(err.response?.data?.message || "Erro ao aceitar passeio")
+  } finally {
+    carregandoId.value = null
+  }
 }
 
 async function recusar(id) {
@@ -69,8 +99,19 @@ async function recusar(id) {
 
   if (!confirmar) return;
 
-  await recusarPasseio(id);
-  await loadPasseios();
+  carregandoId.value = id
+
+  try {
+    await recusarPasseio(id)
+
+    passeios.value = passeios.value.filter(p => p.id !== id)
+
+  } catch (err) {
+    console.error("Erro ao recusar:", err)
+    alert(err.response?.data?.message || "Erro ao recusar passeio")
+  } finally {
+    carregandoId.value = null
+  }
 }
 </script>
 

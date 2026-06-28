@@ -1,103 +1,348 @@
 <template>
-  <div>
+  <div class="container py-4">
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
-    <div v-if="tutor">
-      <h2 class="title">👨‍🦱 Passeadores Disponíveis</h2>
+    <template v-if="tutor">
+      <h2 class="mb-4">👨‍🦱 Passeadores Disponíveis</h2>
 
-      <div class="grid mb-5">
-        <div
-          v-for="walker in passeadores"
-          :key="walker.id"
-          class="card"
-        >
-          <img
-            :src="getFoto(walker.foto)"
-            class="walker-photo"
-          />
-          <h4>{{ walker.nome }}</h4>
-          <p>📱 {{ walker.telefone }}</p>
-          <p>⭐ {{ walker.media_avaliacao ?? "Sem avaliações" }}</p>
-          <router-link
-            :to="`/walkers/${walker.id}`"
-            class="btn btn-success w-100"
-          >
-            Ver Perfil
-          </router-link>
+      <div class="row g-4 mb-5">
+        <div class="col-md-4" v-for="w in passeadores" :key="w.id">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+              <img :src="getFoto(w.foto)" class="rounded-circle mb-3" width="110" height="110">
+              <h5>{{ w.nome }}</h5>
+              <p>📱 {{ w.telefone }}</p>
+              <p>
+                ⭐
+                <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
+                <span v-else>Sem avaliações</span>
+              </p>
+              <router-link :to="`/walkers/${w.id}`" class="btn btn-success w-100">
+                Ver perfil
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
 
-      <h2 class="title">📋 Meus Agendamentos</h2>
-      <div class="grid">
-        <div
-          v-for="p in passeios"
-          :key="p.id"
-          class="card"
-        >
-          <button class="close" @click="remover(p.id)">×</button>
-          <h4>🐶 {{ p.dog?.nome }}</h4>
-          <p>{{ p.data }} - {{ p.hora }}</p>
-          <p>{{ p.local }}</p>
-          <span class="status" :class="p.status">{{ p.status }}</span>
+      <h2 class="mb-3">📋 Meus Passeios</h2>
+
+      <div v-if="passeiosTutor.length === 0" class="alert alert-info">
+        Você ainda não possui passeios.
+      </div>
+
+      <div class="card shadow-sm mb-3" v-for="p in passeiosTutor" :key="p.id">
+        <div class="card-body">
+
+          <h5>🐶 {{ p.dog?.nome }}</h5>
+          <p>📅 {{ formatarData(p.data) }} - {{ p.hora }}</p>
+          <p>📍 {{ p.local }}</p>
+          <p class="text-muted small" v-if="p.passeador">
+            🚶 Passeador: <strong>{{ p.passeador?.nome }}</strong>
+          </p>
+          <p class="text-muted small" v-else-if="p.status === 'recusado'">
+            ❌ Nenhum passeador aceitou este passeio.
+          </p>
+          <p class="text-muted small" v-else>
+            ⏳ Aguardando um passeador aceitar
+          </p>
+
+          <span class="badge" :class="badgeStatus(p.status)">
+            {{ p.status }}
+          </span>
+
+          <div class="mt-3" v-if="p.status === 'finalizado' && !p.avaliado_pelo_tutor">
+            <button class="btn btn-primary" @click="abrirAvaliacaoTutor(p)">
+              ⭐ Avaliar Passeador
+            </button>
+          </div>
+
+          <!-- AVALIAÇÃO ENVIADA PELO TUTOR-->
+          <div class="mt-3 avaliacao-box" v-if="p.avaliacao_do_tutor">
+            <h6 class="mb-2">✅ Sua avaliação sobre o passeador</h6>
+            <div class="mb-1">
+              <span v-for="n in 5" :key="n">
+                {{ n <= p.avaliacao_do_tutor.nota ? "⭐" : "☆" }}
+              </span>
+              <span class="text-muted small ms-1">({{ p.avaliacao_do_tutor.nota }}/5)</span>
+            </div>
+            <p v-if="p.avaliacao_do_tutor.comentario" class="mb-0 fst-italic">
+              "{{ p.avaliacao_do_tutor.comentario }}"
+            </p>
+          </div>
+
+          <div class="mt-4 border-top pt-3" v-if="avaliandoTutor?.id === p.id">
+            <h5>Como foi o passeador?</h5>
+
+            <div class="mb-3">
+              <span
+                v-for="n in 5"
+                :key="n"
+                @click="nota = n"
+                style="font-size:28px;cursor:pointer"
+              >
+                {{ n <= nota ? "⭐" : "☆" }}
+              </span>
+            </div>
+
+            <textarea
+              class="form-control mb-3"
+              rows="3"
+              placeholder="Comentário (opcional)"
+              v-model="comentario"
+            />
+
+            <div class="d-flex gap-2">
+              <button class="btn btn-success" @click="enviarAvaliacao(p.id, 'tutor')" :disabled="enviando">
+                {{ enviando ? "Enviando..." : "Enviar avaliação" }}
+              </button>
+              <button class="btn btn-secondary" @click="cancelarAvaliacaoTutor">
+                Cancelar
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
+
+    </template>
 
     <!-- VISUALIZAÇÃO SOMENTE PASSEADOR -->
-    <div v-else-if="walker">
-      <h2 class="title">🚶 Passeios Disponíveis</h2>
-      <div class="grid">
-        <div v-for="p in passeiosFiltrados" :key="p.id" class="card">
-          <h4>🐶 {{ p.dog?.nome }}</h4>
-          <p>{{ p.data }} - {{ p.hora }}</p>
-          <p>{{ p.local }}</p>
-          <span class="status" :class="p.status">{{ p.status }}</span>
+    <template v-else-if="walker">
+
+      <h2 class="mb-4">🚶 Meus Passeios</h2>
+
+      <div v-if="passeiosWalker.length === 0" class="alert alert-info">
+        Você ainda não possui passeios aceitos.
+        <br>
+        <router-link to="/passeios-disponiveis">👉 Ver passeios disponíveis</router-link>
+      </div>
+
+      <div class="card shadow-sm mb-3" v-for="p in passeiosWalker" :key="p.id">
+        <div class="card-body">
+
+          <h5>🐶 {{ p.dog?.nome }}</h5>
+          <p>📅 {{ formatarData(p.data) }} - {{ p.hora }}</p>
+          <p>📍 {{ p.local }}</p>
+          <p class="text-muted small">
+            👨‍🦱 Tutor: <strong>{{ p.tutor?.nome }}</strong>
+          </p>
+
+          <span class="badge" :class="badgeStatus(p.status)">
+            {{ p.status }}
+          </span>
+
+          <div class="mt-3" v-if="p.status === 'aceito'">
+            <button class="btn btn-primary" @click="abrirAvaliacaoWalker(p)">
+              ✔ Finalizar passeio
+            </button>
+          </div>
+
+          <!-- AVALIAÇÃO ENVIADA PELO PASSEADOR -->
+          <div class="mt-3 avaliacao-box" v-if="p.avaliacao_do_passeador">
+            <h6 class="mb-2">✅ Sua avaliação sobre o passeio</h6>
+            <div class="mb-1">
+              <span v-for="n in 5" :key="n">
+                {{ n <= p.avaliacao_do_passeador.nota ? "⭐" : "☆" }}
+              </span>
+              <span class="text-muted small ms-1">({{ p.avaliacao_do_passeador.nota }}/5)</span>
+            </div>
+            <p v-if="p.avaliacao_do_passeador.comentario" class="mb-0 fst-italic">
+              "{{ p.avaliacao_do_passeador.comentario }}"
+            </p>
+          </div>
+
+          <div class="mt-4 border-top pt-3" v-if="avaliandoWalker?.id === p.id">
+            <h5>Avaliar o tutor / passeio</h5>
+
+            <div class="mb-3">
+              <span
+                v-for="n in 5"
+                :key="n"
+                @click="nota = n"
+                style="font-size:28px;cursor:pointer"
+              >
+                {{ n <= nota ? "⭐" : "☆" }}
+              </span>
+            </div>
+
+            <textarea
+              class="form-control mb-3"
+              rows="3"
+              placeholder="Comentário (opcional)"
+              v-model="comentario"
+            />
+
+            <div class="d-flex gap-2">
+              <button class="btn btn-success" @click="finalizarPasseio(p)" :disabled="enviando">
+                {{ enviando ? "Enviando..." : "Finalizar e enviar" }}
+              </button>
+              <button class="btn btn-secondary" @click="cancelarAvaliacaoWalker">
+                Cancelar
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue"
+import { ref, computed, onMounted } from "vue"
 import { useAuth } from "../composables/userAuth"
 import { api } from "../services/api"
-import { getFoto } from "../utils/image.js"
+import { getFoto } from "../utils/image"
 
 const auth = useAuth()
 
 const tutor = computed(() => auth.tutor.value)
 const walker = computed(() => auth.walker.value)
 
-const passeios = ref([])
 const passeadores = ref([])
+const passeios = ref([])
 
-const passeiosFiltrados = computed(() =>
-  passeios.value.filter(p => 
-    p.status === "pendente" || p.status === "aceito"
+const avaliandoTutor = ref(null)
+const avaliandoWalker = ref(null)
+
+const nota = ref(0)
+const comentario = ref("")
+const enviando = ref(false)
+
+// Tutor vê passeios "pendente", "aceito" ou "finalizado"
+const passeiosTutor = computed(() =>
+  passeios.value.filter(p =>
+    p.status === "pendente" ||
+    p.status === "aceito" ||
+    p.status === "finalizado" ||
+    p.status === "recusado"
   )
 )
 
-async function loadPasseios() {
-  const res = await fetch("http://localhost:8000/api/meus-passeios", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  })
-  const data = await res.json()
-  passeios.value = data.filter(p => 
-    p.status === "pendente" || p.status === "aceito"
-  )
-}
+// Passeador vê passeios "aceito" ou "finalizado" (mantém visível após finalizar, com a avaliação enviada)
+const passeiosWalker = computed(() =>
+  passeios.value.filter(p => p.status === "aceito" || p.status === "finalizado")
+)
 
 async function loadWalkers() {
-  const response = await api.get("/walkers")
-  passeadores.value = response.data
+  try {
+    const res = await api.get("/walkers")
+    passeadores.value = res.data
+  } catch (e) {
+    console.error(e)
+  }
 }
 
-async function remover(id) {
-  const confirmar = confirm("Deseja realmente excluir este agendamento?")
-  if (!confirmar) return
-  passeios.value = passeios.value.filter(p => p.id !== id)
+async function loadPasseios() {
+  try {
+    const res = await api.get("/meus-passeios")
+    passeios.value = res.data
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+function badgeStatus(status) {
+  return {
+    "bg-warning text-dark": status === "pendente",
+    "bg-success": status === "aceito",
+    "bg-danger": status === "recusado",
+    "bg-primary": status === "finalizado"
+  }
+}
+
+function abrirAvaliacaoTutor(passeio) {
+  avaliandoTutor.value = passeio
+  nota.value = 0
+  comentario.value = ""
+}
+
+function cancelarAvaliacaoTutor() {
+  avaliandoTutor.value = null
+  nota.value = 0
+  comentario.value = ""
+}
+
+function abrirAvaliacaoWalker(passeio) {
+  avaliandoWalker.value = passeio
+  nota.value = 0
+  comentario.value = ""
+}
+
+function cancelarAvaliacaoWalker() {
+  avaliandoWalker.value = null
+  nota.value = 0
+  comentario.value = ""
+}
+
+async function finalizarPasseio(passeio) {
+  if (nota.value === 0) {
+    alert("Escolha uma nota antes de finalizar.")
+    return
+  }
+
+  if (!confirm("Deseja finalizar este passeio?")) return
+
+  enviando.value = true
+
+  try {
+    // Marca como finalizado
+    await api.patch(`/passeios/${passeio.id}/finalizar`)
+
+    // Envia avaliação do passeador sobre o tutor/passeio
+    await api.post("/avaliacoes", {
+      passeio_id: passeio.id,
+      nota: nota.value,
+      comentario: comentario.value,
+      tipo_avaliador: "passeador"
+    })
+
+    alert("Passeio finalizado e avaliação enviada!")
+
+    cancelarAvaliacaoWalker()
+    await loadPasseios()
+
+  } catch (err) {
+    console.error(err)
+    alert(err.response?.data?.message || "Erro ao finalizar passeio.")
+  } finally {
+    enviando.value = false
+  }
+}
+
+async function enviarAvaliacao(passeioId, tipo) {
+  if (!nota.value) {
+    alert("Escolha uma nota.")
+    return
+  }
+
+  enviando.value = true
+
+  try {
+    await api.post("/avaliacoes", {
+      passeio_id: passeioId,
+      nota: nota.value,
+      comentario: comentario.value,
+      tipo_avaliador: tipo
+    })
+
+    alert("Avaliação enviada!")
+
+    cancelarAvaliacaoTutor()
+    await loadWalkers()
+    await loadPasseios()
+
+  } catch (err) {
+    console.error(err)
+    alert(err.response?.data?.message || "Erro ao enviar avaliação.")
+  } finally {
+    enviando.value = false
+  }
+}
+
+function formatarData(data) {
+  if (!data) return ""
+  const date = new Date(data)
+  return date.toLocaleDateString("pt-BR")
 }
 
 onMounted(async () => {
@@ -109,65 +354,48 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.title {
-  font-size: 25px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
 .card {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  position: relative;
-}
-
-.walker-photo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-
-.status {
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  display: inline-block;
-  margin-top: 10px;
-}
-
-.pendente { background: #f1c40f; }
-.aceito { background: #2ecc71; color: white; }
-.recusado { background: #e74c3c; color: white; }
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 28px;
-  height: 28px;
   border: none;
-  border-radius: 50%;
-  background: #e74c3c;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s ease;
+  border-radius: 12px;
+  transition: .25s;
 }
 
-.close:hover {
-  background: #c0392b;
-  transform: scale(1.1);
+.card:hover {
+  transform: translateY(-3px);
+}
+
+
+.badge {
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-transform: capitalize;
+}
+
+textarea {
+  resize: none;
+}
+
+.avaliacao-box {
+  background: #f0f9ff;
+  border-left: 3px solid #3498db;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.fst-italic {
+  font-style: italic;
+}
+
+button {
+  border-radius: 8px;
+}
+
+.small {
+  font-size: 12px;
+}
+
+.ms-1 {
+  margin-left: 4px;
 }
 </style>

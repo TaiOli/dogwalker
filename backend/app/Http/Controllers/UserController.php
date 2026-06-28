@@ -55,4 +55,9 @@ class UserController extends Controller
             $this->userService->show($id)
         );
     }
+
+    public function showTutor($id)
+    {
+        return $this->userService->showTutor($id);
+    }
 }
