@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePasseioRequest;
+use App\Models\Passeio;
 use App\Services\PasseioService;
 use Illuminate\Http\Request;
 
@@ -64,7 +65,7 @@ class PasseioController extends Controller
 
     public function finalizar($id)
     {
-        $passeio = \App\Models\Passeio::findOrFail($id);
+        $passeio = Passeio::findOrFail($id);
 
         $passeio->update([
             'status' => 'finalizado'

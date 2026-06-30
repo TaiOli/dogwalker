@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Avaliacao;
 use App\Models\Passeio;
 
 class PasseioService
@@ -55,7 +56,7 @@ class PasseioService
                 ->get()
                 ->map(function ($p) {
 
-                    $avaliacaoTutor = \App\Models\Avaliacao::where('passeio_id', $p->id)
+                    $avaliacaoTutor = Avaliacao::where('passeio_id', $p->id)
                         ->where('tipo_avaliador', 'tutor')
                         ->first();
 
