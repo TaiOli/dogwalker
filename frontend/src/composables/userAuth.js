@@ -3,7 +3,16 @@ import { api } from "../services/api"
 
 export function useAuth() {
 
-  const user = ref(JSON.parse(localStorage.getItem("user") || "null"))
+  let storedUser = null;
+
+  try {
+    storedUser = JSON.parse(localStorage.getItem("user") || "null");
+  } catch {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+  }
+
+const user = ref(storedUser);
 
   const tutor = computed(() => user.value?.tipo_usuario === "tutor")
   const walker = computed(() => user.value?.tipo_usuario === "passeador")
