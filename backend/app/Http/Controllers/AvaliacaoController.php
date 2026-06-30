@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Avaliacao;
+use App\Http\Requests\AvaliacaoRequest;
+use App\Models\Passeio;
 use App\Services\AvaliacaoService;
-use Illuminate\Http\Request;
 
 class AvaliacaoController extends Controller
 {
@@ -12,16 +12,11 @@ class AvaliacaoController extends Controller
         private AvaliacaoService $avaliacaoService
     ) {}
 
-    public function store(Request $request)
+    public function store(AvaliacaoRequest $request)
     {
-        $data = $request->validate([
-            'passeio_id' => 'required|exists:passeios,id',
-            'nota' => 'required|integer|min:1|max:5',
-            'comentario' => 'nullable|string',
-            'tipo_avaliador' => 'required|in:tutor,passeador',
-        ]);
+        $data = $request->validated();
 
-        $passeio = \App\Models\Passeio::findOrFail($data['passeio_id']);
+        $passeio = Passeio::findOrFail($data['passeio_id']);
 
         $avaliacao = $this->avaliacaoService->create([
             'passeio_id' => $passeio->id,
@@ -35,6 +30,6 @@ class AvaliacaoController extends Controller
         return response()->json([
             'message' => 'Avaliação enviada com sucesso',
             'avaliacao' => $avaliacao
-        ]);
+        ], 201);
     }
 }
