@@ -76,7 +76,7 @@ class PasseioService
                 ->get()
                 ->map(function ($p) {
 
-                    $avaliacaoPasseador = \App\Models\Avaliacao::where('passeio_id', $p->id)
+                    $avaliacaoPasseador = Avaliacao::where('passeio_id', $p->id)
                         ->where('tipo_avaliador', 'passeador')
                         ->first();
 
