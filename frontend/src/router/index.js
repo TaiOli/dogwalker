@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import User from "../views/User.vue";
 import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard.vue";
 import CadastrarCachorro from "../views/RegisterDog.vue";
@@ -12,6 +13,10 @@ const routes = [
   {
     path: "/",
     component: Login
+  },
+  {
+    path: "/cadastro-usuario",
+    component: User
   },
   {
     path: "/home",
