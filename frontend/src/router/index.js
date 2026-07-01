@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import User from "../views/User.vue";
 import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard.vue";
-import CadastrarCachorro from "../views/RegisterDog.vue";
-import SolicitarPasseio from "../views/Scheduletour.vue";
+import RegisterDog from "../views/RegisterDog.vue";
+import ScheduleTour from "../views/Scheduletour.vue";
 import Walks from "../views/Walks.vue"
 import WalkerProfile from "../views/WalkerProfile.vue";
 import MyProfile from "../views/MyProfile.vue"
@@ -24,11 +24,11 @@ const routes = [
   },
   {
     path: "/dogs",
-    component: CadastrarCachorro
+    component: RegisterDog
   },
   { 
     path: "/scheduletour", 
-    component: SolicitarPasseio 
+    component: ScheduleTour 
   },
   {
     path: "/walks",
