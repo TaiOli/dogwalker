@@ -1,17 +1,3 @@
-<template>
-  <div class="layout">
-    <SidebarMenu v-if="!isLoginPage" />
-
-    <div class="right-container">
-      <Topbar v-if="!isLoginPage" />
-
-      <div class="page">
-        <router-view />
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { computed } from "vue"
 import { useRoute } from "vue-router"
@@ -25,6 +11,20 @@ const isLoginPage = computed(() =>
   ["/", "/cadastro-usuario"].includes(route.path)
 )
 </script>
+
+<template>
+  <div class="layout">
+    <SidebarMenu v-if="!isLoginPage" />
+
+    <div class="right-container">
+      <Topbar v-if="!isLoginPage" />
+
+      <div class="page">
+        <router-view />
+      </div>
+    </div>
+  </div>
+</template>
 
 <style>
 * {

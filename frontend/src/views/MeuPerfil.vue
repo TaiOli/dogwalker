@@ -1,3 +1,23 @@
+<script setup>
+import { ref, onMounted } from "vue"
+import { api } from "../services/api"
+import { getFoto } from "../utils/image"
+
+const user = ref(null)
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    const res = await api.get("/me")
+    user.value = res.data
+  } catch (err) {
+    console.error("Erro ao carregar perfil", err)
+  } finally {
+    loading.value = false
+  }
+})
+</script>
+
 <template>
   <div class="container py-5">
 
@@ -25,23 +45,3 @@
 
   </div>
 </template>
-
-<script setup>
-import { ref, onMounted } from "vue"
-import { api } from "../services/api"
-import { getFoto } from "../utils/image"
-
-const user = ref(null)
-const loading = ref(true)
-
-onMounted(async () => {
-  try {
-    const res = await api.get("/me")
-    user.value = res.data
-  } catch (err) {
-    console.error("Erro ao carregar perfil", err)
-  } finally {
-    loading.value = false
-  }
-})
-</script>

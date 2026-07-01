@@ -1,3 +1,28 @@
+<script setup>
+import { ref, computed, onMounted } from "vue"
+import { useRoute } from "vue-router"
+import { api } from "../services/api"
+import { getFoto } from "../utils/image"
+
+const route = useRoute()
+
+const walker = ref({})
+
+// Lista de avaliações recebidas pelo passeador (já filtradas por tipo_avaliador=tutor no backend)
+const avaliacoes = computed(() => walker.value.avaliacoes_recebidas ?? [])
+
+function formatarData(data) {
+  if (!data) return ""
+  const date = new Date(data)
+  return date.toLocaleDateString("pt-BR")
+}
+
+onMounted(async () => {
+  const response = await api.get(`/walkers/${route.params.id}`)
+  walker.value = response.data
+})
+</script>
+
 <template>
   <div class="container py-5">
     <div class="row justify-content-center">
@@ -67,31 +92,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, computed, onMounted } from "vue"
-import { useRoute } from "vue-router"
-import { api } from "../services/api"
-import { getFoto } from "../utils/image"
-
-const route = useRoute()
-
-const walker = ref({})
-
-// Lista de avaliações recebidas pelo passeador (já filtradas por tipo_avaliador=tutor no backend)
-const avaliacoes = computed(() => walker.value.avaliacoes_recebidas ?? [])
-
-function formatarData(data) {
-  if (!data) return ""
-  const date = new Date(data)
-  return date.toLocaleDateString("pt-BR")
-}
-
-onMounted(async () => {
-  const response = await api.get(`/walkers/${route.params.id}`)
-  walker.value = response.data
-})
-</script>
 
 <style scoped>
 .profile-photo {

@@ -1,3 +1,57 @@
+<script setup>
+import { onMounted, ref } from "vue";
+import { useWalks } from "../composables/useWalks";
+
+const {
+  passeios,
+  loadPasseios,
+  aceitarPasseio,
+  recusarPasseio
+} = useWalks();
+
+const carregandoId = ref(null)
+
+onMounted(loadPasseios);
+
+async function aceitar(id) {
+  carregandoId.value = id
+
+  try {
+    await aceitarPasseio(id)
+
+    passeios.value = passeios.value.filter(p => p.id !== id)
+
+  } catch (err) {
+    console.error("Erro ao aceitar:", err)
+    alert(err.response?.data?.message || "Erro ao aceitar passeio")
+  } finally {
+    carregandoId.value = null
+  }
+}
+
+async function recusar(id) {
+  const confirmar = confirm(
+    "Tem certeza que deseja recusar este passeio?"
+  );
+
+  if (!confirmar) return;
+
+  carregandoId.value = id
+
+  try {
+    await recusarPasseio(id)
+
+    passeios.value = passeios.value.filter(p => p.id !== id)
+
+  } catch (err) {
+    console.error("Erro ao recusar:", err)
+    alert(err.response?.data?.message || "Erro ao recusar passeio")
+  } finally {
+    carregandoId.value = null
+  }
+}
+</script>
+
 <template>
   <div class="container py-4">
 
@@ -60,60 +114,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { onMounted, ref } from "vue";
-import { useWalks } from "../composables/useWalks";
-
-const {
-  passeios,
-  loadPasseios,
-  aceitarPasseio,
-  recusarPasseio
-} = useWalks();
-
-const carregandoId = ref(null)
-
-onMounted(loadPasseios);
-
-async function aceitar(id) {
-  carregandoId.value = id
-
-  try {
-    await aceitarPasseio(id)
-
-    passeios.value = passeios.value.filter(p => p.id !== id)
-
-  } catch (err) {
-    console.error("Erro ao aceitar:", err)
-    alert(err.response?.data?.message || "Erro ao aceitar passeio")
-  } finally {
-    carregandoId.value = null
-  }
-}
-
-async function recusar(id) {
-  const confirmar = confirm(
-    "Tem certeza que deseja recusar este passeio?"
-  );
-
-  if (!confirmar) return;
-
-  carregandoId.value = id
-
-  try {
-    await recusarPasseio(id)
-
-    passeios.value = passeios.value.filter(p => p.id !== id)
-
-  } catch (err) {
-    console.error("Erro ao recusar:", err)
-    alert(err.response?.data?.message || "Erro ao recusar passeio")
-  } finally {
-    carregandoId.value = null
-  }
-}
-</script>
 
 <style scoped>
 h2{

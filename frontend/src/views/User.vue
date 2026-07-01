@@ -1,3 +1,21 @@
+<script setup>
+import { useAuth } from "../composables/userAuth";
+import UserCadastroForm from "../components/molecules/UserCadastroForm.vue";
+
+const { formCadastro, cadastrar, clearCadastro } = useAuth();
+
+async function novo() {
+  try {
+    await cadastrar();
+    alert("Usuário criado com sucesso!");
+
+    clearCadastro();
+  } catch (error) {
+    alert("Erro ao criar usuário");
+  }
+}
+</script>
+
 <template>
   <div class="page">
 
@@ -25,24 +43,6 @@
 
   </div>
 </template>
-
-<script setup>
-import { useAuth } from "../composables/userAuth";
-import UserCadastroForm from "../components/molecules/UserCadastroForm.vue";
-
-const { formCadastro, cadastrar, clearCadastro } = useAuth();
-
-async function novo() {
-  try {
-    await cadastrar();
-    alert("Usuário criado com sucesso!");
-
-    clearCadastro();
-  } catch (error) {
-    alert("Erro ao criar usuário");
-  }
-}
-</script>
 
 <style scoped>
 .page {

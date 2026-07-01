@@ -1,3 +1,169 @@
+<script setup>
+import { ref, computed, onMounted } from "vue"
+import { useAuth } from "../composables/userAuth"
+import { api } from "../services/api"
+import { getFoto } from "../utils/image"
+
+const auth = useAuth()
+
+const tutor = computed(() => auth.tutor.value)
+const walker = computed(() => auth.walker.value)
+
+const passeadores = ref([])
+const passeios = ref([])
+
+const avaliandoTutor = ref(null)
+const avaliandoWalker = ref(null)
+
+const nota = ref(0)
+const comentario = ref("")
+const enviando = ref(false)
+
+// Tutor vê passeios "pendente", "aceito" ou "finalizado"
+const passeiosTutor = computed(() =>
+  passeios.value.filter(p =>
+    p.status === "pendente" ||
+    p.status === "aceito" ||
+    p.status === "finalizado" ||
+    p.status === "recusado"
+  )
+)
+
+// Passeador vê passeios "aceito" ou "finalizado" (mantém visível após finalizar, com a avaliação enviada)
+const passeiosWalker = computed(() =>
+  passeios.value.filter(p => p.status === "aceito" || p.status === "finalizado")
+)
+
+async function loadWalkers() {
+  try {
+    const res = await api.get("/walkers")
+    passeadores.value = res.data
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+async function loadPasseios() {
+  try {
+    const res = await api.get("/meus-passeios")
+    passeios.value = res.data
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+function badgeStatus(status) {
+  return {
+    "bg-warning text-dark": status === "pendente",
+    "bg-success": status === "aceito",
+    "bg-danger": status === "recusado",
+    "bg-primary": status === "finalizado"
+  }
+}
+
+function abrirAvaliacaoTutor(passeio) {
+  avaliandoTutor.value = passeio
+  nota.value = 0
+  comentario.value = ""
+}
+
+function cancelarAvaliacaoTutor() {
+  avaliandoTutor.value = null
+  nota.value = 0
+  comentario.value = ""
+}
+
+function abrirAvaliacaoWalker(passeio) {
+  avaliandoWalker.value = passeio
+  nota.value = 0
+  comentario.value = ""
+}
+
+function cancelarAvaliacaoWalker() {
+  avaliandoWalker.value = null
+  nota.value = 0
+  comentario.value = ""
+}
+
+async function finalizarPasseio(passeio) {
+  if (nota.value === 0) {
+    alert("Escolha uma nota antes de finalizar.")
+    return
+  }
+
+  if (!confirm("Deseja finalizar este passeio?")) return
+
+  enviando.value = true
+
+  try {
+    // Marca como finalizado
+    await api.patch(`/passeios/${passeio.id}/finalizar`)
+
+    // Envia avaliação do passeador sobre o tutor/passeio
+    await api.post("/avaliacoes", {
+      passeio_id: passeio.id,
+      nota: nota.value,
+      comentario: comentario.value,
+      tipo_avaliador: "passeador"
+    })
+
+    alert("Passeio finalizado e avaliação enviada!")
+
+    cancelarAvaliacaoWalker()
+    await loadPasseios()
+
+  } catch (err) {
+    console.error(err)
+    alert(err.response?.data?.message || "Erro ao finalizar passeio.")
+  } finally {
+    enviando.value = false
+  }
+}
+
+async function enviarAvaliacao(passeioId, tipo) {
+  if (!nota.value) {
+    alert("Escolha uma nota.")
+    return
+  }
+
+  enviando.value = true
+
+  try {
+    await api.post("/avaliacoes", {
+      passeio_id: passeioId,
+      nota: nota.value,
+      comentario: comentario.value,
+      tipo_avaliador: tipo
+    })
+
+    alert("Avaliação enviada!")
+
+    cancelarAvaliacaoTutor()
+    await loadWalkers()
+    await loadPasseios()
+
+  } catch (err) {
+    console.error(err)
+    alert(err.response?.data?.message || "Erro ao enviar avaliação.")
+  } finally {
+    enviando.value = false
+  }
+}
+
+function formatarData(data) {
+  if (!data) return ""
+  const date = new Date(data)
+  return date.toLocaleDateString("pt-BR")
+}
+
+onMounted(async () => {
+  await loadPasseios()
+  if (tutor.value) {
+    await loadWalkers()
+  }
+})
+</script>
+
 <template>
   <div class="container py-4">
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
@@ -186,172 +352,6 @@
     </template>
   </div>
 </template>
-
-<script setup>
-import { ref, computed, onMounted } from "vue"
-import { useAuth } from "../composables/userAuth"
-import { api } from "../services/api"
-import { getFoto } from "../utils/image"
-
-const auth = useAuth()
-
-const tutor = computed(() => auth.tutor.value)
-const walker = computed(() => auth.walker.value)
-
-const passeadores = ref([])
-const passeios = ref([])
-
-const avaliandoTutor = ref(null)
-const avaliandoWalker = ref(null)
-
-const nota = ref(0)
-const comentario = ref("")
-const enviando = ref(false)
-
-// Tutor vê passeios "pendente", "aceito" ou "finalizado"
-const passeiosTutor = computed(() =>
-  passeios.value.filter(p =>
-    p.status === "pendente" ||
-    p.status === "aceito" ||
-    p.status === "finalizado" ||
-    p.status === "recusado"
-  )
-)
-
-// Passeador vê passeios "aceito" ou "finalizado" (mantém visível após finalizar, com a avaliação enviada)
-const passeiosWalker = computed(() =>
-  passeios.value.filter(p => p.status === "aceito" || p.status === "finalizado")
-)
-
-async function loadWalkers() {
-  try {
-    const res = await api.get("/walkers")
-    passeadores.value = res.data
-  } catch (e) {
-    console.error(e)
-  }
-}
-
-async function loadPasseios() {
-  try {
-    const res = await api.get("/meus-passeios")
-    passeios.value = res.data
-  } catch (e) {
-    console.error(e)
-  }
-}
-
-function badgeStatus(status) {
-  return {
-    "bg-warning text-dark": status === "pendente",
-    "bg-success": status === "aceito",
-    "bg-danger": status === "recusado",
-    "bg-primary": status === "finalizado"
-  }
-}
-
-function abrirAvaliacaoTutor(passeio) {
-  avaliandoTutor.value = passeio
-  nota.value = 0
-  comentario.value = ""
-}
-
-function cancelarAvaliacaoTutor() {
-  avaliandoTutor.value = null
-  nota.value = 0
-  comentario.value = ""
-}
-
-function abrirAvaliacaoWalker(passeio) {
-  avaliandoWalker.value = passeio
-  nota.value = 0
-  comentario.value = ""
-}
-
-function cancelarAvaliacaoWalker() {
-  avaliandoWalker.value = null
-  nota.value = 0
-  comentario.value = ""
-}
-
-async function finalizarPasseio(passeio) {
-  if (nota.value === 0) {
-    alert("Escolha uma nota antes de finalizar.")
-    return
-  }
-
-  if (!confirm("Deseja finalizar este passeio?")) return
-
-  enviando.value = true
-
-  try {
-    // Marca como finalizado
-    await api.patch(`/passeios/${passeio.id}/finalizar`)
-
-    // Envia avaliação do passeador sobre o tutor/passeio
-    await api.post("/avaliacoes", {
-      passeio_id: passeio.id,
-      nota: nota.value,
-      comentario: comentario.value,
-      tipo_avaliador: "passeador"
-    })
-
-    alert("Passeio finalizado e avaliação enviada!")
-
-    cancelarAvaliacaoWalker()
-    await loadPasseios()
-
-  } catch (err) {
-    console.error(err)
-    alert(err.response?.data?.message || "Erro ao finalizar passeio.")
-  } finally {
-    enviando.value = false
-  }
-}
-
-async function enviarAvaliacao(passeioId, tipo) {
-  if (!nota.value) {
-    alert("Escolha uma nota.")
-    return
-  }
-
-  enviando.value = true
-
-  try {
-    await api.post("/avaliacoes", {
-      passeio_id: passeioId,
-      nota: nota.value,
-      comentario: comentario.value,
-      tipo_avaliador: tipo
-    })
-
-    alert("Avaliação enviada!")
-
-    cancelarAvaliacaoTutor()
-    await loadWalkers()
-    await loadPasseios()
-
-  } catch (err) {
-    console.error(err)
-    alert(err.response?.data?.message || "Erro ao enviar avaliação.")
-  } finally {
-    enviando.value = false
-  }
-}
-
-function formatarData(data) {
-  if (!data) return ""
-  const date = new Date(data)
-  return date.toLocaleDateString("pt-BR")
-}
-
-onMounted(async () => {
-  await loadPasseios()
-  if (tutor.value) {
-    await loadWalkers()
-  }
-})
-</script>
 
 <style scoped>
 .card {

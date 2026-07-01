@@ -1,3 +1,14 @@
+<script setup>
+import { useAuth } from "../../composables/userAuth"
+import { getFoto } from "../../utils/image"
+
+const auth = useAuth()
+
+function logout(){
+  auth.logout()
+}
+</script>
+
 <template>
   <header class="topbar">
 
@@ -35,17 +46,6 @@
 
   </header>
 </template>
-
-<script setup>
-import { useAuth } from "../../composables/userAuth"
-import { getFoto } from "../../utils/image"
-
-const auth = useAuth()
-
-function logout(){
-  auth.logout()
-}
-</script>
 
 <style scoped>
 .topbar{

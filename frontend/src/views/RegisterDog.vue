@@ -1,3 +1,47 @@
+<script setup>
+import { ref, computed, onMounted } from "vue"
+import DogForm from "../components/molecules/DogForm.vue"
+import { useDog } from "../composables/useDog"
+import { api } from "../services/api"
+
+const { formDog, cadastrarDog, clearDog } = useDog()
+
+const dogs = ref([])
+const search = ref("")
+
+const filteredDogs = computed(() => {
+  return dogs.value.filter(dog =>
+    dog.nome.toLowerCase().includes(search.value.toLowerCase()) ||
+    dog.raca?.toLowerCase().includes(search.value.toLowerCase())
+  )
+})
+
+async function loadDogs() {
+  const res = await api.get("/dogs/my")
+  dogs.value = res.data
+}
+
+async function salvar() {
+  try {
+    await cadastrarDog()
+
+    clearDog()
+    await loadDogs()
+
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("dogModal")
+    )
+    modal.hide()
+
+  } catch (error) {
+    console.log(error)
+    alert("Erro ao cadastrar cachorro")
+  }
+}
+
+onMounted(loadDogs)
+</script>
+
 <template>
   <div class="container py-4">
 
@@ -73,49 +117,6 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from "vue"
-import DogForm from "../components/molecules/DogForm.vue"
-import { useDog } from "../composables/useDog"
-import { api } from "../services/api"
-
-const { formDog, cadastrarDog, clearDog } = useDog()
-
-const dogs = ref([])
-const search = ref("")
-
-const filteredDogs = computed(() => {
-  return dogs.value.filter(dog =>
-    dog.nome.toLowerCase().includes(search.value.toLowerCase()) ||
-    dog.raca?.toLowerCase().includes(search.value.toLowerCase())
-  )
-})
-
-async function loadDogs() {
-  const res = await api.get("/dogs/my")
-  dogs.value = res.data
-}
-
-async function salvar() {
-  try {
-    await cadastrarDog()
-
-    clearDog()
-    await loadDogs()
-
-    const modal = bootstrap.Modal.getInstance(
-      document.getElementById("dogModal")
-    )
-    modal.hide()
-
-  } catch (error) {
-    console.log(error)
-    alert("Erro ao cadastrar cachorro")
-  }
-}
-
-onMounted(loadDogs)
-</script>
 
 <style scoped>
 .dog-img {

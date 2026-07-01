@@ -1,25 +1,3 @@
-<template>
-  <div class="container py-4 mt-5">
-
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-11 col-xl-10">
-
-        <h2 class="page-title mb-4">🚶 Solicitar Passeio</h2>
-
-        <div class="card shadow-sm p-3">
-
-          <ScheduletourForm
-            :form="form"
-            :dogs="dogs"
-            @submit="salvar"
-          />
-
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { onMounted } from "vue"
 import ScheduletourForm from "../components/molecules/ScheduletourForm.vue"
@@ -51,6 +29,28 @@ async function salvar() {
   }
 }
 </script>
+
+<template>
+  <div class="container py-4 mt-5">
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-11 col-xl-10">
+
+        <h2 class="page-title mb-4">🚶 Solicitar Passeio</h2>
+
+        <div class="card shadow-sm p-3">
+
+          <ScheduletourForm
+            :form="form"
+            :dogs="dogs"
+            @submit="salvar"
+          />
+
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .page-title {

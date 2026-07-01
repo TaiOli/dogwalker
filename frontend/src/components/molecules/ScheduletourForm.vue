@@ -1,3 +1,16 @@
+<script setup>
+import BaseInput from "../atoms/BaseInput.vue"
+import BaseButton from "../atoms/BaseButton.vue"
+import BaseSelect from "../atoms/BaseSelect.vue"
+
+const props = defineProps({
+  form: Object,
+  dogs: Array
+})
+
+const emit = defineEmits(["submit"])
+</script>
+
 <template>
   <div class="form">
 
@@ -45,7 +58,6 @@
 
     </div>
 
-    <!-- BOTÃO -->
     <div class="mt-4 d-grid">
       <BaseButton
         label="Solicitar passeio"
@@ -55,19 +67,6 @@
 
   </div>
 </template>
-
-<script setup>
-import BaseInput from "../atoms/BaseInput.vue"
-import BaseButton from "../atoms/BaseButton.vue"
-import BaseSelect from "../atoms/BaseSelect.vue"
-
-const props = defineProps({
-  form: Object,
-  dogs: Array
-})
-
-const emit = defineEmits(["submit"])
-</script>
 
 <style scoped>
 .form {

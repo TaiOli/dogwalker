@@ -1,3 +1,28 @@
+<script setup>
+import { ref, computed, onMounted } from "vue"
+import { useRoute } from "vue-router"
+import { api } from "../services/api"
+import { getFoto } from "../utils/image"
+
+const route = useRoute()
+
+const tutor = ref({})
+
+// Avaliações que passeadores fizeram sobre esse tutor (já filtradas no backend por tipo_avaliador=passeador)
+const avaliacoes = computed(() => tutor.value.avaliacoes_feitas ?? [])
+
+function formatarData(data) {
+  if (!data) return ""
+  const date = new Date(data)
+  return date.toLocaleDateString("pt-BR")
+}
+
+onMounted(async () => {
+  const response = await api.get(`/tutors/${route.params.id}`)
+  tutor.value = response.data
+})
+</script>
+
 <template>
   <div class="container py-5">
     <div class="row justify-content-center">
@@ -67,31 +92,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, computed, onMounted } from "vue"
-import { useRoute } from "vue-router"
-import { api } from "../services/api"
-import { getFoto } from "../utils/image"
-
-const route = useRoute()
-
-const tutor = ref({})
-
-// Avaliações que passeadores fizeram sobre esse tutor (já filtradas no backend por tipo_avaliador=passeador)
-const avaliacoes = computed(() => tutor.value.avaliacoes_feitas ?? [])
-
-function formatarData(data) {
-  if (!data) return ""
-  const date = new Date(data)
-  return date.toLocaleDateString("pt-BR")
-}
-
-onMounted(async () => {
-  const response = await api.get(`/tutors/${route.params.id}`)
-  tutor.value = response.data
-})
-</script>
 
 <style scoped>
 .profile-photo {

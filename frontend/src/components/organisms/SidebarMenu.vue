@@ -1,3 +1,17 @@
+<script setup>
+import { ref } from "vue"
+import { useAuth } from "../../composables/userAuth"
+
+const auth = useAuth()
+const tutor = auth.tutor
+const walker = auth.walker
+const collapsed = ref(false)
+
+function toggle() {
+  collapsed.value = !collapsed.value
+}
+</script>
+
 <template>
   <aside :class="['sidebar', { collapsed }]">
     <div class="header">
@@ -22,19 +36,6 @@
   </aside>
 </template>
 
-<script setup>
-import { ref } from "vue"
-import { useAuth } from "../../composables/userAuth"
-
-const auth = useAuth()
-const tutor = auth.tutor
-const walker = auth.walker
-const collapsed = ref(false)
-
-function toggle() {
-  collapsed.value = !collapsed.value
-}
-</script>
 
 <style scoped>
 .sidebar {
