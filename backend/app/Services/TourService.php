@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Avaliacao;
 use App\Models\Passeio;
 
-class PasseioService
+class TourService
 {
     public function create(array $data, int $tutorId)
     {
@@ -16,7 +16,7 @@ class PasseioService
         ]);
     }
 
-    public function listarDisponiveis()
+    public function listAvailable()
     {
         return Passeio::with(['dog', 'tutor'])
             ->whereIn('status', ['pendente', 'aceito'])
@@ -24,7 +24,7 @@ class PasseioService
             ->get();
     }
 
-    public function aceitar(int $id, int $passeadorId)
+    public function accept(int $id, int $passeadorId)
     {
         $passeio = Passeio::findOrFail($id);
 
@@ -36,7 +36,7 @@ class PasseioService
         return $passeio;
     }
 
-    public function recusar(int $id)
+    public function reject(int $id)
     {
         $passeio = Passeio::findOrFail($id);
 
@@ -47,7 +47,7 @@ class PasseioService
         return $passeio->fresh();
     }
 
-    public function meusPasseios($user)
+    public function myTours($user)
     {
         if ($user->tipo_usuario === 'tutor') {
 
@@ -90,7 +90,7 @@ class PasseioService
 
         return collect();
     }
-    public function excluir(int $id)
+    public function delete(int $id)
     {
         $passeio = Passeio::findOrFail($id);
 

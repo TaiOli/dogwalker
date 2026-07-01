@@ -7,7 +7,7 @@ use App\Models\Passeio;
 use App\Services\PasseioService;
 use Illuminate\Http\Request;
 
-class PasseioController extends Controller
+class TourController extends Controller
 {
     public function __construct(
         private PasseioService  $passeioService
@@ -30,12 +30,12 @@ class PasseioController extends Controller
     // Listar Passeio
     public function index()
     {
-        return $this->passeioService->listarDisponiveis();
+        return $this->passeioService->listAvailable();
     }
 
-    public function aceitar($id, Request $request)
+    public function accept($id, Request $request)
     {
-        $passeio = $this->passeioService->aceitar(
+        $passeio = $this->passeioService->accept(
             $id,
             $request->user()->id
         );
@@ -46,9 +46,9 @@ class PasseioController extends Controller
         ]);
     }
 
-    public function recusar($id)
+    public function reject($id)
     {
-        $passeio = $this->passeioService->recusar($id);
+        $passeio = $this->passeioService->reject($id);
 
         return response()->json([
             'message' => 'Passeio recusado',
@@ -56,14 +56,14 @@ class PasseioController extends Controller
         ]);
     }
 
-    public function meusPasseios(Request $request)
+    public function myTours(Request $request)
     {
-        return $this->passeioService->meusPasseios(
+        return $this->passeioService->myTours(
             $request->user()
         );
     }
 
-    public function finalizar($id)
+    public function complete($id)
     {
         $passeio = Passeio::findOrFail($id);
 
