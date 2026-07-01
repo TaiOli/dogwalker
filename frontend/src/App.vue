@@ -8,7 +8,7 @@ const route = useRoute()
 
 // se está na página de login ou cadastro
 const isLoginPage = computed(() =>
-  ["/", "/register-user"].includes(route.path)
+  ["/", "/cadastro-usuario"].includes(route.path)
 )
 </script>
 

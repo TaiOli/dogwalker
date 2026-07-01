@@ -48,7 +48,7 @@ async function acessoLogin() {
 
         <p class="mt-3 text-muted">
           Não tem conta?
-          <router-link to="/register-user" class="text-decoration-none fw-bold">
+          <router-link to="/cadastrar-usuario" class="text-decoration-none fw-bold">
             Criar conta
           </router-link>
         </p>

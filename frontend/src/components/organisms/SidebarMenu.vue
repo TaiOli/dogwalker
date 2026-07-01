@@ -23,13 +23,13 @@ function toggle() {
       <router-link to="/home" class="nav-item">
         🏠 <span v-if="!collapsed">Dashboard</span>
       </router-link>
-      <router-link v-if="tutor" to="/dogs" class="nav-item">
+      <router-link v-if="tutor" to="/cadastro-cachorro" class="nav-item">
         🐕 <span v-if="!collapsed">Meus cachorros</span>
       </router-link>
-      <router-link v-if="tutor" to="/scheduletour" class="nav-item">
+      <router-link v-if="tutor" to="/agendar-passeio" class="nav-item">
         ➕ <span v-if="!collapsed">Solicitar passeio</span>
       </router-link>
-      <router-link v-if="walker" to="/walks" class="nav-item text-nowrap">
+      <router-link v-if="walker" to="/passeios" class="nav-item text-nowrap">
         🚶 <span v-if="!collapsed">Passeios disponíveis</span>
       </router-link>
     </nav>

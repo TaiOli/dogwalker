@@ -15,7 +15,7 @@ const routes = [
     component: Login
   },
   {
-    path: "/register-user",
+    path: "/cadastro-usuario",
     component: User
   },
   {
@@ -23,27 +23,27 @@ const routes = [
     component: Dashboard
   },
   {
-    path: "/dogs",
+    path: "/cadastro-cachorro",
     component: RegisterDog
   },
   { 
-    path: "/scheduletour", 
+    path: "/agendar-passeio", 
     component: ScheduleTour 
   },
   {
-    path: "/walks",
+    path: "/passeios",
     component: Walks
   },
   {
-    path: "/walkers/:id",
+    path: "/passeador-perfil/:id",
     component: WalkerProfile
   },
   {
-    path: '/tutors/:id',
+    path: '/tutores/:id',
     component: TutorProfile
   },
   {
-    path: "/my-profile",
+    path: "/meu-perfil",
     component: MyProfile
   }
 ];
