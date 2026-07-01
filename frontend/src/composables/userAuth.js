@@ -1,7 +1,10 @@
 import { reactive, ref, computed } from "vue"
+import { useRouter } from "vue-router"
 import { api } from "../services/api"
 
 export function useAuth() {
+
+  const router = useRouter()
 
   let storedUser = null;
 
@@ -12,7 +15,7 @@ export function useAuth() {
     localStorage.removeItem("token");
   }
 
-const user = ref(storedUser);
+  const user = ref(storedUser);
 
   const tutor = computed(() => user.value?.tipo_usuario === "tutor")
   const walker = computed(() => user.value?.tipo_usuario === "passeador")
@@ -48,7 +51,7 @@ const user = ref(storedUser);
     foto: ""
   });
 
- async function cadastrar() {
+  async function cadastrar() {
 
     const formData = new FormData()
 
@@ -88,6 +91,7 @@ const user = ref(storedUser);
     user.value = null
     localStorage.removeItem("user")
     localStorage.removeItem("token")
+    router.push("/")
   }
 
   return {
