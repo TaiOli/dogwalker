@@ -43,8 +43,8 @@ const routes = [
     component: TutorProfile
   },
   {
-    path: "/meu-perfil",
-    component: MeuPerfil
+    path: "/my-profile",
+    component: MyProfile
   }
 ];
 
