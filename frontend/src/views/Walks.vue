@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { useWalks } from "../composables/useWalks";
 
 const {
@@ -10,6 +10,10 @@ const {
 } = useWalks();
 
 const carregandoId = ref(null)
+
+const passeiosDisponiveis = computed(() =>
+  passeios.value.filter(p => !p.status || p.status === "pendente")
+)
 
 onMounted(loadPasseios);
 
@@ -57,13 +61,13 @@ async function recusar(id) {
 
     <h2 class="mb-4 text-start">🚶 Passeios Disponíveis:</h2>
 
-    <div v-if="passeios.length === 0" class="alert alert-info">
+    <div v-if="passeiosDisponiveis.length === 0" class="alert alert-info">
       Nenhum passeio disponível.
     </div>
 
     <div class="row g-4">
 
-      <div v-for="p in passeios" :key="p.id" class="col-12 col-md-6 col-lg-4 col-xl-3">
+      <div v-for="p in passeiosDisponiveis" :key="p.id" class="col-12 col-md-6 col-lg-4 col-xl-3">
         <div class="card shadow-sm h-100">
 
           <div class="card-body d-flex flex-column">

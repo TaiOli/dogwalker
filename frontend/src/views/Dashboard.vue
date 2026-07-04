@@ -19,19 +19,52 @@ const nota = ref(0)
 const comentario = ref("")
 const enviando = ref(false)
 
-// Tutor vê passeios "pendente", "aceito" ou "finalizado"
-const passeiosTutor = computed(() =>
-  passeios.value.filter(p =>
-    p.status === "pendente" ||
-    p.status === "aceito" ||
-    p.status === "finalizado" ||
-    p.status === "recusado"
-  )
-)
+const DISMISSED_KEY = "dashboard_dismissed_passeios"
+const dismissedIds = ref(new Set())
 
-// Passeador vê passeios "aceito" ou "finalizado" (mantém visível após finalizar, com a avaliação enviada)
+function loadDismissed() {
+  try {
+    const raw = localStorage.getItem(DISMISSED_KEY)
+    if (raw) dismissedIds.value = new Set(JSON.parse(raw))
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+function saveDismissed() {
+  try {
+    localStorage.setItem(DISMISSED_KEY, JSON.stringify([...dismissedIds.value]))
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+function dismissPasseio(id) {
+  dismissedIds.value.add(id)
+
+  dismissedIds.value = new Set(dismissedIds.value)
+  saveDismissed()
+}
+
+const passeiosTutor = computed(() =>
+  passeios.value.filter(p => {
+    if (dismissedIds.value.has(p.id)) return false
+    if (p.status === "finalizado") return false
+
+    return (
+      p.status === "pendente" ||
+      p.status === "aceito" ||
+      p.status === "recusado"
+    )
+  })
+)
 const passeiosWalker = computed(() =>
-  passeios.value.filter(p => p.status === "aceito" || p.status === "finalizado")
+  passeios.value.filter(p => {
+    if (dismissedIds.value.has(p.id)) return false
+    if (p.status === "finalizado") return false
+
+    return p.status === "aceito"
+  })
 )
 
 async function loadWalkers() {
@@ -45,7 +78,7 @@ async function loadWalkers() {
 
 async function loadPasseios() {
   try {
-    const res = await api.get("/meus-passeios")
+    const res = await api.get("/my-tours")
     passeios.value = res.data
   } catch (e) {
     console.error(e)
@@ -97,7 +130,7 @@ async function finalizarPasseio(passeio) {
 
   try {
     // Marca como finalizado
-    await api.patch(`/passeios/${passeio.id}/finalizar`)
+    await api.patch(`/tours/${passeio.id}/complete`)
 
     // Envia avaliação do passeador sobre o tutor/passeio
     await api.post("/avaliacoes", {
@@ -157,6 +190,7 @@ function formatarData(data) {
 }
 
 onMounted(async () => {
+  loadDismissed()
   await loadPasseios()
   if (tutor.value) {
     await loadWalkers()
@@ -196,8 +230,16 @@ onMounted(async () => {
         Você ainda não possui passeios.
       </div>
 
-      <div class="card shadow-sm mb-3" v-for="p in passeiosTutor" :key="p.id">
+      <div class="card shadow-sm mb-3 position-relative" v-for="p in passeiosTutor" :key="p.id">
         <div class="card-body">
+
+          <button
+            v-if="p.status === 'aceito' || p.status === 'recusado'"
+            class="btn-close dismiss-btn"
+            aria-label="Remover do dashboard"
+            title="Remover do dashboard"
+            @click="dismissPasseio(p.id)"
+          ></button>
 
           <h5>🐶 {{ p.dog?.nome }}</h5>
           <p>📅 {{ formatarData(p.data) }} - {{ p.hora }}</p>
@@ -279,12 +321,18 @@ onMounted(async () => {
 
       <div v-if="passeiosWalker.length === 0" class="alert alert-info">
         Você ainda não possui passeios aceitos.
-        <br>
-        <router-link to="/passeios-disponiveis">👉 Ver passeios disponíveis</router-link>
       </div>
 
-      <div class="card shadow-sm mb-3" v-for="p in passeiosWalker" :key="p.id">
+      <div class="card shadow-sm mb-3 position-relative" v-for="p in passeiosWalker" :key="p.id">
         <div class="card-body">
+
+          <button
+            v-if="p.status === 'aceito'"
+            class="btn-close dismiss-btn"
+            aria-label="Remover do dashboard"
+            title="Remover do dashboard"
+            @click="dismissPasseio(p.id)"
+          ></button>
 
           <h5>🐶 {{ p.dog?.nome }}</h5>
           <p>📅 {{ formatarData(p.data) }} - {{ p.hora }}</p>
@@ -364,6 +412,16 @@ onMounted(async () => {
   transform: translateY(-3px);
 }
 
+.position-relative {
+  position: relative;
+}
+
+.dismiss-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+}
 
 .badge {
   font-size: 14px;

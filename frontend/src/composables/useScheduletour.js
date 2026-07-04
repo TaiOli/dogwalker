@@ -26,7 +26,7 @@ export function useScheduletour() {
   }
 
   async function solicitarPasseio() {
-    return api.post("/passeios", form)
+    return api.post("/tours", form)
   }
 
   function clearPasseio() {

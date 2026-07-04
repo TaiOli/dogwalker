@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePasseioRequest;
 use App\Models\Passeio;
-use App\Services\PasseioService;
+use App\Services\TourService;
 use Illuminate\Http\Request;
 
 class TourController extends Controller
 {
     public function __construct(
-        private PasseioService  $passeioService
+        private TourService  $passeioService
     ) {}
 
     // Criar Passeio
@@ -80,7 +80,7 @@ class TourController extends Controller
     // Excluir Passeio
     public function destroy($id)
     {
-        $this->passeioService->excluir($id);
+        $this->passeioService->delete($id);
 
         return response()->json([
             'message' => 'Passeio removido com sucesso'

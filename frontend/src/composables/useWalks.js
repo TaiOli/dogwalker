@@ -6,16 +6,16 @@ export function useWalks() {
   const passeios = ref([])
 
   async function loadPasseios() {
-    const response = await api.get("/passeios")
+    const response = await api.get("/tours")
     passeios.value = response.data
   }
 
   async function aceitarPasseio(id) {
-    await api.put(`/passeios/${id}/aceitar`)
+    await api.put(`/tours/${id}/accept`)
   }
 
   async function recusarPasseio(id) {
-    await api.patch(`/passeios/${id}/recusar`)
+    await api.patch(`/tours/${id}/reject`)
   }
 
   return {

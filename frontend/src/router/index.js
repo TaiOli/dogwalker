@@ -31,7 +31,7 @@ const routes = [
     component: ScheduleTour 
   },
   {
-    path: "/passeios",
+    path: "/tours",
     component: Walks
   },
   {

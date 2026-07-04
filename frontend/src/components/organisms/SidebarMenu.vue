@@ -29,7 +29,7 @@ function toggle() {
       <router-link v-if="tutor" to="/agendar-passeio" class="nav-item">
         ➕ <span v-if="!collapsed">Solicitar passeio</span>
       </router-link>
-      <router-link v-if="walker" to="/passeios" class="nav-item text-nowrap">
+      <router-link v-if="walker" to="/tours" class="nav-item text-nowrap">
         🚶 <span v-if="!collapsed">Passeios disponíveis</span>
       </router-link>
     </nav>

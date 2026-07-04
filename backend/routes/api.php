@@ -17,12 +17,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/tutors/{id}', [UserController::class, 'showTutor']);
     Route::post('/dogs', [DogController::class, 'store']);
     Route::get('/dogs/my', [DogController::class, 'myDogs']);
-    Route::post('/passeios', [TourController::class, 'store']);
-    Route::get('/passeios', [TourController::class, 'index']);
-    Route::put('/passeios/{id}/aceitar', [TourController::class, 'aceitar']);
-    Route::patch('/passeios/{id}/recusar', [TourController::class, 'recusar']);
-    Route::get('/meus-passeios',[TourController::class, 'meusPasseios']);
-    Route::delete('/passeios/{id}', [TourController::class, 'destroy']);
+    Route::post('/tours', [TourController::class, 'store']);
+    Route::get('/tours', [TourController::class, 'index']);
+    Route::put('/tours/{id}/accept', [TourController::class, 'accept']);
+    Route::patch('/tours/{id}/reject', [TourController::class, 'reject']);
+    Route::get('/my-tours',[TourController::class, 'myTours']);
+    Route::post('/tours/{id}/complete', [TourController::class, 'complete']); 
+    Route::delete('/tours/{id}', [TourController::class, 'destroy']);
     Route::post('/avaliacoes', [AvaliacaoController::class, 'store']);
     Route::get('/me', function (Request $request) {
         $user = $request->user();
