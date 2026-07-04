@@ -4,24 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Avaliacao extends Model
+class Tour extends Model
 {
-    protected $table = 'avaliacoes';
-
+    protected $table = 'passeios';
     protected $fillable = [
-        'passeio_id',
+        'dog_id',
         'tutor_id',
         'passeador_id',
-        'nota',
-        'comentario',
-        'tipo_avaliador',
+        'data',
+        'hora',
+        'duracao',
+        'local',
+        'valor',
+        'status',
     ];
 
-    // RELACIONAMENTOS
-
-    public function passeio()
+    public function dog()
     {
-        return $this->belongsTo(Passeio::class);
+        return $this->belongsTo(Dog::class);
     }
 
     public function tutor()

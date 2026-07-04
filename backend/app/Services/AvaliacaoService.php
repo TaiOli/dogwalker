@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Models\Avaliacao;
+use App\Models\Evaluation;
 
 class AvaliacaoService
 {
     public function create(array $data)
     {
-        return Avaliacao::create($data);
+        return Evaluation::create($data);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePasseioRequest;
-use App\Models\Passeio;
+use App\Http\Requests\StoreTourRequest;
+use App\Models\Tour;
 use App\Services\TourService;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class TourController extends Controller
     ) {}
 
     // Criar Passeio
-    public function store(StorePasseioRequest $request)
+    public function store(StoreTourRequest $request)
     {
         $passeio = $this->passeioService->create(
             $request->validated(),
@@ -56,6 +56,33 @@ class TourController extends Controller
         ]);
     }
 
+
+    public function cancel($id, Request $request)
+    {
+        $passeio = Tour::findOrFail($id);
+
+        if ($passeio->tutor_id !== $request->user()->id) {
+            return response()->json([
+                'message' => 'Você não tem permissão para cancelar este passeio.'
+            ], 403);
+        }
+
+        if (!in_array($passeio->status, ['pendente', 'aceito'])) {
+            return response()->json([
+                'message' => 'Só é possível cancelar passeios pendentes ou aceitos.'
+            ], 422);
+        }
+
+        $passeio->update([
+            'status' => 'cancelado'
+        ]);
+
+        return response()->json([
+            'message' => 'Passeio cancelado com sucesso',
+            'passeio' => $passeio
+        ]);
+    }
+
     public function myTours(Request $request)
     {
         return $this->passeioService->myTours(
@@ -65,7 +92,7 @@ class TourController extends Controller
 
     public function complete($id)
     {
-        $passeio = Passeio::findOrFail($id);
+        $passeio = Tour::findOrFail($id);
 
         $passeio->update([
             'status' => 'finalizado'

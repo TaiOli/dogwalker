@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AvaliacaoRequest;
-use App\Models\Passeio;
+use App\Models\Tour;
 use App\Services\AvaliacaoService;
 
 class AvaliacaoController extends Controller
@@ -16,7 +16,7 @@ class AvaliacaoController extends Controller
     {
         $data = $request->validated();
 
-        $passeio = Passeio::findOrFail($data['passeio_id']);
+        $passeio = Tour::findOrFail($data['passeio_id']);
 
         $avaliacao = $this->avaliacaoService->create([
             'passeio_id' => $passeio->id,

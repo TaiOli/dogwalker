@@ -2,14 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\Avaliacao;
-use App\Models\Passeio;
+use App\Http\Controllers\TourController;
+use App\Models\Evaluation;
+use App\Models\Tour;
 
 class TourService
 {
     public function create(array $data, int $tutorId)
     {
-        return Passeio::create([
+        return Tour::create([
             ...$data,
             'tutor_id' => $tutorId,
             'status' => 'pendente',
@@ -18,7 +19,7 @@ class TourService
 
     public function listAvailable()
     {
-        return Passeio::with(['dog', 'tutor'])
+        return Tour::with(['dog', 'tutor'])
             ->whereIn('status', ['pendente', 'aceito'])
             ->latest()
             ->get();
@@ -26,7 +27,7 @@ class TourService
 
     public function accept(int $id, int $passeadorId)
     {
-        $passeio = Passeio::findOrFail($id);
+        $passeio = Tour::findOrFail($id);
 
         $passeio->update([
             'passeador_id' => $passeadorId,
@@ -38,7 +39,7 @@ class TourService
 
     public function reject(int $id)
     {
-        $passeio = Passeio::findOrFail($id);
+        $passeio = Tour::findOrFail($id);
 
         $passeio->update([
             'status' => 'recusado'
@@ -51,12 +52,12 @@ class TourService
     {
         if ($user->tipo_usuario === 'tutor') {
 
-            return Passeio::where('tutor_id', $user->id)
+            return Tour::where('tutor_id', $user->id)
                 ->with(['dog', 'passeador'])
                 ->get()
                 ->map(function ($p) {
 
-                    $avaliacaoTutor = Avaliacao::where('passeio_id', $p->id)
+                    $avaliacaoTutor = Evaluation::where('passeio_id', $p->id)
                         ->where('tipo_avaliador', 'tutor')
                         ->first();
 
@@ -70,13 +71,13 @@ class TourService
 
         if ($user->tipo_usuario === 'passeador') {
 
-            return Passeio::where('passeador_id', $user->id)
-                ->whereIn('status', ['aceito', 'finalizado'])
+            return Tour::where('passeador_id', $user->id)
+                ->whereIn('status', ['aceito', 'finalizado', 'cancelado'])
                 ->with(['dog', 'tutor'])
                 ->get()
                 ->map(function ($p) {
 
-                    $avaliacaoPasseador = Avaliacao::where('passeio_id', $p->id)
+                    $avaliacaoPasseador = Evaluation::where('passeio_id', $p->id)
                         ->where('tipo_avaliador', 'passeador')
                         ->first();
 
@@ -92,7 +93,7 @@ class TourService
     }
     public function delete(int $id)
     {
-        $passeio = Passeio::findOrFail($id);
+        $passeio = Tour::findOrFail($id);
 
         $passeio->delete();
     }

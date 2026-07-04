@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\AvaliacaoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -21,13 +20,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/tours', [TourController::class, 'index']);
     Route::put('/tours/{id}/accept', [TourController::class, 'accept']);
     Route::patch('/tours/{id}/reject', [TourController::class, 'reject']);
+    Route::patch('/tours/{id}/cancel', [TourController::class, 'cancel']);
     Route::get('/my-tours',[TourController::class, 'myTours']);
     Route::post('/tours/{id}/complete', [TourController::class, 'complete']); 
     Route::delete('/tours/{id}', [TourController::class, 'destroy']);
     Route::post('/avaliacoes', [AvaliacaoController::class, 'store']);
     Route::get('/me', function (Request $request) {
         $user = $request->user();
-
         return [
             'id' => $user->id,
             'nome' => $user->nome,

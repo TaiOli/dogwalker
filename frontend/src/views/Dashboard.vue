@@ -46,10 +46,33 @@ function dismissPasseio(id) {
   saveDismissed()
 }
 
+async function confirmarCancelamento(passeio) {
+  const confirmar = confirm("Tem certeza que deseja cancelar este passeio?")
+  if (!confirmar) return
+
+  try {
+    await api.patch(`/tours/${passeio.id}/cancel`)
+
+    passeio.status = "cancelado"
+  } catch (err) {
+    console.error(err)
+    alert(err.response?.data?.message || "Erro ao cancelar passeio.")
+  }
+}
+
+function onXClickTutor(p) {
+  if (p.status === "pendente" || p.status === "aceito") {
+    confirmarCancelamento(p)
+  } else {
+    dismissPasseio(p.id)
+  }
+}
+
 const passeiosTutor = computed(() =>
   passeios.value.filter(p => {
     if (dismissedIds.value.has(p.id)) return false
     if (p.status === "finalizado") return false
+    if (p.status === "cancelado") return false
 
     return (
       p.status === "pendente" ||
@@ -58,12 +81,17 @@ const passeiosTutor = computed(() =>
     )
   })
 )
+
+// Passeador só vê "cancelado" se o passeio tinha sido aceito por ele
+// (passeador_id preenchido no backend). Se o tutor cancelou um "pendente"
+// (nunca aceito por ninguém), não existe passeador específico pra avisar,
+// então esse card nunca chega aqui — o backend não retorna.
 const passeiosWalker = computed(() =>
   passeios.value.filter(p => {
     if (dismissedIds.value.has(p.id)) return false
     if (p.status === "finalizado") return false
 
-    return p.status === "aceito"
+    return p.status === "aceito" || p.status === "cancelado"
   })
 )
 
@@ -90,7 +118,8 @@ function badgeStatus(status) {
     "bg-warning text-dark": status === "pendente",
     "bg-success": status === "aceito",
     "bg-danger": status === "recusado",
-    "bg-primary": status === "finalizado"
+    "bg-primary": status === "finalizado",
+    "bg-secondary": status === "cancelado"
   }
 }
 
@@ -234,11 +263,11 @@ onMounted(async () => {
         <div class="card-body">
 
           <button
-            v-if="p.status === 'aceito' || p.status === 'recusado'"
+            v-if="p.status === 'pendente' || p.status === 'aceito' || p.status === 'recusado'"
             class="btn-close dismiss-btn"
-            aria-label="Remover do dashboard"
-            title="Remover do dashboard"
-            @click="dismissPasseio(p.id)"
+            :aria-label="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
+            :title="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
+            @click="onXClickTutor(p)"
           ></button>
 
           <h5>🐶 {{ p.dog?.nome }}</h5>
@@ -327,7 +356,7 @@ onMounted(async () => {
         <div class="card-body">
 
           <button
-            v-if="p.status === 'aceito'"
+            v-if="p.status === 'aceito' || p.status === 'cancelado'"
             class="btn-close dismiss-btn"
             aria-label="Remover do dashboard"
             title="Remover do dashboard"
@@ -339,6 +368,15 @@ onMounted(async () => {
           <p>📍 {{ p.local }}</p>
           <p class="text-muted small">
             👨‍🦱 Tutor: <strong>{{ p.tutor?.nome }}</strong>
+          </p>
+
+          <!--
+            Só aparece se status === "cancelado", o que só acontece
+            quando o passeio estava "aceito" com este passeador e o
+            tutor cancelou. Um "pendente" cancelado nunca chega aqui.
+          -->
+          <p class="text-muted small" v-if="p.status === 'cancelado'">
+            ❌ Este passeio foi cancelado pelo tutor.
           </p>
 
           <span class="badge" :class="badgeStatus(p.status)">

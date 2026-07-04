@@ -26,8 +26,15 @@ export function useScheduletour() {
   }
 
   async function solicitarPasseio() {
-    return api.post("/tours", form)
+  try {
+    const res = await api.post("/tours", form)
+    return res
+  } catch (err) {
+    console.log(err.response?.status)
+    console.log(err.response?.data)
+    throw err
   }
+}
 
   function clearPasseio() {
     Object.assign(form, {
