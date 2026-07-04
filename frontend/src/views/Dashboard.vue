@@ -82,10 +82,6 @@ const passeiosTutor = computed(() =>
   })
 )
 
-// Passeador só vê "cancelado" se o passeio tinha sido aceito por ele
-// (passeador_id preenchido no backend). Se o tutor cancelou um "pendente"
-// (nunca aceito por ninguém), não existe passeador específico pra avisar,
-// então esse card nunca chega aqui — o backend não retorna.
 const passeiosWalker = computed(() =>
   passeios.value.filter(p => {
     if (dismissedIds.value.has(p.id)) return false
@@ -370,11 +366,6 @@ onMounted(async () => {
             👨‍🦱 Tutor: <strong>{{ p.tutor?.nome }}</strong>
           </p>
 
-          <!--
-            Só aparece se status === "cancelado", o que só acontece
-            quando o passeio estava "aceito" com este passeador e o
-            tutor cancelou. Um "pendente" cancelado nunca chega aqui.
-          -->
           <p class="text-muted small" v-if="p.status === 'cancelado'">
             ❌ Este passeio foi cancelado pelo tutor.
           </p>
