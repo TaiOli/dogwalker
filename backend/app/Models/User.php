@@ -48,16 +48,16 @@ class User extends Authenticatable
 
     public function passeiosComoTutor()
     {
-        return $this->hasMany(Passeio::class, 'tutor_id');
+        return $this->hasMany(Tour::class, 'tutor_id');
     }
 
     public function avaliacoesRecebidas()
     {
-        return $this->hasMany(Avaliacao::class, 'passeador_id');
+        return $this->hasMany(Evaluation::class, 'passeador_id');
     }
 
     public function avaliacoesFeitas()
     {
-        return $this->hasMany(Avaliacao::class, 'tutor_id');
+        return $this->hasMany(Evaluation::class, 'tutor_id');
     }
 }

@@ -63,6 +63,16 @@ class TourController extends Controller
         );
     }
 
+    public function cancel($id)
+    {
+        $tour = $this->tourService->cancel($id);
+
+        return response()->json([
+            'message' => 'Passeio cancelado com sucesso',
+            'passeio' => $tour
+        ]);
+    }
+
     public function complete($id)
     {
         $tour = Tour::findOrFail($id);

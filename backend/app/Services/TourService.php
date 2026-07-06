@@ -25,12 +25,12 @@ class TourService
             ->get();
     }
 
-    public function accept(int $id, int $passeadorId)
+    public function accept(int $id, int $walkerId)
     {
         $passeio = Tour::findOrFail($id);
 
         $passeio->update([
-            'passeador_id' => $passeadorId,
+            'passeador_id' => $walkerId,
             'status' => 'aceito'
         ]);
 
@@ -48,6 +48,17 @@ class TourService
         return $passeio->fresh();
     }
 
+    public function cancel(int $id)
+    {
+        $tour = Tour::findOrFail($id);
+
+        $tour->update([
+            'status' => 'cancelado'
+        ]);
+
+        return $tour;
+    }
+
     public function myTours($user)
     {
         if ($user->tipo_usuario === 'tutor') {
@@ -57,12 +68,12 @@ class TourService
                 ->get()
                 ->map(function ($p) {
 
-                    $avaliacaoTutor = Evaluation::where('passeio_id', $p->id)
+                    $reviewTutor = Evaluation::where('passeio_id', $p->id)
                         ->where('tipo_avaliador', 'tutor')
                         ->first();
 
-                    $p->avaliacao_do_tutor = $avaliacaoTutor;
-                    $p->avaliado_pelo_tutor = (bool) $avaliacaoTutor;
+                    $p->review_by_tutor = $reviewTutor;
+                    $p->rated_by_tutor = (bool) $reviewTutor;
 
                     return $p;
                 });
@@ -77,12 +88,12 @@ class TourService
                 ->get()
                 ->map(function ($p) {
 
-                    $avaliacaoPasseador = Evaluation::where('passeio_id', $p->id)
+                    $reviewWlaker = Evaluation::where('passeio_id', $p->id)
                         ->where('tipo_avaliador', 'passeador')
                         ->first();
 
-                    $p->avaliacao_do_passeador = $avaliacaoPasseador;
-                    $p->avaliado_pelo_passeador = (bool) $avaliacaoPasseador;
+                    $p->review_by_walker = $reviewWlaker;
+                    $p->rated_by_walker = (bool) $reviewWlaker;
 
                     return $p;
                 });
@@ -93,8 +104,8 @@ class TourService
     }
     public function delete(int $id)
     {
-        $passeio = Tour::findOrFail($id);
+        $tour = Tour::findOrFail($id);
 
-        $passeio->delete();
+        $tour->delete();
     }
 }

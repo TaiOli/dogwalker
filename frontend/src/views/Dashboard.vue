@@ -9,15 +9,15 @@ const auth = useAuth()
 const tutor = computed(() => auth.tutor.value)
 const walker = computed(() => auth.walker.value)
 
-const passeadores = ref([])
-const passeios = ref([])
+const walkers = ref([])
+const tours = ref([])
 
-const avaliandoTutor = ref(null)
-const avaliandoWalker = ref(null)
+const reviewTutor = ref(null)
+const reviewWalker = ref(null)
 
-const nota = ref(0)
-const comentario = ref("")
-const enviando = ref(false)
+const rating = ref(0)
+const comment = ref("")
+const sending = ref(false)
 
 const DISMISSED_KEY = "dashboard_dismissed_passeios"
 const dismissedIds = ref(new Set())
@@ -39,16 +39,16 @@ function saveDismissed() {
   }
 }
 
-function dismissPasseio(id) {
+function dismissTour(id) {
   dismissedIds.value.add(id)
 
   dismissedIds.value = new Set(dismissedIds.value)
   saveDismissed()
 }
 
-async function confirmarCancelamento(passeio) {
-  const confirmar = confirm("Tem certeza que deseja cancelar este passeio?")
-  if (!confirmar) return
+async function cancelConfirm(passeio) {
+  const confirmed = window.confirm("Tem certeza que deseja cancelar este passeio?")
+  if (!confirmed) return
 
   try {
     await api.patch(`/tours/${passeio.id}/cancel`)
@@ -62,14 +62,14 @@ async function confirmarCancelamento(passeio) {
 
 function onXClickTutor(p) {
   if (p.status === "pendente" || p.status === "aceito") {
-    confirmarCancelamento(p)
+    cancelConfirm(p)
   } else {
-    dismissPasseio(p.id)
+    dismissTour(p.id)
   }
 }
 
-const passeiosTutor = computed(() =>
-  passeios.value.filter(p => {
+const toursTutor = computed(() =>
+  tours.value.filter(p => {
     if (dismissedIds.value.has(p.id)) return false
     if (p.status === "finalizado") return false
     if (p.status === "cancelado") return false
@@ -82,8 +82,8 @@ const passeiosTutor = computed(() =>
   })
 )
 
-const passeiosWalker = computed(() =>
-  passeios.value.filter(p => {
+const toursWalker = computed(() =>
+  tours.value.filter(p => {
     if (dismissedIds.value.has(p.id)) return false
     if (p.status === "finalizado") return false
 
@@ -94,16 +94,16 @@ const passeiosWalker = computed(() =>
 async function loadWalkers() {
   try {
     const res = await api.get("/walkers")
-    passeadores.value = res.data
+    walkers.value = res.data
   } catch (e) {
     console.error(e)
   }
 }
 
-async function loadPasseios() {
+async function loadTours() {
   try {
     const res = await api.get("/my-tours")
-    passeios.value = res.data
+    tours.value = res.data
   } catch (e) {
     console.error(e)
   }
@@ -119,39 +119,39 @@ function badgeStatus(status) {
   }
 }
 
-function abrirAvaliacaoTutor(passeio) {
-  avaliandoTutor.value = passeio
-  nota.value = 0
-  comentario.value = ""
+function openEvaluationTutor(passeio) {
+  reviewTutor.value = passeio
+  rating.value = 0
+  comment.value = ""
 }
 
-function cancelarAvaliacaoTutor() {
-  avaliandoTutor.value = null
-  nota.value = 0
-  comentario.value = ""
+function cancelEvaluationTutor() {
+  reviewTutor.value = null
+  rating.value = 0
+  comment.value = ""
 }
 
-function abrirAvaliacaoWalker(passeio) {
-  avaliandoWalker.value = passeio
-  nota.value = 0
-  comentario.value = ""
+function openEvaluationWalker(passeio) {
+  reviewWalker.value = passeio
+  rating.value = 0
+  comment.value = ""
 }
 
-function cancelarAvaliacaoWalker() {
-  avaliandoWalker.value = null
-  nota.value = 0
-  comentario.value = ""
+function cancelEvaluationWalker() {
+  reviewWalker.value = null
+  rating.value = 0
+  comment.value = ""
 }
 
-async function finalizarPasseio(passeio) {
-  if (nota.value === 0) {
+async function completeTour(passeio) {
+  if (rating.value === 0) {
     alert("Escolha uma nota antes de finalizar.")
     return
   }
 
   if (!confirm("Deseja finalizar este passeio?")) return
 
-  enviando.value = true
+  sending.value = true
 
   try {
     // Marca como finalizado
@@ -160,55 +160,55 @@ async function finalizarPasseio(passeio) {
     // Envia avaliação do passeador sobre o tutor/passeio
     await api.post("/avaliacoes", {
       passeio_id: passeio.id,
-      nota: nota.value,
-      comentario: comentario.value,
+      nota: rating.value,
+      comentario: comment.value,
       tipo_avaliador: "passeador"
     })
 
     alert("Passeio finalizado e avaliação enviada!")
 
-    cancelarAvaliacaoWalker()
-    await loadPasseios()
+    cancelEvaluationWalker()
+    await loadTours()
 
   } catch (err) {
     console.error(err)
     alert(err.response?.data?.message || "Erro ao finalizar passeio.")
   } finally {
-    enviando.value = false
+    sending.value = false
   }
 }
 
-async function enviarAvaliacao(passeioId, tipo) {
-  if (!nota.value) {
+async function sendEvaluation(passeioId, tipo) {
+  if (!rating.value) {
     alert("Escolha uma nota.")
     return
   }
 
-  enviando.value = true
+  sending.value = true
 
   try {
     await api.post("/avaliacoes", {
       passeio_id: passeioId,
-      nota: nota.value,
-      comentario: comentario.value,
+      nota: rating.value,
+      comentario: comment.value,
       tipo_avaliador: tipo
     })
 
     alert("Avaliação enviada!")
 
-    cancelarAvaliacaoTutor()
+    cancelEvaluationTutor()
     await loadWalkers()
-    await loadPasseios()
+    await loadTours()
 
   } catch (err) {
     console.error(err)
     alert(err.response?.data?.message || "Erro ao enviar avaliação.")
   } finally {
-    enviando.value = false
+    sending.value = false
   }
 }
 
-function formatarData(data) {
+function formatDate(data) {
   if (!data) return ""
   const date = new Date(data)
   return date.toLocaleDateString("pt-BR")
@@ -216,7 +216,7 @@ function formatarData(data) {
 
 onMounted(async () => {
   loadDismissed()
-  await loadPasseios()
+  await loadTours()
   if (tutor.value) {
     await loadWalkers()
   }
@@ -230,7 +230,7 @@ onMounted(async () => {
       <h2 class="mb-4">👨‍🦱 Passeadores Disponíveis</h2>
 
       <div class="row g-4 mb-5">
-        <div class="col-md-4" v-for="w in passeadores" :key="w.id">
+        <div class="col-md-4" v-for="w in walkers" :key="w.id">
           <div class="card h-100 shadow-sm">
             <div class="card-body text-center">
               <img :src="getFoto(w.foto)" class="rounded-circle mb-3" width="110" height="110">
@@ -251,11 +251,11 @@ onMounted(async () => {
 
       <h2 class="mb-3">📋 Meus Passeios</h2>
 
-      <div v-if="passeiosTutor.length === 0" class="alert alert-info">
+      <div v-if="toursTutor.length === 0" class="alert alert-info">
         Você ainda não possui passeios.
       </div>
 
-      <div class="card shadow-sm mb-3 position-relative" v-for="p in passeiosTutor" :key="p.id">
+      <div class="card shadow-sm mb-3 position-relative" v-for="p in toursTutor" :key="p.id">
         <div class="card-body">
 
           <button
@@ -267,10 +267,10 @@ onMounted(async () => {
           ></button>
 
           <h5>🐶 {{ p.dog?.nome }}</h5>
-          <p>📅 {{ formatarData(p.data) }} - {{ p.hora }}</p>
+          <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
           <p>📍 {{ p.local }}</p>
-          <p class="text-muted small" v-if="p.passeador">
-            🚶 Passeador: <strong>{{ p.passeador?.nome }}</strong>
+          <p class="text-muted small" v-if="p.walker">
+            🚶 Passeador: <strong>{{ p.walker?.nome }}</strong>
           </p>
           <p class="text-muted small" v-else-if="p.status === 'recusado'">
             ❌ Nenhum passeador aceitou este passeio.
@@ -283,37 +283,37 @@ onMounted(async () => {
             {{ p.status }}
           </span>
 
-          <div class="mt-3" v-if="p.status === 'finalizado' && !p.avaliado_pelo_tutor">
-            <button class="btn btn-primary" @click="abrirAvaliacaoTutor(p)">
+          <div class="mt-3" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
+            <button class="btn btn-primary" @click="openEvaluationTutor(p)">
               ⭐ Avaliar Passeador
             </button>
           </div>
 
           <!-- AVALIAÇÃO ENVIADA PELO TUTOR-->
-          <div class="mt-3 avaliacao-box" v-if="p.avaliacao_do_tutor">
+          <div class="mt-3 avaliacao-box" v-if="p.review_by_tutor">
             <h6 class="mb-2">✅ Sua avaliação sobre o passeador</h6>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
-                {{ n <= p.avaliacao_do_tutor.nota ? "⭐" : "☆" }}
+                {{ n <= p.review_by_tutor.rating ? "⭐" : "☆" }}
               </span>
-              <span class="text-muted small ms-1">({{ p.avaliacao_do_tutor.nota }}/5)</span>
+              <span class="text-muted small ms-1">({{ p.review_by_tutor.rating }}/5)</span>
             </div>
-            <p v-if="p.avaliacao_do_tutor.comentario" class="mb-0 fst-italic">
-              "{{ p.avaliacao_do_tutor.comentario }}"
+            <p v-if="p.review_by_tutor.comment" class="mb-0 fst-italic">
+              "{{ p.review_by_tutor.comment }}"
             </p>
           </div>
 
-          <div class="mt-4 border-top pt-3" v-if="avaliandoTutor?.id === p.id">
+          <div class="mt-4 border-top pt-3" v-if="reviewTutor?.id === p.id">
             <h5>Como foi o passeador?</h5>
 
             <div class="mb-3">
               <span
                 v-for="n in 5"
                 :key="n"
-                @click="nota = n"
+                @click="rating = n"
                 style="font-size:28px;cursor:pointer"
               >
-                {{ n <= nota ? "⭐" : "☆" }}
+                {{ n <= rating ? "⭐" : "☆" }}
               </span>
             </div>
 
@@ -321,14 +321,14 @@ onMounted(async () => {
               class="form-control mb-3"
               rows="3"
               placeholder="Comentário (opcional)"
-              v-model="comentario"
+              v-model="comment"
             />
 
             <div class="d-flex gap-2">
-              <button class="btn btn-success" @click="enviarAvaliacao(p.id, 'tutor')" :disabled="enviando">
-                {{ enviando ? "Enviando..." : "Enviar avaliação" }}
+              <button class="btn btn-success" @click="sendEvaluation(p.id, 'tutor')" :disabled="sending">
+                {{ sending ? "Enviando..." : "Enviar avaliação" }}
               </button>
-              <button class="btn btn-secondary" @click="cancelarAvaliacaoTutor">
+              <button class="btn btn-secondary" @click="cancelEvaluationTutor">
                 Cancelar
               </button>
             </div>
@@ -344,11 +344,11 @@ onMounted(async () => {
 
       <h2 class="mb-4">🚶 Meus Passeios</h2>
 
-      <div v-if="passeiosWalker.length === 0" class="alert alert-info">
+      <div v-if="toursWalker.length === 0" class="alert alert-info">
         Você ainda não possui passeios aceitos.
       </div>
 
-      <div class="card shadow-sm mb-3 position-relative" v-for="p in passeiosWalker" :key="p.id">
+      <div class="card shadow-sm mb-3 position-relative" v-for="p in toursWalker" :key="p.id">
         <div class="card-body">
 
           <button
@@ -356,11 +356,11 @@ onMounted(async () => {
             class="btn-close dismiss-btn"
             aria-label="Remover do dashboard"
             title="Remover do dashboard"
-            @click="dismissPasseio(p.id)"
+            @click="dismissTour(p.id)"
           ></button>
 
           <h5>🐶 {{ p.dog?.nome }}</h5>
-          <p>📅 {{ formatarData(p.data) }} - {{ p.hora }}</p>
+          <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
           <p>📍 {{ p.local }}</p>
           <p class="text-muted small">
             👨‍🦱 Tutor: <strong>{{ p.tutor?.nome }}</strong>
@@ -375,36 +375,36 @@ onMounted(async () => {
           </span>
 
           <div class="mt-3" v-if="p.status === 'aceito'">
-            <button class="btn btn-primary" @click="abrirAvaliacaoWalker(p)">
+            <button class="btn btn-primary" @click="openEvaluationWalker(p)">
               ✔ Finalizar passeio
             </button>
           </div>
 
           <!-- AVALIAÇÃO ENVIADA PELO PASSEADOR -->
-          <div class="mt-3 avaliacao-box" v-if="p.avaliacao_do_passeador">
+          <div class="mt-3 avaliacao-box" v-if="p.review_by_walker">
             <h6 class="mb-2">✅ Sua avaliação sobre o passeio</h6>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
-                {{ n <= p.avaliacao_do_passeador.nota ? "⭐" : "☆" }}
+                {{ n <= p.review_by_walker.rating ? "⭐" : "☆" }}
               </span>
-              <span class="text-muted small ms-1">({{ p.avaliacao_do_passeador.nota }}/5)</span>
+              <span class="text-muted small ms-1">({{ p.review_by_walker.rating }}/5)</span>
             </div>
-            <p v-if="p.avaliacao_do_passeador.comentario" class="mb-0 fst-italic">
-              "{{ p.avaliacao_do_passeador.comentario }}"
+            <p v-if="p.review_by_walker.comment" class="mb-0 fst-italic">
+              "{{ p.review_by_walker.comment }}"
             </p>
           </div>
 
-          <div class="mt-4 border-top pt-3" v-if="avaliandoWalker?.id === p.id">
+          <div class="mt-4 border-top pt-3" v-if="reviewWalker?.id === p.id">
             <h5>Avaliar o tutor / passeio</h5>
 
             <div class="mb-3">
               <span
                 v-for="n in 5"
                 :key="n"
-                @click="nota = n"
+                @click="rating = n"
                 style="font-size:28px;cursor:pointer"
               >
-                {{ n <= nota ? "⭐" : "☆" }}
+                {{ n <= rating ? "⭐" : "☆" }}
               </span>
             </div>
 
@@ -412,14 +412,14 @@ onMounted(async () => {
               class="form-control mb-3"
               rows="3"
               placeholder="Comentário (opcional)"
-              v-model="comentario"
+              v-model="comment"
             />
 
             <div class="d-flex gap-2">
-              <button class="btn btn-success" @click="finalizarPasseio(p)" :disabled="enviando">
-                {{ enviando ? "Enviando..." : "Finalizar e enviar" }}
+              <button class="btn btn-success" @click="completeTour(p)" :disabled="sending">
+                {{ sending ? "Enviando..." : "Finalizar e enviar" }}
               </button>
-              <button class="btn btn-secondary" @click="cancelarAvaliacaoWalker">
+              <button class="btn btn-secondary" @click="cancelEvaluationWalker">
                 Cancelar
               </button>
             </div>

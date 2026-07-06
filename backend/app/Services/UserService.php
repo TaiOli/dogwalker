@@ -45,7 +45,6 @@ class UserService
                     'nome' => $user->nome,
                     'telefone' => $user->telefone,
                     'foto' => $user->foto,
-
                     'media_avaliacao' => round($user->avaliacoesRecebidas_avg_nota ?? 0, 1),
                 ];
             });
