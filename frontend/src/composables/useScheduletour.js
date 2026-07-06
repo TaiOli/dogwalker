@@ -7,11 +7,11 @@ export function useScheduletour() {
 
   const form = reactive({
     dog_id: "",
-    data: "",
-    hora: "",
-    duracao: "",
-    local: "",
-    valor: ""
+    date: "",
+    hour: "",
+    duration: "",
+    location: "",
+    value: ""
   })
 
   async function loadDogs() {
@@ -25,9 +25,17 @@ export function useScheduletour() {
     }
   }
 
-  async function solicitarPasseio() {
+  async function requestTour() {
   try {
-    const res = await api.post("/tours", form)
+    const res = await api.post("/tours", {
+      dog_id: form.dog_id,
+      data: form.date,
+      hora: form.hour,
+      duracao: form.duration,
+      local: form.location,
+      valor: form.value
+    })
+
     return res
   } catch (err) {
     console.log(err.response?.status)
@@ -36,14 +44,14 @@ export function useScheduletour() {
   }
 }
 
-  function clearPasseio() {
+  function clearTour() {
     Object.assign(form, {
       dog_id: "",
-      data: "",
-      hora: "",
-      duracao: "",
-      local: "",
-      valor: ""
+      date: "",
+      hour: "",
+      duration: "",
+      location: "",
+      value: ""
     })
   }
 
@@ -51,7 +59,7 @@ export function useScheduletour() {
     form,
     dogs,
     loadDogs,
-    solicitarPasseio,
-    clearPasseio
+    requestTour,
+    clearTour
   }
 }

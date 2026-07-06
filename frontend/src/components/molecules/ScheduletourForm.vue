@@ -28,23 +28,23 @@ const emit = defineEmits(["submit"])
 
       <div class="col-12 col-md-6">
         <label class="form-label text-start w-100">📅 Data</label>
-        <BaseInput v-model="form.data" type="date" />
+        <BaseInput v-model="form.date" type="date" />
       </div>
 
       <div class="col-12 col-md-6">
         <label class="form-label text-start w-100">⏰ Hora</label>
-        <BaseInput v-model="form.hora" type="time" />
+        <BaseInput v-model="form.hour" type="time" />
       </div>
 
       <div class="col-12 col-md-6">
         <label class="form-label text-start w-100">⏳ Duração</label>
-        <BaseInput v-model="form.duracao" type="time" />
+        <BaseInput v-model="form.duration" type="time" />
       </div>
 
       <div class="col-12 col-md-6">
         <label class="form-label text-start w-100">💰 Valor</label>
         <BaseInput
-          v-model="form.valor"
+          v-model="form.value"
           type="number"
           step="0.01"
           min="0"
@@ -53,7 +53,7 @@ const emit = defineEmits(["submit"])
 
       <div class="col-12">
         <label class="form-label text-start w-100">📍 Local</label>
-        <BaseInput v-model="form.local" placeholder="Digite o local" />
+        <BaseInput v-model="form.location" placeholder="Digite o local" />
       </div>
 
     </div>

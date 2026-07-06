@@ -7,8 +7,8 @@ const {
   form,
   dogs,
   loadDogs,
-  solicitarPasseio,
-  clearPasseio
+  requestTour,
+  clearTour
 } = useScheduletour()
 
 onMounted(() => {
@@ -17,11 +17,11 @@ onMounted(() => {
 
 async function salvar() {
   try {
-    await solicitarPasseio()
+    await requestTour()
 
     alert("Passeio solicitado com sucesso!")
 
-    clearPasseio()
+    clearTour()
 
   } catch (error) {
     console.log(error)
