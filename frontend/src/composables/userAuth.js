@@ -41,29 +41,29 @@ export function useAuth() {
     formLogin.password = ""
   }
 
-  const formCadastro = reactive({
+  const formRegister = reactive({
+    username: "",
     name: "",
-    nome: "",
     email: "",
     password: "",
-    telefone: "",
-    tipo_usuario: "tutor",
-    foto: ""
+    phone: "",
+    type_user: "tutor",
+    photo: ""
   });
 
-  async function cadastrar() {
+  async function register() {
 
     const formData = new FormData()
 
-    formData.append("name", formCadastro.name)
-    formData.append("nome", formCadastro.nome)
-    formData.append("email", formCadastro.email)
-    formData.append("password", formCadastro.password)
-    formData.append("telefone", formCadastro.telefone || "")
-    formData.append("tipo_usuario", formCadastro.tipo_usuario)
+    formData.append("name", formRegister.username)
+    formData.append("nome", formRegister.name)
+    formData.append("email", formRegister.email)
+    formData.append("password", formRegister.password)
+    formData.append("telefone", formRegister.phone || "")
+    formData.append("tipo_usuario", formRegister.type_user)
 
-    if (formCadastro.foto) {
-      formData.append("foto", formCadastro.foto)
+    if (formRegister.photo) {
+      formData.append("foto", formRegister.photo)
     }
 
     const res = await api.post("/users", formData, {
@@ -75,15 +75,15 @@ export function useAuth() {
     return res.data
   }
 
-  function clearCadastro() {
-    Object.assign(formCadastro, {
+  function clearRegister() {
+    Object.assign(formRegister, {
+      username: "",
       name: "",
-      nome: "",
       email: "",
       password: "",
-      telefone: "",
-      tipo_usuario: "tutor",
-      foto: ""
+      phone: "",
+      type_user: "tutor",
+      photo: ""
     })
   }
 
@@ -101,9 +101,9 @@ export function useAuth() {
     formLogin,
     login,
     clearLogin,
-    formCadastro,
-    cadastrar,
-    clearCadastro,
+    formRegister,
+    register,
+    clearRegister,
     logout
   }
 }

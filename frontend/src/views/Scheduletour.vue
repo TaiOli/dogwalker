@@ -15,7 +15,7 @@ onMounted(() => {
   loadDogs()
 })
 
-async function salvar() {
+async function save() {
   try {
     await requestTour()
 
@@ -43,7 +43,7 @@ async function salvar() {
           <ScheduletourForm
             :form="form"
             :dogs="dogs"
-            @submit="salvar"
+            @submit="save"
           />
 
         </div>

@@ -8,7 +8,7 @@ const router = useRouter();
 
 const { formLogin, login, clearLogin } = useAuth();
 
-async function acessoLogin() {
+async function loginAccess() {
   try {
     const data = await login();
 
@@ -43,14 +43,14 @@ async function acessoLogin() {
         <UserAuthForm
           :form="formLogin"
           labelButton="Entrar"
-          @submit="acessoLogin"
+          @submit="loginAccess"
         />
 
         <p class="mt-3 text-muted">
           Não tem conta?
-          <router-link to="/cadastrar-usuario" class="text-decoration-none fw-bold">
+         <router-link to="/cadastro-usuario" class="text-decoration-none fw-bold">
             Criar conta
-          </router-link>
+         </router-link>
         </p>
 
       </div>

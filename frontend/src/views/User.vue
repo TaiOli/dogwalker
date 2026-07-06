@@ -2,14 +2,14 @@
 import { useAuth } from "../composables/userAuth";
 import UserCadastroForm from "../components/molecules/UserRegisterForm.vue";
 
-const { formCadastro, cadastrar, clearCadastro } = useAuth();
+const { formRegister, register, clearRegister } = useAuth();
 
 async function novo() {
   try {
-    await cadastrar();
+    await register();
     alert("Usuário criado com sucesso!");
 
-    clearCadastro();
+    clearRegister();
   } catch (error) {
     alert("Erro ao criar usuário");
   }
@@ -28,7 +28,7 @@ async function novo() {
       </p>
 
       <UserCadastroForm
-        :form="formCadastro"
+        :form="formRegister"
         labelButton="Salvar"
         @submit="novo"
       />

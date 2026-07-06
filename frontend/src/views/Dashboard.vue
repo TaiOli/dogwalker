@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from "vue"
 import { useAuth } from "../composables/userAuth"
 import { api } from "../services/api"
-import { getFoto } from "../utils/image"
+import { getPhoto } from "../utils/image"
 
 const auth = useAuth()
 
@@ -158,7 +158,7 @@ async function completeTour(passeio) {
     await api.patch(`/tours/${passeio.id}/complete`)
 
     // Envia avaliação do passeador sobre o tutor/passeio
-    await api.post("/avaliacoes", {
+    await api.post("/evaluation", {
       passeio_id: passeio.id,
       nota: rating.value,
       comentario: comment.value,
@@ -187,7 +187,7 @@ async function sendEvaluation(passeioId, tipo) {
   sending.value = true
 
   try {
-    await api.post("/avaliacoes", {
+    await api.post("/evaluation", {
       passeio_id: passeioId,
       nota: rating.value,
       comentario: comment.value,
@@ -233,7 +233,7 @@ onMounted(async () => {
         <div class="col-md-4" v-for="w in walkers" :key="w.id">
           <div class="card h-100 shadow-sm">
             <div class="card-body text-center">
-              <img :src="getFoto(w.foto)" class="rounded-circle mb-3" width="110" height="110">
+              <img :src="getPhoto(w.foto)" class="rounded-circle mb-3" width="110" height="110">
               <h5>{{ w.nome }}</h5>
               <p>📱 {{ w.telefone }}</p>
               <p>

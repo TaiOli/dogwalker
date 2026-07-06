@@ -7,9 +7,9 @@ import Topbar from "./components/organisms/TopBar.vue"
 const route = useRoute()
 
 // se está na página de login ou cadastro
-const isLoginPage = computed(() =>
-  ["/", "/cadastro-usuario"].includes(route.path)
-)
+const isLoginPage = computed(() => {
+  return route.path === "/" || route.path === "/cadastro-usuario"
+})
 </script>
 
 <template>

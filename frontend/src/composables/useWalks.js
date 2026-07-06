@@ -3,25 +3,25 @@ import { api } from "../services/api"
 
 export function useWalks() {
 
-  const passeios = ref([])
+  const tours = ref([])
 
-  async function loadPasseios() {
+  async function loadTours() {
     const response = await api.get("/tours")
-    passeios.value = response.data
+    tours.value = response.data
   }
 
-  async function aceitarPasseio(id) {
+  async function tourAccept(id) {
     await api.put(`/tours/${id}/accept`)
   }
 
-  async function recusarPasseio(id) {
+  async function tourReject(id) {
     await api.patch(`/tours/${id}/reject`)
   }
 
   return {
-    passeios,
-    loadPasseios,
-    aceitarPasseio,
-    recusarPasseio
+    tours,
+    loadTours,
+    tourAccept,
+    tourReject
   }
 }

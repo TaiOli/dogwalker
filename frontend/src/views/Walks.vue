@@ -3,55 +3,55 @@ import { onMounted, computed, ref } from "vue";
 import { useWalks } from "../composables/useWalks";
 
 const {
-  passeios,
-  loadPasseios,
-  aceitarPasseio,
-  recusarPasseio
+  tours,
+  loadTours,
+  tourAccept,
+  tourReject
 } = useWalks();
 
-const carregandoId = ref(null)
+const loadId = ref(null)
 
-const passeiosDisponiveis = computed(() =>
-  passeios.value.filter(p => !p.status || p.status === "pendente")
+const availableTours = computed(() =>
+  tours.value.filter(p => !p.status || p.status === "pendente")
 )
 
-onMounted(loadPasseios);
+onMounted(loadTours);
 
-async function aceitar(id) {
-  carregandoId.value = id
+async function accept(id) {
+  loadId.value = id
 
   try {
-    await aceitarPasseio(id)
+    await tourAccept(id)
 
-    passeios.value = passeios.value.filter(p => p.id !== id)
+    tours.value = tours.value.filter(p => p.id !== id)
 
   } catch (err) {
     console.error("Erro ao aceitar:", err)
     alert(err.response?.data?.message || "Erro ao aceitar passeio")
   } finally {
-    carregandoId.value = null
+    loadId.value = null
   }
 }
 
-async function recusar(id) {
+async function reject(id) {
   const confirmar = confirm(
     "Tem certeza que deseja recusar este passeio?"
   );
 
   if (!confirmar) return;
 
-  carregandoId.value = id
+  loadId.value = id
 
   try {
-    await recusarPasseio(id)
+    await tourReject(id)
 
-    passeios.value = passeios.value.filter(p => p.id !== id)
+    tours.value = tours.value.filter(p => p.id !== id)
 
   } catch (err) {
     console.error("Erro ao recusar:", err)
     alert(err.response?.data?.message || "Erro ao recusar passeio")
   } finally {
-    carregandoId.value = null
+    loadId.value = null
   }
 }
 </script>
@@ -61,13 +61,13 @@ async function recusar(id) {
 
     <h2 class="mb-4 text-start">🚶 Passeios Disponíveis:</h2>
 
-    <div v-if="passeiosDisponiveis.length === 0" class="alert alert-info">
+    <div v-if="availableTours.length === 0" class="alert alert-info">
       Nenhum passeio disponível.
     </div>
 
     <div class="row g-4">
 
-      <div v-for="p in passeiosDisponiveis" :key="p.id" class="col-12 col-md-6 col-lg-4 col-xl-3">
+      <div v-for="p in availableTours" :key="p.id" class="col-12 col-md-6 col-lg-4 col-xl-3">
         <div class="card shadow-sm h-100">
 
           <div class="card-body d-flex flex-column">
@@ -97,18 +97,18 @@ async function recusar(id) {
 
               <button
                 class="btn btn-success flex-fill"
-                @click="aceitar(p.id)"
-                :disabled="carregandoId === p.id"
+                @click="accept(p.id)"
+                :disabled="loadId === p.id"
               >
-                {{ carregandoId === p.id ? "⏳" : "Aceitar" }}
+                {{ loadId === p.id ? "⏳" : "Aceitar" }}
               </button>
 
               <button
                 class="btn btn-danger flex-fill"
-                @click="recusar(p.id)"
-                :disabled="carregandoId === p.id"
+                @click="reject(p.id)"
+                :disabled="loadId === p.id"
               >
-                {{ carregandoId === p.id ? "⏳" : "Recusar" }}
+                {{ loadId === p.id ? "⏳" : "Recusar" }}
               </button>
 
             </div>

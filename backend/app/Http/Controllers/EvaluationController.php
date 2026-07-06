@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EvaluationRequest;
+use App\Http\Requests\StoreEvaluationRequest;
 use App\Models\Tour;
 use App\Services\EvaluationService;
 
@@ -12,7 +12,7 @@ class EvaluationController extends Controller
         private EvaluationService $EvaluationService
     ) {}
 
-    public function store(EvaluationRequest $request)
+    public function store(StoreEvaluationRequest $request)
     {
         $data = $request->validated();
 

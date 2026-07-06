@@ -2,16 +2,16 @@
 import { ref, computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
 import { api } from "../services/api"
-import { getFoto } from "../utils/image"
+import { getPhoto } from "../utils/image"
 
 const route = useRoute()
 
 const walker = ref({})
 
 // Lista de avaliações recebidas pelo passeador (já filtradas por tipo_avaliador=tutor no backend)
-const avaliacoes = computed(() => walker.value.avaliacoes_recebidas ?? [])
+const evaluations = computed(() => walker.value.received_reviews ?? [])
 
-function formatarData(data) {
+function formatDate(data) {
   if (!data) return ""
   const date = new Date(data)
   return date.toLocaleDateString("pt-BR")
@@ -30,7 +30,7 @@ onMounted(async () => {
         <div class="card shadow-sm p-4 text-center">
 
           <img
-            :src="getFoto(walker.foto)"
+            :src="getPhoto(walker.foto)"
             class="profile-photo mx-auto mb-3"
             alt="Foto do passeador"
           >
@@ -60,13 +60,13 @@ onMounted(async () => {
           <div class="text-start">
             <h5 class="mb-3">💬 Avaliações de Tutores</h5>
 
-            <div v-if="!avaliacoes.length" class="alert alert-info">
+            <div v-if="!evaluations.length" class="alert alert-info">
               Este passeador ainda não recebeu avaliações.
             </div>
 
             <div
               v-else
-              v-for="av in avaliacoes"
+              v-for="av in evaluations"
               :key="av.id"
               class="avaliacao-item mb-3"
             >
@@ -82,7 +82,7 @@ onMounted(async () => {
               </p>
 
               <p class="text-muted small mb-0">
-                — {{ av.tutor?.nome ?? "Tutor" }} em {{ formatarData(av.created_at) }}
+                — {{ av.tutor?.nome ?? "Tutor" }} em {{ formatDate(av.created_at) }}
               </p>
             </div>
           </div>

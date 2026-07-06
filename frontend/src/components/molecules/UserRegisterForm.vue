@@ -11,7 +11,7 @@ const props = defineProps({
 
 const emit = defineEmits(["submit"])
 
-const tiposUsuario = [
+const typeUsers = [
   { label: "Tutor", value: "tutor" },
   { label: "Passeador", value: "passeador" }
 ]
@@ -36,11 +36,11 @@ function handleFile(event) {
   <div class="form">
 
     <div class="mb-3">
-      <BaseInput v-model="form.name" placeholder="Nome de usuário" />
+      <BaseInput v-model="form.username" placeholder="Nome de usuário" />
     </div>
 
     <div class="mb-3">
-      <BaseInput v-model="form.nome" placeholder="Nome completo" />
+      <BaseInput v-model="form.name" placeholder="Nome completo" />
     </div>
 
     <div class="mb-3">
@@ -55,8 +55,8 @@ function handleFile(event) {
       <label class="form-label text-start w-100">Tipo de usuário:</label>
       <div class="mb-3">
         <BaseSelect
-          v-model="form.tipo_usuario"
-          :options="tiposUsuario"
+          v-model="form.type_user"
+          :options="typeUsers"
           labelKey="label"
           valueKey="value"
         />
@@ -64,7 +64,7 @@ function handleFile(event) {
     </div>
 
     <div class="mb-3">
-      <BaseInput v-model="form.telefone" placeholder="Telefone (opcional)" />
+      <BaseInput v-model="form.phone" placeholder="Telefone (opcional)" />
     </div>
 
     <div class="mb-3">
@@ -82,7 +82,7 @@ function handleFile(event) {
 
         <input
           class="form-control"
-          :value="form.foto ? form.foto.name : ''"
+          :value="form.photo ? form.foto.name : ''"
           placeholder="Nenhuma foto selecionada"
           readonly
         />

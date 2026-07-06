@@ -1,6 +1,6 @@
 <script setup>
 import { useAuth } from "../../composables/userAuth"
-import { getFoto } from "../../utils/image"
+import { getPhoto } from "../../utils/image"
 
 const auth = useAuth()
 
@@ -17,7 +17,7 @@ function logout(){
     <div class="dropdown">
 
       <img
-        :src="getFoto(auth.user.value?.foto)"
+        :src="getPhoto(auth.user.value?.foto)"
         class="profile-photo dropdown-toggle"
         data-bs-toggle="dropdown"
       />

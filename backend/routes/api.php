@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/tours/{id}/reject', [TourController::class, 'reject']);
     Route::patch('/tours/{id}/cancel', [TourController::class, 'cancel']);
     Route::get('/my-tours',[TourController::class, 'myTours']);
-    Route::post('/tours/{id}/complete', [TourController::class, 'complete']); 
+    Route::patch('/tours/{id}/complete', [TourController::class, 'complete']);
     Route::delete('/tours/{id}', [TourController::class, 'destroy']);
     Route::post('/evaluation', [EvaluationController::class, 'store']);
     Route::get('/me', function (Request $request) {

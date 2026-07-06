@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { api } from "../services/api"
-import { getFoto } from "../utils/image"
+import { getPhoto } from "../utils/image"
 
 const user = ref(null)
 const loading = ref(true)
@@ -24,7 +24,7 @@ onMounted(async () => {
     <div v-if="!loading && user" class="card p-4 shadow-sm text-center">
 
       <img
-        :src="getFoto(user?.foto)"
+        :src="getPhoto(user?.foto)"
         class="rounded-circle mb-3"
         width="120"
         height="120"
