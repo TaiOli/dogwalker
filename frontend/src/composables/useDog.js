@@ -5,41 +5,43 @@ import { api } from "../services/api";
 export function useDog() {
 
   const formDog = reactive({
-    nome: "",
-    idade: "",
-    porte: "",
-    raca: "",
-    observacoes: "",
-    foto: ""
+    name: "",
+    age: "",
+    size: "",
+    breed: "",
+    observations: "",
+    photo: ""
   });
 
-  async function cadastrarDog() {
+  async function registerDog() {
+    let photo = formDog.photo;
 
-    let foto = formDog.foto;
-
-    // Se não informou foto, busca uma aleatória
-    if (!foto || foto.trim() === "") {
-      foto = await getRandomDogImage();
+    if (!photo) {
+      photo = await getRandomDogImage();
     }
 
     return await api.post("/dogs", {
-      ...formDog,
-      foto
+      nome: formDog.name,
+      idade: formDog.age ? Number(formDog.age) : null,
+      porte: formDog.size,
+      raca: formDog.breed,
+      observacoes: formDog.observations,
+      foto: photo
     });
-  }
+}
 
   function clearDog() {
-    formDog.nome = "";
-    formDog.idade = "";
-    formDog.porte = "";
-    formDog.raca = "";
-    formDog.observacoes = "";
-    formDog.foto = "";
+    formDog.name = "";
+    formDog.age = "";
+    formDog.size = "";
+    formDog.breed = "";
+    formDog.observations = "";
+    formDog.photo = "";
   }
 
   return {
     formDog,
-    cadastrarDog,
+    registerDog,
     clearDog
   };
 }

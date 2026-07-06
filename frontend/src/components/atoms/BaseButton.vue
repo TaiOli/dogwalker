@@ -10,7 +10,7 @@ const emit = defineEmits(["click"])
   <button
     type="button"
     class="btn btn-success w-100 py-2 fw-bold"
-    @click="emit('click')"
+    @click="$emit('click')"
   >
     {{ label }}
   </button>

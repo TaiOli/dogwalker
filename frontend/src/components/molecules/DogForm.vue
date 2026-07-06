@@ -21,7 +21,7 @@ function handleFile(event) {
   const file = event.target.files[0]
   if (!file) return
 
-  props.form.foto = file
+  props.form.photo = file
   preview.value = URL.createObjectURL(file)
 }
 </script>
@@ -30,23 +30,23 @@ function handleFile(event) {
   <div class="form">
 
     <div class="mb-2">
-      <BaseInput v-model="form.nome" placeholder="Nome do cachorro" />
+      <BaseInput v-model="form.name" placeholder="Nome do cachorro" />
     </div>
 
     <div class="mb-2">
-      <BaseInput v-model="form.idade" placeholder="Idade" type="number" />
+      <BaseInput v-model="form.age" placeholder="Idade" type="number" />
     </div>
 
     <div class="mb-2">
-      <BaseInput v-model="form.porte" placeholder="Porte (pequeno, médio, grande)" />
+      <BaseInput v-model="form.size" placeholder="Porte (pequeno, médio, grande)" />
     </div>
 
     <div class="mb-2">
-      <BaseInput v-model="form.raca" placeholder="Raça" />
+      <BaseInput v-model="form.breed" placeholder="Raça" />
     </div>
 
     <div class="mb-2">
-      <BaseInput v-model="form.observacoes" placeholder="Observações" />
+      <BaseInput v-model="form.observations" placeholder="Observações" />
     </div>
 
     <div class="mb-3 d-flex align-items-center gap-2">

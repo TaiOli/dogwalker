@@ -4,10 +4,11 @@ import DogForm from "../components/molecules/DogForm.vue"
 import { useDog } from "../composables/useDog"
 import { api } from "../services/api"
 
-const { formDog, cadastrarDog, clearDog } = useDog()
+const { formDog, registerDog, clearDog } = useDog()
 
 const dogs = ref([])
 const search = ref("")
+const showModal = ref(false)
 
 const filteredDogs = computed(() => {
   return dogs.value.filter(dog =>
@@ -21,17 +22,22 @@ async function loadDogs() {
   dogs.value = res.data
 }
 
-async function salvar() {
+async function openModal() {
+  showModal.value = true
+}
+
+async function closeModal() {
+  showModal.value = false
+}
+
+async function save() {
   try {
-    await cadastrarDog()
+    await registerDog()
 
     clearDog()
     await loadDogs()
 
-    const modal = bootstrap.Modal.getInstance(
-      document.getElementById("dogModal")
-    )
-    modal.hide()
+    showModal.value = false
 
   } catch (error) {
     console.log(error)
@@ -45,10 +51,11 @@ onMounted(loadDogs)
 <template>
   <div class="container py-4">
 
+    <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h2>Cadastro do dog</h2>
 
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dogModal">
+      <button class="btn btn-primary" @click="openModal">
         Novo
       </button>
     </div>
@@ -93,30 +100,28 @@ onMounted(loadDogs)
     </div>
 
     <!-- MODAL -->
-    <div class="modal fade" id="dogModal" tabindex="-1">
-      <div class="modal-dialog  modal-lg">
-        <div class="modal-content">
+    <div v-if="showModal" class="modal-overlay">
+      <div class="modal-box">
 
-          <div class="modal-header">
-            <h5 class="modal-title">Cadastrar cachorro</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
+        <div class="modal-header d-flex justify-content-between align-items-center">
+          <h5 class="modal-title">Cadastrar cachorro</h5>
 
-          <div class="modal-body">
-            <DogForm
-              :form="formDog"
-              labelButton="Salvar"
-              @submit="salvar"
-            />
-          </div>
-
+          <button class="btn-close" @click="closeModal"></button>
         </div>
+
+        <div class="modal-body mt-3">
+          <DogForm
+            :form="formDog"
+            labelButton="Salvar"
+            @submit="save"
+          />
+        </div>
+
       </div>
     </div>
 
   </div>
 </template>
-
 
 <style scoped>
 .dog-img {
@@ -141,5 +146,23 @@ onMounted(loadDogs)
 h2 {
   text-align: left;
   font-size: 25px;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: #fff;
+  width: 90%;
+  max-width: 700px;
+  border-radius: 12px;
+  padding: 20px;
 }
 </style>
