@@ -10,104 +10,77 @@ use Illuminate\Http\Request;
 class TourController extends Controller
 {
     public function __construct(
-        private TourService  $passeioService
+        private TourService  $tourService
     ) {}
 
     // Criar Passeio
     public function store(StoreTourRequest $request)
     {
-        $passeio = $this->passeioService->create(
+        $tour = $this->tourService->create(
             $request->validated(),
             $request->user()->id
         );
 
         return response()->json([
             'message' => 'Passeio solicitado com sucesso',
-            'passeio' => $passeio
+            'passeio' => $tour
         ]);
     }
 
     // Listar Passeio
     public function index()
     {
-        return $this->passeioService->listAvailable();
+        return $this->tourService->listAvailable();
     }
 
     public function accept($id, Request $request)
     {
-        $passeio = $this->passeioService->accept(
+        $tour = $this->tourService->accept(
             $id,
             $request->user()->id
         );
 
         return response()->json([
             'message' => 'Passeio aceito com sucesso',
-            'passeio' => $passeio
+            'passeio' => $tour
         ]);
     }
 
     public function reject($id)
     {
-        $passeio = $this->passeioService->reject($id);
+        $tour = $this->tourService->reject($id);
 
         return response()->json([
             'message' => 'Passeio recusado',
-            'status' => $passeio->status
-        ]);
-    }
-
-
-    public function cancel($id, Request $request)
-    {
-        $passeio = Tour::findOrFail($id);
-
-        if ($passeio->tutor_id !== $request->user()->id) {
-            return response()->json([
-                'message' => 'Você não tem permissão para cancelar este passeio.'
-            ], 403);
-        }
-
-        if (!in_array($passeio->status, ['pendente', 'aceito'])) {
-            return response()->json([
-                'message' => 'Só é possível cancelar passeios pendentes ou aceitos.'
-            ], 422);
-        }
-
-        $passeio->update([
-            'status' => 'cancelado'
-        ]);
-
-        return response()->json([
-            'message' => 'Passeio cancelado com sucesso',
-            'passeio' => $passeio
+            'status' => $tour->status
         ]);
     }
 
     public function myTours(Request $request)
     {
-        return $this->passeioService->myTours(
+        return $this->tourService->myTours(
             $request->user()
         );
     }
 
     public function complete($id)
     {
-        $passeio = Tour::findOrFail($id);
+        $tour = Tour::findOrFail($id);
 
-        $passeio->update([
+        $tour->update([
             'status' => 'finalizado'
         ]);
 
         return response()->json([
             'message' => 'Passeio finalizado com sucesso',
-            'passeio' => $passeio
+            'passeio' => $tour
         ]);
     }
 
     // Excluir Passeio
     public function destroy($id)
     {
-        $this->passeioService->delete($id);
+        $this->tourService->delete($id);
 
         return response()->json([
             'message' => 'Passeio removido com sucesso'
