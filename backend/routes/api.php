@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\AvaliacaoController;
+use App\Http\Controllers\EvaluationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DogController;
@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/my-tours',[TourController::class, 'myTours']);
     Route::post('/tours/{id}/complete', [TourController::class, 'complete']); 
     Route::delete('/tours/{id}', [TourController::class, 'destroy']);
-    Route::post('/avaliacoes', [AvaliacaoController::class, 'store']);
+    Route::post('/avaliacoes', [EvaluationController::class, 'store']);
     Route::get('/me', function (Request $request) {
         $user = $request->user();
         return [
