@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AvaliacaoRequest;
+use App\Http\Requests\EvaluationRequest;
 use App\Models\Tour;
-use App\Services\AvaliacaoService;
+use App\Services\EvaluationService;
 
-class AvaliacaoController extends Controller
+class EvaluationController extends Controller
 {
     public function __construct(
-        private AvaliacaoService $avaliacaoService
+        private EvaluationService $avaliacaoService
     ) {}
 
-    public function store(AvaliacaoRequest $request)
+    public function store(EvaluationRequest $request)
     {
         $data = $request->validated();
 

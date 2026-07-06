@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Evaluation;
 
-class AvaliacaoService
+class EvaluationService
 {
     public function create(array $data)
     {
