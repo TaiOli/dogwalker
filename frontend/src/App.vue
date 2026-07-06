@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue"
 import { useRoute } from "vue-router"
 import SidebarMenu from "./components/organisms/SidebarMenu.vue"
@@ -7,7 +7,7 @@ import Topbar from "./components/organisms/TopBar.vue"
 const route = useRoute()
 
 // se está na página de login ou cadastro
-const isLoginPage = computed(() => {
+const isLoginPage = computed<boolean>(() => {
   return route.path === "/" || route.path === "/cadastro-usuario"
 })
 </script>

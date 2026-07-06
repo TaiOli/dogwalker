@@ -9,7 +9,7 @@ use App\Services\EvaluationService;
 class EvaluationController extends Controller
 {
     public function __construct(
-        private EvaluationService $EvaluationService
+        private EvaluationService $evaluationService
     ) {}
 
     public function store(StoreEvaluationRequest $request)
@@ -18,7 +18,7 @@ class EvaluationController extends Controller
 
         $tour = Tour::findOrFail($data['passeio_id']);
 
-        $evaluation = $this->EvaluationService->create([
+        $evaluation = $this->evaluationService->create([
             'passeio_id' => $tour->id,
             'tutor_id' => $tour->tutor_id,
             'passeador_id' => $tour->passeador_id,

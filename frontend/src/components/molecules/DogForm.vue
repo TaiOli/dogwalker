@@ -1,24 +1,38 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 
-const props = defineProps({
-  form: Object,
-  labelButton: String
-})
-
-const emit = defineEmits(["submit"])
-
-const preview = ref(null)
-const fileInput = ref(null)
-
-function openFile() {
-  fileInput.value.click()
+interface DogForm {
+  name: string
+  age: string | number
+  size: string
+  breed: string
+  observations: string
+  photo: File | null
 }
 
-function handleFile(event) {
-  const file = event.target.files[0]
+interface RegisterDogFormProps {
+  form: DogForm
+  labelButton: string
+}
+
+const props = defineProps<RegisterDogFormProps>()
+
+const emit = defineEmits<{
+  submit: []
+}>()
+
+const preview = ref<string | null>(null)
+const fileInput = ref<HTMLInputElement | null>(null)
+
+function openFile(): void {
+  fileInput.value?.click()
+}
+
+function handleFile(event: Event): void {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
   if (!file) return
 
   props.form.photo = file

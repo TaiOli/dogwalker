@@ -1,13 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue"
 import { useAuth } from "../../composables/userAuth"
 
-const auth = useAuth()
-const tutor = auth.tutor
-const walker = auth.walker
+const { tutor, walker } = useAuth()
 const collapsed = ref(false)
 
-function toggle() {
+function toggle(): void {
   collapsed.value = !collapsed.value
 }
 </script>
@@ -35,7 +33,6 @@ function toggle() {
     </nav>
   </aside>
 </template>
-
 
 <style scoped>
 .sidebar {

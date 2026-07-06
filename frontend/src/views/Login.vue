@@ -1,16 +1,33 @@
-
-<script setup>
+<script setup lang="ts">
 import { useAuth } from "../composables/userAuth";
 import UserAuthForm from "../components/molecules/UserAuthForm.vue";
 import { useRouter } from "vue-router";
+
+interface LoginResponse {
+  user: {
+    id: number;
+    name: string;
+    login: string;
+    email: string;
+    tipo_usuario: "tutor" | "passeador";
+    telefone?: string;
+    foto?: string;
+  };
+  token: string;
+}
+
+interface ApiErrorResponse {
+  message?: string;
+  errors?: Record<string, string[]>;
+}
 
 const router = useRouter();
 
 const { formLogin, login, clearLogin } = useAuth();
 
-async function loginAccess() {
+async function loginAccess(): Promise<void> {
   try {
-    const data = await login();
+    const data = (await login()) as LoginResponse;
 
     alert("Login realizado com sucesso!");
 
@@ -21,8 +38,15 @@ async function loginAccess() {
 
     router.push("/home");
   } catch (error) {
-    console.log(error);
-    alert("Email ou senha inválidos");
+    const err = error as { response?: { data?: ApiErrorResponse } };
+
+    console.log(err);
+
+    const firstFieldError = err.response?.data?.errors
+      ? Object.values(err.response.data.errors)[0]?.[0]
+      : null;
+
+    alert(firstFieldError || err.response?.data?.message || "Email ou senha inválidos");
   }
 }
 </script>

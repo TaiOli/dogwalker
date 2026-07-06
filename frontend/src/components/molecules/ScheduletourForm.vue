@@ -1,14 +1,34 @@
-<script setup>
+<script setup lang="ts">
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
 
-const props = defineProps({
-  form: Object,
-  dogs: Array
-})
+interface DogOption {
+  id: string | number
+  nome: string
+  [key: string]: string | number
+}
 
-const emit = defineEmits(["submit"])
+interface ScheduleTourForm {
+  dog_id: string | number
+  date: string
+  hour: string
+  duration: string
+  value: string | number
+  location: string
+}
+
+interface ScheduleTourFormProps {
+  form: ScheduleTourForm
+  labelButton: string
+  dogs: DogOption[]
+}
+
+const props = defineProps<ScheduleTourFormProps>()
+
+const emit = defineEmits<{
+  submit: []
+}>()
 </script>
 
 <template>
@@ -60,7 +80,7 @@ const emit = defineEmits(["submit"])
 
     <div class="mt-4 d-grid">
       <BaseButton
-        label="Solicitar passeio"
+        :label="labelButton"
         @click="emit('submit')"
       />
     </div>

@@ -1,13 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseInput from "../atoms/BaseInput.vue";
 
-defineProps({
-  form: Object,
-  labelButton: String
-});
+interface UserAuthForm {
+  email: string
+  password: string
+}
 
-const emit = defineEmits(["submit"]);
+interface UserAuthFormProps {
+  form: UserAuthForm
+  labelButton: string
+}
+const props = defineProps<UserAuthFormProps>();
+
+const emit = defineEmits<{
+  submit: []
+}>();
 </script>
 
 <template>

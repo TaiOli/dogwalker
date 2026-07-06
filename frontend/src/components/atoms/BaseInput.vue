@@ -1,14 +1,18 @@
-<script setup>
-defineProps({
-  modelValue: String,
-  placeholder: String,
+<script setup lang="ts">
+
+interface BaseInputProps {
+  modelValue: string
+  placeholder: string
   type: {
-    type: String,
+    type: string
     default: "text"
   }
-})
-
-const emit = defineEmits(["update:modelValue"])
+}
+defineProps<BaseInputProps>()
+  
+const emit = defineEmits<{
+  "update:modelValue": [value: string]
+}>()
 </script>
 
 <template>

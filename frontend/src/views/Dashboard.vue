@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from "vue"
 import { useAuth } from "../composables/userAuth"
 import { api } from "../services/api"
@@ -19,7 +19,7 @@ const rating = ref(0)
 const comment = ref("")
 const sending = ref(false)
 
-const DISMISSED_KEY = "dashboard_dismissed_passeios"
+const DISMISSED_KEY = "dashboard_dismissed_tours"
 const dismissedIds = ref(new Set())
 
 function loadDismissed() {

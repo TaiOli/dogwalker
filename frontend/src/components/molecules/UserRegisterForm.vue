@@ -1,33 +1,48 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
 
-const props = defineProps({
-  form: Object,
-  labelButton: String
-})
+interface RegisterForm {
+  username: string
+  name: string
+  email: string
+  password: string
+  phone: string
+  type_user: string
+  photo: File | string
+}
 
-const emit = defineEmits(["submit"])
+interface UserRegisterFormProps {
+  form: RegisterForm
+  labelButton: string
+}
+
+const props = defineProps<UserRegisterFormProps>()
+
+const emit = defineEmits<{
+  submit: []
+}>()
 
 const typeUsers = [
   { label: "Tutor", value: "tutor" },
   { label: "Passeador", value: "passeador" }
 ]
 
-const fileInput = ref(null)
-const preview = ref(null)
+const fileInput = ref<HTMLInputElement | null>(null)
+const preview = ref<string | null>(null)
 
-function openFile() {
-  fileInput.value.click()
+function openFile(): void {
+  fileInput.value?.click()
 }
 
-function handleFile(event) {
-  const file = event.target.files[0]
+function handleFile(event: Event): void {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
   if (!file) return
 
-  props.form.foto = file
+  props.form.photo = file
   preview.value = URL.createObjectURL(file)
 }
 </script>
@@ -82,7 +97,7 @@ function handleFile(event) {
 
         <input
           class="form-control"
-          :value="form.photo ? form.foto.name : ''"
+          :value="form.photo && form.photo instanceof File ? form.photo.name : ''"
           placeholder="Nenhuma foto selecionada"
           readonly
         />
