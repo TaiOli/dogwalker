@@ -9,19 +9,19 @@ use App\Services\EvaluationService;
 class EvaluationController extends Controller
 {
     public function __construct(
-        private EvaluationService $avaliacaoService
+        private EvaluationService $EvaluationService
     ) {}
 
     public function store(EvaluationRequest $request)
     {
         $data = $request->validated();
 
-        $passeio = Tour::findOrFail($data['passeio_id']);
+        $tour = Tour::findOrFail($data['passeio_id']);
 
-        $avaliacao = $this->avaliacaoService->create([
-            'passeio_id' => $passeio->id,
-            'tutor_id' => $passeio->tutor_id,
-            'passeador_id' => $passeio->passeador_id,
+        $evaluation = $this->EvaluationService->create([
+            'passeio_id' => $tour->id,
+            'tutor_id' => $tour->tutor_id,
+            'passeador_id' => $tour->passeador_id,
             'nota' => $data['nota'],
             'comentario' => $data['comentario'] ?? null,
             'tipo_avaliador' => $data['tipo_avaliador'],
@@ -29,7 +29,7 @@ class EvaluationController extends Controller
 
         return response()->json([
             'message' => 'Avaliação enviada com sucesso',
-            'avaliacao' => $avaliacao
+            'avaliacao' => $evaluation
         ], 201);
     }
 }
