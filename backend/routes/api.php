@@ -6,25 +6,14 @@ use App\Http\Controllers\DogController;
 use App\Http\Controllers\TourController;
 use Illuminate\Http\Request;
 
-Route::post('/users', [UserController::class, 'store']);
-Route::post('/login', [UserController::class, 'login']);
+Route::controller(UserController::class)->group(function(){
+    Route::post('/users','store');
+    Route::post('/login','login');
+ });
 
 // Protegidas
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/walkers', [UserController::class, 'walkers']);
-    Route::get('/walkers/{id}', [UserController::class, 'show']);
-    Route::get('/tutors/{id}', [UserController::class, 'showTutor']);
-    Route::post('/dogs', [DogController::class, 'store']);
-    Route::get('/dogs/my', [DogController::class, 'myDogs']);
-    Route::post('/tours', [TourController::class, 'store']);
-    Route::get('/tours', [TourController::class, 'index']);
-    Route::put('/tours/{id}/accept', [TourController::class, 'accept']);
-    Route::patch('/tours/{id}/reject', [TourController::class, 'reject']);
-    Route::patch('/tours/{id}/cancel', [TourController::class, 'cancel']);
-    Route::get('/my-tours',[TourController::class, 'myTours']);
-    Route::patch('/tours/{id}/complete', [TourController::class, 'complete']);
-    Route::delete('/tours/{id}', [TourController::class, 'destroy']);
-    Route::post('/evaluation', [EvaluationController::class, 'store']);
+
     Route::get('/me', function (Request $request) {
         $user = $request->user();
         return [
@@ -35,5 +24,31 @@ Route::middleware('auth:sanctum')->group(function () {
             'tipo_usuario' => $user->tipo_usuario,
             'foto' => $user->foto
         ];
+    });
+    
+    Route::controller(UserController::class)->group(function(){
+        Route::get('/walkers','walkers');
+        Route::get('/walkers/{id}','show');
+        Route::get('/tutors/{id}','showTutor');
+    });
+    
+    Route::controller(DogController::class)->group(function(){
+        Route::post('/dogs','store');
+        Route::get('/dogs/my','myDogs');
+    });
+
+    Route::controller(TourController::class)->group(function(){
+        Route::post('/tours','store');
+        Route::get('/tours','index');
+        Route::put('/tours/{id}/accept','accept');
+        Route::patch('/tours/{id}/reject','reject');
+        Route::patch('/tours/{id}/cancel','cancel');
+        Route::get('/my-tours','myTours');
+        Route::patch('/tours/{id}/complete','complete');
+        Route::delete('/tours/{id}','destroy');
+    });
+
+    Route::controller(TourController::class)->group(function(){
+        Route::post('/evaluation','store');
     });
 });
