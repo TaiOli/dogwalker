@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/tours/{id}','destroy');
     });
 
-    Route::controller(TourController::class)->group(function(){
+    Route::controller(EvaluationController::class)->group(function(){
         Route::post('/evaluation','store');
     });
 });
