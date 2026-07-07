@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Services\UserService;
 
@@ -25,7 +24,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function login(LoginRequest $request)
+    public function login(StoreLoginRequest $request)
     {
         $result = $this->userService->login(
             $request->validated()

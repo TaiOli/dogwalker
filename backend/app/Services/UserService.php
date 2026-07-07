@@ -4,10 +4,11 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserService
 {
-    public function create(array $data)
+    public function create(array $data): User
     {
         if (isset($data['foto'])) {
             $data['foto'] = $data['foto']->store('users', 'public');
@@ -18,7 +19,7 @@ class UserService
         return User::create($data);
     }
 
-    public function login(array $data)
+    public function login(array $data): ?array
     {
         $user = User::where('email', $data['email'])->first();
 
@@ -34,7 +35,7 @@ class UserService
         ];
     }
 
-    public function walkers()
+    public function walkers(): Collection
     {
         return User::where('tipo_usuario', 'passeador')
             ->withAvg('avaliacoesRecebidas', 'nota')
@@ -50,7 +51,7 @@ class UserService
             });
     }
 
-    public function show($id)
+    public function show($id): User
     {
         return User::where('id', $id)
             ->with(['avaliacoesRecebidas' => function ($q) {
@@ -62,7 +63,7 @@ class UserService
             ->firstOrFail();
     }
 
-    public function showTutor($id)
+    public function showTutor($id): User
     {
         return User::where('id', $id)
             ->with(['avaliacoesFeitas' => function ($q) {

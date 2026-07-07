@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Controllers\TourController;
 use App\Models\Evaluation;
 use App\Models\Tour;
 
