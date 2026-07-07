@@ -1,17 +1,37 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
 import { api } from "../services/api"
 import { getPhoto } from "../utils/image"
 
+interface Review {
+  id: number
+  nota: number
+  comentario?: string | null
+  created_at: string
+  tutor?: {
+    id: number
+    nome: string
+  }
+}
+
+interface Walker {
+  id: number
+  nome: string
+  email: string
+  telefone?: string
+  foto?: string
+  received_reviews?: Review[]
+}
+
 const route = useRoute()
 
-const walker = ref({})
+const walker = ref<Walker | Record<string, never>>({})
 
 // Lista de avaliações recebidas pelo passeador (já filtradas por tipo_avaliador=tutor no backend)
-const evaluations = computed(() => walker.value.received_reviews ?? [])
+const evaluations = computed<Review[]>(() => (walker.value as Walker).received_reviews ?? [])
 
-function formatDate(data) {
+function formatDate(data: string | null | undefined): string {
   if (!data) return ""
   const date = new Date(data)
   return date.toLocaleDateString("pt-BR")

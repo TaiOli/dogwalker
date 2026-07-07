@@ -1,14 +1,23 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from "vue"
 import DogForm from "../components/molecules/DogForm.vue"
 import { useDog } from "../composables/useDog"
 import { api } from "../services/api"
 
+interface Dog {
+  id: number
+  nome: string
+  raca?: string
+  idade?: number
+  porte?: string
+  foto?: string
+}
+
 const { formDog, registerDog, clearDog } = useDog()
 
-const dogs = ref([])
-const search = ref("")
-const showModal = ref(false)
+const dogs = ref<Dog[]>([])
+const search = ref<string>("")
+const showModal = ref<boolean>(false)
 
 const filteredDogs = computed(() => {
   return dogs.value.filter(dog =>
@@ -17,20 +26,20 @@ const filteredDogs = computed(() => {
   )
 })
 
-async function loadDogs() {
+async function loadDogs(): Promise<void> {
   const res = await api.get("/dogs/my")
   dogs.value = res.data
 }
 
-async function openModal() {
+async function openModal(): void {
   showModal.value = true
 }
 
-async function closeModal() {
+async function closeModal(): void {
   showModal.value = false
 }
 
-async function save() {
+async function save(): Promise<void> {
   try {
     await registerDog()
 

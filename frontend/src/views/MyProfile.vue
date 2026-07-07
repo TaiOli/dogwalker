@@ -1,10 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue"
 import { api } from "../services/api"
 import { getPhoto } from "../utils/image"
 
-const user = ref(null)
-const loading = ref(true)
+interface User {
+  id: number
+  nome: string
+  email: string
+  telefone?: string
+  foto?: string
+  tipo_usuario: string
+}
+
+const user = ref<User | null>(null)
+const loading = ref<boolean>(true)
 
 onMounted(async () => {
   try {

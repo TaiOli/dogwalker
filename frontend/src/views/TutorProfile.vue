@@ -1,17 +1,37 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
 import { api } from "../services/api"
 import { getPhoto } from "../utils/image"
 
+interface Review {
+  id: number
+  nota: number
+  comentario?: string | null
+  created_at: string
+  passeador?: {
+    id: number
+    nome: string
+  }
+}
+
+interface Tutor {
+  id: number
+  nome: string
+  email: string
+  telefone?: string
+  foto?: string
+  submitted_reviews?: Review[]
+}
+
 const route = useRoute()
 
-const tutor = ref({})
+const tutor = ref<Tutor | Record<string, never>>({})
 
 // Avaliações que passeadores fizeram sobre esse tutor (já filtradas no backend por tipo_avaliador=passeador)
-const evaluations = computed(() => tutor.value.submitted_reviews ?? [])
+const evaluations = computed<Review[]>(() => (tutor.value as Tutor).submitted_reviews ?? [])
 
-function formatDate(data) {
+function formatDate(data: string | null | undefined): string {
   if (!data) return ""
   const date = new Date(data)
   return date.toLocaleDateString("pt-BR")

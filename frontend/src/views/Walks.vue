@@ -1,55 +1,87 @@
-<script setup>
-import { onMounted, computed, ref } from "vue";
-import { useWalks } from "../composables/useWalks";
+<script setup lang="ts">
+import { onMounted, computed, ref } from "vue"
+import { useWalks } from "../composables/useWalks"
+
+interface Dog {
+  id: number
+  nome: string
+}
+
+interface Tutor {
+  id: number
+  nome: string
+}
+
+type TourStatus = "pendente" | "aceito" | "recusado" | "finalizado" | "cancelado"
+
+interface Tour {
+  id: number
+  data: string
+  hora: string
+  local: string
+  status?: TourStatus
+  dog?: Dog
+  tutor?: Tutor
+}
+
+interface ApiErrorResponse {
+  response?: {
+    data?: {
+      message?: string
+    }
+  }
+}
 
 const {
   tours,
   loadTours,
   tourAccept,
   tourReject
-} = useWalks();
+} = useWalks()
 
-const loadId = ref(null)
+const loadId = ref<number | null>(null)
 
-const availableTours = computed(() =>
-  tours.value.filter(p => !p.status || p.status === "pendente")
+const availableTours = computed<Tour[]>(() =>
+  tours.value.filter((p: Tour) => !p.status || p.status === "pendente")
 )
 
-onMounted(loadTours);
+onMounted(loadTours)
 
-async function accept(id) {
+async function accept(id: number): Promise<void> {
   loadId.value = id
 
   try {
     await tourAccept(id)
 
-    tours.value = tours.value.filter(p => p.id !== id)
+    tours.value = tours.value.filter((p: Tour) => p.id !== id)
 
   } catch (err) {
     console.error("Erro ao aceitar:", err)
-    alert(err.response?.data?.message || "Erro ao aceitar passeio")
+    const error = err as ApiErrorResponse
+    alert(error.response?.data?.message || "Erro ao aceitar passeio")
   } finally {
     loadId.value = null
   }
 }
 
-async function reject(id) {
+async function reject(id: number): Promise<void> {
   const confirmar = confirm(
     "Tem certeza que deseja recusar este passeio?"
-  );
+  )
 
-  if (!confirmar) return;
+  if (!confirmar) return
 
   loadId.value = id
 
   try {
     await tourReject(id)
 
-    tours.value = tours.value.filter(p => p.id !== id)
+    tours.value = tours.value.filter((p: Tour) => p.id !== id)
 
   } catch (err) {
     console.error("Erro ao recusar:", err)
-    alert(err.response?.data?.message || "Erro ao recusar passeio")
+    const error = err as ApiErrorResponse
+    alert(error.response?.data?.message || "Erro ao recusar passeio")
   } finally {
     loadId.value = null
   }

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted } from "vue"
 import ScheduletourForm from "../components/molecules/ScheduletourForm.vue"
 import { useScheduletour } from "../composables/useScheduletour"
@@ -15,7 +15,7 @@ onMounted(() => {
   loadDogs()
 })
 
-async function save() {
+async function save(): Promise<void> {
   try {
     await requestTour()
 

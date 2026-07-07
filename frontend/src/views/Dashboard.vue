@@ -4,25 +4,69 @@ import { useAuth } from "../composables/userAuth"
 import { api } from "../services/api"
 import { getPhoto } from "../utils/image"
 
+interface Dog {
+  id: number
+  nome: string
+}
+
+interface Person {
+  id: number
+  nome: string
+  telefone?: string
+  foto?: string
+  media_avaliacao?: number | null
+}
+
+interface Review {
+  rating: number
+  comment?: string | null
+}
+
+type TourStatus = "pendente" | "aceito" | "recusado" | "finalizado" | "cancelado"
+
+interface Tour {
+  id: number
+  data: string
+  hora: string
+  local: string
+  status: TourStatus
+  dog?: Dog
+  tutor?: Person
+  walker?: Person
+  rated_by_tutor?: boolean
+  review_by_tutor?: Review | null
+  review_by_walker?: Review | null
+}
+
+type Avaliador = "tutor" | "passeador"
+
+interface ApiErrorResponse {
+  response?: {
+    data?: {
+      message?: string
+    }
+  }
+}
+
 const auth = useAuth()
 
 const tutor = computed(() => auth.tutor.value)
 const walker = computed(() => auth.walker.value)
 
-const walkers = ref([])
-const tours = ref([])
+const walkers = ref<Person[]>([])
+const tours = ref<Tour[]>([])
 
-const reviewTutor = ref(null)
-const reviewWalker = ref(null)
+const reviewTutor = ref<Tour | null>(null)
+const reviewWalker = ref<Tour | null>(null)
 
-const rating = ref(0)
-const comment = ref("")
-const sending = ref(false)
+const rating = ref<number>(0)
+const comment = ref<string>("")
+const sending = ref<boolean>(false)
 
 const DISMISSED_KEY = "dashboard_dismissed_tours"
-const dismissedIds = ref(new Set())
+const dismissedIds = ref<Set<number>>(new Set())
 
-function loadDismissed() {
+function loadDismissed(): void {
   try {
     const raw = localStorage.getItem(DISMISSED_KEY)
     if (raw) dismissedIds.value = new Set(JSON.parse(raw))
@@ -31,7 +75,7 @@ function loadDismissed() {
   }
 }
 
-function saveDismissed() {
+function saveDismissed(): void {
   try {
     localStorage.setItem(DISMISSED_KEY, JSON.stringify([...dismissedIds.value]))
   } catch (e) {
@@ -39,14 +83,14 @@ function saveDismissed() {
   }
 }
 
-function dismissTour(id) {
+function dismissTour(id: number): void {
   dismissedIds.value.add(id)
 
   dismissedIds.value = new Set(dismissedIds.value)
   saveDismissed()
 }
 
-async function cancelConfirm(passeio) {
+async function cancelConfirm(passeio: Tour): Promise<void> {
   const confirmed = window.confirm("Tem certeza que deseja cancelar este passeio?")
   if (!confirmed) return
 
@@ -56,11 +100,12 @@ async function cancelConfirm(passeio) {
     passeio.status = "cancelado"
   } catch (err) {
     console.error(err)
-    alert(err.response?.data?.message || "Erro ao cancelar passeio.")
+    const error = err as ApiErrorResponse
+    alert(error.response?.data?.message || "Erro ao cancelar passeio.")
   }
 }
 
-function onXClickTutor(p) {
+function onXClickTutor(p: Tour): void {
   if (p.status === "pendente" || p.status === "aceito") {
     cancelConfirm(p)
   } else {
@@ -91,7 +136,7 @@ const toursWalker = computed(() =>
   })
 )
 
-async function loadWalkers() {
+async function loadWalkers(): Promise<void> {
   try {
     const res = await api.get("/walkers")
     walkers.value = res.data
@@ -100,7 +145,7 @@ async function loadWalkers() {
   }
 }
 
-async function loadTours() {
+async function loadTours(): Promise<void> {
   try {
     const res = await api.get("/my-tours")
     tours.value = res.data
@@ -109,7 +154,7 @@ async function loadTours() {
   }
 }
 
-function badgeStatus(status) {
+function badgeStatus(status: TourStatus): Record<string, boolean> {
   return {
     "bg-warning text-dark": status === "pendente",
     "bg-success": status === "aceito",
@@ -119,31 +164,31 @@ function badgeStatus(status) {
   }
 }
 
-function openEvaluationTutor(passeio) {
+function openEvaluationTutor(passeio: Tour): void {
   reviewTutor.value = passeio
   rating.value = 0
   comment.value = ""
 }
 
-function cancelEvaluationTutor() {
+function cancelEvaluationTutor(): void {
   reviewTutor.value = null
   rating.value = 0
   comment.value = ""
 }
 
-function openEvaluationWalker(passeio) {
+function openEvaluationWalker(passeio: Tour): void {
   reviewWalker.value = passeio
   rating.value = 0
   comment.value = ""
 }
 
-function cancelEvaluationWalker() {
+function cancelEvaluationWalker(): void {
   reviewWalker.value = null
   rating.value = 0
   comment.value = ""
 }
 
-async function completeTour(passeio) {
+async function completeTour(passeio: Tour): Promise<void> {
   if (rating.value === 0) {
     alert("Escolha uma nota antes de finalizar.")
     return
@@ -172,13 +217,14 @@ async function completeTour(passeio) {
 
   } catch (err) {
     console.error(err)
-    alert(err.response?.data?.message || "Erro ao finalizar passeio.")
+    const error = err as ApiErrorResponse
+    alert(error.response?.data?.message || "Erro ao finalizar passeio.")
   } finally {
     sending.value = false
   }
 }
 
-async function sendEvaluation(passeioId, tipo) {
+async function sendEvaluation(passeioId: number, tipo: Avaliador): Promise<void> {
   if (!rating.value) {
     alert("Escolha uma nota.")
     return
@@ -202,13 +248,14 @@ async function sendEvaluation(passeioId, tipo) {
 
   } catch (err) {
     console.error(err)
-    alert(err.response?.data?.message || "Erro ao enviar avaliação.")
+    const error = err as ApiErrorResponse
+    alert(error.response?.data?.message || "Erro ao enviar avaliação.")
   } finally {
     sending.value = false
   }
 }
 
-function formatDate(data) {
+function formatDate(data: string | null | undefined): string {
   if (!data) return ""
   const date = new Date(data)
   return date.toLocaleDateString("pt-BR")

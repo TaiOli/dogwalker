@@ -1,17 +1,18 @@
-<script setup>
-import { useAuth } from "../composables/userAuth";
-import UserCadastroForm from "../components/molecules/UserRegisterForm.vue";
+<script setup lang="ts">
+import { useAuth } from "../composables/userAuth"
+import UserCadastroForm from "../components/molecules/UserRegisterForm.vue"
 
-const { formRegister, register, clearRegister } = useAuth();
+const { formRegister, register, clearRegister } = useAuth()
 
-async function novo() {
+async function novo(): Promise<void> {
   try {
-    await register();
-    alert("Usuário criado com sucesso!");
+    await register()
+    alert("Usuário criado com sucesso!")
 
-    clearRegister();
+    clearRegister()
   } catch (error) {
-    alert("Erro ao criar usuário");
+    console.error(error)
+    alert("Erro ao criar usuário")
   }
 }
 </script>
