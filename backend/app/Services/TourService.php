@@ -4,107 +4,96 @@ namespace App\Services;
 
 use App\Models\Evaluation;
 use App\Models\Tour;
+use App\Repositories\Interfaces\TourRepositoryInterface;
+use Illuminate\Support\Collection;
 
 class TourService
 {
-    public function create(array $data, int $tutorId)
+    public function __construct(
+        private TourRepositoryInterface $tourRepository
+    ) {}
+
+    public function create(array $data, int $tutorId): Tour
     {
-        return Tour::create([
+        return $this->tourRepository->create([
             ...$data,
             'tutor_id' => $tutorId,
             'status' => 'pendente',
         ]);
     }
 
-    public function listAvailable()
+    public function listAvailable(): Collection
     {
-        return Tour::with(['dog', 'tutor'])
-            ->whereIn('status', ['pendente', 'aceito'])
-            ->latest()
-            ->get();
+        return $this->tourRepository->listAvailable();
     }
 
-    public function accept(int $id, int $walkerId)
+    public function accept(int $id, int $walkerId): Tour
     {
-        $passeio = Tour::findOrFail($id);
+        $tour = $this->tourRepository->find($id);
 
-        $passeio->update([
+        return $this->tourRepository->update($tour, [
             'passeador_id' => $walkerId,
-            'status' => 'aceito'
+            'status' => 'aceito',
         ]);
-
-        return $passeio;
     }
 
-    public function reject(int $id)
+    public function reject(int $id): Tour
     {
-        $passeio = Tour::findOrFail($id);
+        $tour = $this->tourRepository->find($id);
 
-        $passeio->update([
-            'status' => 'recusado'
+        return $this->tourRepository->update($tour, [
+            'status' => 'recusado',
         ]);
-
-        return $passeio->fresh();
     }
 
-    public function cancel(int $id)
+    public function cancel(int $id): Tour
     {
-        $tour = Tour::findOrFail($id);
+        $tour = $this->tourRepository->find($id);
 
-        $tour->update([
-            'status' => 'cancelado'
+        return $this->tourRepository->update($tour, [
+            'status' => 'cancelado',
         ]);
-
-        return $tour;
     }
 
-    public function myTours($user)
+    public function myTours($user): Collection
     {
         if ($user->tipo_usuario === 'tutor') {
+            $tours = $this->tourRepository->findByTutor($user->id);
 
-            return Tour::where('tutor_id', $user->id)
-                ->with(['dog', 'passeador'])
-                ->get()
-                ->map(function ($p) {
+            return $tours->map(function ($tour) {
+                $reviewTutor = Evaluation::where('passeio_id', $tour->id)
+                    ->where('tipo_avaliador', 'tutor')
+                    ->first();
 
-                    $reviewTutor = Evaluation::where('passeio_id', $p->id)
-                        ->where('tipo_avaliador', 'tutor')
-                        ->first();
+                $tour->review_by_tutor = $reviewTutor;
+                $tour->rated_by_tutor = (bool) $reviewTutor;
 
-                    $p->review_by_tutor = $reviewTutor;
-                    $p->rated_by_tutor = (bool) $reviewTutor;
-
-                    return $p;
-                });
-
+                return $tour;
+            });
         }
 
         if ($user->tipo_usuario === 'passeador') {
+            $tours = $this->tourRepository->findByWalker($user->id);
 
-            return Tour::where('passeador_id', $user->id)
-                ->whereIn('status', ['aceito', 'finalizado', 'cancelado'])
-                ->with(['dog', 'tutor'])
-                ->get()
-                ->map(function ($p) {
+            return $tours->map(function ($tour) {
+                $reviewWalker = Evaluation::where('passeio_id', $tour->id)
+                    ->where('tipo_avaliador', 'passeador')
+                    ->first();
 
-                    $reviewWlaker = Evaluation::where('passeio_id', $p->id)
-                        ->where('tipo_avaliador', 'passeador')
-                        ->first();
+                $tour->review_by_walker = $reviewWalker;
+                $tour->rated_by_walker = (bool) $reviewWalker;
 
-                    $p->review_by_walker = $reviewWlaker;
-                    $p->rated_by_walker = (bool) $reviewWlaker;
-
-                    return $p;
-                });
-
+                return $tour;
+            });
         }
 
         return collect();
     }
-    public function delete(int $id)
-    {
-        $tour = Tour::findOrFail($id);
 
-        $tour->delete();
+    public function delete(int $id): void
+    {
+        $tour = $this->tourRepository->find($id);
+
+        $this->tourRepository->delete($tour);
     }
 }
