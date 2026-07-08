@@ -27,4 +27,18 @@ class StoreLoginRequest extends FormRequest
             'password' => 'required|string'
         ];
     }
+
+     /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array<string, string>
+     */
+    public function messages()
+    {
+        return [
+            'email.required' => 'Informe o email.',
+            'email.email' => 'Informe um email válido.',
+            'password.required' => 'Informe a senha é obrigatório.'
+        ];
+    }
 }

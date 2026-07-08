@@ -31,4 +31,17 @@ class UpdateDogRequest extends FormRequest
             'observacoes' => 'nullable|string',
         ];   
     }
+
+     /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array<string, string>
+     */
+    public function messages()
+    {
+        return [
+            'nome.required' => 'Informe o nome completo é obrigatório.',
+            'nome.string' => 'O nome completo deve conter um texto válido.' 
+        ];
+    }
 }

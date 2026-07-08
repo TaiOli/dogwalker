@@ -31,4 +31,21 @@ class StoreDogRequest extends FormRequest
             'observacoes' => 'nullable|string',
         ];   
     }
+
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array<string, string>
+     */
+    public function messages()
+    {
+        return [
+            'nome.required' => 'Informe o nome do cachorro.',
+            'nome.string' => 'O nome do cachorro deve conter um texto válido.',
+            'idade.integer' => 'A idade deve ser informada com um número válido.',
+            'raca.string' => 'A raça deve conter um texto válido.',
+            'foto.string' => 'A foto deve ser informada corretamente.',
+            'observacoes.string' => 'As observações devem conter um texto válido.',
+        ];
+    }
 }

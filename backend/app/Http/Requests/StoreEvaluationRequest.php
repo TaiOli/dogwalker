@@ -20,4 +20,18 @@ class StoreEvaluationRequest extends FormRequest
             'tipo_avaliador' => 'required|in:tutor,passeador',
         ];
     }
+
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array<string, string>
+     */
+    public function messages()
+    {
+        return [
+            'nota.required' => 'Informe uma nota para avaliar.',
+            'nota.min' => 'A nota mínima é 1.',
+            'nota.max' => 'A nota máxima é 5.',
+        ];
+    }
 }
