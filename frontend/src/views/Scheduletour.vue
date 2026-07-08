@@ -43,6 +43,7 @@ async function save(): Promise<void> {
           <ScheduletourForm
             :form="form"
             :dogs="dogs"
+            labelButton="Salvar"
             @submit="save"
           />
 

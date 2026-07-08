@@ -5,9 +5,14 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 
 class UserService
 {
+    public function __construct(
+        private UserRepositoryInterface $userRepository
+    ) {}
+
     public function create(array $data): User
     {
         if (isset($data['foto'])) {
@@ -16,12 +21,12 @@ class UserService
 
         $data['password'] = Hash::make($data['password']);
 
-        return User::create($data);
+        return $this->userRepository->create($data);
     }
 
     public function login(array $data): ?array
     {
-        $user = User::where('email', $data['email'])->first();
+        $user = $this->userRepository->findByEmail($data['email']);
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return null;
@@ -31,15 +36,14 @@ class UserService
 
         return [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ];
     }
 
     public function walkers(): Collection
     {
-        return User::where('tipo_usuario', 'passeador')
-            ->withAvg('avaliacoesRecebidas', 'nota')
-            ->get()
+        return $this->userRepository
+            ->getWalkersWithRatingAvg()
             ->map(function ($user) {
                 return [
                     'id' => $user->id,
@@ -51,26 +55,13 @@ class UserService
             });
     }
 
-    public function show($id): User
+    public function show(int $id): User
     {
-        return User::where('id', $id)
-            ->with(['avaliacoesRecebidas' => function ($q) {
-                $q->where('tipo_avaliador', 'tutor')
-                ->with('tutor')
-                ->latest();
-            }])
-            ->withAvg('avaliacoesRecebidas', 'nota')
-            ->firstOrFail();
+        return $this->userRepository->findWithReceivedEvaluations($id);
     }
 
-    public function showTutor($id): User
+    public function showTutor(int $id): User
     {
-        return User::where('id', $id)
-            ->with(['avaliacoesFeitas' => function ($q) {
-                $q->where('tipo_avaliador', 'passeador')
-                ->with('passeador')
-                ->latest();
-            }])
-            ->firstOrFail();
+        return $this->userRepository->findWithSubmittedEvaluations($id);
     }
 }
