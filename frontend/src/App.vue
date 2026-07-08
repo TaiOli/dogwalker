@@ -19,7 +19,7 @@ const isLoginPage = computed<boolean>(() => {
     <div class="right-container">
       <Topbar v-if="!isLoginPage" />
 
-      <div class="page">
+      <div class="page-app">
         <router-view />
       </div>
     </div>
@@ -41,7 +41,7 @@ const isLoginPage = computed<boolean>(() => {
   overflow: hidden;
 }
 
-.page {
+.page-app {
   flex: 1;
   overflow-y: auto;
   padding: 40px;

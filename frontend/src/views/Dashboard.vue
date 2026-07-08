@@ -517,19 +517,7 @@ textarea {
   padding: 12px;
 }
 
-.fst-italic {
-  font-style: italic;
-}
-
 button {
   border-radius: 8px;
-}
-
-.small {
-  font-size: 12px;
-}
-
-.ms-1 {
-  margin-left: 4px;
 }
 </style>

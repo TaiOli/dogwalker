@@ -128,17 +128,4 @@ onMounted(async () => {
   border-radius: 8px;
   padding: 12px;
 }
-
-.fst-italic {
-  font-style: italic;
-  color: #555;
-}
-
-.ms-1 {
-  margin-left: 4px;
-}
-
-.small {
-  font-size: 12px;
-}
 </style>

@@ -18,7 +18,7 @@ async function novo(): Promise<void> {
 </script>
 
 <template>
-  <div class="page">
+  <div class="page-user">
 
     <div class="cadastro-wrapper text-center">
 
@@ -46,7 +46,7 @@ async function novo(): Promise<void> {
 </template>
 
 <style scoped>
-.page {
+.page-user {
   min-height: 100vh;
   width: 100%;
   background: #f4f6f8;
