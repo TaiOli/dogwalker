@@ -5,6 +5,7 @@ import { api } from "../services/api";
 export function useDog() {
 
   const formDog = reactive({
+    id: null,
     name: "",
     age: "",
     size: "",
@@ -28,9 +29,38 @@ export function useDog() {
       observacoes: formDog.observations,
       foto: photo
     });
-}
+  }
+
+  async function updateDog() {
+    let photo = formDog.photo;
+
+    if (!photo) {
+      photo = await getRandomDogImage();
+    }
+
+    return await api.put(`/dogs/${formDog.id}`, {
+      nome: formDog.name,
+      idade: formDog.age ? Number(formDog.age) : null,
+      porte: formDog.size,
+      raca: formDog.breed,
+      observacoes: formDog.observations,
+      foto: photo
+    });
+  }
+
+  // recebe o dog vindo da API (nome, idade, raca...) e preenche o form
+  function setDog(dog) {
+    formDog.id = dog.id;
+    formDog.name = dog.nome ?? "";
+    formDog.age = dog.idade ?? "";
+    formDog.size = dog.porte ?? "";
+    formDog.breed = dog.raca ?? "";
+    formDog.observations = dog.observacoes ?? "";
+    formDog.photo = dog.foto ?? "";
+  }
 
   function clearDog() {
+    formDog.id = null;
     formDog.name = "";
     formDog.age = "";
     formDog.size = "";
@@ -42,6 +72,8 @@ export function useDog() {
   return {
     formDog,
     registerDog,
+    updateDog,
+    setDog,
     clearDog
   };
 }

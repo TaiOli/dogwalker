@@ -13,7 +13,7 @@ interface Dog {
   foto?: string
 }
 
-const { formDog, registerDog, clearDog } = useDog()
+const { formDog, registerDog, updateDog, setDog, clearDog } = useDog()
 
 const dogs = ref<Dog[]>([])
 const search = ref<string>("")
@@ -21,34 +21,39 @@ const showModal = ref<boolean>(false)
 
 async function loadDogs(): Promise<void> {
   const res = await api.get("/dogs/my", {
-    params: {
-      search: search.value
-    }
+    params: { search: search.value }
   })
-
   dogs.value = res.data
 }
 
-async function openModal(): void {
+function openModal(): void {
+  clearDog()
   showModal.value = true
 }
 
-async function closeModal(): void {
+function editDog(dog: Dog): void {
+  setDog(dog)
+  showModal.value = true
+}
+
+function closeModal(): void {
   showModal.value = false
 }
 
 async function save(): Promise<void> {
   try {
-    await registerDog()
+    if (formDog.id) {
+      await updateDog()
+    } else {
+      await registerDog()
+    }
 
     clearDog()
     await loadDogs()
-
     showModal.value = false
-
   } catch (error) {
     console.log(error)
-    alert("Erro ao cadastrar cachorro")
+    alert("Erro ao salvar cachorro")
   }
 }
 
@@ -61,7 +66,6 @@ onMounted(loadDogs)
 
 <template>
   <div class="container py-4">
-
     <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h2>Cadastro do dog</h2>
@@ -96,41 +100,43 @@ onMounted(loadDogs)
       >
         <div class="card h-100 shadow-sm dog-card">
 
-          <img :src="dog.foto" class="card-img-top dog-img" alt="dog"/>
+          <img :src="dog.foto" class="card-img-top dog-img" alt="dog" />
 
           <div class="card-body">
             <h5 class="card-title">{{ dog.nome }}</h5>
-
             <p class="mb-1">🐾 {{ dog.raca }}</p>
             <p class="mb-1">🎂 {{ dog.idade }} anos</p>
             <p class="mb-1">📦 {{ dog.porte }}</p>
-          </div>
 
+            <button
+              class="btn btn-sm btn-outline-secondary mt-2"
+              @click="editDog(dog)"
+            >
+              ✏️ Editar
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- MODAL -->
     <div v-if="showModal" class="modal-overlay">
       <div class="modal-box">
-
         <div class="modal-header d-flex justify-content-between align-items-center">
-          <h5 class="modal-title">Cadastrar cachorro</h5>
-
+          <h5 class="modal-title">
+            {{ formDog.id ? "Editar cachorro" : "Cadastrar cachorro" }}
+          </h5>
           <button class="btn-close" @click="closeModal"></button>
         </div>
 
         <div class="modal-body mt-3">
           <DogForm
             :form="formDog"
-            labelButton="Salvar"
+            :labelButton="formDog.id ? 'Atualizar' : 'Salvar'"
             @submit="save"
           />
         </div>
-
       </div>
     </div>
-
   </div>
 </template>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDogRequest;
+use App\Http\Requests\UpdateDogRequest;
 use App\Http\Requests\SearchDogRequest;
 use App\Services\DogService;
 
@@ -21,6 +22,20 @@ class DogController extends Controller
 
         return response()->json([
             'message' => 'Cachorro cadastrado com sucesso',
+            'dog' => $dog
+        ]);
+    }
+
+    public function edit(UpdateDogRequest $request, $id)
+    {
+        $dog = $this->dogService->update(
+            $request->validated(),
+            $id,
+            $request->user()->id
+        );
+
+        return response()->json([
+            'message' => 'Cachorro atualizado com sucesso',
             'dog' => $dog
         ]);
     }

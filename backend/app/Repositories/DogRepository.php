@@ -25,4 +25,17 @@ class DogRepository implements DogRepositoryInterface
             })
             ->get();
     }
+
+    public function findById(int $id): ?Dog
+    {
+        return Dog::find($id);
+    }
+
+    public function update(int $id, array $data): Dog
+    {
+        $dog = Dog::findOrFail($id);
+        $dog->update($data);
+        return $dog;
+    }
+
 }

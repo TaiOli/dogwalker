@@ -9,4 +9,6 @@ interface DogRepositoryInterface
 {
     public function create(array $data): Dog;
     public function findByUserId(int $userId, ?string $search = null): Collection;
+    public function findById(int $id): ?Dog;
+    public function update(int $id, array $data): Dog;
 }

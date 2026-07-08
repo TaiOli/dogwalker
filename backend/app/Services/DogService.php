@@ -28,4 +28,15 @@ class DogService
             $data['search'] ?? null
         );
     }
+
+    public function update(array $data, int $dogId, int $userId): Dog
+    {
+        $dog = $this->dogRepository->findById($dogId);
+
+        if (!$dog || $dog->user_id !== $userId) {
+            throw new \Exception('Cachorro não encontrado ou você não tem permissão para atualizá-lo.');
+        }
+
+        return $this->dogRepository->update($dogId, $data);
+    }
 }
