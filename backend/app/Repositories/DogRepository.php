@@ -13,6 +13,7 @@ class DogRepository implements DogRepositoryInterface
         return Dog::create($data);
     }
 
+    // Filtro de busca única
     public function findByUserId(int $userId, ?string $search = null): Collection
     {
         return Dog::where('user_id', $userId)
