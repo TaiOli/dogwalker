@@ -19,6 +19,10 @@ const routes = [
     component: User
   },
   {
+    path: "/usuario/editar",
+    component: User
+  },
+  {
     path: "/home",
     component: Dashboard
   },

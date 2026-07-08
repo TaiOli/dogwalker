@@ -59,4 +59,17 @@ class UserRepository implements UserRepositoryInterface
             }])
             ->firstOrFail();
     }
+
+    public function update(int $id, array $data): User
+    {
+        $user = $this->findById($id);
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+        $user->update($data);
+
+        return $user;
+    }
 }

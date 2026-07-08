@@ -2,17 +2,21 @@
 import { useAuth } from "../composables/userAuth"
 import UserCadastroForm from "../components/molecules/UserRegisterForm.vue"
 
-const { formRegister, register, clearRegister } = useAuth()
+const { formRegister, register, updateRegister, clearRegister } = useAuth()
 
-async function novo(): Promise<void> {
+async function salvar(): Promise<void> {
   try {
-    await register()
-    alert("Usuário criado com sucesso!")
-
+    if (formRegister.id) {
+      await updateRegister()
+      alert("Cadastro atualizado com sucesso!")
+    } else {
+      await register()
+      alert("Usuário criado com sucesso!")
+    }
     clearRegister()
   } catch (error) {
     console.error(error)
-    alert("Erro ao criar usuário")
+    alert("Erro ao salvar usuário")
   }
 }
 </script>
@@ -25,13 +29,13 @@ async function novo(): Promise<void> {
       <h2>🐶 Dog Walker</h2>
 
       <p class="text-muted mb-4">
-        Criar conta de usuário
+         {{ formRegister.id ? "Editar cadastro" : "Criar conta de usuário" }}
       </p>
 
       <UserCadastroForm
         :form="formRegister"
-        labelButton="Salvar"
-        @submit="novo"
+        :labelButton="formRegister.id ? 'Atualizar' : 'Salvar'"
+        @submit="salvar"
       />
 
       <p class="mt-3">

@@ -2,6 +2,18 @@ import { reactive, ref, computed } from "vue"
 import { useRouter } from "vue-router"
 import { api } from "../services/api"
 
+
+const formRegister = reactive({
+  id: null,
+  username: "",
+  name: "",
+  email: "",
+  password: "",
+  phone: "",
+  type_user: "tutor",
+  photo: ""
+});
+
 export function useAuth() {
 
   const router = useRouter()
@@ -41,21 +53,37 @@ export function useAuth() {
     formLogin.password = ""
   }
 
-  const formRegister = reactive({
-    username: "",
-    name: "",
-    email: "",
-    password: "",
-    phone: "",
-    type_user: "tutor",
-    photo: ""
-  });
+  async function updateRegister() {
+    const data = {
+      username: formRegister.username,
+      nome: formRegister.name,
+      email: formRegister.email,
+      password: formRegister.password,
+      telefone: formRegister.phone,
+      tipo_usuario: formRegister.type_user,
+      foto: formRegister.photo,
+    };
+    console.log(data);
+
+    return await api.put(`/users/${formRegister.id}`, data);
+  }
+
+  function setRegister(user) {
+    formRegister.id = user.id;
+    formRegister.name = user.name ?? "";
+    formRegister.name = user.nome ?? "";
+    formRegister.email = user.email ?? "";
+    formRegister.password = "";
+    formRegister.phone = user.telefone ?? "";
+    formRegister.type_user = user.tipo_usuario ??  "tutor";
+    formRegister.photo = user.foto ?? "";
+  }
 
   async function register() {
 
     const formData = new FormData()
 
-    formData.append("name", formRegister.username)
+    formData.append("username", formRegister.username)
     formData.append("nome", formRegister.name)
     formData.append("email", formRegister.email)
     formData.append("password", formRegister.password)
@@ -77,6 +105,7 @@ export function useAuth() {
 
   function clearRegister() {
     Object.assign(formRegister, {
+      id: null,
       username: "",
       name: "",
       email: "",
@@ -102,6 +131,8 @@ export function useAuth() {
     login,
     clearLogin,
     formRegister,
+    updateRegister,
+    setRegister,
     register,
     clearRegister,
     logout

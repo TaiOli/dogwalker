@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
         $user = $request->user();
         return [
             'id' => $user->id,
+            'username' => $user->username,
             'nome' => $user->nome,
             'email' => $user->email,
             'telefone' => $user->telefone,
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/walkers','walkers');
         Route::get('/walkers/{id}','show');
         Route::get('/tutors/{id}','showTutor');
+        Route::put('/users/{id}', 'update');
     });
     
     Route::controller(DogController::class)->group(function(){

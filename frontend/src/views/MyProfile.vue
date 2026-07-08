@@ -2,6 +2,8 @@
 import { ref, onMounted } from "vue"
 import { api } from "../services/api"
 import { getPhoto } from "../utils/image"
+import { useRouter } from "vue-router"
+import { useAuth } from "../composables/userAuth"
 
 interface User {
   id: number
@@ -14,6 +16,16 @@ interface User {
 
 const user = ref<User | null>(null)
 const loading = ref<boolean>(true)
+const router = useRouter()
+
+const { setRegister } = useAuth()
+
+function editProfile(): void {
+  if (!user.value) return
+  setRegister(user.value)
+  
+  router.push("/usuario/editar")
+}
 
 onMounted(async () => {
   try {
@@ -46,6 +58,10 @@ onMounted(async () => {
 
       <p>👤 Tipo: {{ user.tipo_usuario }}</p>
 
+      <button class="btn btn-primary mt-3 d-block mx-auto" @click="editProfile">
+        Editar cadastro
+      </button>
+
     </div>
 
     <div v-else class="text-center py-5">
@@ -54,3 +70,9 @@ onMounted(async () => {
 
   </div>
 </template>
+
+<style scoped>
+.btn-primary{
+   width: 30%;
+}
+</style>

@@ -13,4 +13,5 @@ interface UserRepositoryInterface
     public function getWalkersWithRatingAvg(): Collection;
     public function findWithReceivedEvaluations(int $id): User;
     public function findWithSubmittedEvaluations(int $id): User;
+    public function update(int $id, array $data): User;
 }

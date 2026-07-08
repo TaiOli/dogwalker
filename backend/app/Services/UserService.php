@@ -64,4 +64,17 @@ class UserService
     {
         return $this->userRepository->findWithSubmittedEvaluations($id);
     }
+
+    public function update(int $id, array $data): User
+    {
+        if (isset($data['foto'])) {
+            $data['foto'] = $data['foto']->store('users', 'public');
+        }
+
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+
+        return $this->userRepository->update($id, $data);
+    }
 }

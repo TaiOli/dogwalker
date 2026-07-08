@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Services\UserService;
 
 class UserController extends Controller
@@ -58,5 +59,18 @@ class UserController extends Controller
     public function showTutor($id)
     {
         return $this->userService->showTutor($id);
+    }
+
+    public function update($id, UpdateUserRequest $request)
+    {
+        $user = $this->userService->update(
+            $id,
+            $request->validated()
+        );
+
+        return response()->json([
+            'message' => 'Usuário atualizado com sucesso',
+            'user' => $user
+        ]);
     }
 }
