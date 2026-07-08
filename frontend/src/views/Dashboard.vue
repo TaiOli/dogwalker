@@ -288,7 +288,7 @@ onMounted(async () => {
                 <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
                 <span v-else>Sem avaliações</span>
               </p>
-              <router-link :to="`/walkers/${w.id}`" class="btn btn-success w-100">
+              <router-link :to="`/passeador-perfil/${w.id}`" class="btn btn-success w-100">
                 Ver perfil
               </router-link>
             </div>
