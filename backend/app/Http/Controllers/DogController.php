@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDogRequest;
+use App\Http\Requests\SearchDogRequest;
 use App\Services\DogService;
-use Illuminate\Http\Request;
 
 class DogController extends Controller
 {
@@ -25,10 +25,10 @@ class DogController extends Controller
         ]);
     }
 
-    public function myDogs(Request $request)
+    public function myDogs(SearchDogRequest $request)
     {
-        return $this->dogService->myDogs(
-            $request->user()->id
-        );
+        $data = $request->validated();
+
+        return $this->dogService->myDogs($data);
     }
 }

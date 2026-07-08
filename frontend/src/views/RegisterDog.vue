@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue"
+import { ref, watch, onMounted } from "vue"
 import DogForm from "../components/molecules/DogForm.vue"
 import { useDog } from "../composables/useDog"
 import { api } from "../services/api"
@@ -19,15 +19,13 @@ const dogs = ref<Dog[]>([])
 const search = ref<string>("")
 const showModal = ref<boolean>(false)
 
-const filteredDogs = computed(() => {
-  return dogs.value.filter(dog =>
-    dog.nome.toLowerCase().includes(search.value.toLowerCase()) ||
-    dog.raca?.toLowerCase().includes(search.value.toLowerCase())
-  )
-})
-
 async function loadDogs(): Promise<void> {
-  const res = await api.get("/dogs/my")
+  const res = await api.get("/dogs/my", {
+    params: {
+      search: search.value
+    }
+  })
+
   dogs.value = res.data
 }
 
@@ -53,6 +51,10 @@ async function save(): Promise<void> {
     alert("Erro ao cadastrar cachorro")
   }
 }
+
+watch(search, () => {
+  loadDogs()
+})
 
 onMounted(loadDogs)
 </script>
@@ -82,13 +84,13 @@ onMounted(loadDogs)
     <!-- LISTA -->
     <h2 class="mt-5 mb-4">🐕 Meus Doguinhos :</h2>
 
-    <div v-if="filteredDogs.length === 0" class="text-center text-muted">
+    <div v-if="dogs.length === 0" class="text-center text-muted">
       Nenhum cachorro encontrado.
     </div>
 
     <div class="row g-4">
       <div
-        v-for="dog in filteredDogs"
+        v-for="dog in dogs"
         :key="dog.id"
         class="col-12 col-sm-6 col-md-4 col-lg-3"
       >

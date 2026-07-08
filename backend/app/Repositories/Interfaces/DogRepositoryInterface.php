@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Collection;
 interface DogRepositoryInterface
 {
     public function create(array $data): Dog;
-    public function findByUserId(int $userId): Collection;
+    public function findByUserId(int $userId, ?string $search = null): Collection;
 }

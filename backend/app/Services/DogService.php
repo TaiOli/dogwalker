@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Dog;
 use App\Repositories\Interfaces\DogRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class DogService
 {
@@ -20,8 +21,11 @@ class DogService
         ]);
     }
 
-    public function myDogs(int $userId): Collection
+    public function myDogs(array $data): Collection
     {
-        return $this->dogRepository->findByUserId($userId);
+        return $this->dogRepository->findByUserId(
+            Auth::id(),
+            $data['search'] ?? null
+        );
     }
 }

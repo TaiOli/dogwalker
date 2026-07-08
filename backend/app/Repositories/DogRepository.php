@@ -13,8 +13,15 @@ class DogRepository implements DogRepositoryInterface
         return Dog::create($data);
     }
 
-    public function findByUserId(int $userId): Collection
+    public function findByUserId(int $userId, ?string $search = null): Collection
     {
-        return Dog::where('user_id', $userId)->get();
+        return Dog::where('user_id', $userId)
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('nome', 'like', "%{$search}%")
+                    ->orWhere('raca', 'like', "%{$search}%");
+                });
+            })
+            ->get();
     }
 }
