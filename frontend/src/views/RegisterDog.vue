@@ -18,6 +18,7 @@ const { formDog, registerDog, updateDog, setDog, clearDog } = useDog()
 const dogs = ref<Dog[]>([])
 const search = ref<string>("")
 const showModal = ref<boolean>(false)
+const excludingId = ref<number | null>(null)
 
 async function loadDogs(): Promise<void> {
   const res = await api.get("/dogs/my", {
@@ -38,6 +39,26 @@ function editDog(dog: Dog): void {
 
 function closeModal(): void {
   showModal.value = false
+}
+
+async function removeDog(dog: Dog): Promise<void> {
+  const confirmar = confirm(`Tem certeza que deseja excluir o cadastro de "${dog.nome}"?`)
+  if (!confirmar) return
+
+  excludingId.value = dog.id
+
+  try {
+    await api.delete(`/dogs/${dog.id}`)
+
+    dogs.value = dogs.value.filter(d => d.id !== dog.id)
+    alert("Dog excluído com sucesso!")
+
+  } catch (error: any) {
+    console.error("Erro ao excluir cachorro:", error)
+    alert(error.response?.data?.message || "Erro ao excluir cachorro")
+  } finally {
+    excludingId.value = null
+  }
 }
 
 async function save(): Promise<void> {
@@ -100,7 +121,16 @@ onMounted(loadDogs)
         :key="dog.id"
         class="col-12 col-sm-6 col-md-4 col-lg-3"
       >
-        <div class="card h-100 shadow-sm dog-card">
+        <div class="card h-100 shadow-sm dog-card position-relative">
+
+          <button
+            type="button"
+            class="btn-close dismiss-btn"
+            aria-label="Excluir cachorro"
+            title="Excluir cachorro"
+            :disabled="excludingId === dog.id"
+            @click="removeDog(dog)"
+          ></button>
 
           <img :src="dog.foto" class="card-img-top dog-img" alt="dog" />
 
@@ -165,6 +195,25 @@ onMounted(loadDogs)
 h2 {
   text-align: left;
   font-size: 25px;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.dismiss-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 6px;
+  opacity: 0.9;
+}
+
+.dismiss-btn:hover {
+  opacity: 1;
 }
 
 .modal-overlay {

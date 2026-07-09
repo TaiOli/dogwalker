@@ -38,4 +38,9 @@ class DogRepository implements DogRepositoryInterface
         return $dog;
     }
 
+    public function delete(int $id): void
+    {
+        Dog::findOrFail($id)->delete();
+    }
+
 }

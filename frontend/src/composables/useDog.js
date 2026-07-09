@@ -14,38 +14,42 @@ export function useDog() {
     photo: ""
   });
 
-  async function registerDog() {
-    let photo = formDog.photo;
+  async function buildFormData() {
+    const formData = new FormData();
 
-    if (!photo) {
-      photo = await getRandomDogImage();
+    formData.append("nome", formDog.name);
+    formData.append("idade", formDog.age ? Number(formDog.age) : "");
+    formData.append("porte", formDog.size);
+    formData.append("raca", formDog.breed);
+    formData.append("observacoes", formDog.observations ?? "");
+
+    if (formDog.photo instanceof File) {
+      // usuário anexou uma foto: manda o arquivo de verdade
+      formData.append("foto", formDog.photo);
+    } else if (!formDog.photo) {
+      // sem anexo e sem foto atual: busca uma foto aleatória (URL)
+      const url = await getRandomDogImage();
+      formData.append("foto", url);
+    } else {
+      // edição sem trocar a foto: mantém a URL que já estava salva 
+      formData.append("foto", formDog.photo);
     }
 
-    return await api.post("/dogs", {
-      nome: formDog.name,
-      idade: formDog.age ? Number(formDog.age) : null,
-      porte: formDog.size,
-      raca: formDog.breed,
-      observacoes: formDog.observations,
-      foto: photo
-    });
+    return formData;
+  }
+
+  async function registerDog() {
+    const formData = await buildFormData();
+
+    return await api.post("/dogs", formData);
   }
 
   async function updateDog() {
-    let photo = formDog.photo;
+    const formData = await buildFormData();
 
-    if (!photo) {
-      photo = await getRandomDogImage();
-    }
+    formData.append("_method", "PUT");
 
-    return await api.put(`/dogs/${formDog.id}`, {
-      nome: formDog.name,
-      idade: formDog.age ? Number(formDog.age) : null,
-      porte: formDog.size,
-      raca: formDog.breed,
-      observacoes: formDog.observations,
-      foto: photo
-    });
+    return await api.post(`/dogs/${formDog.id}`, formData);
   }
 
   // recebe o dog vindo da API (nome, idade, raca...) e preenche o form

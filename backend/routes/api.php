@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/dogs','store');
         Route::get('/dogs/my','myDogs');
         Route::put('/dogs/{id}', 'edit');
+        Route::delete('/dogs/{id}','destroy');
     });
 
     Route::controller(TourController::class)->group(function(){

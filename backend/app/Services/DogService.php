@@ -45,4 +45,19 @@ class DogService
 
         return $this->dogRepository->update($dogId, $data);
     }
+
+    public function delete(int $dogId, int $userId): void
+    {
+        $dog = $this->dogRepository->findById($dogId);
+
+        if (!$dog) {
+            throw new DogNotFoundException();
+        }
+
+        if ($dog->user_id !== $userId) {
+            throw new DogUnauthorizedException();
+        }
+
+        $this->dogRepository->delete($dogId);
+    }
 }

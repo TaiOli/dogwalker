@@ -8,6 +8,8 @@ use App\Http\Requests\SearchDogRequest;
 use App\Services\DogService;
 use App\Exceptions\DogNotFoundException;
 use App\Exceptions\DogUnauthorizedException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DogController extends Controller
 {
@@ -31,8 +33,15 @@ class DogController extends Controller
     public function edit(UpdateDogRequest $request, $id)
     {
         try {
+            $data = $request->validated();
+
+            if ($request->hasFile('foto')) {
+                $path = $request->file('foto')->store('dogs', 'public');
+                $data['foto'] = Storage::url($path);
+            }
+
             $dog = $this->dogService->update(
-                $request->validated(),
+                $data,
                 $id,
                 $request->user()->id
             );
@@ -54,6 +63,30 @@ class DogController extends Controller
             ], 403);
         }
 
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        try {
+            $this->dogService->delete(
+                $id,
+                $request->user()->id
+            );
+
+            return response()->json([
+                'message' => 'Cachorro removido com sucesso'
+            ], 200);
+
+        } catch (DogNotFoundException $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 404);
+
+        } catch (DogUnauthorizedException $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 403);
+        }
     }
 
     public function myDogs(SearchDogRequest $request)
