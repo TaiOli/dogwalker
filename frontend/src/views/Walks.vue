@@ -119,7 +119,7 @@ async function reject(id: number): Promise<void> {
             <!-- VER PERFIL DO TUTOR -->
             <router-link
               v-if="p.tutor"
-              :to="`/tutors/${p.tutor.id}`"
+              :to="`/tutores/${p.tutor.id}`"
               class="btn btn-outline-secondary btn-sm mb-2"
             >
               👤 Ver Perfil do Tutor
