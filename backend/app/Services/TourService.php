@@ -43,7 +43,7 @@ class TourService
         ]);
     }
 
-    public function reject(int $id, int $walkerId): Tour
+    public function reject(int $id): Tour
     {
         $tour = $this->findOrFail($id);
 
