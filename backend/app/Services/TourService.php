@@ -24,9 +24,9 @@ class TourService
         ]);
     }
 
-    public function listAvailable(): Collection
+    public function listAvailable(?int $walkerId = null): Collection
     {
-        return $this->tourRepository->listAvailable();
+        return $this->tourRepository->listAvailable($walkerId);
     }
 
     public function accept(int $id, int $walkerId): Tour
@@ -35,6 +35,11 @@ class TourService
 
         if ($tour->status !== 'pendente') {
             throw new TourInvalidStatusException('Este passeio já foi respondido');
+        }
+
+        // se o passeio foi direcionado a um passeador específico, só ele pode aceitar
+        if ($tour->passeador_id !== null && $tour->passeador_id !== $walkerId) {
+            throw new TourInvalidStatusException('Este passeio foi direcionado a outro passeador');
         }
 
         return $this->tourRepository->update($tour, [

@@ -1,18 +1,30 @@
 <script setup lang="ts">
 import { onMounted } from "vue"
+import { useRoute } from "vue-router"
 import ScheduletourForm from "../components/molecules/ScheduletourForm.vue"
 import { useScheduletour } from "../composables/useScheduletour"
+
+const route = useRoute()
 
 const {
   form,
   dogs,
+  walkers,
   loadDogs,
+  loadWalkers,
+  setWalker,
   requestTour,
   clearTour
 } = useScheduletour()
 
-onMounted(() => {
-  loadDogs()
+onMounted(async () => {
+  await Promise.all([loadDogs(), loadWalkers()])
+
+  const walkerId = route.query.walkerId
+
+  if (walkerId) {
+    setWalker(Array.isArray(walkerId) ? walkerId[0] : walkerId)
+  }
 })
 
 async function save(): Promise<void> {
@@ -43,6 +55,7 @@ async function save(): Promise<void> {
           <ScheduletourForm
             :form="form"
             :dogs="dogs"
+            :walkers="walkers"
             labelButton="Salvar"
             @submit="save"
           />

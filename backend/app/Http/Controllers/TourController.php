@@ -29,9 +29,9 @@ class TourController extends Controller
     }
 
     // Listar Passeio
-    public function index()
+    public function index(Request $request)
     {
-        return $this->tourService->listAvailable();
+        return $this->tourService->listAvailable($request->user()->id);
     }
 
     public function accept($id, Request $request)

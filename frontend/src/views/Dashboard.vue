@@ -288,9 +288,17 @@ onMounted(async () => {
                 <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
                 <span v-else>Sem avaliações</span>
               </p>
-              <router-link :to="`/passeador-perfil/${w.id}`" class="btn btn-success w-100">
-                Ver perfil
-              </router-link>
+              <div class="d-flex flex-column gap-2">
+                <router-link :to="`/passeador-perfil/${w.id}`" class="btn btn-success w-100">
+                  Ver perfil
+                </router-link>
+                <router-link
+                  :to="{ path: '/agendar-passeio', query: { walkerId: w.id, walkerNome: w.nome } }"
+                  class="btn btn-outline-success w-100"
+                >
+                  🐾 Solicitar Passeio
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
