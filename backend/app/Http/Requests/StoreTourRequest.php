@@ -24,7 +24,7 @@ class StoreTourRequest extends FormRequest
     {
         return [
             'dog_id' => 'required|exists:dogs,id',
-            'passeador_id' => 'nullable|exists:users,id',
+            'passeador_id' => 'required|exists:users,id',
             'data' => 'required|date|after_or_equal:today',
             'hora' => 'required',
             'duracao' => 'required|date_format:H:i',
@@ -43,6 +43,8 @@ class StoreTourRequest extends FormRequest
         return [
             'dog_id.required' => 'Selecione um cachorro.',
             'dog_id.exists' => 'O cachorro informado não foi encontrado.',
+            'passeador_id.required' => 'Selecione um passeador.',
+            'passeador_id.exists' => 'O passeador informado não foi encontrado.',
             'data.required' => 'Informe a data do passeio.',
             'data.date' => 'Informe uma data válida.',
             'data.after_or_equal' => 'A data do passeio não pode ser anterior ao dia atual.',

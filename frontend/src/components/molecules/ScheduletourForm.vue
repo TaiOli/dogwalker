@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed, ref } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
@@ -41,11 +41,23 @@ const emit = defineEmits<{
   submit: []
 }>()
 
-// opção "qualquer passeador" + lista real de passeadores disponíveis
+// placeholder (orienta o usuário a escolher) + lista real de passeadores
 const walkerOptions = computed<WalkerOption[]>(() => [
-  { id: "", nome: "Qualquer passeador disponível" },
+  { id: "", nome: "Selecione um passeador..." },
   ...props.walkers
 ])
+
+const walkerError = ref<string>("")
+
+function handleSubmit(): void {
+  if (!props.form.passeador_id) {
+    walkerError.value = "É obrigatório selecionar um passeador."
+    return
+  }
+
+  walkerError.value = ""
+  emit("submit")
+}
 </script>
 
 <template>
@@ -62,13 +74,20 @@ const walkerOptions = computed<WalkerOption[]>(() => [
     </div>
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">🎯 Passeador</label>
+      <label class="form-label text-start w-100">
+        🎯 Passeador <span class="text-danger">*</span>
+      </label>
       <BaseSelect
         v-model="form.passeador_id"
         :options="walkerOptions"
         labelKey="nome"
         valueKey="id"
+        :class="{ 'is-invalid': walkerError }"
+        @update:modelValue="walkerError = ''"
       />
+      <div v-if="walkerError" class="text-danger small mt-1">
+        {{ walkerError }}
+      </div>
     </div>
 
     <div class="row g-3">
@@ -108,7 +127,7 @@ const walkerOptions = computed<WalkerOption[]>(() => [
     <div class="mt-4 d-grid">
       <BaseButton
         :label="labelButton"
-        @click="emit('submit')"
+        @click="handleSubmit"
       />
     </div>
 
