@@ -113,16 +113,16 @@ function onXClickTutor(p: Tour): void {
   }
 }
 
-const toursTutor = computed(() =>
+const toursTutor = computed(() =>                                                                                                                                                                                                    
   tours.value.filter(p => {
     if (dismissedIds.value.has(p.id)) return false
-    if (p.status === "finalizado") return false
     if (p.status === "cancelado") return false
 
     return (
       p.status === "pendente" ||
       p.status === "aceito" ||
-      p.status === "recusado"
+      p.status === "recusado" ||
+      (p.status === "finalizado" && !p.rated_by_tutor)
     )
   })
 )
