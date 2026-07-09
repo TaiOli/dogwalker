@@ -1,18 +1,23 @@
 <script setup lang="ts">
-
 interface BaseInputProps {
-  modelValue: string
-  placeholder: string
-  type: {
-    type: string
-    default: "text"
-  }
+  modelValue: string | number
+  placeholder?: string
+  type?: string
 }
-defineProps<BaseInputProps>()
-  
+
+withDefaults(defineProps<BaseInputProps>(), {
+  placeholder: "",
+  type: "text"
+})
+
 const emit = defineEmits<{
   "update:modelValue": [value: string]
 }>()
+
+function onInput(event: Event): void {
+  const target = event.target as HTMLInputElement
+  emit("update:modelValue", target.value)
+}
 </script>
 
 <template>
@@ -21,6 +26,6 @@ const emit = defineEmits<{
     :value="modelValue"
     :placeholder="placeholder"
     :type="type"
-    @input="emit('update:modelValue', $event.target.value)"
+    @input="onInput"
   />
 </template>
