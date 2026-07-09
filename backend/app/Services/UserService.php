@@ -57,14 +57,56 @@ class UserService
             });
     }
 
-    public function show(int $id): User
+    public function show(int $id): array
     {
-        return $this->userRepository->findWithReceivedEvaluations($id);
-    }
+        $user = $this->userRepository->findWithReceivedEvaluations($id);
 
-    public function showTutor(int $id): User
+        return [
+            'id' => $user->id,
+            'nome' => $user->nome,
+            'email' => $user->email,
+            'telefone' => $user->telefone,
+            'foto' => $user->foto,
+            'tipo_usuario' => $user->tipo_usuario,
+            'received_reviews' => $user->avaliacoesRecebidas->map(function ($review) {
+                return [
+                    'id' => $review->id,
+                    'nota' => $review->nota,
+                    'comentario' => $review->comentario,
+                    'created_at' => $review->created_at,
+                    'tutor' => $review->tutor ? [
+                        'id' => $review->tutor->id,
+                        'nome' => $review->tutor->nome,
+                    ] : null,
+                ];
+            }),
+        ];
+    }
+    
+    public function showTutor(int $id): array
     {
-        return $this->userRepository->findWithSubmittedEvaluations($id);
+        $user = $this->userRepository->findWithSubmittedEvaluations($id);
+
+        return [
+            'id' => $user->id,
+            'nome' => $user->nome,
+            'email' => $user->email,
+            'telefone' => $user->telefone,
+            'foto' => $user->foto,
+            'tipo_usuario' => $user->tipo_usuario,
+            'submitted_reviews' => $user->avaliacoesFeitas->map(function ($review) {
+                return [
+                    'id' => $review->id,
+                    'nota' => $review->nota,
+                    'comentario' => $review->comentario,
+                    'created_at' => $review->created_at,
+                    'passeador' => $review->passeador ? [
+                        'id' => $review->passeador->id,
+                        'nome' => $review->passeador->nome,
+                    ] : null,
+                ];
+            }),
+        ];
     }
 
     public function update(int $id, array $data, int $authUserId): User
