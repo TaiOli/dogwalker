@@ -1,10 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEvaluationRequest;
-use App\Models\Tour;
 use App\Services\EvaluationService;
+use App\Exceptions\TourNotFoundException;
+use App\Exceptions\EvaluationTourNotFinishedException;
+use App\Exceptions\EvaluationAlreadyExistsException;
 
 class EvaluationController extends Controller
 {
@@ -14,22 +15,24 @@ class EvaluationController extends Controller
 
     public function store(StoreEvaluationRequest $request)
     {
-        $data = $request->validated();
+        try {
+            $evaluation = $this->evaluationService->create(
+                $request->validated()
+            );
 
-        $tour = Tour::findOrFail($data['passeio_id']);
+            return response()->json([
+                'message' => 'Avaliação enviada com sucesso',
+                'avaliacao' => $evaluation
+            ], 201);
 
-        $evaluation = $this->evaluationService->create([
-            'passeio_id' => $tour->id,
-            'tutor_id' => $tour->tutor_id,
-            'passeador_id' => $tour->passeador_id,
-            'nota' => $data['nota'],
-            'comentario' => $data['comentario'] ?? null,
-            'tipo_avaliador' => $data['tipo_avaliador'],
-        ]);
+        } catch (TourNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
 
-        return response()->json([
-            'message' => 'Avaliação enviada com sucesso',
-            'avaliacao' => $evaluation
-        ], 201);
+        } catch (EvaluationTourNotFinishedException $e) {
+            return response()->json(['message' => $e->getMessage()], 409);
+
+        } catch (EvaluationAlreadyExistsException $e) {
+            return response()->json(['message' => $e->getMessage()], 409);
+        }
     }
 }

@@ -1,11 +1,13 @@
 <?php
-
 namespace App\Services;
 
 use App\Models\Evaluation;
 use App\Models\Tour;
 use App\Repositories\Interfaces\TourRepositoryInterface;
 use Illuminate\Support\Collection;
+use App\Exceptions\TourNotFoundException;
+use App\Exceptions\TourUnauthorizedException;
+use App\Exceptions\TourInvalidStatusException;
 
 class TourService
 {
@@ -29,7 +31,11 @@ class TourService
 
     public function accept(int $id, int $walkerId): Tour
     {
-        $tour = $this->tourRepository->find($id);
+        $tour = $this->findOrFail($id);
+
+        if ($tour->status !== 'pendente') {
+            throw new TourInvalidStatusException('Este passeio já foi respondido');
+        }
 
         return $this->tourRepository->update($tour, [
             'passeador_id' => $walkerId,
@@ -37,21 +43,46 @@ class TourService
         ]);
     }
 
-    public function reject(int $id): Tour
+    public function reject(int $id, int $walkerId): Tour
     {
-        $tour = $this->tourRepository->find($id);
+        $tour = $this->findOrFail($id);
+
+        if ($tour->status !== 'pendente') {
+            throw new TourInvalidStatusException('Este passeio já foi respondido');
+        }
 
         return $this->tourRepository->update($tour, [
             'status' => 'recusado',
         ]);
     }
 
-    public function cancel(int $id): Tour
+    public function cancel(int $id, int $userId): Tour
     {
-        $tour = $this->tourRepository->find($id);
+        $tour = $this->findOrFail($id);
+
+        if ($tour->tutor_id !== $userId) {
+            throw new TourUnauthorizedException('Apenas o tutor que solicitou pode cancelar este passeio');
+        }
 
         return $this->tourRepository->update($tour, [
             'status' => 'cancelado',
+        ]);
+    }
+
+    public function complete(int $id, int $userId): Tour
+    {
+        $tour = $this->findOrFail($id);
+
+        if ($tour->passeador_id !== $userId) {
+            throw new TourUnauthorizedException('Apenas o passeador responsável pode finalizar este passeio');
+        }
+
+        if ($tour->status !== 'aceito') {
+            throw new TourInvalidStatusException('Este passeio não está em andamento');
+        }
+
+        return $this->tourRepository->update($tour, [
+            'status' => 'finalizado',
         ]);
     }
 
@@ -90,10 +121,25 @@ class TourService
         return collect();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, int $userId): void
+    {
+        $tour = $this->findOrFail($id);
+
+        if ($tour->tutor_id !== $userId) {
+            throw new TourUnauthorizedException('Apenas o tutor que solicitou pode remover este passeio');
+        }
+
+        $this->tourRepository->delete($tour);
+    }
+
+    private function findOrFail(int $id): Tour
     {
         $tour = $this->tourRepository->find($id);
 
-        $this->tourRepository->delete($tour);
+        if (!$tour) {
+            throw new TourNotFoundException();
+        }
+
+        return $tour;
     }
 }

@@ -6,6 +6,8 @@ use App\Models\Dog;
 use App\Repositories\Interfaces\DogRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\DogNotFoundException;
+use App\Exceptions\DogUnauthorizedException;
 
 class DogService
 {
@@ -33,8 +35,12 @@ class DogService
     {
         $dog = $this->dogRepository->findById($dogId);
 
-        if (!$dog || $dog->user_id !== $userId) {
-            throw new \Exception('Cachorro não encontrado ou você não tem permissão para atualizá-lo.');
+        if (!$dog) {
+            throw new DogNotFoundException();
+        }
+
+        if ($dog->user_id !== $userId) {
+            throw new DogUnauthorizedException();
         }
 
         return $this->dogRepository->update($dogId, $data);

@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Collection;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Exceptions\UserNotFoundException;
+use App\Exceptions\UserUnauthorizedException;
 
 class UserService
 {
@@ -65,8 +67,18 @@ class UserService
         return $this->userRepository->findWithSubmittedEvaluations($id);
     }
 
-    public function update(int $id, array $data): User
+    public function update(int $id, array $data, int $authUserId): User
     {
+        $user = $this->userRepository->findById($id);
+
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+
+        if ($user->id !== $authUserId) {
+            throw new UserUnauthorizedException();
+        }
+
         if (isset($data['foto'])) {
             $data['foto'] = $data['foto']->store('users', 'public');
         }

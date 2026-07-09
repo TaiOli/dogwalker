@@ -6,6 +6,8 @@ use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Services\UserService;
+use App\Exceptions\UserNotFoundException;
+use App\Exceptions\UserUnauthorizedException;
 
 class UserController extends Controller
 {
@@ -22,7 +24,7 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Usuário criado com sucesso',
             'user' => $user
-        ]);
+        ],201);
     }
 
     public function login(StoreLoginRequest $request)
@@ -41,7 +43,7 @@ class UserController extends Controller
             'message' => 'Login realizado com sucesso',
             'user' => $result['user'],
             'token' => $result['token']
-        ]);
+        ],201);
     }
 
     public function walkers()
@@ -63,14 +65,29 @@ class UserController extends Controller
 
     public function update($id, UpdateUserRequest $request)
     {
-        $user = $this->userService->update(
-            $id,
-            $request->validated()
-        );
+        try {
+            $user = $this->userService->update(
+                $id,
+                $request->validated(),
+                $request->user()->id
+            );
 
-        return response()->json([
-            'message' => 'Usuário atualizado com sucesso',
-            'user' => $user
-        ]);
+            return response()->json([
+                'message' => 'Usuário atualizado com sucesso',
+                'user' => $user
+            ],200);
+
+        // Not Found : Página ou dado procurado não existe
+        } catch (UserNotFoundException $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 404);
+            
+        // Forbidden: Tentou alterar mas não pode
+        } catch (UserUnauthorizedException $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 403);
+        }
     }
 }
