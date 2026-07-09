@@ -96,7 +96,11 @@ class TourService
                     ->where('tipo_avaliador', 'tutor')
                     ->first();
 
-                $tour->review_by_tutor = $reviewTutor;
+                $tour->review_by_tutor = $reviewTutor ? [
+                    'rating' => $reviewTutor->nota,
+                    'comment' => $reviewTutor->comentario,
+                ] : null;
+
                 $tour->rated_by_tutor = (bool) $reviewTutor;
 
                 return $tour;
@@ -111,7 +115,11 @@ class TourService
                     ->where('tipo_avaliador', 'passeador')
                     ->first();
 
-                $tour->review_by_walker = $reviewWalker;
+                $tour->review_by_walker = $reviewWalker ? [
+                    'rating' => $reviewWalker->nota,
+                    'comment' => $reviewWalker->comentario,
+                ] : null;
+
                 $tour->rated_by_walker = (bool) $reviewWalker;
 
                 return $tour;
