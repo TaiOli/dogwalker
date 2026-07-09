@@ -9,6 +9,7 @@ interface BaseSelectProps {
   labelKey: string
   valueKey: string
   label?: string
+  placeholder?: string
 }
 
 const props = defineProps<BaseSelectProps>()
@@ -32,6 +33,7 @@ function updateValue(event: Event) {
   <div>
     <label v-if="label" class="form-label text-start w-100">{{ label }}</label>
     <select class="form-select" :value="modelValue" @change="updateValue">
+      <option value="" disabled>{{ placeholder }}</option>
       <option
         v-for="item in options"
         :key="item[valueKey]"

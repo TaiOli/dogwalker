@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
+import BaseSelect from "../atoms/BaseSelect.vue"
 
 interface DogForm {
   name: string
@@ -22,6 +23,12 @@ const props = defineProps<RegisterDogFormProps>()
 const emit = defineEmits<{
   submit: []
 }>()
+
+const sizeOptions = [
+  { label: "Pequeno", value: "pequeno" },
+  { label: "Médio", value: "médio" },
+  { label: "Grande", value: "grande" }
+]
 
 const preview = ref<string | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -52,7 +59,13 @@ function handleFile(event: Event): void {
     </div>
 
     <div class="mb-2">
-      <BaseInput v-model="form.size" placeholder="Porte (pequeno, médio, grande)" />
+      <BaseSelect
+        v-model="form.size"
+        :options="sizeOptions"
+        labelKey="label"
+        valueKey="value"
+        placeholder="Porte"
+      />
     </div>
 
     <div class="mb-2">
@@ -64,7 +77,6 @@ function handleFile(event: Event): void {
     </div>
 
     <div class="mb-3 d-flex align-items-center gap-2">
-
       <input
         ref="fileInput"
         type="file"
@@ -72,13 +84,8 @@ function handleFile(event: Event): void {
         hidden
         @change="handleFile"
       />
-
-      <button type="button" class="clip-btn" @click="openFile">
-        📎
-      </button>
-
+      <button type="button" class="clip-btn" @click="openFile">📎</button>
       <span class="text-muted small">Anexar foto</span>
-
     </div>
 
     <div v-if="preview" class="mb-3 text-center">
@@ -89,28 +96,3 @@ function handleFile(event: Event): void {
 
   </div>
 </template>
-
-<style scoped>
-.form {
-  width: 100%;
-}
-
-.clip-btn {
-  border: none;
-  background: transparent;
-  font-size: 22px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.clip-btn:hover {
-  transform: scale(1.2);
-}
-
-.img-preview {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-</style>
