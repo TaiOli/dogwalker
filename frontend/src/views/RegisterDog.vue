@@ -44,8 +44,10 @@ async function save(): Promise<void> {
   try {
     if (formDog.id) {
       await updateDog()
+      alert("Cadastro atualizado com sucesso!")
     } else {
       await registerDog()
+      alert("Dog cadastrado com sucesso!")
     }
 
     clearDog()
