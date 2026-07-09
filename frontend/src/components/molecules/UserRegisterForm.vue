@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
@@ -32,6 +32,11 @@ const typeUsers = [
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const preview = ref<string | null>(null)
+
+const photoFileName = computed(() => {
+  const photo = props.form.photo
+  return photo instanceof File ? photo.name : ""
+})
 
 function openFile(): void {
   fileInput.value?.click()
@@ -84,20 +89,14 @@ function handleFile(event: Event): void {
 
     <div class="mb-3">
       <label class="form-label text-start w-100">Foto</label>
-
       <div class="input-group">
-
-        <button
-          type="button"
-          class="btn btn-outline-secondary"
-          @click="openFile"
-        >
+        <button type="button" class="btn btn-outline-secondary" @click="openFile">
           📎
         </button>
 
         <input
           class="form-control"
-          :value="form.photo && form.photo instanceof File ? form.photo.name : ''"
+          :value="photoFileName"
           placeholder="Nenhuma foto selecionada"
           readonly
         />
@@ -109,7 +108,6 @@ function handleFile(event: Event): void {
           hidden
           @change="handleFile"
         />
-
       </div>
     </div>
 
@@ -117,11 +115,7 @@ function handleFile(event: Event): void {
       <img :src="preview" class="img-preview" />
     </div>
 
-    <BaseButton
-      class="w-100 mt-2"
-      :label="labelButton"
-      @click="emit('submit')"
-    />
+    <BaseButton class="w-100 mt-2" :label="labelButton" @click="emit('submit')" />
 
   </div>
 </template>
