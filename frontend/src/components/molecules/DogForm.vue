@@ -118,7 +118,7 @@ function handleFile(files: FileList | null): void {
         hidden
         @change="handleFile"
       />
-      <BaseButton  type="button" class="clip-btn" @click="openFile"📎/>
+      <BaseButton  type="button" class="clip-btn" @click="openFile" label="📎"/>
       <span class="text-muted small">Anexar foto</span>
     </div>
 
