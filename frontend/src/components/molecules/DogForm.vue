@@ -3,6 +3,7 @@ import { ref } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
+import BaseLabel from "../atoms/BaseLabel.vue"
 
 interface DogForm {
   name: string
@@ -20,15 +21,17 @@ interface RegisterDogFormProps {
 
 const props = defineProps<RegisterDogFormProps>()
 
-const dogError = ref<string>("")
+const nameError = ref<string>("")
+const sizeError = ref<string>("")
 
-function handleSubmit(): void {
-  if (!props.form.name) {
-    dogError.value = "É obrigatório inserir o nome."
+  function handleSubmit(): void {
+  nameError.value = !props.form.name ? "Insira uma nome!" : ""
+  sizeError.value = !props.form.size ? "Selecione um tipo um porte!" : ""
+
+  if (nameError.value || sizeError.value ) {
     return
   }
 
-  dogError.value = ""
   emit("submit")
 }
 
@@ -63,37 +66,49 @@ function handleFile(event: Event): void {
   <div class="form">
 
     <div class="mb-2">
+      <BaseLabel class="text-start w-100">
+        Nome do cachorro <span class="text-danger">*</span>
+      </BaseLabel>
       <BaseInput 
         v-model="form.name" 
-        placeholder="Nome do cachorro" 
-        :class="{ 'is-invalid': dogError }"
-        @update:modelValue="dogError = ''"
+        :class="{ 'is-invalid': nameError }"
+        @update:modelValue="nameError = ''"
       />
-       <div v-if="dogError" class="text-danger small mt-1">
-        {{ dogError }}
+      <div v-if="nameError" class="text-danger small mt-1">
+        {{ nameError }}
       </div>
     </div>
 
     <div class="mb-2">
-      <BaseInput v-model="form.age" placeholder="Idade" type="number" />
+      <BaseLabel text="Idade" /> 
+      <BaseInput v-model="form.age" type="number" />
     </div>
 
     <div class="mb-2">
+      <BaseLabel class="text-start w-100">
+        Porte <span class="text-danger">*</span>
+      </BaseLabel>
       <BaseSelect
         v-model="form.size"
         :options="sizeOptions"
         labelKey="label"
         valueKey="value"
-        placeholder="Porte"
+        :class="{ 'is-invalid': sizeError }"
+        @update:modelValue="sizeError = ''"
       />
+      <div v-if="sizeError" class="text-danger small mt-1">
+        {{ sizeError }}
+      </div>
     </div>
 
     <div class="mb-2">
-      <BaseInput v-model="form.breed" placeholder="Raça" />
+      <BaseLabel text="Raça" /> 
+      <BaseInput v-model="form.breed"/>
     </div>
 
     <div class="mb-2">
-      <BaseInput v-model="form.observations" placeholder="Observações" />
+      <BaseLabel text="Observações" /> 
+      <BaseInput v-model="form.observations" />
     </div>
 
     <div class="mb-3 d-flex align-items-center gap-2">
