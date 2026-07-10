@@ -28,7 +28,7 @@ const route = useRoute()
 
 const walker = ref<Walker | Record<string, never>>({})
 
-// Lista de avaliações recebidas pelo passeador (já filtradas por tipo_avaliador=tutor no backend)
+// Lista de avaliações recebidas pelo passeador (já filtradas por tipo_avaliador=tutor)
 const evaluations = computed<Review[]>(() => (walker.value as Walker).received_reviews ?? [])
 
 function formatDate(data: string | null | undefined): string {

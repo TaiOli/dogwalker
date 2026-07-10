@@ -41,7 +41,6 @@ const emit = defineEmits<{
   submit: []
 }>()
 
-// placeholder (orienta o usuário a escolher) + lista real de passeadores
 const walkerOptions = computed<WalkerOption[]>(() => [
   { id: "", nome: "Selecione um passeador..." },
   ...props.walkers

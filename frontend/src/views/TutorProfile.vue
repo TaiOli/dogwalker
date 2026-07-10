@@ -28,7 +28,7 @@ const route = useRoute()
 
 const tutor = ref<Tutor | Record<string, never>>({})
 
-// Avaliações que passeadores fizeram sobre esse tutor (já filtradas no backend por tipo_avaliador=passeador)
+// Avaliações que passeadores fizeram sobre esse tutor (já filtradas por tipo_avaliador=passeador)
 const evaluations = computed<Review[]>(() => (tutor.value as Tutor).submitted_reviews ?? [])
 
 function formatDate(data: string | null | undefined): string {

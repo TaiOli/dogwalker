@@ -34,8 +34,6 @@ export function useScheduletour() {
     }
   }
 
-  // pré-seleciona um passeador específico (ex: vindo do Dashboard
-  // via query string). O select do formulário reflete isso sozinho.
   function setWalker(id) {
     form.passeador_id = id ? Number(id) : ""
   }

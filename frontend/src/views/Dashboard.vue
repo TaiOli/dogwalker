@@ -199,7 +199,7 @@ async function completeTour(passeio: Tour): Promise<void> {
   sending.value = true
 
   try {
-    // Marca como finalizado
+  
     await api.patch(`/tours/${passeio.id}/complete`)
 
     // Envia avaliação do passeador sobre o tutor/passeio
