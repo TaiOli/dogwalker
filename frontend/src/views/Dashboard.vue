@@ -4,10 +4,6 @@ import { useAuth } from "../composables/userAuth"
 import { api } from "../services/api"
 import { getPhoto } from "../utils/image"
 import BaseButton from "../components/atoms/BaseButton.vue"
-import BaseButton from "../components/atoms/BaseButton.vue"
-import BaseButton from "../components/atoms/BaseButton.vue"
-import BaseButton from "../components/atoms/BaseButton.vue"
-import BaseButton from "../components/atoms/BaseButton.vue"
 import BaseTextarea from "../components/atoms/BaseTextarea.vue"
 
 interface Dog {

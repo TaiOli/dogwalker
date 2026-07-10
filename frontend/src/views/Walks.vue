@@ -2,7 +2,6 @@
 import { onMounted, computed, ref } from "vue"
 import { useWalks } from "../composables/useWalks"
 import BaseButton from "../components/atoms/BaseButton.vue"
-import BaseButton from "../components/atoms/BaseButton.vue"
 
 interface Dog {
   id: number
