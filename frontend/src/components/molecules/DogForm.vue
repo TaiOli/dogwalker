@@ -20,6 +20,18 @@ interface RegisterDogFormProps {
 
 const props = defineProps<RegisterDogFormProps>()
 
+const dogError = ref<string>("")
+
+function handleSubmit(): void {
+  if (!props.form.name) {
+    dogError.value = "É obrigatório inserir o nome."
+    return
+  }
+
+  dogError.value = ""
+  emit("submit")
+}
+
 const emit = defineEmits<{
   submit: []
 }>()
@@ -51,7 +63,15 @@ function handleFile(event: Event): void {
   <div class="form">
 
     <div class="mb-2">
-      <BaseInput v-model="form.name" placeholder="Nome do cachorro" />
+      <BaseInput 
+        v-model="form.name" 
+        placeholder="Nome do cachorro" 
+        :class="{ 'is-invalid': dogError }"
+        @update:modelValue="dogError = ''"
+      />
+       <div v-if="dogError" class="text-danger small mt-1">
+        {{ dogError }}
+      </div>
     </div>
 
     <div class="mb-2">
@@ -92,7 +112,7 @@ function handleFile(event: Event): void {
       <img :src="preview" class="img-preview" />
     </div>
 
-    <BaseButton class="w-100" :label="labelButton" @click="emit('submit')" />
+    <BaseButton class="w-100" :label="labelButton" @click="handleSubmit" />
 
   </div>
 </template>
