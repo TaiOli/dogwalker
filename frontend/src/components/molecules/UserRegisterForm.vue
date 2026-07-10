@@ -156,7 +156,7 @@ function handleFile(files: FileList | null): void {
     <div class="mb-3">
       <BaseLabel text="Foto" /> 
       <div class="input-group">
-        <BaseButton type="button" class="btn btn-outline-secondary" @click="openFile" 📎/>
+        <BaseButton type="button" class="btn btn-outline-secondary" @click="openFile" label="📎"/>
         <BaseInput 
           class="form-control"
           :value="photoFileName"
