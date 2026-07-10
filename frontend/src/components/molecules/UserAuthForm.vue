@@ -39,8 +39,8 @@ const emit = defineEmits<{
   <div class="form">
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100">
-        📧 Email <span class="text-danger">*</span>
+      <BaseLabel class="text-start w-100" required>
+        📧 Email 
       </BaseLabel>
       <BaseInput 
         v-model="form.email" 
@@ -54,8 +54,8 @@ const emit = defineEmits<{
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100">
-        🔒 Senha <span class="text-danger">*</span>
+      <BaseLabel class="text-start w-100" required>
+        🔒 Senha 
       </BaseLabel>
       <BaseInput 
         v-model="form.password" 

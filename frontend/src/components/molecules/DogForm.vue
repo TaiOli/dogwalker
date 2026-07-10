@@ -65,8 +65,8 @@ function handleFile(files: FileList | null): void {
   <div class="form">
 
     <div class="mb-2">
-      <BaseLabel class="text-start w-100">
-        Nome do cachorro <span class="text-danger">*</span>
+      <BaseLabel class="text-start w-100" required>
+        Nome do cachorro 
       </BaseLabel>
       <BaseInput 
         v-model="form.name" 
@@ -84,8 +84,8 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div class="mb-2">
-      <BaseLabel class="text-start w-100">
-        Porte <span class="text-danger">*</span>
+      <BaseLabel class="text-start w-100" required>
+        Porte
       </BaseLabel>
       <BaseSelect
         v-model="form.size"

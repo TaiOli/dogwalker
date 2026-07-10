@@ -75,8 +75,8 @@ function handleFile(files: FileList | null): void {
   <div class="form">
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100">
-        Username <span class="text-danger">*</span>
+      <BaseLabel class="text-start w-100" required>
+        Username 
       </BaseLabel>
       <BaseInput 
         v-model="form.username" 
@@ -89,8 +89,8 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100">
-        Nome Completo <span class="text-danger">*</span>
+      <BaseLabel class="text-start w-100" required>
+        Nome Completo 
       </BaseLabel>
       <BaseInput 
         v-model="form.name"  
@@ -103,8 +103,8 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100">
-        Email <span class="text-danger">*</span>
+      <BaseLabel class="text-start w-100" required>
+        Email
       </BaseLabel>
       <BaseInput 
         v-model="form.email" 
@@ -117,8 +117,8 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100">
-        Senha <span class="text-danger">*</span>
+      <BaseLabel class="text-start w-100" required>
+        Senha
       </BaseLabel>
       <BaseInput 
         v-model="form.password" 
@@ -132,8 +132,8 @@ function handleFile(files: FileList | null): void {
     </div>
 
       <div class="mb-3">
-        <BaseLabel class="text-start w-100">
-          Tipo de Usuário <span class="text-danger">*</span>
+        <BaseLabel class="text-start w-100" required>
+          Tipo de Usuário
         </BaseLabel>
         <BaseSelect
           v-model="form.type_user"

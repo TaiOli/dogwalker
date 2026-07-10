@@ -78,8 +78,8 @@ function handleSubmit(): void {
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100">
-        🎯 Passeador <span class="text-danger">*</span>
+      <BaseLabel class="text-start w-100" required>
+        🎯 Passeador
       </BaseLabel>
       <BaseSelect
         v-model="form.passeador_id"

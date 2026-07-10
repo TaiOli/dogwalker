@@ -15,6 +15,7 @@ withDefaults(defineProps<BaseLabelProps>(), {
 <template>
   <label :for="htmlFor" class="form-label text-start w-100">
     <slot>{{ text }}</slot>
+    <span v-if="required" class="text-danger ms-1">*</span>
   </label>
 </template>
 
