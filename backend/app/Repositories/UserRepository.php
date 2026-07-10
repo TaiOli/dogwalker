@@ -31,7 +31,7 @@ class UserRepository implements UserRepositoryInterface
     {
         return $this->model
             ->where('tipo_usuario', 'passeador')
-            ->withAvg('avaliacoesRecebidas', 'nota')
+            ->withAvg('receivedEvaluations', 'nota')
             ->get();
     }
 
@@ -39,12 +39,12 @@ class UserRepository implements UserRepositoryInterface
     {
         return $this->model
             ->where('id', $id)
-            ->with(['avaliacoesRecebidas' => function ($q) {
+            ->with(['receivedEvaluations' => function ($q) {
                 $q->where('tipo_avaliador', 'tutor')
                     ->with('tutor')
                     ->latest();
             }])
-            ->withAvg('avaliacoesRecebidas', 'nota')
+            ->withAvg('receivedEvaluations', 'nota')
             ->firstOrFail();
     }
 
@@ -52,7 +52,7 @@ class UserRepository implements UserRepositoryInterface
     {
         return $this->model
             ->where('id', $id)
-            ->with(['avaliacoesFeitas' => function ($q) {
+            ->with(['givenEvaluations' => function ($q) {
                 $q->where('tipo_avaliador', 'passeador')
                     ->with('passeador')
                     ->latest();

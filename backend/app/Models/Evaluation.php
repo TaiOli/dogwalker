@@ -19,7 +19,7 @@ class Evaluation extends Model
 
     // RELACIONAMENTOS
 
-    public function passeio()
+    public function tours()
     {
         return $this->belongsTo(Tour::class);
     }
@@ -29,7 +29,7 @@ class Evaluation extends Model
         return $this->belongsTo(User::class, 'tutor_id');
     }
 
-    public function passeador()
+    public function walker()
     {
         return $this->belongsTo(User::class, 'passeador_id');
     }

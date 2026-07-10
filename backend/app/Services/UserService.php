@@ -68,7 +68,7 @@ class UserService
             'telefone' => $user->telefone,
             'foto' => $user->foto,
             'tipo_usuario' => $user->tipo_usuario,
-            'received_reviews' => $user->avaliacoesRecebidas->map(function ($review) {
+            'received_reviews' => $user->receivedEvaluations->map(function ($review) {
                 return [
                     'id' => $review->id,
                     'nota' => $review->nota,
@@ -94,7 +94,7 @@ class UserService
             'telefone' => $user->telefone,
             'foto' => $user->foto,
             'tipo_usuario' => $user->tipo_usuario,
-            'submitted_reviews' => $user->avaliacoesFeitas->map(function ($review) {
+            'submitted_reviews' => $user->givenEvaluations->map(function ($review) {
                 return [
                     'id' => $review->id,
                     'nota' => $review->nota,

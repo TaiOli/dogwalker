@@ -45,17 +45,17 @@ class User extends Authenticatable
         return $this->hasMany(Dog::class);
     }
 
-    public function passeiosComoTutor()
+    public function tutorTours()
     {
         return $this->hasMany(Tour::class, 'tutor_id');
     }
 
-    public function avaliacoesRecebidas()
+    public function receivedEvaluations()
     {
         return $this->hasMany(Evaluation::class, 'passeador_id');
     }
 
-    public function avaliacoesFeitas()
+    public function givenEvaluations()
     {
         return $this->hasMany(Evaluation::class, 'tutor_id');
     }

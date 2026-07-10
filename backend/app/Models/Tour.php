@@ -29,7 +29,7 @@ class Tour extends Model
         return $this->belongsTo(User::class, 'tutor_id');
     }
 
-    public function passeador()
+    public function walker()
     {
         return $this->belongsTo(User::class, 'passeador_id');
     }
