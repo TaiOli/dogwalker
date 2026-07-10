@@ -30,15 +30,6 @@ const passwordError = ref<string>("")
 const nameError = ref<string>("")
 const typeuserError = ref<string>("")
 
-const emit = defineEmits<{
-  submit: []
-}>()
-
-const typeUsers = [
-  { label: "Tutor", value: "tutor" },
-  { label: "Passeador", value: "passeador" }
-]
-
 function handleSubmit(): void {
   usernameError.value = !props.form.username ? "Insira um username!" : ""
   emailError.value = !props.form.email ? "Insira um e-mail!" : ""
@@ -52,6 +43,15 @@ function handleSubmit(): void {
 
   emit("submit")
 }
+
+const emit = defineEmits<{
+  submit: []
+}>()
+
+const typeUsers = [
+  { label: "Tutor", value: "tutor" },
+  { label: "Passeador", value: "passeador" }
+]
 
 const photoFileName = computed(() => {
   const photo = props.form.photo
