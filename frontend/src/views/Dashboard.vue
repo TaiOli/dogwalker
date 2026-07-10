@@ -8,6 +8,7 @@ import BaseButton from "../components/atoms/BaseButton.vue"
 import BaseButton from "../components/atoms/BaseButton.vue"
 import BaseButton from "../components/atoms/BaseButton.vue"
 import BaseButton from "../components/atoms/BaseButton.vue"
+import BaseTextarea from "../components/atoms/BaseTextarea.vue"
 
 interface Dog {
   id: number
@@ -377,7 +378,7 @@ onMounted(async () => {
               </span>
             </div>
 
-            <textarea
+            <BaseTextarea
               class="form-control mb-3"
               rows="3"
               placeholder="Comentário (opcional)"
@@ -470,7 +471,7 @@ onMounted(async () => {
               </span>
             </div>
 
-            <textarea
+            <BaseTextarea
               class="form-control mb-3"
               rows="3"
               placeholder="Comentário (opcional)"
