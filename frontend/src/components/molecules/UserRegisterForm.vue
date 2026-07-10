@@ -21,6 +21,14 @@ interface UserRegisterFormProps {
 
 const props = defineProps<UserRegisterFormProps>()
 
+const fileInput = ref<HTMLInputElement | null>(null)
+const preview = ref<string | null>(null)
+const usernameError = ref<string>("")
+const emailError = ref<string>("")
+const passwordError = ref<string>("")
+const nameError = ref<string>("")
+const typeuserError = ref<string>("")
+
 const emit = defineEmits<{
   submit: []
 }>()
@@ -30,8 +38,19 @@ const typeUsers = [
   { label: "Passeador", value: "passeador" }
 ]
 
-const fileInput = ref<HTMLInputElement | null>(null)
-const preview = ref<string | null>(null)
+function handleSubmit(): void {
+  usernameError.value = !props.form.username ? "Insira um username!" : ""
+  emailError.value = !props.form.email ? "Insira um e-mail!" : ""
+  passwordError.value = !props.form.password ? "Insira uma senha!" : ""
+  nameError.value = !props.form.name ? "Insira uma nome!" : ""
+  typeuserError.value = !props.form.type_user ? "Selecione um tipo de usuário!" : ""
+
+  if (usernameError.value || emailError.value || passwordError.value || nameError.value || typeuserError.value ) {
+    return
+  }
+
+  emit("submit")
+}
 
 const photoFileName = computed(() => {
   const photo = props.form.photo
@@ -56,34 +75,81 @@ function handleFile(event: Event): void {
   <div class="form">
 
     <div class="mb-3">
-      <BaseInput v-model="form.username" placeholder="Nome de usuário" />
+      <label class="form-label text-start w-100">
+        Username <span class="text-danger">*</span>
+      </label>
+      <BaseInput 
+        v-model="form.username" 
+        :class="{ 'is-invalid': usernameError }"
+        @update:modelValue="usernameError = ''"
+      />
+      <div v-if="usernameError" class="text-danger text-start small mt-1">
+        {{ usernameError }}
+      </div>
     </div>
 
     <div class="mb-3">
-      <BaseInput v-model="form.name" placeholder="Nome completo" />
+      <label class="form-label text-start w-100">
+        Nome Completo <span class="text-danger">*</span>
+      </label>
+      <BaseInput 
+        v-model="form.name"  
+        :class="{ 'is-invalid': nameError }"
+        @update:modelValue="nameError = ''"
+      />
+      <div v-if="nameError" class="text-danger text-start small mt-1">
+        {{ nameError }}
+      </div>
     </div>
 
     <div class="mb-3">
-      <BaseInput v-model="form.email" placeholder="Email" />
+      <label class="form-label text-start w-100">
+        Email <span class="text-danger">*</span>
+      </label>
+      <BaseInput 
+        v-model="form.email" 
+        :class="{ 'is-invalid': emailError }"
+        @update:modelValue="emailError = ''"
+      />
+      <div v-if="emailError" class="text-danger text-start small mt-1">
+        {{ emailError }}
+      </div>
     </div>
 
     <div class="mb-3">
-      <BaseInput v-model="form.password" placeholder="Senha" type="password" />
+      <label class="form-label text-start w-100">
+        Senha <span class="text-danger">*</span>
+      </label>
+      <BaseInput 
+        v-model="form.password" 
+        type="password" 
+        :class="{ 'is-invalid': passwordError }"
+        @update:modelValue="passwordError = ''"
+      />
+      <div v-if="passwordError" class="text-danger text-start small mt-1">
+        {{ passwordError }}
+      </div>
     </div>
 
-    <div class="mb-3">
-      <label class="form-label text-start w-100">Tipo de usuário:</label>
       <div class="mb-3">
+        <label class="form-label text-start w-100">
+          Tipo de Usuário <span class="text-danger">*</span>
+        </label>
         <BaseSelect
           v-model="form.type_user"
           :options="typeUsers"
           labelKey="label"
           valueKey="value"
+          :class="{ 'is-invalid': typeuserError }"
+          @update:modelValue="typeuserError = ''"
         />
+        <div v-if="typeuserError" class="text-danger text-start small mt-1">
+          {{ typeuserError }}
+        </div>
       </div>
-    </div>
 
     <div class="mb-3">
+      <label class="form-label text-start w-100">Telefone </label>
       <BaseInput v-model="form.phone" placeholder="Telefone (opcional)" />
     </div>
 
@@ -115,7 +181,7 @@ function handleFile(event: Event): void {
       <img :src="preview" class="img-preview" />
     </div>
 
-    <BaseButton class="w-100 mt-2" :label="labelButton" @click="emit('submit')" />
+    <BaseButton class="w-100 mt-2" :label="labelButton" @click="handleSubmit" />
 
   </div>
 </template>

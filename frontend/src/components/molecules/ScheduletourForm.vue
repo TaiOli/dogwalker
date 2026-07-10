@@ -13,7 +13,7 @@ interface DogOption {
 interface WalkerOption {
   id: string | number
   nome: string
-  [key: string]: string | number | null | undefined
+  [key: string]: string | number
 }
 
 interface ScheduleTourForm {
@@ -43,7 +43,11 @@ const emit = defineEmits<{
 
 const walkerOptions = computed<WalkerOption[]>(() => [
   { id: "", nome: "Selecione um passeador..." },
-  ...props.walkers
+  ...props.walkers.map(w => ({
+    ...w,
+    id: w.id ?? "",
+    nome: w.nome ?? ""
+  }))
 ])
 
 const walkerError = ref<string>("")
