@@ -7,13 +7,13 @@ import BaseLabel from "../atoms/BaseLabel.vue"
 
 interface DogOption {
   id: string | number
-  nome: string
+  name: string
   [key: string]: string | number
 }
 
 interface WalkerOption {
   id: string | number
-  nome: string
+  name: string
   [key: string]: string | number
 }
 
@@ -47,7 +47,7 @@ const walkerOptions = computed<WalkerOption[]>(() => [
   ...props.walkers.map(w => ({
     ...w,
     id: w.id ?? "",
-    nome: w.nome ?? ""
+    name: w.name ?? ""
   }))
 ])
 
