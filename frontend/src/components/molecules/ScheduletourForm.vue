@@ -55,7 +55,7 @@ const walkerError = ref<string>("")
 
 function handleSubmit(): void {
   if (!props.form.passeador_id) {
-    walkerError.value = "É obrigatório selecionar um passeador."
+    walkerError.value = "Selecionar um passeador!"
     return
   }
 
