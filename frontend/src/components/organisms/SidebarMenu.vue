@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { useAuth } from "../../composables/userAuth"
+import BaseButton from "../atoms/BaseButton.vue"
 
 const { tutor, walker } = useAuth()
 const collapsed = ref(false)
@@ -14,7 +15,7 @@ function toggle(): void {
   <aside :class="['sidebar', { collapsed }]">
     <div class="header">
       <h2 v-if="!collapsed" class="m-0">🐶 Dog Walker</h2>
-      <button class="toggle btn btn-outline-light btn-md" @click="toggle">☰</button>
+      <BaseButton class="toggle btn btn-outline-light btn-md" @click="toggle"☰/>
     </div>
 
     <nav class="nav flex-column mt-3">

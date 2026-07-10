@@ -62,9 +62,8 @@ function openFile(): void {
   fileInput.value?.click()
 }
 
-function handleFile(event: Event): void {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
+function handleFile(files: FileList | null): void {
+  const file = files?.[0]
   if (!file) return
 
   props.form.photo = file
@@ -157,18 +156,15 @@ function handleFile(event: Event): void {
     <div class="mb-3">
       <BaseLabel text="Foto" /> 
       <div class="input-group">
-        <button type="button" class="btn btn-outline-secondary" @click="openFile">
-          📎
-        </button>
-
-        <input
+        <BaseButton type="button" class="btn btn-outline-secondary" @click="openFile" 📎/>
+        <BaseInput 
           class="form-control"
           :value="photoFileName"
           placeholder="Nenhuma foto selecionada"
           readonly
         />
 
-        <input
+        <BaseInput
           ref="fileInput"
           type="file"
           accept="image/*"

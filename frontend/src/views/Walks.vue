@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted, computed, ref } from "vue"
 import { useWalks } from "../composables/useWalks"
+import BaseButton from "../components/atoms/BaseButton.vue"
+import BaseButton from "../components/atoms/BaseButton.vue"
 
 interface Dog {
   id: number
@@ -120,28 +122,25 @@ async function reject(id: number): Promise<void> {
             <router-link
               v-if="p.tutor"
               :to="`/tutores/${p.tutor.id}`"
-              class="btn btn-outline-secondary btn-sm mb-2"
-            >
+              class="btn btn-outline-secondary btn-sm mb-2">
               👤 Ver Perfil do Tutor
             </router-link>
 
             <div class="d-flex gap-2 mt-auto pt-3">
 
-              <button
+              <BaseButton
                 class="btn btn-success flex-fill"
                 @click="accept(p.id)"
-                :disabled="loadId === p.id"
-              >
+                :disabled="loadId === p.id">
                 {{ loadId === p.id ? "⏳" : "Aceitar" }}
-              </button>
+              </BaseButton>
 
-              <button
+              <BaseButton
                 class="btn btn-danger flex-fill"
                 @click="reject(p.id)"
-                :disabled="loadId === p.id"
-              >
+                :disabled="loadId === p.id">
                 {{ loadId === p.id ? "⏳" : "Recusar" }}
-              </button>
+              </BaseButton>
 
             </div>
           </div>

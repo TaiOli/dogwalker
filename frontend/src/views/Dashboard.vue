@@ -3,6 +3,11 @@ import { ref, computed, onMounted } from "vue"
 import { useAuth } from "../composables/userAuth"
 import { api } from "../services/api"
 import { getPhoto } from "../utils/image"
+import BaseButton from "../components/atoms/BaseButton.vue"
+import BaseButton from "../components/atoms/BaseButton.vue"
+import BaseButton from "../components/atoms/BaseButton.vue"
+import BaseButton from "../components/atoms/BaseButton.vue"
+import BaseButton from "../components/atoms/BaseButton.vue"
 
 interface Dog {
   id: number
@@ -313,13 +318,13 @@ onMounted(async () => {
       <div class="card shadow-sm mb-3 position-relative" v-for="p in toursTutor" :key="p.id">
         <div class="card-body">
 
-          <button
+          <BaseButton
             v-if="p.status === 'pendente' || p.status === 'aceito' || p.status === 'recusado'"
             class="btn-close dismiss-btn"
             :aria-label="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             :title="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             @click="onXClickTutor(p)"
-          ></button>
+          />
 
           <h5>🐶 {{ p.dog?.nome }}</h5>
           <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
@@ -339,9 +344,9 @@ onMounted(async () => {
           </span>
 
           <div class="mt-3" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
-            <button class="btn btn-primary" @click="openEvaluationTutor(p)">
+            <BaseButton class="btn btn-primary" @click="openEvaluationTutor(p)">
               ⭐ Avaliar Passeador
-            </button>
+            </BaseButton>
           </div>
 
           <!-- AVALIAÇÃO ENVIADA PELO TUTOR-->
@@ -380,12 +385,12 @@ onMounted(async () => {
             />
 
             <div class="d-flex gap-2">
-              <button class="btn btn-success" @click="sendEvaluation(p.id, 'tutor')" :disabled="sending">
+              <BaseButton class="btn btn-success" @click="sendEvaluation(p.id, 'tutor')" :disabled="sending">
                 {{ sending ? "Enviando..." : "Enviar avaliação" }}
-              </button>
-              <button class="btn btn-secondary" @click="cancelEvaluationTutor">
+              </BaseButton>
+              <BaseButton class="btn btn-secondary" @click="cancelEvaluationTutor">
                 Cancelar
-              </button>
+              </BaseButton>
             </div>
           </div>
 
@@ -406,13 +411,13 @@ onMounted(async () => {
       <div class="card shadow-sm mb-3 position-relative" v-for="p in toursWalker" :key="p.id">
         <div class="card-body">
 
-          <button
-            v-if="p.status === 'aceito' || p.status === 'cancelado'"
-            class="btn-close dismiss-btn"
-            aria-label="Remover do dashboard"
-            title="Remover do dashboard"
-            @click="dismissTour(p.id)"
-          ></button>
+          <BaseButton
+              v-if="p.status === 'aceito' || p.status === 'cancelado'"
+              class="btn-close dismiss-btn"
+              aria-label="Remover do dashboard"
+              title="Remover do dashboard"
+              @click="dismissTour(p.id)"
+            />
 
           <h5>🐶 {{ p.dog?.nome }}</h5>
           <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
@@ -430,9 +435,11 @@ onMounted(async () => {
           </span>
 
           <div class="mt-3" v-if="p.status === 'aceito'">
-            <button class="btn btn-primary" @click="openEvaluationWalker(p)">
+            <BaseButton 
+              class="btn btn-primary" 
+              @click="openEvaluationWalker(p)" >
               ✔ Finalizar passeio
-            </button>
+            </BaseButton>
           </div>
 
           <!-- AVALIAÇÃO ENVIADA PELO PASSEADOR -->
@@ -471,12 +478,12 @@ onMounted(async () => {
             />
 
             <div class="d-flex gap-2">
-              <button class="btn btn-success" @click="completeTour(p)" :disabled="sending">
+              <BaseButton class="btn btn-success" @click="completeTour(p)" :disabled="sending">
                 {{ sending ? "Enviando..." : "Finalizar e enviar" }}
-              </button>
-              <button class="btn btn-secondary" @click="cancelEvaluationWalker">
+              </BaseButton>
+              <BaseButton class="btn btn-secondary" @click="cancelEvaluationWalker">
                 Cancelar
-              </button>
+              </BaseButton>
             </div>
           </div>
         </div>

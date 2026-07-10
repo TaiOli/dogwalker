@@ -4,6 +4,7 @@ import { api } from "../services/api"
 import { getPhoto } from "../utils/image"
 import { useRouter } from "vue-router"
 import { useAuth } from "../composables/userAuth"
+import BaseButton from "../components/atoms/BaseButton.vue"
 
 interface User {
   id: number
@@ -58,9 +59,9 @@ onMounted(async () => {
 
       <p>👤 Tipo: {{ user.tipo_usuario }}</p>
 
-      <button class="btn btn-primary mt-3 d-block mx-auto" @click="editProfile">
+      <BaseButton class="btn btn-primary mt-3 d-block mx-auto" @click="editProfile">
         Editar cadastro
-      </button>
+      </BaseButton>
 
     </div>
 

@@ -52,9 +52,8 @@ function openFile(): void {
   fileInput.value?.click()
 }
 
-function handleFile(event: Event): void {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
+function handleFile(files: FileList | null): void {
+  const file = files?.[0]
   if (!file) return
 
   props.form.photo = file
@@ -112,14 +111,14 @@ function handleFile(event: Event): void {
     </div>
 
     <div class="mb-3 d-flex align-items-center gap-2">
-      <input
+       <BaseInput
         ref="fileInput"
         type="file"
         accept="image/*"
         hidden
         @change="handleFile"
       />
-      <button type="button" class="clip-btn" @click="openFile">📎</button>
+      <BaseButton  type="button" class="clip-btn" @click="openFile"📎/>
       <span class="text-muted small">Anexar foto</span>
     </div>
 

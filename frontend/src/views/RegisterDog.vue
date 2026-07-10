@@ -3,6 +3,8 @@ import { ref, watch, onMounted } from "vue"
 import DogForm from "../components/molecules/DogForm.vue"
 import { useDog } from "../composables/useDog"
 import { api } from "../services/api"
+import BaseInput from "../components/atoms/BaseInput.vue"
+import BaseButton from "../components/atoms/BaseButton.vue"
 
 interface Dog {
   id: number
@@ -93,14 +95,14 @@ onMounted(loadDogs)
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h2>Cadastro do dog</h2>
 
-      <button class="btn btn-primary" @click="openModal">
+      <BaseButton class="btn btn-primary" @click="openModal">
         Novo
-      </button>
+      </BaseButton>
     </div>
 
     <!-- FILTRO -->
     <div class="mb-4">
-      <input
+      <BaseInput
         v-model="search"
         type="text"
         class="form-control"
@@ -123,14 +125,14 @@ onMounted(loadDogs)
       >
         <div class="card h-100 shadow-sm dog-card position-relative">
 
-          <button
+          <BaseButton
             type="button"
             class="btn-close dismiss-btn"
             aria-label="Excluir cachorro"
             title="Excluir cachorro"
             :disabled="excludingId === dog.id"
             @click="removeDog(dog)"
-          ></button>
+          />
 
           <img :src="dog.foto" class="card-img-top dog-img" alt="dog" />
 
@@ -140,12 +142,11 @@ onMounted(loadDogs)
             <p class="mb-1">🎂 {{ dog.idade }} anos</p>
             <p class="mb-1">📦 {{ dog.porte }}</p>
 
-            <button
+            <BaseButton
               class="btn btn-sm btn-outline-secondary mt-2"
-              @click="editDog(dog)"
-            >
+              @click="editDog(dog)">
               ✏️ Editar
-            </button>
+            </BaseButton>
           </div>
         </div>
       </div>
@@ -157,7 +158,7 @@ onMounted(loadDogs)
           <h5 class="modal-title">
             {{ formDog.id ? "Editar cachorro" : "Cadastrar cachorro" }}
           </h5>
-          <button class="btn-close" @click="closeModal"></button>
+          <BaseButton class="btn-close" @click="closeModal"/>
         </div>
 
         <div class="modal-body mt-3">
