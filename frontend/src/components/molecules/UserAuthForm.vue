@@ -17,16 +17,14 @@ interface UserAuthFormProps {
 const emailError = ref<string>("")
 const passwordError = ref<string>("")
 
-  function handleSubmit(): void {
-  if (!props.form.email) {
-    emailError.value = "Insira o email!"
+function handleSubmit(): void {
+  emailError.value = !props.form.email ? "Insira um e-mail!" : ""
+  passwordError.value = !props.form.password ? "Insira uma senha!" : ""
+
+  if ( emailError.value || passwordError.value ) {
     return
-  } else {
-    passwordError.value ="Insira a senha!"
   }
 
-  emailError.value = ""
-  passwordError.value = ""
   emit("submit")
 }
 
