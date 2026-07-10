@@ -3,6 +3,7 @@ import { ref, computed } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
+import BaseLabel from "../atoms/BaseLabel.vue"
 
 interface RegisterForm {
   username: string
@@ -75,9 +76,9 @@ function handleFile(event: Event): void {
   <div class="form">
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">
+      <BaseLabel class="text-start w-100">
         Username <span class="text-danger">*</span>
-      </label>
+      </BaseLabel>
       <BaseInput 
         v-model="form.username" 
         :class="{ 'is-invalid': usernameError }"
@@ -89,9 +90,9 @@ function handleFile(event: Event): void {
     </div>
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">
+      <BaseLabel class="text-start w-100">
         Nome Completo <span class="text-danger">*</span>
-      </label>
+      </BaseLabel>
       <BaseInput 
         v-model="form.name"  
         :class="{ 'is-invalid': nameError }"
@@ -103,9 +104,9 @@ function handleFile(event: Event): void {
     </div>
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">
+      <BaseLabel class="text-start w-100">
         Email <span class="text-danger">*</span>
-      </label>
+      </BaseLabel>
       <BaseInput 
         v-model="form.email" 
         :class="{ 'is-invalid': emailError }"
@@ -117,9 +118,9 @@ function handleFile(event: Event): void {
     </div>
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">
+      <BaseLabel class="text-start w-100">
         Senha <span class="text-danger">*</span>
-      </label>
+      </BaseLabel>
       <BaseInput 
         v-model="form.password" 
         type="password" 
@@ -132,9 +133,9 @@ function handleFile(event: Event): void {
     </div>
 
       <div class="mb-3">
-        <label class="form-label text-start w-100">
+        <BaseLabel class="text-start w-100">
           Tipo de Usuário <span class="text-danger">*</span>
-        </label>
+        </BaseLabel>
         <BaseSelect
           v-model="form.type_user"
           :options="typeUsers"
@@ -149,12 +150,12 @@ function handleFile(event: Event): void {
       </div>
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">Telefone </label>
-      <BaseInput v-model="form.phone" placeholder="Telefone (opcional)" />
+      <BaseLabel text="📞 Telefone" /> 
+      <BaseInput v-model="form.phone" />
     </div>
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">Foto</label>
+      <BaseLabel text="Foto" /> 
       <div class="input-group">
         <button type="button" class="btn btn-outline-secondary" @click="openFile">
           📎

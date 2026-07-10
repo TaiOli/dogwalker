@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseInput from "../atoms/BaseInput.vue";
+import BaseLabel from "../atoms/BaseLabel.vue";
 
 interface UserAuthForm {
   email: string
@@ -40,7 +41,9 @@ const emit = defineEmits<{
   <div class="form">
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">📧 Email</label>
+      <BaseLabel class="text-start w-100">
+        📧 Email <span class="text-danger">*</span>
+      </BaseLabel>
       <BaseInput 
         v-model="form.email" 
         placeholder="Email" 
@@ -53,7 +56,9 @@ const emit = defineEmits<{
     </div>
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">🔒 Senha</label>
+      <BaseLabel class="text-start w-100">
+        🔒 Senha <span class="text-danger">*</span>
+      </BaseLabel>
       <BaseInput 
         v-model="form.password" 
         placeholder="Senha" 

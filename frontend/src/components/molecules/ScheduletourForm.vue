@@ -3,6 +3,7 @@ import { computed, ref } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
+import BaseLabel from "../atoms/BaseLabel.vue"
 
 interface DogOption {
   id: string | number
@@ -67,7 +68,7 @@ function handleSubmit(): void {
   <div class="form">
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">🐶 Cachorro</label>
+      <BaseLabel text="🐶 Cachorro" /> 
       <BaseSelect
         v-model="form.dog_id"
         :options="dogs"
@@ -77,9 +78,9 @@ function handleSubmit(): void {
     </div>
 
     <div class="mb-3">
-      <label class="form-label text-start w-100">
+      <BaseLabel class="text-start w-100">
         🎯 Passeador <span class="text-danger">*</span>
-      </label>
+      </BaseLabel>
       <BaseSelect
         v-model="form.passeador_id"
         :options="walkerOptions"
@@ -96,22 +97,22 @@ function handleSubmit(): void {
     <div class="row g-3">
 
       <div class="col-12 col-md-6">
-        <label class="form-label text-start w-100">📅 Data</label>
+        <BaseLabel text="📅 Data" /> 
         <BaseInput v-model="form.date" type="date" />
       </div>
 
       <div class="col-12 col-md-6">
-        <label class="form-label text-start w-100">⏰ Hora</label>
+        <BaseLabel text="⏰ Hora" /> 
         <BaseInput v-model="form.hour" type="time" />
       </div>
 
       <div class="col-12 col-md-6">
-        <label class="form-label text-start w-100">⏳ Duração</label>
+        <BaseLabel text="⏳ Duração" /> 
         <BaseInput v-model="form.duration" type="time" />
       </div>
 
       <div class="col-12 col-md-6">
-        <label class="form-label text-start w-100">💰 Valor</label>
+        <BaseLabel text="💰 Valor" /> 
         <BaseInput
           v-model="form.value"
           type="number"
@@ -121,7 +122,7 @@ function handleSubmit(): void {
       </div>
 
       <div class="col-12">
-        <label class="form-label text-start w-100">📍 Local</label>
+        <BaseLabel text="📍 Local" /> 
         <BaseInput v-model="form.location" placeholder="Digite o local" />
       </div>
 
