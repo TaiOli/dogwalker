@@ -43,7 +43,7 @@ const emit = defineEmits<{
 }>()
 
 const walkerOptions = computed<WalkerOption[]>(() => [
-  { id: "", nome: "Selecione um passeador..." },
+  { id: "", name: "Selecione um passeador..." },
   ...props.walkers.map(w => ({
     ...w,
     id: w.id ?? "",
@@ -58,7 +58,6 @@ function handleSubmit(): void {
     walkerError.value = "Selecionar um passeador!"
     return
   }
-
   walkerError.value = ""
   emit("submit")
 }
@@ -66,9 +65,8 @@ function handleSubmit(): void {
 
 <template>
   <div class="form">
-
     <div class="mb-3">
-      <BaseLabel text="🐶 Cachorro" /> 
+      <BaseLabel text="🐶 Cachorro" />
       <BaseSelect
         v-model="form.dog_id"
         :options="dogs"
@@ -84,7 +82,7 @@ function handleSubmit(): void {
       <BaseSelect
         v-model="form.passeador_id"
         :options="walkerOptions"
-        labelKey="nome"
+        labelKey="name"
         valueKey="id"
         :class="{ 'is-invalid': walkerError }"
         @update:modelValue="walkerError = ''"
@@ -95,24 +93,20 @@ function handleSubmit(): void {
     </div>
 
     <div class="row g-3">
-
       <div class="col-12 col-md-6">
-        <BaseLabel text="📅 Data" /> 
+        <BaseLabel text="📅 Data" />
         <BaseInput v-model="form.date" type="date" />
       </div>
-
       <div class="col-12 col-md-6">
-        <BaseLabel text="⏰ Hora" /> 
+        <BaseLabel text="⏰ Hora" />
         <BaseInput v-model="form.hour" type="time" />
       </div>
-
       <div class="col-12 col-md-6">
-        <BaseLabel text="⏳ Duração" /> 
+        <BaseLabel text="⏳ Duração" />
         <BaseInput v-model="form.duration" type="time" />
       </div>
-
       <div class="col-12 col-md-6">
-        <BaseLabel text="💰 Valor" /> 
+        <BaseLabel text="💰 Valor" />
         <BaseInput
           v-model="form.value"
           type="number"
@@ -120,12 +114,10 @@ function handleSubmit(): void {
           min="0"
         />
       </div>
-
       <div class="col-12">
-        <BaseLabel text="📍 Local" /> 
+        <BaseLabel text="📍 Local" />
         <BaseInput v-model="form.location" placeholder="Digite o local" />
       </div>
-
     </div>
 
     <div class="mt-4 d-grid">
@@ -134,7 +126,6 @@ function handleSubmit(): void {
         @click="handleSubmit"
       />
     </div>
-
   </div>
 </template>
 
