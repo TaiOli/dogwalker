@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\DTOs\Dog\CreateDogDTO;
+use App\DTOs\Dog\UpdateDogDTO;
 use App\Models\Dog;
 use App\Repositories\Interfaces\DogRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,12 +17,15 @@ class DogService
         private DogRepositoryInterface $dogRepository
     ) {}
 
-    public function create(array $data, int $userId): Dog
+    public function create(CreateDogDTO $dto): Dog
     {
-        return $this->dogRepository->create([
-            ...$data,
-            'user_id' => $userId
-        ]);
+        $data = $dto->toArray();
+
+        if (isset($data['foto'])) {
+            $data['foto'] = $data['foto']->store('dogs', 'public');
+        }
+
+        return $this->dogRepository->create($data);
     }
 
     public function myDogs(array $data): Collection
@@ -31,7 +36,7 @@ class DogService
         );
     }
 
-    public function update(array $data, int $dogId, int $userId): Dog
+    public function update(UpdateDogDTO $dto, int $dogId, int $userId): Dog
     {
         $dog = $this->dogRepository->findById($dogId);
 
@@ -41,6 +46,12 @@ class DogService
 
         if ($dog->user_id !== $userId) {
             throw new DogUnauthorizedException();
+        }
+
+        $data = $dto->toArray();
+
+        if (isset($data['foto'])) {
+            $data['foto'] = $data['foto']->store('dogs', 'public');
         }
 
         return $this->dogRepository->update($dogId, $data);
