@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Http\Controllers;
 
+use App\DTOs\Tour\CreateTourDTO;
+use App\DTOs\Tour\TourResponseDTO;
 use App\Http\Requests\StoreTourRequest;
 use App\Services\TourService;
 use Illuminate\Http\Request;
 use App\Exceptions\TourNotFoundException;
-use App\Exceptions\TourUnauthorizedException;
+use App\Exceptions\TourUnauthorizedException; 
 use App\Exceptions\TourInvalidStatusException;
 
 class TourController extends Controller
@@ -17,14 +20,16 @@ class TourController extends Controller
     // Criar Passeio
     public function store(StoreTourRequest $request)
     {
-        $tour = $this->tourService->create(
+        $dto = CreateTourDTO::fromRequest(
             $request->validated(),
             $request->user()->id
         );
 
+        $tour = $this->tourService->create($dto);
+
         return response()->json([
             'message' => 'Passeio solicitado com sucesso',
-            'passeio' => $tour
+            'passeio' => (new TourResponseDTO($tour))->toArray(),
         ], 201);
     }
 
@@ -41,7 +46,7 @@ class TourController extends Controller
 
             return response()->json([
                 'message' => 'Passeio aceito com sucesso',
-                'passeio' => $tour
+                'passeio' => (new TourResponseDTO($tour))->toArray(),
             ], 200);
 
         } catch (TourNotFoundException $e) {
@@ -70,7 +75,9 @@ class TourController extends Controller
 
     public function myTours(Request $request)
     {
-        return $this->tourService->myTours($request->user());
+        return response()->json(
+            $this->tourService->myTours($request->user())
+        );
     }
 
     public function cancel($id, Request $request)
@@ -80,7 +87,7 @@ class TourController extends Controller
 
             return response()->json([
                 'message' => 'Passeio cancelado com sucesso',
-                'passeio' => $tour
+                'passeio' => (new TourResponseDTO($tour))->toArray(),
             ], 200);
 
         } catch (TourNotFoundException $e) {
@@ -97,7 +104,7 @@ class TourController extends Controller
 
             return response()->json([
                 'message' => 'Passeio finalizado com sucesso',
-                'passeio' => $tour
+                'passeio' => (new TourResponseDTO($tour))->toArray(),
             ], 200);
 
         } catch (TourNotFoundException $e) {

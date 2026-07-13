@@ -1,6 +1,9 @@
 <?php
+
 namespace App\Services;
 
+use App\DTOs\Tour\CreateTourDTO;
+use App\DTOs\Tour\TourResponseDTO;
 use App\Models\Evaluation;
 use App\Models\Tour;
 use App\Repositories\Interfaces\TourRepositoryInterface;
@@ -15,13 +18,10 @@ class TourService
         private TourRepositoryInterface $tourRepository
     ) {}
 
-    public function create(array $data, int $tutorId): Tour
+
+    public function create(CreateTourDTO $dto): Tour
     {
-        return $this->tourRepository->create([
-            ...$data,
-            'tutor_id' => $tutorId,
-            'status' => 'pendente',
-        ]);
+        return $this->tourRepository->create($dto->toArray());
     }
 
     public function listAvailable(?int $walkerId = null): Collection
@@ -91,47 +91,45 @@ class TourService
         ]);
     }
 
-    public function myTours($user): Collection
+    public function myTours($user): array
     {
         if ($user->tipo_usuario === 'tutor') {
             $tours = $this->tourRepository->findByTutor($user->id);
 
-            return $tours->map(function ($tour) {
-                $reviewTutor = Evaluation::where('passeio_id', $tour->id)
+            return $tours->map(function (Tour $tour) {
+                $review = Evaluation::where('passeio_id', $tour->id)
                     ->where('tipo_avaliador', 'tutor')
                     ->first();
 
-                $tour->review_by_tutor = $reviewTutor ? [
-                    'rating' => $reviewTutor->nota,
-                    'comment' => $reviewTutor->comentario,
-                ] : null;
+                $tour->review_by_tutor = $review ? [
+                    'rating' => $review->nota, 
+                    'comment' => $review->comentario,
+                ]: null;
+                $tour->rated_by_tutor = (bool) $review;
 
-                $tour->rated_by_tutor = (bool) $reviewTutor;
-
-                return $tour;
-            });
+                return (new TourResponseDTO($tour))->toArray();
+            })->values()->all();
         }
 
         if ($user->tipo_usuario === 'passeador') {
             $tours = $this->tourRepository->findByWalker($user->id);
 
-            return $tours->map(function ($tour) {
-                $reviewWalker = Evaluation::where('passeio_id', $tour->id)
+            return $tours->map(function (Tour $tour) {
+                $review = Evaluation::where('passeio_id', $tour->id)
                     ->where('tipo_avaliador', 'passeador')
                     ->first();
 
-                $tour->review_by_walker = $reviewWalker ? [
-                    'rating' => $reviewWalker->nota,
-                    'comment' => $reviewWalker->comentario,
-                ] : null;
+                $tour->review_by_walker = $review ? [
+                    'rating' => $review->nota, 
+                    'comment' => $review->comentario
+                ]: null;
+                $tour->rated_by_walker = (bool) $review;
 
-                $tour->rated_by_walker = (bool) $reviewWalker;
-
-                return $tour;
-            });
+                return (new TourResponseDTO($tour))->toArray();
+            })->values()->all();
         }
 
-        return collect();
+        return [];
     }
 
     public function delete(int $id, int $userId): void
