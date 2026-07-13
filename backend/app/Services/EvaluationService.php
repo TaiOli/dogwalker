@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Services;
 
+use App\DTOs\Evaluation\CreateEvaluationDTO;
 use App\Models\Evaluation;
 use App\Repositories\Interfaces\EvaluationRepositoryInterface;
 use App\Repositories\Interfaces\TourRepositoryInterface;
@@ -12,12 +14,12 @@ class EvaluationService
 {
     public function __construct(
         private EvaluationRepositoryInterface $evaluationRepository,
-        private TourRepositoryInterface $tourRepository
+        private TourRepositoryInterface       $tourRepository
     ) {}
 
-    public function create(array $data): Evaluation
+    public function create(CreateEvaluationDTO $dto): Evaluation
     {
-        $tour = $this->tourRepository->find($data['passeio_id']);
+        $tour = $this->tourRepository->find($dto->passeioId);
 
         if (!$tour) {
             throw new TourNotFoundException();
@@ -29,7 +31,7 @@ class EvaluationService
 
         $alreadyEvaluated = $this->evaluationRepository->existsForTourAndType(
             $tour->id,
-            $data['tipo_avaliador']
+            $dto->tipoAvaliador
         );
 
         if ($alreadyEvaluated) {
@@ -37,12 +39,12 @@ class EvaluationService
         }
 
         return $this->evaluationRepository->create([
-            'passeio_id' => $tour->id,
-            'tutor_id' => $tour->tutor_id,
-            'passeador_id' => $tour->passeador_id,
-            'nota' => $data['nota'],
-            'comentario' => $data['comentario'] ?? null,
-            'tipo_avaliador' => $data['tipo_avaliador'],
+            'passeio_id'    => $tour->id,
+            'tutor_id'      => $tour->tutor_id,
+            'passeador_id'  => $tour->passeador_id,
+            'nota'          => $dto->nota,
+            'comentario'    => $dto->comentario,
+            'tipo_avaliador' => $dto->tipoAvaliador,
         ]);
     }
 }

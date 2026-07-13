@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Http\Controllers;
 
+use App\DTOs\Evaluation\CreateEvaluationDTO;
 use App\Http\Requests\StoreEvaluationRequest;
 use App\Services\EvaluationService;
 use App\Exceptions\TourNotFoundException;
@@ -16,9 +18,10 @@ class EvaluationController extends Controller
     public function store(StoreEvaluationRequest $request)
     {
         try {
-            $evaluation = $this->evaluationService->create(
-                $request->validated()
-            );
+
+            $dto = CreateEvaluationDTO::fromRequest($request->validated());
+
+            $evaluation = $this->evaluationService->create($dto);
 
             return response()->json([
                 'message' => 'Avaliação enviada com sucesso',
@@ -27,10 +30,8 @@ class EvaluationController extends Controller
 
         } catch (TourNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], 404);
-
         } catch (EvaluationTourNotFinishedException $e) {
             return response()->json(['message' => $e->getMessage()], 409);
-
         } catch (EvaluationAlreadyExistsException $e) {
             return response()->json(['message' => $e->getMessage()], 409);
         }
