@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\User\CreateUserDTO;
+use App\DTOs\User\UpdateUserDTO;
+use App\DTOs\User\UserResponseDTO;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Services\UserService;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserUnauthorizedException;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -17,21 +21,18 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        $user = $this->userService->create(
-            $request->validated()
-        );
+        $dto  = CreateUserDTO::fromRequest($request->validated());
+        $user = $this->userService->create($dto);
 
         return response()->json([
             'message' => 'Usuário criado com sucesso',
-            'user' => $user
-        ],201);
+            'user'    => (new UserResponseDTO($user))->toArray(),
+        ], 201);
     }
 
     public function login(StoreLoginRequest $request)
     {
-        $result = $this->userService->login(
-            $request->validated()
-        );
+        $result = $this->userService->login($request->validated());
 
         if (!$result) {
             return response()->json([
@@ -48,46 +49,56 @@ class UserController extends Controller
 
     public function walkers()
     {
-        return $this->userService->walkers();
+        return response()->json(
+            $this->userService->walkers() 
+        );
     }
 
     public function show($id)
     {
         return response()->json(
-            $this->userService->show($id)
+            $this->userService->show($id) 
         );
     }
 
     public function showTutor($id)
     {
-        return $this->userService->showTutor($id);
+        return response()->json(
+            $this->userService->showTutor($id) 
+        );
     }
 
     public function update($id, UpdateUserRequest $request)
     {
         try {
+            $dto  = UpdateUserDTO::fromRequest($request->validated());
+            
             $user = $this->userService->update(
-                $id,
-                $request->validated(),
+                $id, 
+                $dto, 
                 $request->user()->id
             );
 
             return response()->json([
                 'message' => 'Usuário atualizado com sucesso',
-                'user' => $user
+                'user' => (new UserResponseDTO($user))->toArray(),
             ],200);
 
-        // Not Found : Página ou dado procurado não existe
         } catch (UserNotFoundException $e) {
             return response()->json([
                 'message' => $e->getMessage()
             ], 404);
-            
-        // Forbidden: Tentou alterar mas não pode
         } catch (UserUnauthorizedException $e) {
             return response()->json([
                 'message' => $e->getMessage()
             ], 403);
         }
+    }
+
+    public function me(Request $request)
+    {
+        return response()->json(
+            (new UserResponseDTO($request->user()))->toArray()
+        );
     }
 }

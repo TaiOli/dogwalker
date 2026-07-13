@@ -2,9 +2,13 @@
 
 namespace App\Services;
 
+use App\DTOs\User\CreateUserDTO;
+use App\DTOs\User\UpdateUserDTO;
+use App\DTOs\User\UserResponseDTO;
+use App\DTOs\User\WalkerProfileResponseDTO;
+use App\DTOs\User\TutorProfileResponseDTO;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Collection;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserUnauthorizedException;
@@ -15,15 +19,21 @@ class UserService
         private UserRepositoryInterface $userRepository
     ) {}
 
-    public function create(array $data): User
+    public function create(CreateUserDTO $dto): User
     {
-        if (isset($data['foto'])) {
-            $data['foto'] = $data['foto']->store('users', 'public');
+        $foto = null;
+        if ($dto->foto) {
+            $foto = $dto->foto->store('users', 'public');
         }
 
-        $data['password'] = Hash::make($data['password']);
-
-        return $this->userRepository->create($data);
+        return $this->userRepository->create([
+            'nome'        => $dto->nome,
+            'email'       => $dto->email,
+            'password'    => Hash::make($dto->password),
+            'tipo_usuario' => $dto->tipoUsuario,
+            'telefone'    => $dto->telefone,
+            'foto'        => $foto,
+        ]);
     }
 
     public function login(array $data): ?array
@@ -37,79 +47,33 @@ class UserService
         $token = $user->createToken('auth-token')->plainTextToken;
 
         return [
-            'user' => $user,
+            'user'  => (new UserResponseDTO($user))->toArray(),
             'token' => $token,
         ];
     }
 
-    public function walkers(): Collection
+    public function walkers(): array
     {
-        return $this->userRepository
-            ->getWalkersWithRatingAvg()
-            ->map(function ($user) {
-                return [
-                    'id' => $user->id,
-                    'nome' => $user->nome,
-                    'telefone' => $user->telefone,
-                    'foto' => $user->foto,
-                    'media_avaliacao' => round($user->receivedEvaluationsAvgRating ?? 0, 1),
-                ];
-            });
+        $walkers = $this->userRepository->getWalkersWithRatingAvg();
+
+        return UserResponseDTO::collection($walkers);
     }
 
     public function show(int $id): array
     {
         $user = $this->userRepository->findWithReceivedEvaluations($id);
 
-        return [
-            'id' => $user->id,
-            'nome' => $user->nome,
-            'email' => $user->email,
-            'telefone' => $user->telefone,
-            'foto' => $user->foto,
-            'tipo_usuario' => $user->tipo_usuario,
-            'received_reviews' => $user->receivedEvaluations->map(function ($review) {
-                return [
-                    'id' => $review->id,
-                    'nota' => $review->nota,
-                    'comentario' => $review->comentario,
-                    'created_at' => $review->created_at,
-                    'tutor' => $review->tutor ? [
-                        'id' => $review->tutor->id,
-                        'nome' => $review->tutor->nome,
-                    ] : null,
-                ];
-            }),
-        ];
+        return (new WalkerProfileResponseDTO($user))->toArray();
     }
-    
+
     public function showTutor(int $id): array
     {
         $user = $this->userRepository->findWithSubmittedEvaluations($id);
 
-        return [
-            'id' => $user->id,
-            'nome' => $user->nome,
-            'email' => $user->email,
-            'telefone' => $user->telefone,
-            'foto' => $user->foto,
-            'tipo_usuario' => $user->tipo_usuario,
-            'submitted_reviews' => $user->givenEvaluations->map(function ($review) {
-                return [
-                    'id' => $review->id,
-                    'nota' => $review->nota,
-                    'comentario' => $review->comentario,
-                    'created_at' => $review->created_at,
-                    'passeador' => $review->passeador ? [
-                        'id' => $review->passeador->id,
-                        'nome' => $review->passeador->nome,
-                    ] : null,
-                ];
-            }),
-        ];
+        return (new TutorProfileResponseDTO($user))->toArray();
     }
 
-    public function update(int $id, array $data, int $authUserId): User
+    public function update(int $id, UpdateUserDTO $dto, int $authUserId): User
     {
         $user = $this->userRepository->findById($id);
 
@@ -120,6 +84,8 @@ class UserService
         if ($user->id !== $authUserId) {
             throw new UserUnauthorizedException();
         }
+
+        $data = $dto->toArray();
 
         if (isset($data['foto'])) {
             $data['foto'] = $data['foto']->store('users', 'public');
