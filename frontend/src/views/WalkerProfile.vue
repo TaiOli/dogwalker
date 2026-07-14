@@ -49,11 +49,11 @@ onMounted(async () => {
       <div class="col-md-6">
         <div class="card shadow-sm p-4 text-center">
 
-          <img
+          <v-img
             :src="getPhoto(walker.foto)"
             class="profile-photo mx-auto mb-3"
             alt="Foto do passeador"
-          >
+          ></v-img>
 
           <h2>{{ walker.nome }}</h2>
 

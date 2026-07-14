@@ -45,7 +45,7 @@ onMounted(async () => {
 
     <div v-if="!loading && user" class="card p-4 shadow-sm text-center">
 
-      <img
+      <v-img
         :src="getPhoto(user?.foto)"
         class="rounded-circle mb-3"
         width="120"

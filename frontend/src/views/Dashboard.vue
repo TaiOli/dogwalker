@@ -282,7 +282,7 @@ onMounted(async () => {
         <div class="col-md-4" v-for="w in walkers" :key="w.id">
           <div class="card h-100 shadow-sm">
             <div class="card-body text-center">
-              <img :src="getPhoto(w.foto)" class="rounded-circle mb-3" width="110" height="110">
+              <v-img :src="getPhoto(w.foto)" class="rounded-circle mb-3" width="110" height="110"></v-img>
               <h5>{{ w.nome }}</h5>
               <p>📱 {{ w.telefone }}</p>
               <p>

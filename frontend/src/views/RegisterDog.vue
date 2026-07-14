@@ -134,7 +134,7 @@ onMounted(loadDogs)
             @click="removeDog(dog)"
           />
 
-          <img :src="dog.foto" class="card-img-top dog-img" alt="dog" />
+          <v-img :src="dog.foto" class="card-img-top dog-img" alt="dog" />
 
           <div class="card-body">
             <h5 class="card-title">{{ dog.nome }}</h5>

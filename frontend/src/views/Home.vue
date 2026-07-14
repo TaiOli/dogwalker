@@ -14,7 +14,7 @@ function start(): void {
 <template>
   <div class="home-screen" :style="{ backgroundImage: `url(${dogImage})` }">
     <div class="brand-name">
-      <img :src="dogPaw" alt="Pata" class="paw-icon" />
+      <v-img :src="dogPaw" alt="Pata" class="paw-icon" />
       <v-text-field>Dog Walker</v-text-field>
     </div>
 

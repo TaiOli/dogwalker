@@ -123,7 +123,7 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div v-if="preview" class="mb-3 text-center">
-      <img :src="preview" class="img-preview" />
+      <v-img :src="preview" class="img-preview" />
     </div>
 
     <BaseButton class="w-100" :label="labelButton" @click="handleSubmit" />

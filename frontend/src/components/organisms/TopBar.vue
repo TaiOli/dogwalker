@@ -12,7 +12,7 @@ const { user, logout } = useAuth()
 
     <div class="dropdown">
 
-      <img
+      <v-img
         :src="getPhoto(user?.foto)"
         class="profile-photo dropdown-toggle"
         data-bs-toggle="dropdown"
