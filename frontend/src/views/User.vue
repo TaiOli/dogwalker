@@ -4,7 +4,7 @@ import UserCadastroForm from "../components/molecules/UserRegisterForm.vue"
 
 const { formRegister, register, updateRegister, clearRegister } = useAuth()
 
-async function salvar(): Promise<void> {
+async function save(): Promise<void> {
   try {
     if (formRegister.id) {
       await updateRegister()
@@ -35,7 +35,7 @@ async function salvar(): Promise<void> {
       <UserCadastroForm
         :form="formRegister"
         :labelButton="formRegister.id ? 'Atualizar' : 'Salvar'"
-        @submit="salvar"
+        @submit="save"
       />
 
       <p class="mt-3">

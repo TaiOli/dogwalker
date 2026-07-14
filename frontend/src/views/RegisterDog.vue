@@ -44,8 +44,8 @@ function closeModal(): void {
 }
 
 async function removeDog(dog: Dog): Promise<void> {
-  const confirmar = confirm(`Tem certeza que deseja excluir o cadastro de "${dog.nome}"?`)
-  if (!confirmar) return
+  const confirmed = confirm(`Tem certeza que deseja excluir o cadastro de "${dog.nome}"?`)
+  if (!confirmed) return
 
   excludingId.value = dog.id
 

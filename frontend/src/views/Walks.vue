@@ -66,11 +66,11 @@ async function accept(id: number): Promise<void> {
 }
 
 async function reject(id: number): Promise<void> {
-  const confirmar = confirm(
+  const confirmed = confirm(
     "Tem certeza que deseja recusar este passeio?"
   )
 
-  if (!confirmar) return
+  if (!confirmed) return
 
   loadId.value = id
 
