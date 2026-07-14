@@ -21,7 +21,7 @@ function toggle(): void {
     </div>
 
     <nav class="nav flex-column mt-3">
-      <router-link to="/home" class="nav-item">
+      <router-link to="/dashboard" class="nav-item">
         🏠 <span v-if="!collapsed">Dashboard</span>
       </router-link>
       <router-link v-if="tutor" to="/cadastro-cachorro" class="nav-item">

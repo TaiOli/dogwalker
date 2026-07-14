@@ -8,7 +8,7 @@ const route = useRoute()
 
 // se está na página de login ou cadastro
 const isLoginPage = computed<boolean>(() => {
-  return route.path === "/" || route.path === "/cadastro-usuario"
+  return route.path === "/login" || route.path === "/cadastro-usuario" || route.path === "/inicio"
 })
 </script>
 

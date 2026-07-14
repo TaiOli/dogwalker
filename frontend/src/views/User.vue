@@ -39,7 +39,7 @@ async function salvar(): Promise<void> {
       />
 
       <p class="mt-3">
-        <router-link to="/" class="text-decoration-none fw-bold text-success">
+        <router-link to="/login" class="text-decoration-none fw-bold text-success">
           Voltar
         </router-link>
       </p>

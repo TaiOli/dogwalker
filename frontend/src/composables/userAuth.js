@@ -120,7 +120,7 @@ export function useAuth() {
     user.value = null
     localStorage.removeItem("user")
     localStorage.removeItem("token")
-    router.push("/")
+    router.push("/login")
   }
 
   return {

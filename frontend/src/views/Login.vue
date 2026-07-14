@@ -36,7 +36,7 @@ async function loginAccess(): Promise<void> {
 
     clearLogin();
 
-    router.push("/home");
+    router.push("/dashboard");
   } catch (error) {
     const err = error as { response?: { data?: ApiErrorResponse } };
 
