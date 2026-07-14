@@ -11,11 +11,11 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <button
+  <v-btn
     type="button"
     class="btn btn-success w-100 py-2 fw-bold"
     @click="emit('click', $event)"
   >
     {{ label }}
-  </button>
+</v-btn>
 </template>

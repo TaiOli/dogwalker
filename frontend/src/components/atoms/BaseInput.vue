@@ -35,7 +35,7 @@ function onChange(event: Event): void {
 </script>
 
 <template>
-  <input
+  <v-input
     class="form-control"
     :value="type !== 'file' ? modelValue : undefined" 
     :placeholder="placeholder"

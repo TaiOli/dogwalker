@@ -178,7 +178,7 @@ function handleFile(files: FileList | null): void {
       <img :src="preview" class="img-preview" />
     </div>
 
-    <BaseButton class="w-100 mt-2" :label="labelButton" @click="handleSubmit" />
+    <BaseButton class="w-100 mt-2 btn-mustard" :label="labelButton" @click="handleSubmit" />
 
   </div>
 </template>
@@ -205,5 +205,32 @@ function handleFile(files: FileList | null): void {
   max-height: 200px;
   object-fit: cover;
   border-radius: 10px;
+}
+
+.btn-mustard {
+    background-color: #D4A017;
+    border-color: #D4A017;
+    color: #1F1F1F;
+    font-weight: 600;
+    transition: 0.3s ease;
+    border-radius: 50px;
+    padding: 10px 32px;
+    max-width: 70%;
+    border-radius: 50px;
+    padding: 10px 32px;
+}
+
+.btn-mustard:hover {
+    background-color: #B88A12;
+    border-color: #B88A12;
+    color: #1F1F1F;
+}
+
+.btn-mustard:focus,
+.btn-mustard:active {
+    background-color: #A97C10 !important;
+    border-color: #A97C10 !important;
+    color: #1F1F1F !important;
+    box-shadow: 0 0 0 0.25rem rgba(212, 160, 23, 0.35);
 }
 </style>
