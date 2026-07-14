@@ -13,7 +13,7 @@ export function useScheduletour() {
     duration: "",
     location: "",
     value: "",
-    passeador_id: ""
+    walker_id: ""
   })
 
   async function loadDogs() {
@@ -35,11 +35,11 @@ export function useScheduletour() {
   }
 
   function setWalker(id) {
-    form.passeador_id = id ? Number(id) : ""
+    form.walker_id = id ? Number(id) : ""
   }
 
   function clearWalker() {
-    form.passeador_id = ""
+    form.walker_id = ""
   }
 
   async function requestTour() {
@@ -51,7 +51,7 @@ export function useScheduletour() {
         duracao: form.duration,
         local: form.location,
         valor: form.value,
-        passeador_id: form.passeador_id || null
+        passeador_id: form.walker_id || null
       })
 
       return res
@@ -70,7 +70,7 @@ export function useScheduletour() {
       duration: "",
       location: "",
       value: "",
-      passeador_id: ""
+      walker_id: ""
     })
   }
 

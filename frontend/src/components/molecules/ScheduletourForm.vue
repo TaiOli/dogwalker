@@ -24,7 +24,7 @@ interface ScheduleTourForm {
   duration: string
   value: string | number
   location: string
-  passeador_id: string | number
+  walker_id: string | number
 }
 
 interface ScheduleTourFormProps {
@@ -54,7 +54,7 @@ const walkerOptions = computed<WalkerOption[]>(() => [
 const walkerError = ref<string>("")
 
 function handleSubmit(): void {
-  if (!props.form.passeador_id) {
+  if (!props.form.walker_id) {
     walkerError.value = "Selecionar um passeador!"
     return
   }
@@ -80,7 +80,7 @@ function handleSubmit(): void {
         🎯 Passeador
       </BaseLabel>
       <BaseSelect
-        v-model="form.passeador_id"
+        v-model="form.walker_id"
         :options="walkerOptions"
         labelKey="name"
         valueKey="id"
