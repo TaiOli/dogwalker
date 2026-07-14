@@ -22,16 +22,16 @@ function toggle(): void {
 
     <nav class="nav flex-column mt-3">
       <router-link to="/dashboard" class="nav-item">
-        🏠 <span v-if="!collapsed">Dashboard</span>
+        🏠 <v-text-field v-if="!collapsed">Dashboard</v-text-field>
       </router-link>
       <router-link v-if="tutor" to="/cadastro-cachorro" class="nav-item">
-        🐕 <span v-if="!collapsed">Meus cachorros</span>
+        🐕 <v-text-field v-if="!collapsed">Meus cachorros</v-text-field>
       </router-link>
       <router-link v-if="tutor" to="/agendar-passeio" class="nav-item">
-        ➕ <span v-if="!collapsed">Solicitar passeio</span>
+        ➕ <v-text-field v-if="!collapsed">Solicitar passeio</v-text-field>
       </router-link>
       <router-link v-if="walker" to="/passeios" class="nav-item text-nowrap">
-        🚶 <span v-if="!collapsed">Passeios disponíveis</span>
+        🚶 <v-text-field v-if="!collapsed">Passeios disponíveis</v-text-field>
       </router-link>
     </nav>
   </aside>

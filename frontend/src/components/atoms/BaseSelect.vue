@@ -32,7 +32,7 @@ function updateValue(event: Event) {
 <template>
   <div>
     <v-label v-if="label" class="form-label text-start w-100">{{ label }}</v-label>
-    <select class="form-select" :value="modelValue" @change="updateValue">
+    <v-select class="form-select" :value="modelValue" @change="updateValue">
       <option value="" disabled>{{ placeholder }}</option>
       <option
         v-for="item in options"
@@ -41,6 +41,6 @@ function updateValue(event: Event) {
       >
         {{ item[labelKey] }}
       </option>
-    </select>
+    </v-select>
   </div>
 </template>

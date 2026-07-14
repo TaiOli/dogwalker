@@ -119,7 +119,7 @@ function handleFile(files: FileList | null): void {
         @change="handleFile"
       />
       <BaseButton  type="button" class="clip-btn" @click="openFile" label="📎"/>
-      <span class="text-muted small">Anexar foto</span>
+      <v-text-field class="text-muted small">Anexar foto</v-text-field>
     </div>
 
     <div v-if="preview" class="mb-3 text-center">

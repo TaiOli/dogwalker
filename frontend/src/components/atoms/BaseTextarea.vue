@@ -23,8 +23,8 @@ function onInput(event: Event): void {
 
 <template>
   <div>
-    <label v-if="label" class="form-label text-start w-100">{{ label }}</label>
-    <textarea
+    <v-text-field v-if="label" class="form-label text-start w-100">{{ label }}</v-text-field>
+    <v-textarea
       class="form-control"
       :value="modelValue"
       :placeholder="placeholder"

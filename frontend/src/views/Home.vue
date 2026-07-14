@@ -15,7 +15,7 @@ function start(): void {
   <div class="home-screen" :style="{ backgroundImage: `url(${dogImage})` }">
     <div class="brand-name">
       <img :src="dogPaw" alt="Pata" class="paw-icon" />
-      <span>Dog Walker</span>
+      <v-text-field>Dog Walker</v-text-field>
     </div>
 
     <BaseButton

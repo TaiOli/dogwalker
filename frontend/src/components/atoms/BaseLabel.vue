@@ -15,7 +15,7 @@ withDefaults(defineProps<BaseLabelProps>(), {
 <template>
   <v-text-field :for="htmlFor" class="form-label text-start w-100">
     <slot>{{ text }}</slot>
-    <span v-if="required" class="text-danger ms-1">*</span>
+    <v-text-field v-if="required" class="text-danger ms-1">*</v-text-field>
   </v-text-field>
 </template>
 
