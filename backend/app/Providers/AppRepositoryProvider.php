@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
-use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\Interfaces\TourRepositoryInterface;
-use App\Repositories\Interfaces\DogRepositoryInterface;
-use App\Repositories\Interfaces\EvaluationRepositoryInterface;
-use App\Repositories\UserRepository;
-use App\Repositories\TourRepository;
-use App\Repositories\DogRepository;
-use App\Repositories\EvaluationRepository;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Contracts\TourRepositoryInterface;
+use App\Repositories\Contracts\DogRepositoryInterface;
+use App\Repositories\Contracts\EvaluationRepositoryInterface;
+use App\Repositories\Eloquent\UserRepository;
+use App\Repositories\Eloquent\TourRepository;
+use App\Repositories\Eloquent\DogRepository;
+use App\Repositories\Eloquent\EvaluationRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppRepositoryProvider extends ServiceProvider
