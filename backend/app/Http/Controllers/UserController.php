@@ -7,7 +7,6 @@ use App\DTOs\User\UserResponseDTO;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Services\UserService;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserUnauthorizedException;
 use App\Repositories\Services\Contracts\UserServiceInterface;
