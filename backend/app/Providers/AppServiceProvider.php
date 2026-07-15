@@ -3,14 +3,14 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Repositories\Contracts\TourRepositoryInterface;
-use App\Repositories\Contracts\DogRepositoryInterface;
-use App\Repositories\Contracts\EvaluationRepositoryInterface;
-use App\Repositories\Eloquent\UserRepository;
-use App\Repositories\Eloquent\TourRepository;
-use App\Repositories\Eloquent\DogRepository;
-use App\Repositories\Eloquent\EvaluationRepository;
+use App\Repositories\Services\Contracts\UserServiceInterface;
+use App\Repositories\Services\Contracts\DogServiceInterface;
+use App\Repositories\Services\Contracts\TourServiceInterface;
+use App\Repositories\Services\Contracts\EvaluationServiceInterface;
+use App\Services\UserService;
+use App\Services\DogService;
+use App\Services\TourService;
+use App\Services\EvaluationService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,10 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
-        $this->app->bind(TourRepositoryInterface::class, TourRepository::class);
-        $this->app->bind(DogRepositoryInterface::class, DogRepository:: class);
-        $this->app->bind(EvaluationRepositoryInterface::class, EvaluationRepository::class);
+        $this->app->bind(UserServiceInterface::class, UserService::class);
+        $this->app->bind(DogServiceInterface::class, DogService::class);
+        $this->app->bind(TourServiceInterface::class,TourService::class);
+        $this->app->bind(EvaluationServiceInterface::class,EvaluationService::class);
     }
 
     /**
