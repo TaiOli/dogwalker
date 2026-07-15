@@ -1,5 +1,7 @@
 <?php
-namespace App\Repositories;
+
+namespace App\Repositories\Eloquent;
+
 use App\Models\Tour;
 use App\Repositories\Contracts\TourRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
