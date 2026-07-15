@@ -16,5 +16,4 @@ interface TourServiceInterface{
     public function complete(int $id, int $userId): Tour;
     public function myTours($user): array;
     public function delete(int $id, int $userId): void;
-    public function findOrFail (int $id): Tour;
 }
