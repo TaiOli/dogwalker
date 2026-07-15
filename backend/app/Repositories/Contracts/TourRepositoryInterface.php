@@ -1,7 +1,9 @@
 <?php
-namespace App\Repositories\Interfaces;
+namespace App\Repositories\Contracts;
+
 use App\Models\Tour;
 use Illuminate\Database\Eloquent\Collection;
+
 interface TourRepositoryInterface
 {
     public function create(array $data): Tour;

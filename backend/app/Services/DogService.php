@@ -5,7 +5,7 @@ namespace App\Services;
 use App\DTOs\Dog\CreateDogDTO;
 use App\DTOs\Dog\UpdateDogDTO;
 use App\Models\Dog;
-use App\Repositories\Interfaces\DogRepositoryInterface;
+use App\Repositories\Contracts\DogRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\DogNotFoundException;

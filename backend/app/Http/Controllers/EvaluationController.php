@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOs\Evaluation\CreateEvaluationDTO;
 use App\Http\Requests\StoreEvaluationRequest;
-use App\Services\EvaluationService;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\EvaluationTourNotFinishedException;
 use App\Exceptions\EvaluationAlreadyExistsException;
+use App\Repositories\Services\Contracts\EvaluationServiceInterface;
 
 class EvaluationController extends Controller
 {
     public function __construct(
-        private EvaluationService $evaluationService
+        private EvaluationServiceInterface $evaluationService
     ) {}
 
     public function store(StoreEvaluationRequest $request)
@@ -20,7 +19,6 @@ class EvaluationController extends Controller
         try {
             
             $evaluation = $this->evaluationService->create($request->toDto());
-
             return response()->json([
                 'message' => 'Avaliação enviada com sucesso',
                 'avaliacao' => $evaluation

@@ -9,8 +9,9 @@ use App\Repositories\Interfaces\TourRepositoryInterface;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\EvaluationTourNotFinishedException;
 use App\Exceptions\EvaluationAlreadyExistsException;
+use App\Repositories\Services\Contracts\EvaluationServiceInterface;
 
-class EvaluationService
+class EvaluationService implements EvaluationServiceInterface
 {
     public function __construct(
         private EvaluationRepositoryInterface $evaluationRepository,

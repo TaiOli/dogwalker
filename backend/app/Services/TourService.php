@@ -11,15 +11,16 @@ use Illuminate\Support\Collection;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourUnauthorizedException;
 use App\Exceptions\TourInvalidStatusException;
+use App\Repositories\Services\Contracts\TourServiceInterface;
 
-class TourService
+class TourService implements TourServiceInterface
 {
     public function __construct(
         private TourRepositoryInterface $tourRepository
     ) {}
 
 
-    public function create(CreateTourDTO $dto): Tour
+    public function create(CreateTourDTO $dto): Evaluation
     {
         return $this->tourRepository->create($dto->toArray());
     }

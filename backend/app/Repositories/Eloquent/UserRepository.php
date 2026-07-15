@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
-use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
 {

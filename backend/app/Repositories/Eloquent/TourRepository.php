@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories;
 use App\Models\Tour;
-use App\Repositories\Interfaces\TourRepositoryInterface;
+use App\Repositories\Contracts\TourRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 class TourRepository implements TourRepositoryInterface
 {

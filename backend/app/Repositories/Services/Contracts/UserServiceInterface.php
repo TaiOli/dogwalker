@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Interfaces;
+namespace App\Repositories\Services\Contracts;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
-interface UserRepositoryInterface
-{
+interface UserServiceInterface{
+
     public function create(array $data): User;
     public function findByEmail(string $email): ?User;
     public function findById(int $id): ?User;

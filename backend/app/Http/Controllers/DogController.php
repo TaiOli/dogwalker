@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOs\Dog\CreateDogDTO;
+
 use App\DTOs\Dog\UpdateDogDTO;
 use App\DTOs\Dog\DogResponseDTO;
 use App\Http\Requests\StoreDogRequest;
@@ -11,12 +11,13 @@ use App\Http\Requests\SearchDogRequest;
 use App\Services\DogService;
 use App\Exceptions\DogNotFoundException;
 use App\Exceptions\DogUnauthorizedException;
+use App\Repositories\Services\Contracts\DogServiceInterface;
 use Illuminate\Http\Request;
 
 class DogController extends Controller
 {
     public function __construct(
-        private DogService $dogService
+        private DogServiceInterface $dogService
     ) {}
 
     public function store(StoreDogRequest $request)

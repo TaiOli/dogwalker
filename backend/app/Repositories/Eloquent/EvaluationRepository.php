@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Evaluation;
-use App\Repositories\Interfaces\EvaluationRepositoryInterface;
+use App\Repositories\Contracts\EvaluationRepositoryInterface;
 
 class EvaluationRepository implements EvaluationRepositoryInterface
 {

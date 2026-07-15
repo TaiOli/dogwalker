@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOs\Tour\CreateTourDTO;
 use App\DTOs\Tour\TourResponseDTO;
 use App\Http\Requests\StoreTourRequest;
-use App\Services\TourService;
 use Illuminate\Http\Request;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourUnauthorizedException; 
 use App\Exceptions\TourInvalidStatusException;
+use App\Repositories\Services\Contracts\TourServiceInterface;
 
 class TourController extends Controller
 {
     public function __construct(
-        private TourService $tourService
+        private TourServiceInterface $tourService
     ) {}
 
     // Criar Passeio
