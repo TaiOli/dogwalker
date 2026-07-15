@@ -2,16 +2,16 @@
 
 namespace App\Repositories\Services\Contracts;
 
+use App\DTOs\User\CreateUserDTO;
+use App\DTOs\User\UpdateUserDTO;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 
 interface UserServiceInterface{
 
-    public function create(array $data): User;
-    public function findByEmail(string $email): ?User;
-    public function findById(int $id): ?User;
-    public function getWalkersWithRatingAvg(): Collection;
-    public function findWithReceivedEvaluations(int $id): User;
-    public function findWithSubmittedEvaluations(int $id): User;
-    public function update(int $id, array $data): User;
+    public function create(CreateUserDTO $dto): User;
+    public function login(array $data): ?array;
+    public function walkers(): array;
+    public function show(int $id): array;
+    public function showTutor(int $id): array;
+    public function update(int $id, UpdateUserDTO $dto, int $authUserId): User;
 }

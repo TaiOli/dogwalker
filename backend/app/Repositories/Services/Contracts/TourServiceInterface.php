@@ -5,15 +5,16 @@ namespace App\Repositories\Services\Contracts;
 use App\DTOs\Tour\CreateTourDTO;
 use App\Models\Tour;
 use Illuminate\Database\Eloquent\Collection;
-use App\Models\Evaluation;
 
 interface TourServiceInterface{
 
-    public function create(CreateTourDTO $dto): Evaluation;
-    public function find(int $id): Tour;
-    public function update(Tour $tour, array $data): Tour;
-    public function delete(Tour $tour): void;
+    public function create(CreateTourDTO $dto): Tour;
     public function listAvailable(?int $walkerId = null): Collection;
-    public function findByTutor(int $tutorId): Collection;
-    public function findByWalker(int $walkerId): Collection;
+    public function accept(int $id, int $walkerId): Tour;
+    public function reject(int $id): Tour;
+    public function cancel(int $id, int $userId): Tour;
+    public function complete(int $id, int $userId): Tour;
+    public function myTours($user): array;
+    public function delete(int $id, int $userId): void;
+    public function findOrFail (int $id): Tour;
 }

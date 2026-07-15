@@ -10,8 +10,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\DogNotFoundException;
 use App\Exceptions\DogUnauthorizedException;
+use App\Repositories\Services\Contracts\DogServiceInterface;
 
-class DogService
+class DogService implements DogServiceInterface
 {
     public function __construct(
         private DogRepositoryInterface $dogRepository

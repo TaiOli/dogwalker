@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserUnauthorizedException;
+use App\Repositories\Services\Contracts\UserServiceInterface;
 
-class UserService
+class UserService implements UserServiceInterface
 {
     public function __construct(
         private UserRepositoryInterface $userRepository

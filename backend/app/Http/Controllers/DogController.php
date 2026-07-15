@@ -8,7 +8,6 @@ use App\DTOs\Dog\DogResponseDTO;
 use App\Http\Requests\StoreDogRequest;
 use App\Http\Requests\UpdateDogRequest;
 use App\Http\Requests\SearchDogRequest;
-use App\Services\DogService;
 use App\Exceptions\DogNotFoundException;
 use App\Exceptions\DogUnauthorizedException;
 use App\Repositories\Services\Contracts\DogServiceInterface;

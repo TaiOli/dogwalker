@@ -7,7 +7,7 @@ use App\DTOs\Tour\TourResponseDTO;
 use App\Models\Evaluation;
 use App\Models\Tour;
 use App\Repositories\Interfaces\TourRepositoryInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourUnauthorizedException;
 use App\Exceptions\TourInvalidStatusException;
@@ -20,7 +20,7 @@ class TourService implements TourServiceInterface
     ) {}
 
 
-    public function create(CreateTourDTO $dto): Evaluation
+    public function create(CreateTourDTO $dto): Tour
     {
         return $this->tourRepository->create($dto->toArray());
     }
