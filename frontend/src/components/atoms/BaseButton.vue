@@ -1,21 +1,25 @@
 <script setup lang="ts">
 interface BaseButtonProps {
   label: string
+  type?: "button" | "submit" | "reset"
 }
 
-defineProps<BaseButtonProps>()
+withDefaults(defineProps<BaseButtonProps>(), {
+  type: "button",
+})
 
 const emit = defineEmits<{
-  click: [event: MouseEvent]
+  (e: "click", event: MouseEvent): void
 }>()
 </script>
 
 <template>
   <v-btn
-    type="button"
-    class="btn btn-success w-100 py-2 fw-bold"
+    :type="type"
     @click="emit('click', $event)"
   >
-    {{ label }}
-</v-btn>
+     <slot>
+      {{ label }}
+    </slot>
+  </v-btn>
 </template>

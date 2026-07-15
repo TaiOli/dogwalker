@@ -66,9 +66,9 @@ function handleSubmit(): void {
 <template>
   <div class="form">
     <div class="mb-3">
-      <BaseLabel text="🐶 Cachorro" />
       <BaseSelect
         v-model="form.dog_id"
+        label="🐶 Cachorro"
         :options="dogs"
         labelKey="nome"
         valueKey="id"
@@ -76,12 +76,11 @@ function handleSubmit(): void {
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100" required>
-        🎯 Passeador
-      </BaseLabel>
       <BaseSelect
         v-model="form.walker_id"
         :options="walkerOptions"
+        required
+        label="🎯 Passeador"
         labelKey="name"
         valueKey="id"
         :class="{ 'is-invalid': walkerError }"
@@ -94,29 +93,25 @@ function handleSubmit(): void {
 
     <div class="row g-3">
       <div class="col-12 col-md-6">
-        <BaseLabel text="📅 Data" />
-        <BaseInput v-model="form.date" type="date" />
+        <BaseInput v-model="form.date" type="date" label="📅 Data" />
       </div>
       <div class="col-12 col-md-6">
-        <BaseLabel text="⏰ Hora" />
-        <BaseInput v-model="form.hour" type="time" />
+        <BaseInput v-model="form.hour" type="time" label="⏰ Hora" />
       </div>
       <div class="col-12 col-md-6">
-        <BaseLabel text="⏳ Duração" />
-        <BaseInput v-model="form.duration" type="time" />
+        <BaseInput v-model="form.duration" type="time" label="⏳ Duração" />
       </div>
       <div class="col-12 col-md-6">
-        <BaseLabel text="💰 Valor" />
         <BaseInput
           v-model="form.value"
+          label="💰 Valor"
           type="number"
           step="0.01"
           min="0"
         />
       </div>
       <div class="col-12">
-        <BaseLabel text="📍 Local" />
-        <BaseInput v-model="form.location" placeholder="Digite o local" />
+        <BaseInput v-model="form.location" label="Local" />
       </div>
     </div>
 

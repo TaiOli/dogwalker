@@ -65,11 +65,10 @@ function handleFile(files: FileList | null): void {
   <div class="form">
 
     <div class="mb-2">
-      <BaseLabel class="text-start w-100" required>
-        Nome do cachorro 
-      </BaseLabel>
       <BaseInput 
         v-model="form.name" 
+        required
+        label="Nome do cachorro"
         :class="{ 'is-invalid': nameError }"
         @update:modelValue="nameError = ''"
       />
@@ -79,17 +78,15 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div class="mb-2">
-      <BaseLabel text="Idade" /> 
-      <BaseInput v-model="form.age" type="number" />
+      <BaseInput v-model="form.age" type="number" label="Idade" />
     </div>
 
     <div class="mb-2">
-      <BaseLabel class="text-start w-100" required>
-        Porte
-      </BaseLabel>
       <BaseSelect
         v-model="form.size"
         :options="sizeOptions"
+        required
+        label="Porte"
         labelKey="label"
         valueKey="value"
         :class="{ 'is-invalid': sizeError }"
@@ -101,26 +98,30 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div class="mb-2">
-      <BaseLabel text="Raça" /> 
-      <BaseInput v-model="form.breed"/>
+      <BaseInput v-model="form.breed" label="Raça"/>
     </div>
 
     <div class="mb-2">
-      <BaseLabel text="Observações" /> 
-      <BaseInput v-model="form.observations" />
+      <BaseInput v-model="form.observations" label="Observações" />
     </div>
 
-    <div class="mb-3 d-flex align-items-center gap-2">
-       <BaseInput
-        ref="fileInput"
-        type="file"
-        accept="image/*"
-        hidden
-        @change="handleFile"
-      />
-      <BaseButton  type="button" class="clip-btn" @click="openFile" label="📎"/>
-      <v-text-field class="text-muted small">Anexar foto</v-text-field>
+    <div class="mb-3">
+      <div class="d-flex align-center ga-2">  
+          <BaseInput
+            v-model="form.photo"
+            type="file"
+            accept="image/*"
+            label="Foto"
+          />
+        </div>
     </div>
+
+    <div v-if="preview" class="text-center mb-3">
+      <v-img :src="preview" class="img-preview" />
+    </div>
+
+    <BaseButton class="w-100 mt-2 btn-mustard" :label="labelButton" @click="handleSubmit" />
+
 
     <div v-if="preview" class="mb-3 text-center">
       <v-img :src="preview" class="img-preview" />

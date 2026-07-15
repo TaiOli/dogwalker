@@ -39,12 +39,10 @@ const emit = defineEmits<{
   <div class="form">
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100" required>
-        📧 Email 
-      </BaseLabel>
       <BaseInput 
         v-model="form.email" 
-        placeholder="Email" 
+        required
+        label="📧 Email"
         :class="{ 'is-invalid': emailError }"
         @update:modelValue="emailError = ''"
       />
@@ -54,12 +52,10 @@ const emit = defineEmits<{
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100" required>
-        🔒 Senha 
-      </BaseLabel>
       <BaseInput 
         v-model="form.password" 
-        placeholder="Senha" 
+        required
+        label="🔒 Senha"
         type="password" 
         :class="{ 'is-invalid': passwordError }"
         @update:modelValue="passwordError = ''"

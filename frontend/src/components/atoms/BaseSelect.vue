@@ -4,43 +4,35 @@ interface SelectOption {
 }
 
 interface BaseSelectProps {
-  modelValue: string | number
+  modelValue?: string | number | null
   options: SelectOption[]
-  labelKey: string
-  valueKey: string
+  labelKey?: string
+  valueKey?: string
   label?: string
   placeholder?: string
+  required?: boolean
 }
 
-const props = defineProps<BaseSelectProps>()
+withDefaults(defineProps<BaseSelectProps>(), {
+  labelKey: "label",
+  valueKey: "value",
+  placeholder: "",
+  required: false,
+})
 
 const emit = defineEmits<{
-  "update:modelValue": [value: string | number]
+  (e: "update:modelValue", value: string | number | null): void
 }>()
-
-function updateValue(event: Event) {
-  const target = event.target as HTMLSelectElement
-  const selected = props.options.find(
-    (item) => String(item[props.valueKey]) === target.value
-  )
-  if (selected) {
-    emit("update:modelValue", selected[props.valueKey])
-  }
-}
 </script>
 
 <template>
-  <div>
-    <v-label v-if="label" class="form-label text-start w-100">{{ label }}</v-label>
-    <v-select class="form-select" :value="modelValue" @change="updateValue">
-      <option value="" disabled>{{ placeholder }}</option>
-      <option
-        v-for="item in options"
-        :key="item[valueKey]"
-        :value="item[valueKey]"
-      >
-        {{ item[labelKey] }}
-      </option>
-    </v-select>
-  </div>
+  <v-select
+    :label="required ? `${label} *` : label"
+    :items="options"
+    :item-title="labelKey"
+    :item-value="valueKey"
+    :placeholder="placeholder"
+    :model-value="modelValue"
+    @update:modelValue="emit('update:modelValue', $event)"
+  />
 </template>

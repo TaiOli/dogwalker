@@ -3,7 +3,6 @@ import { ref, computed } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
-import BaseLabel from "../atoms/BaseLabel.vue"
 
 interface RegisterForm {
   username: string
@@ -22,7 +21,6 @@ interface UserRegisterFormProps {
 
 const props = defineProps<UserRegisterFormProps>()
 
-const fileInput = ref<HTMLInputElement | null>(null)
 const preview = ref<string | null>(null)
 const usernameError = ref<string>("")
 const emailError = ref<string>("")
@@ -52,33 +50,15 @@ const typeUsers = [
   { label: "Tutor", value: "tutor" },
   { label: "Passeador", value: "passeador" }
 ]
-
-const photoFileName = computed(() => {
-  const photo = props.form.photo
-  return photo instanceof File ? photo.name : ""
-})
-
-function openFile(): void {
-  fileInput.value?.click()
-}
-
-function handleFile(files: FileList | null): void {
-  const file = files?.[0]
-  if (!file) return
-
-  props.form.photo = file
-  preview.value = URL.createObjectURL(file)
-}
 </script>
 
 <template>
   <div class="form">
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100" required>
-        Username 
-      </BaseLabel>
       <BaseInput 
+        label="Username"
+        required
         v-model="form.username" 
         :class="{ 'is-invalid': usernameError }"
         @update:modelValue="usernameError = ''"
@@ -89,10 +69,9 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100" required>
-        Nome Completo 
-      </BaseLabel>
-      <BaseInput 
+      <BaseInput
+        label="Nome Completo"
+        required
         v-model="form.name"  
         :class="{ 'is-invalid': nameError }"
         @update:modelValue="nameError = ''"
@@ -103,10 +82,9 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100" required>
-        Email
-      </BaseLabel>
       <BaseInput 
+        label="Email"
+        required
         v-model="form.email" 
         :class="{ 'is-invalid': emailError }"
         @update:modelValue="emailError = ''"
@@ -117,10 +95,9 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <div class="mb-3">
-      <BaseLabel class="text-start w-100" required>
-        Senha
-      </BaseLabel>
       <BaseInput 
+        label="Senha"
+        required
         v-model="form.password" 
         type="password" 
         :class="{ 'is-invalid': passwordError }"
@@ -132,10 +109,9 @@ function handleFile(files: FileList | null): void {
     </div>
 
       <div class="mb-3">
-        <BaseLabel class="text-start w-100" required>
-          Tipo de Usuário
-        </BaseLabel>
         <BaseSelect
+          label="Tipo de Usuário"
+          required
           v-model="form.type_user"
           :options="typeUsers"
           labelKey="label"
@@ -149,29 +125,18 @@ function handleFile(files: FileList | null): void {
       </div>
 
     <div class="mb-3">
-      <BaseLabel text="📞 Telefone" /> 
-      <BaseInput v-model="form.phone" />
+      <BaseInput v-model="form.phone" label="📞 Telefone" />
     </div>
 
     <div class="mb-3">
-      <BaseLabel text="Foto" /> 
-      <div class="input-group">
-        <BaseButton type="button" class="btn btn-outline-secondary" @click="openFile" label="📎"/>
-        <BaseInput 
-          class="form-control"
-          :value="photoFileName"
-          placeholder="Nenhuma foto selecionada"
-          readonly
-        />
-
-        <BaseInput
-          ref="fileInput"
-          type="file"
-          accept="image/*"
-          hidden
-          @change="handleFile"
-        />
-      </div>
+      <div class="d-flex align-center ga-2">  
+          <BaseInput
+            v-model="form.photo"
+            type="file"
+            accept="image/*"
+            label="Foto"
+          />
+        </div>
     </div>
 
     <div v-if="preview" class="text-center mb-3">

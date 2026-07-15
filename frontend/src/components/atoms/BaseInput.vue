@@ -2,46 +2,46 @@
 interface BaseInputProps {
   modelValue?: string | number | null
   placeholder?: string
-  type?: string 
-  accept?: string 
+  label?: string
+  type?: string
+  accept?: string
+  required?: boolean
+  readonly?: boolean
 }
 
-const props = withDefaults(defineProps<BaseInputProps>(), {
+withDefaults(defineProps<BaseInputProps>(), {
   placeholder: "",
+  label: "",
   type: "text",
-  accept: ""
+  accept: "",
+  required: false,
+  readonly: false,
 })
 
 const emit = defineEmits<{
-  "update:modelValue": [value: string]
-   "change": [value: FileList | null]
+  (
+    e: "update:modelValue",
+    value: string | number | File | File[] | null
+  ): void
 }>()
-
-function onInput(event: Event): void {
-  // Ignora o onInput se for arquivo para não quebrar o value
-  if (props.type === 'file') return
-  
-  const target = event.target as HTMLInputElement
-  emit("update:modelValue", target.value)
-}
-
-function onChange(event: Event): void {
-  // Dispara o evento específico para arquivos
-  if (props.type === 'file') {
-    const target = event.target as HTMLInputElement
-    emit("change", target.files)
-  }
-}
 </script>
 
 <template>
-  <v-input
-    class="form-control"
-    :value="type !== 'file' ? modelValue : undefined" 
+  <v-file-input
+    v-if="type === 'file'"
+    :label="required ? `${label} *` : label"
+    :accept="accept"
+    :model-value="modelValue"
+    @update:modelValue="emit('update:modelValue', $event)"
+  />
+
+  <v-text-field
+    v-else
+    :label="required ? `${label} *` : label"
+    :model-value="modelValue"
     :placeholder="placeholder"
     :type="type"
-    :accept="accept"
-    @input="onInput"
-    @change="onChange"
+    :readonly="readonly"
+    @update:modelValue="emit('update:modelValue', $event)"
   />
 </template>
