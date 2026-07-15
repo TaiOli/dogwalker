@@ -18,10 +18,8 @@ class EvaluationController extends Controller
     public function store(StoreEvaluationRequest $request)
     {
         try {
-
-            $dto = CreateEvaluationDTO::fromRequest($request->validated());
-
-            $evaluation = $this->evaluationService->create($dto);
+            
+            $evaluation = $this->evaluationService->create($request->toDto());
 
             return response()->json([
                 'message' => 'Avaliação enviada com sucesso',

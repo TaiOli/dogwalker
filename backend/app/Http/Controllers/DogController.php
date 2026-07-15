@@ -21,18 +21,14 @@ class DogController extends Controller
 
     public function store(StoreDogRequest $request)
     {
-        $dto = CreateDogDTO::fromRequest(
-            $request->validated(),
-            $request->user()->id
-        );
-
-        $dog = $this->dogService->create($dto);
+        $dog = $this->dogService->create($request->toDto());
 
         return response()->json([
             'message' => 'Cachorro cadastrado com sucesso',
             'dog'     => (new DogResponseDTO($dog))->toArray(),
         ], 201);
     }
+
 
     public function edit(UpdateDogRequest $request, $id)
     {

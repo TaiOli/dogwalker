@@ -20,12 +20,7 @@ class TourController extends Controller
     // Criar Passeio
     public function store(StoreTourRequest $request)
     {
-        $dto = CreateTourDTO::fromRequest(
-            $request->validated(),
-            $request->user()->id
-        );
-
-        $tour = $this->tourService->create($dto);
+        $tour = $this->tourService->create($request->toDto());
 
         return response()->json([
             'message' => 'Passeio solicitado com sucesso',

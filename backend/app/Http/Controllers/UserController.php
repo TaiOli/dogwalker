@@ -21,8 +21,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        $dto  = CreateUserDTO::fromRequest($request->validated());
-        $user = $this->userService->create($dto);
+        $user = $this->userService->create($request->toDto());
 
         return response()->json([
             'message' => 'Usuário criado com sucesso',
