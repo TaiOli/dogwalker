@@ -3,18 +3,16 @@ import { computed, ref } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
-import BaseLabel from "../atoms/BaseLabel.vue"
 
 interface DogOption {
   id: string | number
-  name: string
-  [key: string]: string | number
+  nome: string
 }
 
 interface WalkerOption {
   id: string | number
-  name: string
-  [key: string]: string | number
+  nome?: string
+  name?: string
 }
 
 interface ScheduleTourForm {
@@ -42,16 +40,18 @@ const emit = defineEmits<{
   submit: []
 }>()
 
-const walkerOptions = computed<WalkerOption[]>(() => [
-  { id: "", name: "Selecione um passeador..." },
+const walkerOptions = computed(() => [
+  {
+    id: "",
+    name: "Selecione um passeador..."
+  },
   ...props.walkers.map(w => ({
-    ...w,
-    id: w.id ?? "",
-    name: w.name ?? ""
+    id: w.id,
+    name: w.nome ?? w.name ?? ""
   }))
 ])
 
-const walkerError = ref<string>("")
+const walkerError = ref("")
 
 function handleSubmit(): void {
   if (!props.form.walker_id) {
@@ -115,10 +115,11 @@ function handleSubmit(): void {
       </div>
     </div>
 
-    <div class="mt-4 d-grid">
+    <div class="mt-4 d-grid d-flex justify-content-center">
       <BaseButton
         :label="labelButton"
         @click="handleSubmit"
+        class="w-100 btn-mustard"
       />
     </div>
   </div>
@@ -127,5 +128,32 @@ function handleSubmit(): void {
 <style scoped>
 .form {
   width: 100%;
+}
+
+.btn-mustard {
+    background-color: #D4A017;
+    border-color: #D4A017;
+    color: #1F1F1F;
+    font-weight: 600;
+    transition: 0.3s ease;
+    border-radius: 50px;
+    padding: 10px 32px;
+    max-width: 70%;
+    border-radius: 50px;
+    padding: 10px 32px;
+}
+
+.btn-mustard:hover {
+    background-color: #B88A12;
+    border-color: #B88A12;
+    color: #1F1F1F;
+}
+
+.btn-mustard:focus,
+.btn-mustard:active {
+    background-color: #A97C10 !important;
+    border-color: #A97C10 !important;
+    color: #1F1F1F !important;
+    box-shadow: 0 0 0 0.25rem rgba(212, 160, 23, 0.35);
 }
 </style>
