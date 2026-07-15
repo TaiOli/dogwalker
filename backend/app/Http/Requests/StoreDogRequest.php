@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\DTOs\Dog\CreateDogDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +30,7 @@ class StoreDogRequest extends FormRequest
             'raca' => 'nullable|string',
             'foto' => 'nullable|string',
             'observacoes' => 'nullable|string',
-        ];   
+        ];
     }
 
     /**
@@ -37,15 +38,29 @@ class StoreDogRequest extends FormRequest
      *
      * @return array<string, string>
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'nome.required' => 'Informe o nome do cachorro.',
             'nome.string' => 'O nome do cachorro deve conter um texto válido.',
             'idade.integer' => 'A idade deve ser informada com um número válido.',
             'raca.string' => 'A raça deve conter um texto válido.',
-            'foto.string' => 'A foto deve ser informada corretamente.',
+            'foto.image' => 'A foto deve ser uma imagem válida.',
             'observacoes.string' => 'As observações devem conter um texto válido.',
         ];
+    }
+
+    public function toDto(): CreateDogDTO
+    {
+        /** @var array<string, mixed> $validated */
+        $validated = $this->validated();
+
+        $userId = $this->user()?->id;
+
+        if ($userId === null) {
+            throw new \RuntimeException('Usuário não autenticado.');
+        }
+
+        return CreateDogDTO::fromRequest($validated, $userId);
     }
 }

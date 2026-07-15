@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\DTOs\User\CreateUserDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -40,5 +41,13 @@ class StoreLoginRequest extends FormRequest
             'email.email' => 'Informe um email válido.',
             'password.required' => 'Informe a senha é obrigatório.'
         ];
+    }
+
+    public function toDto(): CreateUserDTO
+    {
+         /** @var array<string, mixed> $validated */
+        $validated = $this->validated();
+
+         return CreateUserDTO::fromRequest($validated);
     }
 }

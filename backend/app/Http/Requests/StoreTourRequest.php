@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\DTOs\Tour\CreateTourDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -58,5 +59,20 @@ class StoreTourRequest extends FormRequest
             'valor.numeric' => 'O valor deve ser um número válido.',
             'valor.min' => 'O valor não pode ser menor que :min.',
         ];
+    }
+
+    public function toDto(): CreateTourDTO
+    {
+        /** @var array<string, mixed> $validated */
+        $validated = $this->validated();
+
+        $tutorId = $this->user()?->id;
+
+        if ($tutorId === null) {
+            throw new \RuntimeException('Usuário não autenticado.');
+        }
+
+        return CreateTourDTO::fromRequest($validated, $tutorId);
+
     }
 }

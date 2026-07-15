@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\DTOs\Evaluation\CreateEvaluationDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreEvaluationRequest extends FormRequest
@@ -34,4 +35,12 @@ class StoreEvaluationRequest extends FormRequest
             'nota.max' => 'A nota máxima é 5.',
         ];
     }
+
+      public function toDto(): CreateEvaluationDTO
+      {
+         /** @var array<string, mixed> $validated */
+        $validated = $this->validated();
+
+         return CreateEvaluationDTO::fromRequest($validated);
+      }
 }

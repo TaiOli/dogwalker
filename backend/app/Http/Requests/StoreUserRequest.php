@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\DTOs\User\CreateUserDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -56,5 +57,14 @@ class StoreUserRequest extends FormRequest
             'foto.mimes' => 'A foto deve estar nos formatos JPG, JPEG ou PNG.',
             'foto.max' => 'A foto não pode ultrapassar 2MB.',
         ];
+    }
+
+     public function toDto(): CreateUserDTO
+    {   
+        /** @var array<string, mixed> $validated */
+        $validated = $this->validated();
+
+        return CreateUserDTO::fromRequest($validated);
+
     }
 }
