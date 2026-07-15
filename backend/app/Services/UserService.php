@@ -9,7 +9,7 @@ use App\DTOs\User\WalkerProfileResponseDTO;
 use App\DTOs\User\TutorProfileResponseDTO;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserUnauthorizedException;
 use App\Repositories\Services\Contracts\UserServiceInterface;
