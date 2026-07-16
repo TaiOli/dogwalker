@@ -180,16 +180,17 @@ Ao clicar na foto de perfil localizada no canto superior direito, o usuário pod
 
 - PHP 8.x
 - Laravel 13
-- MySQL
-- Laravel Sanctum
+- MySQL 8.0.x
+- Laravel Sanctum 4.x
 
 ## Frontend
 
-- Vue 3
-- TypeScript
-- Vite
-- Bootstrap 5
-- Axios
+- Vue 3.5.x
+- TypeScript 5.x
+- Vite 8.1.x
+- Bootstrap 5.3.x
+- Vuetify 4.1.x
+- Axios 1.7.x
 
 ---
 
