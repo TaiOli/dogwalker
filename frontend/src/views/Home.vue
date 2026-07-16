@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import BaseButton from '../components/atoms/BaseButton.vue';
 import { useRouter } from "vue-router"
-import dogImage from '../assets/images/dog.png'
 import dogPaw from '../assets/images/pata-coracao.png'
+import dogImageUrl from '../assets/images/dog.png'; 
+import { ref, computed } from 'vue';
 
 const router = useRouter()
+
+const dogImage = ref<string>(dogImageUrl);
+const bgImageStyle = computed<string>(() => `url(${dogImage.value})`);
 
 function start(): void {
   router.push("/login")
@@ -36,7 +40,7 @@ function start(): void {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: v-bind('`url(${dogImage})`'); 
+   background-image: v-bind(bgImageStyle); 
 }
 
 .brand-name {
