@@ -136,19 +136,22 @@ onMounted(loadDogs)
 
           <v-img :src="dog.foto" class="card-img-top dog-img" alt="dog" />
 
-          <div class="card-body">
-            <h5 class="card-title">{{ dog.nome }}</h5>
-            <p class="mb-1">🐾 {{ dog.raca }}</p>
-            <p class="mb-1">🎂 {{ dog.idade }} anos</p>
-            <p class="mb-1">📦 {{ dog.porte }}</p>
+          <v-card class="card-body pa-4" rounded="xl" elevation="2">
+            <v-card-title class="text-h5 font-weight-bold pb-2">
+              {{ dog.nome }}
+            </v-card-title>
+            
+            <v-card-text class="py-1">🐾 {{ dog.raca }}</v-card-text>
+            <v-card-text class="py-1">🎂 {{ dog.idade }} anos</v-card-text>
+            <v-card-text class="py-1 mb-2">📦 {{ dog.porte }}</v-card-text>
 
             <BaseButton
               class="btn btn-sm btn-outline-secondary mt-2"
               label="✏️ Editar"
-              @click="editDog(dog)">
-              ✏️ Editar
-            </BaseButton>
-          </div>
+              @click="editDog(dog)"
+            />
+          </v-card>
+
         </div>
       </div>
     </div>
