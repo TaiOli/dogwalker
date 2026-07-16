@@ -2,8 +2,6 @@
 
 namespace App\DTOs\Dog;
 
-use Illuminate\Http\Request;
-
 class UpdateDogDTO
 {
     public function __construct(
@@ -15,7 +13,7 @@ class UpdateDogDTO
         public readonly ?string $foto = null,
     ) {}
 
-    public static function fromRequest(Request $request, array $validated): self 
+    public static function fromRequest(array $validated): self 
     {
         return new self(
             nome: $validated['nome'] ?? null,
