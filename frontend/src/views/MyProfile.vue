@@ -59,7 +59,7 @@ onMounted(async () => {
 
       <p>👤 Tipo: {{ user.tipo_usuario }}</p>
 
-      <BaseButton class="btn btn-primary mt-3 d-block mx-auto" @click="editProfile">
+      <BaseButton class="btn btn-primary mt-3 d-block mx-auto" label="Editar Cadastro" @click="editProfile">
         Editar cadastro
       </BaseButton>
 

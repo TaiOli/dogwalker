@@ -115,7 +115,7 @@ function onXClickTutor(p: Tour): void {
   }
 }
 
-const toursTutor = computed(() =>                                                                                                                                                                                                    
+const toursTutor = computed(() => 
   tours.value.filter(p => {
     if (dismissedIds.value.has(p.id)) return false
     if (p.status === "cancelado") return false
@@ -201,7 +201,6 @@ async function completeTour(passeio: Tour): Promise<void> {
   sending.value = true
 
   try {
-  
     await api.patch(`/tours/${passeio.id}/complete`)
 
     // Envia avaliação do passeador sobre o tutor/passeio
@@ -318,6 +317,7 @@ onMounted(async () => {
           <BaseButton
             v-if="p.status === 'pendente' || p.status === 'aceito' || p.status === 'recusado'"
             class="btn-close dismiss-btn"
+            label="Fechar"
             :aria-label="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             :title="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             @click="onXClickTutor(p)"
@@ -341,7 +341,7 @@ onMounted(async () => {
           </span>
 
           <div class="mt-3" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
-            <BaseButton class="btn btn-primary" @click="openEvaluationTutor(p)">
+            <BaseButton class="btn btn-primary" label="Avaliar Passeador" @click="openEvaluationTutor(p)">
               ⭐ Avaliar Passeador
             </BaseButton>
           </div>
@@ -376,16 +376,21 @@ onMounted(async () => {
 
             <BaseTextarea
               class="form-control mb-3"
-              rows="3"
+              :rows="3"
               placeholder="Comentário (opcional)"
               v-model="comment"
             />
 
             <div class="d-flex gap-2">
-              <BaseButton class="btn btn-success" @click="sendEvaluation(p.id, 'tutor')" :disabled="sending">
+              <BaseButton
+                class="btn btn-success"
+                :label="sending ? 'Enviando...' : 'Enviar avaliação'"
+                @click="sendEvaluation(p.id, 'tutor')"
+                :disabled="sending"
+              >
                 {{ sending ? "Enviando..." : "Enviar avaliação" }}
               </BaseButton>
-              <BaseButton class="btn btn-secondary" @click="cancelEvaluationTutor">
+              <BaseButton class="btn btn-secondary" label="Cancelar" @click="cancelEvaluationTutor">
                 Cancelar
               </BaseButton>
             </div>
@@ -411,6 +416,7 @@ onMounted(async () => {
           <BaseButton
               v-if="p.status === 'aceito' || p.status === 'cancelado'"
               class="btn-close dismiss-btn"
+              label="Fechar"
               aria-label="Remover do dashboard"
               title="Remover do dashboard"
               @click="dismissTour(p.id)"
@@ -432,8 +438,9 @@ onMounted(async () => {
           </span>
 
           <div class="mt-3" v-if="p.status === 'aceito'">
-            <BaseButton 
-              class="btn btn-primary" 
+            <BaseButton
+              class="btn btn-primary"
+              label="Finalizar passeio"
               @click="openEvaluationWalker(p)" >
               ✔ Finalizar passeio
             </BaseButton>
@@ -475,10 +482,15 @@ onMounted(async () => {
             />
 
             <div class="d-flex gap-2">
-              <BaseButton class="btn btn-success" @click="completeTour(p)" :disabled="sending">
+              <BaseButton
+                class="btn btn-success"
+                :label="sending ? 'Enviando...' : 'Finalizar e enviar'"
+                @click="completeTour(p)"
+                :disabled="sending"
+              >
                 {{ sending ? "Enviando..." : "Finalizar e enviar" }}
               </BaseButton>
-              <BaseButton class="btn btn-secondary" @click="cancelEvaluationWalker">
+              <BaseButton class="btn btn-secondary" label="Cancelar" @click="cancelEvaluationWalker">
                 Cancelar
               </BaseButton>
             </div>

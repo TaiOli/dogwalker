@@ -10,11 +10,11 @@ export function useWalks() {
     tours.value = response.data
   }
 
-  async function tourAccept(id) {
+  async function tourAccept(id: string | number | null) {
     await api.put(`/tours/${id}/accept`)
   }
 
-  async function tourReject(id) {
+  async function tourReject(id: string | number | null) {
     await api.patch(`/tours/${id}/reject`)
   }
 

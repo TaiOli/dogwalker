@@ -1,12 +1,13 @@
 <script setup lang="ts">
 interface BaseInputProps {
-  modelValue?: string | number | null
+  modelValue?: string | number | File | File[] | null
   placeholder?: string
   label?: string
   type?: string
   accept?: string
   required?: boolean
   readonly?: boolean
+  
 }
 
 withDefaults(defineProps<BaseInputProps>(), {
@@ -31,7 +32,7 @@ const emit = defineEmits<{
     v-if="type === 'file'"
     :label="required ? `${label} *` : label"
     :accept="accept"
-    :model-value="modelValue"
+    :model-value="modelValue as any"
     @update:modelValue="emit('update:modelValue', $event)"
   />
 

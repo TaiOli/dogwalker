@@ -1,4 +1,4 @@
-export const getPhoto = (foto) => {
+export const getPhoto = (foto: string | null | undefined): string => {
   if (!foto) return "https://placehold.co/120x120"
 
   if (foto.startsWith("http")) return foto

@@ -95,7 +95,7 @@ onMounted(loadDogs)
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h2>Cadastro do dog</h2>
 
-      <BaseButton class="btn btn-primary" @click="openModal">
+      <BaseButton class="btn btn-primary" label="Novo" @click="openModal">
         Novo
       </BaseButton>
     </div>
@@ -129,7 +129,7 @@ onMounted(loadDogs)
             type="button"
             class="btn-close dismiss-btn"
             aria-label="Excluir cachorro"
-            title="Excluir cachorro"
+            label="Excluir cachorro"
             :disabled="excludingId === dog.id"
             @click="removeDog(dog)"
           />
@@ -144,6 +144,7 @@ onMounted(loadDogs)
 
             <BaseButton
               class="btn btn-sm btn-outline-secondary mt-2"
+              label="✏️ Editar"
               @click="editDog(dog)">
               ✏️ Editar
             </BaseButton>
@@ -158,7 +159,7 @@ onMounted(loadDogs)
           <h5 class="modal-title">
             {{ formDog.id ? "Editar cachorro" : "Cadastrar cachorro" }}
           </h5>
-          <BaseButton class="btn-close" @click="closeModal"/>
+          <BaseButton class="btn-close" label="" @click="closeModal"/>
         </div>
 
         <div class="modal-body mt-3">

@@ -15,11 +15,10 @@ function toggle(): void {
   <aside :class="['sidebar', { collapsed }]">
     <div class="header">
       <h2 v-if="!collapsed" class="m-0">🐶 Dog Walker</h2>
-      <BaseButton class="toggle btn btn-outline-light btn-md" @click="toggle">
+      <BaseButton class="toggle btn btn-outline-light btn-md" label="Menu" @click="toggle">
         ☰
       </BaseButton>
     </div>
-
     <nav class="nav flex-column mt-3">
       <router-link to="/dashboard" class="nav-item">
         🏠 <span v-if="!collapsed">Dashboard</span>

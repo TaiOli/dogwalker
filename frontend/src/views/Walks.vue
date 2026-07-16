@@ -129,6 +129,7 @@ async function reject(id: number): Promise<void> {
 
               <BaseButton
                 class="btn btn-success flex-fill"
+                label="Aceitar"
                 @click="accept(p.id)"
                 :disabled="loadId === p.id">
                 {{ loadId === p.id ? "⏳" : "Aceitar" }}
@@ -136,6 +137,7 @@ async function reject(id: number): Promise<void> {
 
               <BaseButton
                 class="btn btn-danger flex-fill"
+                label="Recusar"
                 @click="reject(p.id)"
                 :disabled="loadId === p.id">
                 {{ loadId === p.id ? "⏳" : "Recusar" }}
