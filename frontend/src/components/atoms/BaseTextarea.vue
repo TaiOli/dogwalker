@@ -14,28 +14,21 @@ withDefaults(defineProps<BaseTextareaProps>(), {
 const emit = defineEmits<{
   "update:modelValue": [value: string]
 }>()
-
-function onInput(event: Event): void {
-  const target = event.target as HTMLTextAreaElement
-  emit("update:modelValue", target.value)
-}
 </script>
 
 <template>
   <div>
-    <v-text-field v-if="label" class="form-label text-start w-100">{{ label }}</v-text-field>
+    <label v-if="label" class="form-label mb-1">
+      {{ label }}
+    </label>
+
     <v-textarea
-      class="form-control"
-      :value="modelValue"
+      :model-value="modelValue"
+      @update:model-value="value => emit('update:modelValue', value)"
       :placeholder="placeholder"
-      :rows="rows"
-      @input="onInput"
+      variant="outlined"
+      density="comfortable"
+      hide-details
     />
   </div>
 </template>
-
-<style scoped>
-textarea {
-  resize: none;
-}
-</style>

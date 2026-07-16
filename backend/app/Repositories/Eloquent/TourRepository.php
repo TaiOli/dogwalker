@@ -43,7 +43,7 @@ class TourRepository implements TourRepositoryInterface
     public function findByTutor(int $tutorId): Collection
     {
         return Tour::where('tutor_id', $tutorId)
-            ->with(['dog', 'passeador'])
+            ->with(['dog', 'walker'])
             ->get();
     }
     public function findByWalker(int $walkerId): Collection

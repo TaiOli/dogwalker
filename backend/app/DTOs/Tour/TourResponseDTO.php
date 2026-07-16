@@ -23,33 +23,33 @@ class TourResponseDTO
 
     public function __construct(Tour $tour)
     {
-        $this->id     = $tour->id;
-        $this->status = $tour->status;
-        $this->data   = $tour->data;
-        $this->hora   = $tour->hora;
-        $this->duracao = $tour->duracao;
-        $this->local  = $tour->local;
-        $this->valor  = (float) $tour->valor;
+        $this->id      = (int) $tour->id;
+        $this->status  = $tour->status;
+        $this->data    = $tour->data;
+        $this->hora    = $tour->hora;
+        $this->duracao = (int) $tour->duracao;   
+        $this->local   = $tour->local;
+        $this->valor   = (float) $tour->valor;
 
         $this->dog = $tour->dog ? [
-            'id'   => $tour->dog->id,
+            'id'   => (int) $tour->dog->id,
             'nome' => $tour->dog->nome,
         ] : null;
 
         $this->tutor = $tour->tutor ? [
-            'id'   => $tour->tutor->id,
+            'id'   => (int) $tour->tutor->id,
             'nome' => $tour->tutor->nome,
         ] : null;
 
         $this->walker = $tour->walker ? [
-            'id'   => $tour->walker->id,
+            'id'   => (int) $tour->walker->id,
             'nome' => $tour->walker->nome,
         ] : null;
 
         $this->reviewByTutor   = $tour->review_by_tutor ?? null;
         $this->reviewByWalker  = $tour->review_by_walker ?? null;
-        $this->ratedByTutor    = $tour->rated_by_tutor ?? false;
-        $this->ratedByWalker   = $tour->rated_by_walker ?? false;
+        $this->ratedByTutor    = (bool) ($tour->rated_by_tutor ?? false);
+        $this->ratedByWalker   = (bool) ($tour->rated_by_walker ?? false);
     }
 
     public function toArray(): array
@@ -74,6 +74,9 @@ class TourResponseDTO
 
     public static function collection(iterable $tours): array
     {
-        return collect($tours)->map(fn(Tour $t) => (new self($t))->toArray())->values()->all();
+        return collect($tours)
+            ->map(fn(Tour $t) => (new self($t))->toArray())
+            ->values()
+            ->all();
     }
 }

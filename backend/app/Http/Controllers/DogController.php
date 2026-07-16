@@ -33,7 +33,10 @@ class DogController extends Controller
     public function edit(UpdateDogRequest $request, $id)
     {
         try {
-            $dto = UpdateDogDTO::fromRequest($request->validated());
+            $dto = UpdateDogDTO::fromRequest(
+                $request,
+                $request->validated()
+            );
 
             $dog = $this->dogService->update($dto, $id, $request->user()->id);
 

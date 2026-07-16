@@ -22,10 +22,6 @@ class DogService implements DogServiceInterface
     {
         $data = $dto->toArray();
 
-        if (isset($data['foto'])) {
-            $data['foto'] = $data['foto']->store('dogs', 'public');
-        }
-
         return $this->dogRepository->create($data);
     }
 
@@ -50,10 +46,6 @@ class DogService implements DogServiceInterface
         }
 
         $data = $dto->toArray();
-
-        if (isset($data['foto'])) {
-            $data['foto'] = $data['foto']->store('dogs', 'public');
-        }
 
         return $this->dogRepository->update($dogId, $data);
     }

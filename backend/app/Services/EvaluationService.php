@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\DTOs\Evaluation\CreateEvaluationDTO;
 use App\Models\Evaluation;
-use App\Repositories\Interfaces\EvaluationRepositoryInterface;
-use App\Repositories\Interfaces\TourRepositoryInterface;
+use App\Repositories\Contracts\EvaluationRepositoryInterface;
+use App\Repositories\Contracts\TourRepositoryInterface;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\EvaluationTourNotFinishedException;
 use App\Exceptions\EvaluationAlreadyExistsException;

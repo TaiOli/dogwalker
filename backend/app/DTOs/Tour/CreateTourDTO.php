@@ -19,12 +19,12 @@ class CreateTourDTO
     {
         return new self(
             tutorId: $tutorId,
-            dogId:   $validated['dog_id'],
-            data:    $validated['data'],
-            hora:    $validated['hora'],
-            duracao: $validated['duracao'],
-            local:   $validated['local'],
-            valor:   $validated['valor'],
+            dogId: (int) $validated['dog_id'],
+            data: $validated['data'],
+            hora: $validated['hora'],
+            duracao: (int) $validated['duracao'],
+            local: $validated['local'],
+            valor: (float) $validated['valor'],
         );
     }
 

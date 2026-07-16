@@ -54,7 +54,7 @@ class UserRepository implements UserRepositoryInterface
             ->where('id', $id)
             ->with(['givenEvaluations' => function ($q) {
                 $q->where('tipo_avaliador', 'passeador')
-                    ->with('passeador')
+                    ->with('tutor')
                     ->latest();
             }])
             ->firstOrFail();

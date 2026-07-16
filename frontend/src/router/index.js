@@ -12,6 +12,10 @@ import Home from "../views/Home.vue"
 
 const routes = [
   {
+    path: "/",
+    redirect: "/inicio" 
+  },
+  {
     path: "/inicio",
     component: Home
   },
@@ -35,9 +39,9 @@ const routes = [
     path: "/cadastro-cachorro",
     component: RegisterDog
   },
-  { 
-    path: "/agendar-passeio", 
-    component: ScheduleTour 
+  {
+    path: "/agendar-passeio",
+    component: ScheduleTour
   },
   {
     path: "/passeios",
@@ -48,7 +52,7 @@ const routes = [
     component: WalkerProfile
   },
   {
-    path: '/tutores/:id',
+    path: "/tutores/:id",
     component: TutorProfile
   },
   {

@@ -23,20 +23,15 @@ export function useDog() {
     formData.append("raca", formDog.breed);
     formData.append("observacoes", formDog.observations ?? "");
 
-    if (formDog.photo instanceof File) {
-      // usuário anexou uma foto: manda o arquivo de verdade
-      formData.append("foto", formDog.photo);
-    } else if (!formDog.photo) {
-      // sem anexo e sem foto atual: busca uma foto aleatória (URL)
+    if (!formDog.photo) {
       const url = await getRandomDogImage();
       formData.append("foto", url);
     } else {
-      // edição sem trocar a foto: mantém a URL que já estava salva 
       formData.append("foto", formDog.photo);
     }
 
     return formData;
-  }
+}
 
   async function registerDog() {
     const formData = await buildFormData();

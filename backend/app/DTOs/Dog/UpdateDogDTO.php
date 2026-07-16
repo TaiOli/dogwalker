@@ -2,6 +2,7 @@
 
 namespace App\DTOs\Dog;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 class UpdateDogDTO
@@ -12,18 +13,18 @@ class UpdateDogDTO
         public readonly ?string       $porte = null,
         public readonly ?string       $raca = null,
         public readonly ?string       $observacoes = null,
-        public readonly ?UploadedFile $foto = null,
+        public readonly ?string $foto = null,
     ) {}
 
-    public static function fromRequest(array $validated): self
+    public static function fromRequest(Request $request, array $validated): self 
     {
         return new self(
-            nome:        $validated['nome'] ?? null,
-            idade:       $validated['idade'] ?? null,
-            porte:       $validated['porte'] ?? null,
-            raca:        $validated['raca'] ?? null,
+            nome: $validated['nome'] ?? null,
+            idade: isset($validated['idade']) ? (int) $validated['idade'] : null,
+            porte: $validated['porte'] ?? null,
+            raca: $validated['raca'] ?? null,
             observacoes: $validated['observacoes'] ?? null,
-            foto:        $validated['foto'] ?? null,
+            foto: $validated['foto'] ?? null,
         );
     }
 

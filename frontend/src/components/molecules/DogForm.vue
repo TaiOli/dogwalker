@@ -121,14 +121,6 @@ function handleFile(files: FileList | null): void {
     </div>
 
     <BaseButton class="w-100 mt-2 btn-mustard" :label="labelButton" @click="handleSubmit" />
-
-
-    <div v-if="preview" class="mb-3 text-center">
-      <v-img :src="preview" class="img-preview" />
-    </div>
-
-    <BaseButton class="w-100 btn-mustard" :label="labelButton" @click="handleSubmit" />
-
   </div>
 </template>
 

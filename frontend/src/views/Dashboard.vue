@@ -336,9 +336,9 @@ onMounted(async () => {
             ⏳ Aguardando um passeador aceitar
           </p>
 
-          <v-text-field class="badge" :class="badgeStatus(p.status)">
+          <span class="badge" :class="badgeStatus(p.status)">
             {{ p.status }}
-          </v-text-field>
+          </span>
 
           <div class="mt-3" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
             <BaseButton class="btn btn-primary" @click="openEvaluationTutor(p)">
@@ -350,9 +350,9 @@ onMounted(async () => {
           <div class="mt-3 avaliacao-box" v-if="p.review_by_tutor">
             <h6 class="mb-2">✅ Sua avaliação sobre o passeador</h6>
             <div class="mb-1">
-              <v-text-field v-for="n in 5" :key="n">
+              <span v-for="n in 5" :key="n">
                 {{ n <= p.review_by_tutor.rating ? "⭐" : "☆" }}
-              </v-text-field>
+              </span>
               <v-text-field class="text-muted small ms-1">({{ p.review_by_tutor.rating }}/5)</v-text-field>
             </div>
             <p v-if="p.review_by_tutor.comment" class="mb-0 fst-italic">
@@ -364,14 +364,14 @@ onMounted(async () => {
             <h5>Como foi o passeador?</h5>
 
             <div class="mb-3">
-              <v-text-field
+              <span
                 v-for="n in 5"
                 :key="n"
                 @click="rating = n"
                 style="font-size:28px;cursor:pointer"
               >
                 {{ n <= rating ? "⭐" : "☆" }}
-              </v-text-field>
+            </span>
             </div>
 
             <BaseTextarea
@@ -427,9 +427,9 @@ onMounted(async () => {
             ❌ Este passeio foi cancelado pelo tutor.
           </p>
 
-          <v-text-field class="badge" :class="badgeStatus(p.status)">
+          <span class="badge" :class="badgeStatus(p.status)">
             {{ p.status }}
-          </v-text-field>
+          </span>
 
           <div class="mt-3" v-if="p.status === 'aceito'">
             <BaseButton 
@@ -443,9 +443,9 @@ onMounted(async () => {
           <div class="mt-3 avaliacao-box" v-if="p.review_by_walker">
             <h6 class="mb-2">✅ Sua avaliação sobre o passeio</h6>
             <div class="mb-1">
-              <v-text-field v-for="n in 5" :key="n">
+              <span v-for="n in 5" :key="n">
                 {{ n <= p.review_by_walker.rating ? "⭐" : "☆" }}
-              </v-text-field>
+              </span>
               <v-text-field class="text-muted small ms-1">({{ p.review_by_walker.rating }}/5)</v-text-field>
             </div>
             <p v-if="p.review_by_walker.comment" class="mb-0 fst-italic">
@@ -457,19 +457,19 @@ onMounted(async () => {
             <h5>Avaliar o tutor / passeio</h5>
 
             <div class="mb-3">
-              <v-text-field
+              <span
                 v-for="n in 5"
                 :key="n"
                 @click="rating = n"
                 style="font-size:28px;cursor:pointer"
               >
                 {{ n <= rating ? "⭐" : "☆" }}
-              </v-text-field>
+            </span>
             </div>
 
             <BaseTextarea
-              class="form-control mb-3"
-              rows="3"
+              class="mb-3"
+              :rows="3"
               placeholder="Comentário (opcional)"
               v-model="comment"
             />
@@ -531,5 +531,15 @@ textarea {
 
 button {
   border-radius: 8px;
+}
+
+:deep(.v-textarea .v-field__input) {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  min-height: 56px;
+}
+
+:deep(.v-textarea textarea) {
+  line-height: 1.5;
 }
 </style>

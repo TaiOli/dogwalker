@@ -6,7 +6,7 @@ use App\DTOs\Tour\CreateTourDTO;
 use App\DTOs\Tour\TourResponseDTO;
 use App\Models\Evaluation;
 use App\Models\Tour;
-use App\Repositories\Interfaces\TourRepositoryInterface;
+use App\Repositories\Contracts\TourRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourUnauthorizedException;

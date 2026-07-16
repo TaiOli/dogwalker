@@ -91,9 +91,9 @@ onMounted(async () => {
               class="avaliacao-item mb-3"
             >
               <div class="mb-1">
-                <v-text-field v-for="n in 5" :key="n">
+                <span v-for="n in 5" :key="n">
                   {{ n <= av.nota ? "⭐" : "☆" }}
-                </v-text-field>
+                </span>
                 <v-text-field class="text-muted small ms-1">({{ av.nota }}/5)</v-text-field>
               </div>
 
