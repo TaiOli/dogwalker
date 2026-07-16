@@ -23,29 +23,32 @@ async function salvar(): Promise<void> {
 
 <template>
   <div class="page-user">
-
+ 
     <div class="register-wrapper text-center">
-
+ 
       <h2>🐶 Dog Walker</h2>
-
-      <p class="text-muted mb-4">
+ 
+      <p class="text-medium-emphasis mb-4">
          {{ formRegister.id ? "Editar cadastro" : "Criar conta de usuário" }}
       </p>
-
+ 
       <UserCadastroForm
         :form="formRegister"
         :labelButton="formRegister.id ? 'Atualizar' : 'Salvar'"
         @submit="salvar"
       />
-
+ 
       <p class="mt-3">
-        <router-link to="/login" class="text-decoration-none fw-bold text-success">
+        <router-link
+            to="/login"
+            class="back-link text-success"
+        >
           Voltar
         </router-link>
       </p>
-
+ 
     </div>
-
+ 
   </div>
 </template>
 
@@ -67,5 +70,14 @@ async function salvar(): Promise<void> {
 
 h2 {
   font-size: 28px;
+}
+
+.back-link {
+  text-decoration: none;
+  font-weight: 700;
+}
+ 
+.back-link:hover {
+  text-decoration: underline;
 }
 </style>

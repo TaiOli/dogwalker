@@ -44,10 +44,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card shadow-sm p-4 text-center">
+  <v-container>
+    <v-row class="justify-center">
+      <v-col cols="12" md="6">
 
           <v-img
             :src="getPhoto(walker.foto)"
@@ -57,11 +56,11 @@ onMounted(async () => {
 
           <h2>{{ walker.nome }}</h2>
 
-          <p class="text-muted mb-4">
+          <p class="text-medium-emphasis mb-4">
             Passeador
           </p>
 
-          <hr>
+          <v-divider class="mb-4" />
 
           <div class="text-start">
             <p>
@@ -75,14 +74,14 @@ onMounted(async () => {
             </p>
           </div>
 
-          <hr>
+          <v-divider class="my-4" />
 
           <div class="text-start">
             <h5 class="mb-3">💬 Avaliações de Tutores</h5>
 
-            <div v-if="!evaluations.length" class="alert alert-info">
-              Este passeador ainda não recebeu avaliações.
-            </div>
+            <v-alert v-if="!evaluations.length" type="info" variant="tonal">
+              Este tutor ainda não recebeu avaliações.
+            </v-alert>
 
             <div
               v-else
@@ -90,27 +89,27 @@ onMounted(async () => {
               :key="av.id"
               class="evaluation-item mb-3"
             >
+              
               <div class="mb-1">
                 <span v-for="n in 5" :key="n">
                   {{ n <= av.nota ? "⭐" : "☆" }}
                 </span>
-                <v-text-field class="text-muted small ms-1">({{ av.nota }}/5)</v-text-field>
+                <span class="text-medium-emphasis text-caption ms-1">({{ av.nota }}/5)</span>
               </div>
 
               <p v-if="av.comentario" class="mb-1 fst-italic">
                 "{{ av.comentario }}"
               </p>
 
-              <p class="text-muted small mb-0">
+              <p class="text-medium-emphasis text-caption mb-0">
                 — {{ av.tutor?.nome ?? "Tutor" }} em {{ formatDate(av.created_at) }}
               </p>
             </div>
           </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
+      </v-col>
+    </v-row>
+  </v-container>
+      
 </template>
 
 <style scoped>
