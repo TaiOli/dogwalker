@@ -24,7 +24,7 @@ function start(): void {
 
     <div class="btn-wrapper">
       <BaseButton
-        class="btn btn-primary btn-mustard"
+        class="btn-mustard"
         label="Começar"
         @click="start"
       />

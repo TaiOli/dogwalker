@@ -66,44 +66,60 @@ function handleSubmit(): void {
 </script>
 
 <template>
-  <div class="form">
-    <div class="mb-3">
-      <BaseSelect
-        v-model="form.dog_id"
-        label="🐶 Cachorro"
-        :options="dogs"
-        labelKey="nome"
-        valueKey="id"
-      />
-    </div>
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <BaseSelect
+          v-model="form.dog_id"
+          label="🐶 Cachorro"
+          :options="dogs"
+          labelKey="nome"
+          valueKey="id"
+        />
+      </v-col>
+    </v-row>
 
-    <div class="mb-3">
-      <BaseSelect
-        v-model="form.walker_id"
-        :options="walkerOptions"
-        required
-        label="🎯 Passeador"
-        labelKey="name"
-        valueKey="id"
-        :class="{ 'is-invalid': walkerError }"
-        @update:modelValue="walkerError = ''"
-      />
-      <div v-if="walkerError" class="text-danger small mt-1">
-        {{ walkerError }}
-      </div>
-    </div>
+    <v-row>
+      <v-col cols="12">
+        <BaseSelect
+          v-model="form.walker_id"
+          :options="walkerOptions"
+          required
+          label="🎯 Passeador"
+          labelKey="name"
+          valueKey="id"
+          :error-message="walkerError"
+          @update:modelValue="walkerError = ''"
+        />
+      </v-col>
+    </v-row>
 
-    <div class="row g-3">
-      <div class="col-12 col-md-6">
-        <BaseInput v-model="form.date" type="date" label="📅 Data" />
-      </div>
-      <div class="col-12 col-md-6">
-        <BaseInput v-model="form.hour" type="time" label="⏰ Hora" />
-      </div>
-      <div class="col-12 col-md-6">
-        <BaseInput v-model="form.duration" type="time" label="⏳ Duração" />
-      </div>
-      <div class="col-12 col-md-6">
+    <v-row>
+      <v-col cols="12" md="6">
+        <BaseInput
+          v-model="form.date"
+          type="date"
+          label="📅 Data"
+        />
+      </v-col>
+
+      <v-col cols="12" md="6">
+        <BaseInput
+          v-model="form.hour"
+          type="time"
+          label="⏰ Hora"
+        />
+      </v-col>
+
+      <v-col cols="12" md="6">
+        <BaseInput
+          v-model="form.duration"
+          type="time"
+          label="⏳ Duração"
+        />
+      </v-col>
+
+      <v-col cols="12" md="6">
         <BaseInput
           v-model="form.value"
           label="💰 Valor"
@@ -111,20 +127,26 @@ function handleSubmit(): void {
           step="0.01"
           min="0"
         />
-      </div>
-      <div class="col-12">
-        <BaseInput v-model="form.location" label="Local" />
-      </div>
-    </div>
+      </v-col>
 
-    <div class="mt-4 d-grid d-flex justify-content-center">
-      <BaseButton
-        :label="labelButton"
-        @click="handleSubmit"
-        class="w-100 btn-mustard"
-      />
-    </div>
-  </div>
+      <v-col cols="12">
+        <BaseInput
+          v-model="form.location"
+          label="📍 Local"
+        />
+      </v-col>
+    </v-row>
+
+    <v-row class="mt-4 justify-center">
+      <v-col cols="12" class="d-flex justify-center">
+        <BaseButton
+          :label="labelButton"
+          @click="handleSubmit"
+          class="btn-mustard"
+        />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>

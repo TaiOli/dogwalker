@@ -10,35 +10,25 @@ const { user, logout } = useAuth()
 
     <div></div>
 
-    <div class="dropdown">
+    <v-menu location="bottom end">
+      <template #activator="{ props }">
+        <v-avatar v-bind="props" size="42" class="profile-photo">
+          <v-img :src="getPhoto(user?.foto)" cover />
+        </v-avatar>
+      </template>
 
-      <v-img
-        :src="getPhoto(user?.foto)"
-        class="profile-photo dropdown-toggle"
-        data-bs-toggle="dropdown"
-      />
+      <v-list bg-color="white">
+        <v-list-item to="/meu-perfil">
+          👤 Meu Perfil
+        </v-list-item>
 
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li>
-          <router-link class="dropdown-item" to="/meu-perfil">
-            👤 Meu Perfil
-          </router-link>
-        </li>
+        <v-divider />
 
-        <li><hr class="dropdown-divider"></li>
-
-        <li>
-          <a
-            class="dropdown-item text-danger"
-            href="#"
-            @click.prevent="logout"
-          >
-            🚪 Sair
-          </a>
-        </li>
-      </ul>
-
-    </div>
+        <v-list-item class="text-danger" @click="logout">
+          🚪 Sair
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
   </header>
 </template>
@@ -55,10 +45,6 @@ const { user, logout } = useAuth()
 }
 
 .profile-photo{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  object-fit:cover;
   cursor:pointer;
 }
 </style>

@@ -53,99 +53,101 @@ const typeUsers = [
 </script>
 
 <template>
-  <div class="form">
+  <v-container>
 
-    <div class="mb-3">
-      <BaseInput 
-        label="Username"
-        required
-        v-model="form.username" 
-        :class="{ 'is-invalid': usernameError }"
-        @update:modelValue="usernameError = ''"
-      />
-      <div v-if="usernameError" class="text-danger text-start small mt-1">
-        {{ usernameError }}
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <BaseInput
-        label="Nome Completo"
-        required
-        v-model="form.name"  
-        :class="{ 'is-invalid': nameError }"
-        @update:modelValue="nameError = ''"
-      />
-      <div v-if="nameError" class="text-danger text-start small mt-1">
-        {{ nameError }}
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <BaseInput 
-        label="Email"
-        required
-        v-model="form.email" 
-        :class="{ 'is-invalid': emailError }"
-        @update:modelValue="emailError = ''"
-      />
-      <div v-if="emailError" class="text-danger text-start small mt-1">
-        {{ emailError }}
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <BaseInput 
-        label="Senha"
-        required
-        v-model="form.password" 
-        type="password" 
-        :class="{ 'is-invalid': passwordError }"
-        @update:modelValue="passwordError = ''"
-      />
-      <div v-if="passwordError" class="text-danger text-start small mt-1">
-        {{ passwordError }}
-      </div>
-    </div>
-
-      <div class="mb-3">
-        <BaseSelect
-          label="Tipo de Usuário"
+    <v-row>
+      <v-col cols="12">
+        <BaseInput 
+          label="Username"
           required
-          v-model="form.type_user"
-          :options="typeUsers"
-          labelKey="label"
-          valueKey="value"
-          :class="{ 'is-invalid': typeuserError }"
-          @update:modelValue="typeuserError = ''"
+          v-model="form.username" 
+          :error-message="usernameError"
+          @update:modelValue="usernameError = ''"
         />
-        <div v-if="typeuserError" class="text-danger text-start small mt-1">
-          {{ typeuserError }}
-        </div>
-      </div>
+      </v-col>
+    </v-row>
 
-    <div class="mb-3">
-      <BaseInput v-model="form.phone" label="📞 Telefone" />
-    </div>
+    <v-row>
+      <v-col cols="12">
+        <BaseInput
+          label="Nome Completo"
+          required
+          v-model="form.name"  
+          :error-message="nameError"
+          @update:modelValue="nameError = ''"
+        />
+      </v-col>
+    </v-row>
 
-    <div class="mb-3">
-      <div class="d-flex align-center ga-2">  
-          <BaseInput
-            v-model="form.photo"
-            type="file"
-            accept="image/*"
-            label="Foto"
+    <v-row>
+        <v-col cols="12">
+        <BaseInput 
+          label="Email"
+          required
+          v-model="form.email" 
+          :error-message="emailError"
+          @update:modelValue="emailError = ''"
+        />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col cols="12">
+        <BaseInput 
+          label="Senha"
+          required
+          v-model="form.password" 
+          type="password" 
+          :error-message="passwordError"
+          @update:modelValue="passwordError = ''"
+        />
+      </v-col>
+    </v-row>
+
+     <v-row>
+        <v-col cols="12">
+          <BaseSelect
+            label="Tipo de Usuário"
+            required
+            v-model="form.type_user"
+            :options="typeUsers"
+            labelKey="label"
+            valueKey="value"
+            :error-message="typeuserError"
+            @update:modelValue="typeuserError = ''"
           />
-        </div>
-    </div>
+       </v-col>
+      </v-row>
+       
+     <v-row>
+      <v-col cols="12">
+        <BaseInput v-model="form.phone" label="📞 Telefone" />
+      </v-col>
+    </v-row>
 
-    <div v-if="preview" class="text-center mb-3">
-      <v-img :src="preview" class="img-preview" />
-    </div>
+    <v-row>
+      <v-col cols="12" class="d-flex align-center ga-2">
+        <BaseInput
+          v-model="form.photo"
+          type="file"
+          accept="image/*"
+          label="Foto"
+        />
+      </v-col>
+    </v-row>
+
+    <v-row v-if="preview">
+      <v-col cols="12" class="text-center">
+        <v-img
+          :src="preview"
+          class="img-preview"
+        />
+      </v-col>
+    </v-row>
 
     <BaseButton class="w-100 mt-2 btn-mustard" :label="labelButton" @click="handleSubmit" />
 
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

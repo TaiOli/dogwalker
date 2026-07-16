@@ -57,66 +57,80 @@ function handleFile(files: FileList | null): void {
 </script>
 
 <template>
-  <div class="form">
+  <v-container>
 
-    <div class="mb-2">
+    <v-row>
+      <v-col cols="12">
+        <BaseInput
+          v-model="form.name"
+          required
+          label="Nome do cachorro"
+          :error-message="nameError"
+          @update:modelValue="nameError = ''"
+        />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col cols="12">
       <BaseInput 
-        v-model="form.name" 
-        required
-        label="Nome do cachorro"
-        :class="{ 'is-invalid': nameError }"
-        @update:modelValue="nameError = ''"
-      />
-      <div v-if="nameError" class="text-danger small mt-1">
-        {{ nameError }}
-      </div>
-    </div>
+        v-model="form.age" 
+        type="number" 
+        label="Idade" />
+      </v-col>
+    </v-row>
 
-    <div class="mb-2">
-      <BaseInput v-model="form.age" type="number" label="Idade" />
-    </div>
-
-    <div class="mb-2">
-      <BaseSelect
+    <v-row>
+      <v-col cols="12">
+        <BaseSelect
         v-model="form.size"
         :options="sizeOptions"
         required
         label="Porte"
         labelKey="label"
         valueKey="value"
-        :class="{ 'is-invalid': sizeError }"
+        :error-message="nameError"
         @update:modelValue="sizeError = ''"
       />
-      <div v-if="sizeError" class="text-danger small mt-1">
-        {{ sizeError }}
-      </div>
-    </div>
+      </v-col>
+    </v-row>
 
-    <div class="mb-2">
-      <BaseInput v-model="form.breed" label="Raça"/>
-    </div>
+    <v-row>
+      <v-col cols="12">
+        <BaseInput v-model="form.breed" label="Raça"/>
+      </v-col>
+    </v-row>
 
-    <div class="mb-2">
-      <BaseInput v-model="form.observations" label="Observações" />
-    </div>
+    <v-row>
+      <v-col cols="12">
+        <BaseInput v-model="form.observations" label="Observações" />
+      </v-col>
+    </v-row>
 
-    <div class="mb-3">
-      <div class="d-flex align-center ga-2">  
-          <BaseInput
-            type="file"
-            accept="image/*"
-            label="Foto"
-            @change="handleFile"
-          />
-        </div>
-    </div>
+    <v-row>
+      <v-col cols="12">
+        <BaseInput
+          type="file"
+          accept="image/*"
+          label="Foto"
+          @change="handleFile"
+        />
+      </v-col>
 
-    <div v-if="preview" class="text-center mb-3">
-      <v-img :src="preview" class="img-preview" />
-    </div>
+      <v-col
+        v-if="preview"
+        cols="12"
+        class="text-center"
+      >
+        <v-img
+          :src="preview"
+          class="img-preview"
+        />
+      </v-col>
+    </v-row>
 
     <BaseButton class="w-100 mt-2 btn-mustard" :label="labelButton" @click="handleSubmit" />
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

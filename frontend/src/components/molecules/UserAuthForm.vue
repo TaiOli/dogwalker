@@ -35,42 +35,39 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="form">
+  <v-container>
 
-    <div class="mb-3">
-      <BaseInput 
-        v-model="form.email" 
-        required
-        label="📧 Email"
-        :class="{ 'is-invalid': emailError }"
-        @update:modelValue="emailError = ''"
-      />
-      <div v-if="emailError" class="text-danger text-start small mt-1">
-        {{ emailError }}
-      </div>
-    </div>
+    <v-row>
+      <v-col cols="12">
+        <BaseInput 
+          v-model="form.email" 
+          required
+          label="📧 Email"
+          :error-message="emailError"
+          @update:modelValue="emailError = ''"
+        />
+      </v-col>
+    </v-row>
 
-    <div class="mb-3">
-      <BaseInput 
-        v-model="form.password" 
-        required
-        label="🔒 Senha"
-        type="password" 
-        :class="{ 'is-invalid': passwordError }"
-        @update:modelValue="passwordError = ''"
-      />
-      <div v-if="passwordError" class="text-danger text-start small mt-1">
-        {{ passwordError }}
-      </div>
-    </div>
+    <v-row>
+      <v-col cols="12">
+        <BaseInput 
+            v-model="form.password" 
+            required
+            label="🔒 Senha"
+            type="password" 
+            :error-message="passwordError"
+            @update:modelValue="passwordError = ''"
+          />
+      </v-col>
+    </v-row>
 
     <BaseButton
       class="w-100 mt-2 btn-mustard"
       :label="labelButton"
       @click="handleSubmit"
     />
-
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

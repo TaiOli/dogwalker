@@ -13,26 +13,60 @@ function toggle(): void {
 
 <template>
   <aside :class="['sidebar', { collapsed }]">
-    <div class="header">
-      <h2 v-if="!collapsed" class="m-0">🐶 Dog Walker</h2>
-      <BaseButton class="toggle btn btn-outline-light btn-md" label="Menu" @click="toggle">
-        ☰
-      </BaseButton>
-    </div>
-    <nav class="nav flex-column mt-3">
-      <router-link to="/dashboard" class="nav-item">
-        🏠 <span v-if="!collapsed">Dashboard</span>
-      </router-link>
-      <router-link v-if="tutor" to="/cadastro-cachorro" class="nav-item">
-        🐕 <span v-if="!collapsed">Meus cachorros</span>
-      </router-link>
-      <router-link v-if="tutor" to="/agendar-passeio" class="nav-item">
-        ➕ <span v-if="!collapsed">Solicitar passeio</span>
-      </router-link>
-      <router-link v-if="walker" to="/passeios" class="nav-item text-nowrap">
-        🚶 <span v-if="!collapsed">Passeios disponíveis</span>
-      </router-link>
-    </nav>
+    <v-row no-gutters align="center" justify="space-between" class="header">
+      <v-col v-if="!collapsed">
+        <h2 class="m-0">🐶 Dog Walker</h2>
+      </v-col>
+       <v-col>
+        <BaseButton
+          class="toggle"
+          variant="outlined"
+          color="white"
+          size="small"
+          label="Menu"
+          @click="toggle"
+        >
+          ☰
+        </BaseButton>
+      </v-col>
+    </v-row>
+
+    <v-list nav class="nav mt-3" bg-color="transparent">
+      <v-list-item
+        to="/dashboard"
+        class="nav-item"
+        prepend-icon="mdi-home"
+      >
+        <span v-if="!collapsed">Dashboard</span>
+      </v-list-item>
+
+      <v-list-item
+        v-if="tutor"
+        to="/cadastro-cachorro"
+        class="nav-item"
+        prepend-icon="mdi-dog"
+      >
+        <span v-if="!collapsed">Meus cachorros</span>
+      </v-list-item>
+
+      <v-list-item
+        v-if="tutor"
+        to="/agendar-passeio"
+        class="nav-item"
+        prepend-icon="mdi-plus"
+      >
+        <span v-if="!collapsed">Solicitar passeio</span>
+      </v-list-item>
+
+      <v-list-item
+        v-if="walker"
+        to="/passeios"
+        class="nav-item text-nowrap"
+        prepend-icon="mdi-walk"
+      >
+        <span v-if="!collapsed">Passeios disponíveis</span>
+      </v-list-item>
+    </v-list>
   </aside>
 </template>
 

@@ -7,6 +7,7 @@ interface BaseInputProps {
   accept?: string
   required?: boolean
   readonly?: boolean
+  errorMessage?: string
   
 }
 
@@ -17,6 +18,7 @@ withDefaults(defineProps<BaseInputProps>(), {
   accept: "",
   required: false,
   readonly: false,
+  errorMessage: "",
 })
 
 const emit = defineEmits<{
@@ -33,6 +35,8 @@ const emit = defineEmits<{
     :label="required ? `${label} *` : label"
     :accept="accept"
     :model-value="modelValue as any"
+    :error="!!errorMessage"
+    :error-messages="errorMessage"
     @update:modelValue="emit('update:modelValue', $event)"
   />
 
@@ -43,6 +47,8 @@ const emit = defineEmits<{
     :placeholder="placeholder"
     :type="type"
     :readonly="readonly"
+    :error="!!errorMessage"
+    :error-messages="errorMessage"
     @update:modelValue="emit('update:modelValue', $event)"
   />
 </template>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 interface SelectOption {
   id?: string | number
   nome?: string
@@ -17,6 +16,7 @@ interface BaseSelectProps {
   label?: string
   placeholder?: string
   required?: boolean
+  errorMessage?: string
 }
 
 withDefaults(defineProps<BaseSelectProps>(), {
@@ -24,6 +24,7 @@ withDefaults(defineProps<BaseSelectProps>(), {
   valueKey: "value",
   placeholder: "",
   required: false,
+  errorMessage: "",
 })
 
 const emit = defineEmits<{
@@ -39,6 +40,9 @@ const emit = defineEmits<{
     :item-value="valueKey"
     :placeholder="placeholder"
     :model-value="modelValue"
+    :error="!!errorMessage"
+    :error-messages="errorMessage"
+    hide-details="auto"
     @update:modelValue="emit('update:modelValue', $event)"
   />
 </template>
