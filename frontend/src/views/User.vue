@@ -24,7 +24,7 @@ async function salvar(): Promise<void> {
 <template>
   <div class="page-user">
 
-    <div class="cadastro-wrapper text-center">
+    <div class="register-wrapper text-center">
 
       <h2>🐶 Dog Walker</h2>
 
@@ -60,7 +60,7 @@ async function salvar(): Promise<void> {
   overflow-y: auto; 
 }
 
-.cadastro-wrapper {
+.register-wrapper {
   width: 100%;
   max-width: 650px;
 }

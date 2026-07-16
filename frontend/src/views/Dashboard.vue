@@ -368,7 +368,7 @@ onMounted(async () => {
                 v-for="n in 5"
                 :key="n"
                 @click="rating = n"
-                style="font-size:28px;cursor:pointer"
+                class="rating"
               >
                 {{ n <= rating ? "⭐" : "☆" }}
             </span>
@@ -447,7 +447,7 @@ onMounted(async () => {
           </div>
 
           <!-- AVALIAÇÃO ENVIADA PELO PASSEADOR -->
-          <div class="mt-3 avaliacao-box" v-if="p.review_by_walker">
+          <div class="mt-3 evaluation-box" v-if="p.review_by_walker">
             <h6 class="mb-2">✅ Sua avaliação sobre o passeio</h6>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
@@ -468,7 +468,7 @@ onMounted(async () => {
                 v-for="n in 5"
                 :key="n"
                 @click="rating = n"
-                style="font-size:28px;cursor:pointer"
+                class="rating"
               >
                 {{ n <= rating ? "⭐" : "☆" }}
             </span>
@@ -534,7 +534,7 @@ textarea {
   resize: none;
 }
 
-.avaliacao-box {
+.evaluation-box {
   background: #f0f9ff;
   border-left: 3px solid #3498db;
   border-radius: 8px;
@@ -543,6 +543,11 @@ textarea {
 
 button {
   border-radius: 8px;
+}
+
+.rating{
+   font-size:28px;
+   cursor:pointer;
 }
 
 :deep(.v-textarea .v-field__input) {

@@ -88,7 +88,7 @@ onMounted(async () => {
               v-else
               v-for="av in evaluations"
               :key="av.id"
-              class="avaliacao-item mb-3"
+              class="evaluation-item mb-3"
             >
               <div class="mb-1">
                 <span v-for="n in 5" :key="n">
@@ -122,7 +122,7 @@ onMounted(async () => {
   border: 4px solid #3498db;
 }
 
-.avaliacao-item {
+.evaluation-item {
   background: #f0f9ff;
   border-left: 3px solid #3498db;
   border-radius: 8px;

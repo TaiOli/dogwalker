@@ -12,7 +12,7 @@ function start(): void {
 </script>
 
 <template>
-  <div class="home-screen" :style="{ backgroundImage: `url(${dogImage})` }">
+  <div class="home-screen">
     <div class="brand-name">
       <img :src="dogPaw" alt="Pata" class="paw-icon" />
       <span>Dog Walker</span>
@@ -36,6 +36,7 @@ function start(): void {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-image: v-bind('`url(${dogImage})`'); 
 }
 
 .brand-name {
