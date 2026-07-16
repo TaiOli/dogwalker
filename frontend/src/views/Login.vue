@@ -52,41 +52,55 @@ async function loginAccess(): Promise<void> {
 </script>
 
 <template>
-  <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
-    
-    <div class="login-card shadow p-4">
-      
-      <div class="card-body text-center">
-
+  <v-container fluid class="fill-height d-flex justify-center align-center">
+ 
+    <v-card  class="login-card pa-4" elevation="4" color="white" rounded="xl">
+ 
+      <div class="text-center">
+ 
         <h2 class="mb-3">🐶 Dog Walker</h2>
-
-        <p class="text-muted mb-4">
+ 
+        <p class="text-medium-emphasis mb-4">
           Entrar no sistema
         </p>
-
+ 
         <UserAuthForm
           :form="formLogin"
           labelButton="Entrar"
           @submit="loginAccess"
         />
-
-        <p class="mt-3 text-muted">
+ 
+        <p class="mt-3">
           Não tem conta?
-         <router-link to="/cadastro-usuario" class="text-decoration-none fw-bold">
+         <router-link 
+            to="/cadastro-usuario" 
+            class="signup-link"
+          >
             Criar conta
          </router-link>
         </p>
-
+ 
       </div>
-
-    </div>
-
-  </div>
+ 
+    </v-card>
+ 
+  </v-container>
 </template>
 
 <style scoped>
 .login-card {
   width: 100%;
   max-width: 550px;
+  padding: 20px;
+  
+}
+
+.signup-link {
+  text-decoration: none;
+  font-weight: 700;
+}
+ 
+.signup-link:hover {
+  text-decoration: underline;
 }
 </style>

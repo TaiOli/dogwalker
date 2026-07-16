@@ -37,8 +37,8 @@ const emit = defineEmits<{
 <template>
   <v-container>
 
-    <v-row>
-      <v-col cols="12">
+    <v-row class="justify-center">
+      <v-col cols="8">
         <BaseInput 
           v-model="form.email" 
           required
@@ -49,8 +49,8 @@ const emit = defineEmits<{
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col cols="12">
+    <v-row class="justify-center">
+      <v-col cols="8">
         <BaseInput 
             v-model="form.password" 
             required
