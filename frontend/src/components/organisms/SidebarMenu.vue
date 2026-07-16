@@ -39,7 +39,7 @@ function toggle(): void {
 <style scoped>
 .sidebar {
   width: 280px;
-  background: #2c3e50;
+  background: #01071F;
   color: white;
   padding: 20px;
   display: flex;
