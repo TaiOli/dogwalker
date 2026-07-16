@@ -281,7 +281,7 @@ onMounted(async () => {
         <div class="col-md-4" v-for="w in walkers" :key="w.id">
           <div class="card h-100 shadow-sm">
             <div class="card-body text-center">
-              <v-img :src="getPhoto(w.foto)" class="rounded-circle mb-3" width="110" height="110"></v-img>
+              <v-img :src="getPhoto(w.foto)" class="rounded-circle mb-3" width="110" height="110" cover></v-img>
               <h5>{{ w.nome }}</h5>
               <p>📱 {{ w.telefone }}</p>
               <p>
@@ -317,7 +317,7 @@ onMounted(async () => {
           <BaseButton
             v-if="p.status === 'pendente' || p.status === 'aceito' || p.status === 'recusado'"
             class="btn-close dismiss-btn"
-            label="Fechar"
+            label=""
             :aria-label="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             :title="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             @click="onXClickTutor(p)"
@@ -416,7 +416,7 @@ onMounted(async () => {
           <BaseButton
               v-if="p.status === 'aceito' || p.status === 'cancelado'"
               class="btn-close dismiss-btn"
-              label="Fechar"
+              label=""
               aria-label="Remover do dashboard"
               title="Remover do dashboard"
               @click="dismissTour(p.id)"

@@ -50,6 +50,7 @@ onMounted(async () => {
         class="rounded-circle mb-3"
         width="120"
         height="120"
+        cover
       />
 
       <h3>{{ user.nome }}</h3>
