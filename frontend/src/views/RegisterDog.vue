@@ -129,7 +129,7 @@ onMounted(loadDogs)
             type="button"
             class="btn-close dismiss-btn"
             aria-label="Excluir cachorro"
-            label="Excluir cachorro"
+            label=""
             :disabled="excludingId === dog.id"
             @click="removeDog(dog)"
           />
