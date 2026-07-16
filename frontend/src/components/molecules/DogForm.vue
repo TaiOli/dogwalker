@@ -3,7 +3,6 @@ import { ref } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
-import BaseLabel from "../atoms/BaseLabel.vue"
 
 interface DogForm {
   name: string
@@ -11,7 +10,7 @@ interface DogForm {
   size: string
   breed: string
   observations: string
-  photo: File | null
+  photo: File | string | null
 }
 
 interface RegisterDogFormProps {
@@ -46,11 +45,7 @@ const sizeOptions = [
 ]
 
 const preview = ref<string | null>(null)
-const fileInput = ref<HTMLInputElement | null>(null)
 
-function openFile(): void {
-  fileInput.value?.click()
-}
 
 function handleFile(files: FileList | null): void {
   const file = files?.[0]
@@ -108,10 +103,10 @@ function handleFile(files: FileList | null): void {
     <div class="mb-3">
       <div class="d-flex align-center ga-2">  
           <BaseInput
-            v-model="form.photo"
             type="file"
             accept="image/*"
             label="Foto"
+            @change="handleFile"
           />
         </div>
     </div>

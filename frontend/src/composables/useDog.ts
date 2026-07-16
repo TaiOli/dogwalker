@@ -5,11 +5,11 @@ import { api } from "../services/api";
 interface Dog {
   id: number
   nome: string
-  idade: number | string
-  porte: string
-  raca: string
-  observacoes: string | null
-  foto: string
+  idade?: number | string
+  porte?: string
+  raca?: string
+  observacoes?: string | null
+  foto?: string
 }
 
 interface DogForm {

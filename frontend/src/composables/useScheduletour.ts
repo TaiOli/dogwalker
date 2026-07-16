@@ -4,14 +4,11 @@ import { api } from "../services/api"
 interface Dog {
   id: number
   nome: string
-  [key: string]: unknown
 }
 
 interface Walker {
   id: number
-  nome?: string
-  name?: string
-  [key: string]: unknown
+  nome: string
 }
 
 interface ScheduleTourForm {
@@ -36,7 +33,8 @@ export function useScheduletour() {
     value: "",
     walker_id: ""
   })
-  async function loadDogs() {
+
+  async function loadDogs(): Promise<void> {
     try {
       const res = await api.get("/dogs/my")
       dogs.value = res.data
@@ -44,39 +42,41 @@ export function useScheduletour() {
       console.log("erro ao buscar dogs:", error?.response?.data || error)
     }
   }
-  async function loadWalkers() {
+
+  async function loadWalkers(): Promise<void> {
     try {
       const res = await api.get("/walkers")
-      walkers.value = res.data
+      walkers.value = res.data.map((walker: any) => ({
+        id: walker.id,
+        nome: walker.nome ?? walker.name
+      }))
     } catch (error: any) {
       console.log("erro ao buscar passeadores:", error?.response?.data || error)
     }
   }
+
   function setWalker(id: string | number | null): void {
     form.walker_id = id ? Number(id) : ""
   }
-  function clearWalker() {
+
+  function clearWalker(): void {
     form.walker_id = ""
   }
+
   async function requestTour() {
-    try {
-      const res = await api.post("/tours", {
-        dog_id: form.dog_id,
-        data: form.date,
-        hora: form.hour,
-        duracao: form.duration,
-        local: form.location,
-        valor: form.value,
-        passeador_id: form.walker_id || null
-      })
-      return res
-    } catch (err: any) {
-      console.log(err?.response?.status)
-      console.log(err?.response?.data)
-      throw err
-    }
+
+    return await api.post("/tours", {
+      dog_id: form.dog_id,
+      data: form.date,
+      hora: form.hour,
+      duracao: form.duration,
+      local: form.location,
+      valor: form.value,
+      passeador_id: form.walker_id || null
+    })
   }
-  function clearTour() {
+
+  function clearTour(): void {
     Object.assign(form, {
       dog_id: "",
       date: "",
@@ -87,6 +87,7 @@ export function useScheduletour() {
       walker_id: ""
     })
   }
+
   return {
     form,
     dogs,

@@ -1,6 +1,12 @@
 <script setup lang="ts">
+
 interface SelectOption {
-  [key: string]: string | number
+  id?: string | number
+  nome?: string
+  name?: string
+  label?: string
+  value?: string | number
+  [key: string]: unknown
 }
 
 interface BaseSelectProps {

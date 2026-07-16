@@ -7,15 +7,14 @@ import BaseSelect from "../atoms/BaseSelect.vue"
 interface DogOption {
   id: string | number
   nome: string
-  [key: string]: string | number
+  [key: string]: unknown
 }
 
 interface WalkerOption {
   id: string | number
   nome?: string
   name?: string
-  [key: string]: string | number | undefined
-  
+  [key: string]: unknown
 }
 
 interface ScheduleTourForm {
@@ -43,14 +42,14 @@ const emit = defineEmits<{
   submit: []
 }>()
 
-const walkerOptions = computed((): Array<{ id: string | number; name: string }> => [
+const walkerOptions = computed(() => [
   {
     id: "",
     name: "Selecione um passeador..."
   },
   ...props.walkers.map(w => ({
     id: w.id,
-    name: w.nome ?? w.name ?? ""
+    name: w.nome
   }))
 ])
 
