@@ -3,7 +3,6 @@
 namespace App\DTOs\Dog;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 
 class UpdateDogDTO
 {

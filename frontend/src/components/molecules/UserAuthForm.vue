@@ -2,7 +2,6 @@
 import { ref } from "vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseInput from "../atoms/BaseInput.vue";
-import BaseLabel from "../atoms/BaseLabel.vue";
 
 interface UserAuthForm {
   email: string
