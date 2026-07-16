@@ -91,8 +91,7 @@ async function loginAccess(): Promise<void> {
 .login-card {
   width: 100%;
   max-width: 550px;
-  padding: 20px;
-  
+  padding: 20px; 
 }
 
 .signup-link {
