@@ -90,10 +90,10 @@ onMounted(loadDogs)
 </script>
 
 <template>
-  <div class="container py-4">
+  <v-container class="py-4">
     <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2>Cadastro do dog</h2>
+      <h2 class="pure-text">Cadastro do dog</h2>
 
       <BaseButton class="btn btn-primary" label="Novo" @click="openModal">
         Novo
@@ -111,7 +111,7 @@ onMounted(loadDogs)
     </div>
 
     <!-- LISTA -->
-    <h2 class="mt-5 mb-4">🐕 Meus Doguinhos :</h2>
+    <h2 class="mt-5 mb-4 pure-text">🐕 Meus Doguinhos :</h2>
 
     <div v-if="dogs.length === 0" class="text-center text-muted">
       Nenhum cachorro encontrado.
@@ -159,7 +159,7 @@ onMounted(loadDogs)
     <div v-if="showModal" class="modal-overlay">
       <div class="modal-box">
         <div class="modal-header d-flex justify-content-between align-items-center">
-          <h5 class="modal-title">
+          <h5 class="modal-title pure-text">
             {{ formDog.id ? "Editar cachorro" : "Cadastrar cachorro" }}
           </h5>
           <BaseButton class="btn-close" label="" @click="closeModal"/>
@@ -174,7 +174,7 @@ onMounted(loadDogs)
         </div>
       </div>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

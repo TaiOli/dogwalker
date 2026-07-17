@@ -43,14 +43,14 @@ async function save(): Promise<void> {
 </script>
 
 <template>
-  <div class="container py-4 mt-5">
+  <v-container class="py-4 mt-5">
 
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-11 col-xl-10">
+    <v-row class="justify-center">
+      <v-col cols="12" lg="11" xl="10">
 
         <h2 class="page-title mb-4">🚶 Solicitar Passeio</h2>
 
-        <div class="card shadow-sm p-3">
+        <v-card elevation="1" class="pa-3">
 
           <ScheduletourForm
             :form="form"
@@ -60,10 +60,10 @@ async function save(): Promise<void> {
             @submit="save"
           />
 
-        </div>
-      </div>
-    </div>
-  </div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>
