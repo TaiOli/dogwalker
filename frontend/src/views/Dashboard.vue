@@ -159,7 +159,7 @@ async function loadTours(): Promise<void> {
 function badgeStatus(status: TourStatus): string {
   switch (status) {
     case "pendente":
-      return "warning"   
+      return "warning"  
     case "aceito":
       return "success"   
     case "recusado":
@@ -286,7 +286,7 @@ onMounted(async () => {
 
       <v-row class="mb-5">
         <v-col cols="12" md="4" v-for="w in walkers" :key="w.id">
-          <v-card class="h-100" elevation="2">
+          <v-card class="h-100 card" elevation="2" color="white">
             <v-card-text class="text-center">
               <v-img :src="getPhoto(w.foto)" class="rounded-circle mx-auto mb-3" width="110" height="110" cover></v-img>
               <h5>{{ w.nome }}</h5>
@@ -297,17 +297,19 @@ onMounted(async () => {
                 <span v-else>Sem avaliações</span>
               </p>
               <div class="d-flex flex-column ga-2">
-                <v-btn :to="`/passeador-perfil/${w.id}`" color="success" block>
+                <BaseButton label="Ver perfil" class="text-decoration-none text-white" :to="`/passeador-perfil/${w.id}`" color="success" block>
                   Ver perfil
-                </v-btn>
-                <v-btn
+                </BaseButton>
+                <BaseButton
                   :to="{ path: '/agendar-passeio', query: { walkerId: w.id, walkerNome: w.nome } }"
                   color="success"
+                   class="text-decoration-none"
                   variant="outlined"
+                  label="Solicitar Passeio"
                   block
                 >
                   🐾 Solicitar Passeio
-                </v-btn>
+                </BaseButton>
               </div>
             </v-card-text>
           </v-card>
@@ -320,34 +322,43 @@ onMounted(async () => {
         Você ainda não possui passeios.
       </v-alert>
 
-      <v-card class="mb-3 position-relative" elevation="2" v-for="p in toursTutor" :key="p.id">
+      <v-card class="mb-3 position-relative card" color="white" elevation="2" v-for="p in toursTutor" :key="p.id">
         <v-card-text>
 
-          <v-btn
+          <BaseButton
             v-if="p.status === 'pendente' || p.status === 'aceito' || p.status === 'recusado'"
             icon="mdi-close"
             size="small"
             variant="text"
+            label=""
             class="dismiss-btn"
             :aria-label="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             :title="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             @click="onXClickTutor(p)"
           />
 
-          <h5>🐶 {{ p.dog?.nome }}</h5>
-          <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
-          <p>📍 {{ p.local }}</p>
-          <p class="text-medium-emphasis text-caption" v-if="p.walker">
-            🚶 Passeador: <strong>{{ p.walker?.nome }}</strong>
-          </p>
-          <p class="text-medium-emphasis text-caption" v-else-if="p.status === 'recusado'">
-            ❌ Nenhum passeador aceitou este passeio.
-          </p>
-          <p class="text-medium-emphasis text-caption" v-else>
-            ⏳ Aguardando um passeador aceitar
-          </p>
+          <div class="text-black">
+            <h5>🐶 {{ p.dog?.nome }}</h5>
+            <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
+            <p>📍 {{ p.local }}</p>
+            
+            <p class="text-caption" v-if="p.walker">
+              🚶 Passeador: <strong>{{ p.walker?.nome }}</strong>
+            </p>
+            <p class="text-caption" v-else-if="p.status === 'recusado'">
+              ❌ Nenhum passeador aceitou este passeio.
+            </p>
+            <p class="text-caption" v-else>
+              ⏳ Aguardando um passeador aceitar
+            </p>
+          </div>
 
-          <v-chip :color="badgeStatus(p.status)" size="small" class="text-capitalize">
+          <v-chip 
+            :color="badgeStatus(p.status)" 
+            variant="flat"
+            size="small"
+            class="text-capitalize text-white text-caption font-weight-medium px-4"
+          >
             {{ p.status }}
           </v-chip>
 
@@ -424,11 +435,12 @@ onMounted(async () => {
       <v-card class="mb-3 position-relative" elevation="2" v-for="p in toursWalker" :key="p.id">
         <v-card-text>
 
-          <v-btn
+          <BaseButton
               v-if="p.status === 'aceito' || p.status === 'cancelado'"
               icon="mdi-close"
               size="small"
               variant="text"
+              label=""
               class="dismiss-btn"
               aria-label="Remover do dashboard"
               title="Remover do dashboard"
@@ -519,6 +531,7 @@ onMounted(async () => {
   border: none;
   border-radius: 12px;
   transition: .25s;
+  padding: 20px;
 }
 
 .card:hover {
