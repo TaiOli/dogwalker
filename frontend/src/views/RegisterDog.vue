@@ -92,23 +92,28 @@ onMounted(loadDogs)
 <template>
   <v-container class="py-4">
     <!-- HEADER -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2 class="pure-text">Cadastro do dog</h2>
-
-      <BaseButton class="btn btn-primary" label="Novo" @click="openModal">
-        Novo
-      </BaseButton>
-    </div>
+    <v-row no-gutters align="center" justify="space-between" class="mb-3">
+      <v-col cols="auto">
+        <h2 class="text-h4 font-weight-bold">Cadastro do dog</h2>
+      </v-col>
+      <v-col cols="auto">
+        <BaseButton label="Novo" color="primary" @click="openModal">
+          Novo
+        </BaseButton>
+      </v-col>
+    </v-row>
 
     <!-- FILTRO -->
-    <div class="mb-4">
-      <BaseInput
-        v-model="search"
-        type="text"
-        class="form-control"
-        placeholder="🔎 Buscar cachorro por nome, raça..."
-      />
-    </div>
+    <v-row class="mb-4">
+      <v-col cols="12">
+        <BaseInput
+          v-model="search"
+          type="text"
+          class="bg-white rounded px-4 elevation-1"
+          placeholder="🔎 Buscar cachorro por nome, raça..."
+        />
+      </v-col>
+    </v-row>
 
     <!-- LISTA -->
     <h2 class="mt-5 mb-4 pure-text">🐕 Meus Doguinhos :</h2>
@@ -117,13 +122,16 @@ onMounted(loadDogs)
       Nenhum cachorro encontrado.
     </div>
 
-    <div class="row g-4">
-      <div
+    <v-row spacing="4">
+      <v-col
         v-for="dog in dogs"
         :key="dog.id"
-        class="col-12 col-sm-6 col-md-4 col-lg-3"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
       >
-        <div class="card h-100 shadow-sm dog-card position-relative">
+        <v-card class="card h-100 dog-card position-relative text-black" theme="light">
 
           <BaseButton
             type="button"
@@ -152,9 +160,9 @@ onMounted(loadDogs)
             />
           </v-card>
 
-        </div>
-      </div>
-    </div>
+        </v-card>
+      </v-col>
+    </v-row>
 
     <div v-if="showModal" class="modal-overlay">
       <div class="modal-box">
