@@ -17,15 +17,22 @@ const { user, logout } = useAuth()
         </v-avatar>
       </template>
 
-      <v-list bg-color="white">
-        <v-list-item to="/meu-perfil">
-          👤 Meu Perfil
+      <v-list bg-color="white" class="px-2 py-2 text-black rounded-lg min-width-menu" min-width="160">
+        
+        <v-list-item to="/meu-perfil" class="text-decoration-none rounded-md">
+          <template v-slot:prepend>
+            <span class="mr-2">👤</span>
+          </template>
+          Meu Perfil
         </v-list-item>
 
-        <v-divider />
+        <v-divider class="my-1 mx-2" />
 
-        <v-list-item class="text-danger" @click="logout">
-          🚪 Sair
+        <v-list-item class="text-error rounded-md" @click="logout">
+          <template v-slot:prepend>
+            <span class="mr-2">🚪</span>
+          </template>
+          Sair
         </v-list-item>
       </v-list>
     </v-menu>
