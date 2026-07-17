@@ -13,42 +13,32 @@ interface DogForm {
   photo: File | string | null
 }
 
-interface RegisterDogFormProps {
+interface Props {
   form: DogForm
   labelButton: string
 }
 
-const props = defineProps<RegisterDogFormProps>()
-
-const nameError = ref<string>("")
-const sizeError = ref<string>("")
-
-  function handleSubmit(): void {
-  nameError.value = !props.form.name ? "Insira uma nome!" : ""
-  sizeError.value = !props.form.size ? "Selecione um tipo um porte!" : ""
-
-  if (nameError.value || sizeError.value ) {
-    return
-  }
-
-  emit("submit")
-}
-
-const emit = defineEmits<{
-  submit: []
-}>()
+const props = defineProps<Props>()
+const emit = defineEmits<{ submit: [] }>()
+const nameError = ref("")
+const sizeError = ref("")
+const preview = ref<string | null>(null)
 
 const sizeOptions = [
   { label: "Pequeno", value: "pequeno" },
-  { label: "Médio", value: "médio" },
-  { label: "Grande", value: "grande" }
+  { label: "Médio",   value: "médio" },
+  { label: "Grande",  value: "grande" }
 ]
 
-const preview = ref<string | null>(null)
+function handleSubmit(): void {
+  nameError.value = !props.form.name ? "Insira um nome!" : ""
+  sizeError.value = !props.form.size ? "Selecione um porte!" : ""
+  if (nameError.value || sizeError.value) return
+  emit("submit")
+}
 
-
-function handleFile(files: FileList | null): void {
-  const file = files?.[0]
+function handlePhoto(value: string | number | File | File[] | null): void {
+  const file = Array.isArray(value) ? value[0] : value instanceof File ? value : null
   if (!file) return
 
   props.form.photo = file
@@ -57,7 +47,7 @@ function handleFile(files: FileList | null): void {
 </script>
 
 <template>
-  <v-container>
+  <v-container class="pa-0">
 
     <v-row>
       <v-col cols="12">
@@ -73,37 +63,44 @@ function handleFile(files: FileList | null): void {
 
     <v-row>
       <v-col cols="12">
-      <BaseInput 
-        v-model="form.age" 
-        type="number" 
-        label="Idade" />
+        <BaseInput
+          v-model="form.age"
+          type="number"
+          label="Idade"
+        />
       </v-col>
     </v-row>
 
     <v-row>
       <v-col cols="12">
         <BaseSelect
-        v-model="form.size"
-        :options="sizeOptions"
-        required
-        label="Porte"
-        labelKey="label"
-        valueKey="value"
-        :error-message="nameError"
-        @update:modelValue="sizeError = ''"
-      />
+          v-model="form.size"
+          required
+          label="Porte"
+          :options="sizeOptions"
+          labelKey="label"
+          valueKey="value"
+          :error-message="sizeError"
+          @update:modelValue="sizeError = ''"
+        />
       </v-col>
     </v-row>
 
     <v-row>
       <v-col cols="12">
-        <BaseInput v-model="form.breed" label="Raça"/>
+        <BaseInput
+          v-model="form.breed"
+          label="Raça"
+        />
       </v-col>
     </v-row>
 
     <v-row>
       <v-col cols="12">
-        <BaseInput v-model="form.observations" label="Observações" />
+        <BaseInput
+          v-model="form.observations"
+          label="Observações"
+        />
       </v-col>
     </v-row>
 
@@ -113,23 +110,35 @@ function handleFile(files: FileList | null): void {
           type="file"
           accept="image/*"
           label="Foto"
-          @change="handleFile"
-        />
-      </v-col>
-
-      <v-col
-        v-if="preview"
-        cols="12"
-        class="text-center"
-      >
-        <v-img
-          :src="preview"
-          class="img-preview"
+          @update:modelValue="handlePhoto"
         />
       </v-col>
     </v-row>
 
-    <BaseButton class="w-100 mt-2 btn-mustard" :label="labelButton" @click="handleSubmit" />
+    <v-row v-if="preview">
+      <v-col cols="12" class="text-center">
+        <v-img
+          :src="preview"
+          max-height="200"
+          cover
+          rounded="lg"
+          class="mx-auto"
+          style="max-width: 100%;"
+        />
+      </v-col>
+    </v-row>
+
+    <v-row class="mt-2">
+      <v-col cols="12">
+        <BaseButton
+          class="btn-mustard"
+          :label="labelButton"
+          block
+          @click="handleSubmit"
+        />
+      </v-col>
+    </v-row>
+
   </v-container>
 </template>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref} from "vue"
+import { ref } from "vue"
 import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
 import BaseSelect from "../atoms/BaseSelect.vue"
@@ -14,53 +14,55 @@ interface RegisterForm {
   photo: File | string
 }
 
-interface UserRegisterFormProps {
+interface Props {
   form: RegisterForm
   labelButton: string
 }
 
-const props = defineProps<UserRegisterFormProps>()
+const props = defineProps<Props>()
+const emit = defineEmits<{ submit: [] }>()
 
 const preview = ref<string | null>(null)
-const usernameError = ref<string>("")
-const emailError = ref<string>("")
-const passwordError = ref<string>("")
-const nameError = ref<string>("")
-const typeuserError = ref<string>("")
-
-function handleSubmit(): void {
-  usernameError.value = !props.form.username ? "Insira um username!" : ""
-  emailError.value = !props.form.email ? "Insira um e-mail!" : ""
-  passwordError.value = !props.form.password ? "Insira uma senha!" : ""
-  nameError.value = !props.form.name ? "Insira uma nome!" : ""
-  typeuserError.value = !props.form.type_user ? "Selecione um tipo de usuário!" : ""
-
-  if (usernameError.value || emailError.value || passwordError.value || nameError.value || typeuserError.value ) {
-    return
-  }
-
-  emit("submit")
-}
-
-const emit = defineEmits<{
-  submit: []
-}>()
+const usernameError = ref("")
+const nameError = ref("")
+const emailError = ref("")
+const passwordError = ref("")
+const typeuserError = ref("")
 
 const typeUsers = [
   { label: "Tutor", value: "tutor" },
   { label: "Passeador", value: "passeador" }
 ]
+
+function handleSubmit(): void {
+  usernameError.value = !props.form.username ? "Insira um username!" : ""
+  nameError.value = !props.form.name ? "Insira um nome!" : ""
+  emailError.value = !props.form.email ? "Insira um e-mail!" : ""
+  passwordError.value = !props.form.password ? "Insira uma senha!" : ""
+  typeuserError.value = !props.form.type_user ? "Selecione um tipo de usuário!" : ""
+
+  if (usernameError.value || nameError.value || emailError.value || passwordError.value || typeuserError.value) return
+
+  emit("submit")
+}
+
+function handlePhoto(value: string | number | File | File[] | null): void {
+  const file = Array.isArray(value) ? value[0] : value instanceof File ? value : null
+  if (!file) return
+  props.form.photo = file
+  preview.value = URL.createObjectURL(file)
+}
 </script>
 
 <template>
-  <v-container>
+  <v-container class="pa-0">
 
     <v-row>
       <v-col cols="12">
-        <BaseInput 
-          label="Username"
+        <BaseInput
+          v-model="form.username"
           required
-          v-model="form.username" 
+          label="Username"
           :error-message="usernameError"
           @update:modelValue="usernameError = ''"
         />
@@ -70,9 +72,9 @@ const typeUsers = [
     <v-row>
       <v-col cols="12">
         <BaseInput
-          label="Nome Completo"
+          v-model="form.name"
           required
-          v-model="form.name"  
+          label="Nome Completo"
           :error-message="nameError"
           @update:modelValue="nameError = ''"
         />
@@ -80,11 +82,11 @@ const typeUsers = [
     </v-row>
 
     <v-row>
-        <v-col cols="12">
-        <BaseInput 
-          label="Email"
+      <v-col cols="12">
+        <BaseInput
+          v-model="form.email"
           required
-          v-model="form.email" 
+          label="Email"
           :error-message="emailError"
           @update:modelValue="emailError = ''"
         />
@@ -93,45 +95,48 @@ const typeUsers = [
 
     <v-row>
       <v-col cols="12">
-        <BaseInput 
-          label="Senha"
+        <BaseInput
+          v-model="form.password"
           required
-          v-model="form.password" 
-          type="password" 
+          type="password"
+          label="Senha"
           :error-message="passwordError"
           @update:modelValue="passwordError = ''"
         />
       </v-col>
     </v-row>
 
-     <v-row>
-        <v-col cols="12">
-          <BaseSelect
-            label="Tipo de Usuário"
-            required
-            v-model="form.type_user"
-            :options="typeUsers"
-            labelKey="label"
-            valueKey="value"
-            :error-message="typeuserError"
-            @update:modelValue="typeuserError = ''"
-          />
-       </v-col>
-      </v-row>
-       
-     <v-row>
+    <v-row>
       <v-col cols="12">
-        <BaseInput v-model="form.phone" label="📞 Telefone" />
+        <BaseSelect
+          v-model="form.type_user"
+          required
+          label="Tipo de Usuário"
+          :options="typeUsers"
+          labelKey="label"
+          valueKey="value"
+          :error-message="typeuserError"
+          @update:modelValue="typeuserError = ''"
+        />
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="12" class="d-flex align-center ga-2">
+      <v-col cols="12">
         <BaseInput
-          v-model="form.photo"
+          v-model="form.phone"
+          label="📞 Telefone"
+        />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col cols="12">
+        <BaseInput
           type="file"
           accept="image/*"
           label="Foto"
+          @update:modelValue="handlePhoto"
         />
       </v-col>
     </v-row>
@@ -140,12 +145,24 @@ const typeUsers = [
       <v-col cols="12" class="text-center">
         <v-img
           :src="preview"
-          class="img-preview"
+          max-height="200"
+          cover
+          rounded="lg"
+          class="mx-auto img-preview"
         />
       </v-col>
     </v-row>
 
-    <BaseButton class="w-100 mt-2 btn-mustard" :label="labelButton" @click="handleSubmit" />
+    <v-row class="mt-2">
+      <v-col cols="12">
+        <BaseButton
+          :label="labelButton"
+          color="mustard"
+          block
+          @click="handleSubmit"
+        />
+      </v-col>
+    </v-row>
 
   </v-container>
 </template>
@@ -172,6 +189,7 @@ const typeUsers = [
   max-height: 200px;
   object-fit: cover;
   border-radius: 10px;
+  max-width: 100%;
 }
 
 .btn-mustard {

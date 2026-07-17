@@ -1,46 +1,38 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import BaseInput from "../atoms/BaseInput.vue"
 import BaseButton from "../atoms/BaseButton.vue"
-import BaseInput from "../atoms/BaseInput.vue";
 
 interface UserAuthForm {
   email: string
   password: string
 }
 
-interface UserAuthFormProps {
+interface Props {
   form: UserAuthForm
   labelButton: string
 }
 
-const emailError = ref<string>("")
-const passwordError = ref<string>("")
+const props = defineProps<Props>()
+const emit = defineEmits<{ submit: [] }>()
+
+const emailError = ref("")
+const passwordError = ref("")
 
 function handleSubmit(): void {
   emailError.value = !props.form.email ? "Insira um e-mail!" : ""
   passwordError.value = !props.form.password ? "Insira uma senha!" : ""
-
-  if ( emailError.value || passwordError.value ) {
-    return
-  }
-
+  if (emailError.value || passwordError.value) return
   emit("submit")
 }
-
-const props = defineProps<UserAuthFormProps>();
-
-const emit = defineEmits<{
-  submit: []
-}>();
 </script>
 
 <template>
-  <v-container>
-
-    <v-row class="justify-center">
-      <v-col cols="8">
-        <BaseInput 
-          v-model="form.email" 
+  <v-container class="pa-0">
+    <v-row justify="center">
+      <v-col cols="12" sm="8">
+        <BaseInput
+          v-model="form.email"
           required
           label="📧 Email"
           :error-message="emailError"
@@ -49,24 +41,29 @@ const emit = defineEmits<{
       </v-col>
     </v-row>
 
-    <v-row class="justify-center">
-      <v-col cols="8">
-        <BaseInput 
-            v-model="form.password" 
-            required
-            label="🔒 Senha"
-            type="password" 
-            :error-message="passwordError"
-            @update:modelValue="passwordError = ''"
-          />
+    <v-row justify="center">
+      <v-col cols="12" sm="8">
+        <BaseInput
+          v-model="form.password"
+          required
+          label="🔒 Senha"
+          type="password"
+          :error-message="passwordError"
+          @update:modelValue="passwordError = ''"
+        />
       </v-col>
     </v-row>
 
-    <BaseButton
-      class="w-100 mt-2 btn-mustard"
-      :label="labelButton"
-      @click="handleSubmit"
-    />
+    <v-row justify="center" class="mt-2">
+      <v-col cols="12" sm="8">
+        <BaseButton
+          :label="labelButton"
+          class="btn-mustard"
+          block
+          @click="handleSubmit"
+        />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

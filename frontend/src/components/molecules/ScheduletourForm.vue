@@ -27,37 +27,29 @@ interface ScheduleTourForm {
   walker_id: string | number
 }
 
-interface ScheduleTourFormProps {
+interface Props {
   form: ScheduleTourForm
   labelButton: string
   dogs: DogOption[]
   walkers?: WalkerOption[]
 }
 
-const props = withDefaults(defineProps<ScheduleTourFormProps>(), {
+const props = withDefaults(defineProps<Props>(), {
   walkers: () => []
 })
 
-const emit = defineEmits<{
-  submit: []
-}>()
-
-const walkerOptions = computed(() => [
-  {
-    id: "",
-    name: "Selecione um passeador..."
-  },
-  ...props.walkers.map(w => ({
-    id: w.id,
-    name: w.nome
-  }))
-])
+const emit = defineEmits<{ submit: [] }>()
 
 const walkerError = ref("")
 
+const walkerOptions = computed(() => [
+  { id: "", name: "Selecione um passeador..." },
+  ...props.walkers.map(w => ({ id: w.id, name: w.nome ?? w.name ?? "" }))
+])
+
 function handleSubmit(): void {
   if (!props.form.walker_id) {
-    walkerError.value = "Selecionar um passeador!"
+    walkerError.value = "Selecione um passeador!"
     return
   }
   walkerError.value = ""
@@ -66,7 +58,8 @@ function handleSubmit(): void {
 </script>
 
 <template>
-  <v-container>
+  <v-container class="pa-0">
+
     <v-row>
       <v-col cols="12">
         <BaseSelect
@@ -83,9 +76,9 @@ function handleSubmit(): void {
       <v-col cols="12">
         <BaseSelect
           v-model="form.walker_id"
-          :options="walkerOptions"
           required
           label="🎯 Passeador"
+          :options="walkerOptions"
           labelKey="name"
           valueKey="id"
           :error-message="walkerError"
@@ -122,10 +115,8 @@ function handleSubmit(): void {
       <v-col cols="12" md="6">
         <BaseInput
           v-model="form.value"
-          label="💰 Valor"
           type="number"
-          step="0.01"
-          min="0"
+          label="💰 Valor"
         />
       </v-col>
 
@@ -137,10 +128,11 @@ function handleSubmit(): void {
       </v-col>
     </v-row>
 
-    <v-row class="mt-4 justify-center">
-      <v-col cols="12" class="d-flex justify-center">
+    <v-row justify="center" class="mt-4">
+      <v-col cols="12" sm="6">
         <BaseButton
           :label="labelButton"
+          block
           @click="handleSubmit"
           class="btn-mustard"
         />
