@@ -156,13 +156,20 @@ async function loadTours(): Promise<void> {
   }
 }
 
-function badgeStatus(status: TourStatus): Record<string, boolean> {
-  return {
-    "bg-warning text-dark": status === "pendente",
-    "bg-success": status === "aceito",
-    "bg-danger": status === "recusado",
-    "bg-primary": status === "finalizado",
-    "bg-secondary": status === "cancelado"
+function badgeStatus(status: TourStatus): string {
+  switch (status) {
+    case "pendente":
+      return "warning"   
+    case "aceito":
+      return "success"   
+    case "recusado":
+      return "error"    
+    case "finalizado":
+      return "primary"   
+    case "cancelado":
+      return "secondary" 
+    default:
+      return "grey"   
   }
 }
 
@@ -272,52 +279,56 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container py-4">
+  <v-container class="py-4">
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
     <template v-if="tutor">
       <h2 class="mb-4">👨‍🦱 Passeadores Disponíveis</h2>
 
-      <div class="row g-4 mb-5">
-        <div class="col-md-4" v-for="w in walkers" :key="w.id">
-          <div class="card h-100 shadow-sm">
-            <div class="card-body text-center">
-              <v-img :src="getPhoto(w.foto)" class="rounded-circle mb-3" width="110" height="110" cover></v-img>
+      <v-row class="mb-5">
+        <v-col cols="12" md="4" v-for="w in walkers" :key="w.id">
+          <v-card class="h-100" elevation="2">
+            <v-card-text class="text-center">
+              <v-img :src="getPhoto(w.foto)" class="rounded-circle mx-auto mb-3" width="110" height="110" cover></v-img>
               <h5>{{ w.nome }}</h5>
               <p>📱 {{ w.telefone }}</p>
               <p>
                 ⭐
-                <v-text-field v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</v-text-field>
-                <v-text-field v-else>Sem avaliações</v-text-field>
+                <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
+                <span v-else>Sem avaliações</span>
               </p>
-              <div class="d-flex flex-column gap-2">
-                <router-link :to="`/passeador-perfil/${w.id}`" class="btn btn-success w-100">
+              <div class="d-flex flex-column ga-2">
+                <v-btn :to="`/passeador-perfil/${w.id}`" color="success" block>
                   Ver perfil
-                </router-link>
-                <router-link
+                </v-btn>
+                <v-btn
                   :to="{ path: '/agendar-passeio', query: { walkerId: w.id, walkerNome: w.nome } }"
-                  class="btn btn-outline-success w-100"
+                  color="success"
+                  variant="outlined"
+                  block
                 >
                   🐾 Solicitar Passeio
-                </router-link>
+                </v-btn>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
 
       <h2 class="mb-3">📋 Meus Passeios</h2>
 
-      <div v-if="toursTutor.length === 0" class="alert alert-info">
+      <v-alert v-if="toursTutor.length === 0" type="info" variant="tonal">
         Você ainda não possui passeios.
-      </div>
+      </v-alert>
 
-      <div class="card shadow-sm mb-3 position-relative" v-for="p in toursTutor" :key="p.id">
-        <div class="card-body">
+      <v-card class="mb-3 position-relative" elevation="2" v-for="p in toursTutor" :key="p.id">
+        <v-card-text>
 
-          <BaseButton
+          <v-btn
             v-if="p.status === 'pendente' || p.status === 'aceito' || p.status === 'recusado'"
-            class="btn-close dismiss-btn"
-            label=""
+            icon="mdi-close"
+            size="small"
+            variant="text"
+            class="dismiss-btn"
             :aria-label="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             :title="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
             @click="onXClickTutor(p)"
@@ -326,22 +337,22 @@ onMounted(async () => {
           <h5>🐶 {{ p.dog?.nome }}</h5>
           <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
           <p>📍 {{ p.local }}</p>
-          <p class="text-muted small" v-if="p.walker">
+          <p class="text-medium-emphasis text-caption" v-if="p.walker">
             🚶 Passeador: <strong>{{ p.walker?.nome }}</strong>
           </p>
-          <p class="text-muted small" v-else-if="p.status === 'recusado'">
+          <p class="text-medium-emphasis text-caption" v-else-if="p.status === 'recusado'">
             ❌ Nenhum passeador aceitou este passeio.
           </p>
-          <p class="text-muted small" v-else>
+          <p class="text-medium-emphasis text-caption" v-else>
             ⏳ Aguardando um passeador aceitar
           </p>
 
-          <span class="badge" :class="badgeStatus(p.status)">
+          <v-chip :color="badgeStatus(p.status)" size="small" class="text-capitalize">
             {{ p.status }}
-          </span>
+          </v-chip>
 
           <div class="mt-3" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
-            <BaseButton class="btn btn-primary" label="Avaliar Passeador" @click="openEvaluationTutor(p)">
+            <BaseButton color="primary" label="Avaliar Passeador" @click="openEvaluationTutor(p)">
               ⭐ Avaliar Passeador
             </BaseButton>
           </div>
@@ -353,14 +364,14 @@ onMounted(async () => {
               <span v-for="n in 5" :key="n">
                 {{ n <= p.review_by_tutor.rating ? "⭐" : "☆" }}
               </span>
-              <v-text-field class="text-muted small ms-1">({{ p.review_by_tutor.rating }}/5)</v-text-field>
+              <span class="text-medium-emphasis text-caption ms-1">({{ p.review_by_tutor.rating }}/5)</span>
             </div>
-            <p v-if="p.review_by_tutor.comment" class="mb-0 fst-italic">
+            <p v-if="p.review_by_tutor.comment" class="mb-0 font-italic">
               "{{ p.review_by_tutor.comment }}"
             </p>
           </div>
 
-          <div class="mt-4 border-top pt-3" v-if="reviewTutor?.id === p.id">
+          <div class="mt-4 border-t pt-3" v-if="reviewTutor?.id === p.id">
             <h5>Como foi o passeador?</h5>
 
             <div class="mb-3">
@@ -375,29 +386,29 @@ onMounted(async () => {
             </div>
 
             <BaseTextarea
-              class="form-control mb-3"
+              class="mb-3"
               :rows="3"
               placeholder="Comentário (opcional)"
               v-model="comment"
             />
 
-            <div class="d-flex gap-2">
+            <div class="d-flex ga-2">
               <BaseButton
-                class="btn btn-success"
+                color="success"
                 :label="sending ? 'Enviando...' : 'Enviar avaliação'"
                 @click="sendEvaluation(p.id, 'tutor')"
                 :disabled="sending"
               >
                 {{ sending ? "Enviando..." : "Enviar avaliação" }}
               </BaseButton>
-              <BaseButton class="btn btn-secondary" label="Cancelar" @click="cancelEvaluationTutor">
+              <BaseButton color="secondary" label="Cancelar" @click="cancelEvaluationTutor">
                 Cancelar
               </BaseButton>
             </div>
           </div>
 
-        </div>
-      </div>
+        </v-card-text>
+      </v-card>
 
     </template>
 
@@ -406,17 +417,19 @@ onMounted(async () => {
 
       <h2 class="mb-4">🚶 Meus Passeios</h2>
 
-      <div v-if="toursWalker.length === 0" class="alert alert-info">
+      <v-alert v-if="toursWalker.length === 0" type="info" variant="tonal">
         Você ainda não possui passeios aceitos.
-      </div>
+      </v-alert>
 
-      <div class="card shadow-sm mb-3 position-relative" v-for="p in toursWalker" :key="p.id">
-        <div class="card-body">
+      <v-card class="mb-3 position-relative" elevation="2" v-for="p in toursWalker" :key="p.id">
+        <v-card-text>
 
-          <BaseButton
+          <v-btn
               v-if="p.status === 'aceito' || p.status === 'cancelado'"
-              class="btn-close dismiss-btn"
-              label=""
+              icon="mdi-close"
+              size="small"
+              variant="text"
+              class="dismiss-btn"
               aria-label="Remover do dashboard"
               title="Remover do dashboard"
               @click="dismissTour(p.id)"
@@ -425,21 +438,21 @@ onMounted(async () => {
           <h5>🐶 {{ p.dog?.nome }}</h5>
           <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
           <p>📍 {{ p.local }}</p>
-          <p class="text-muted small">
+          <p class="text-medium-emphasis text-caption">
             👨‍🦱 Tutor: <strong>{{ p.tutor?.nome }}</strong>
           </p>
 
-          <p class="text-muted small" v-if="p.status === 'cancelado'">
+          <p class="text-medium-emphasis text-caption" v-if="p.status === 'cancelado'">
             ❌ Este passeio foi cancelado pelo tutor.
           </p>
 
-          <span class="badge" :class="badgeStatus(p.status)">
+          <v-chip :color="badgeStatus(p.status)" size="small" class="text-capitalize">
             {{ p.status }}
-          </span>
+          </v-chip>
 
           <div class="mt-3" v-if="p.status === 'aceito'">
             <BaseButton
-              class="btn btn-primary"
+              color="primary"
               label="Finalizar passeio"
               @click="openEvaluationWalker(p)" >
               ✔ Finalizar passeio
@@ -453,14 +466,14 @@ onMounted(async () => {
               <span v-for="n in 5" :key="n">
                 {{ n <= p.review_by_walker.rating ? "⭐" : "☆" }}
               </span>
-              <v-text-field class="text-muted small ms-1">({{ p.review_by_walker.rating }}/5)</v-text-field>
+              <span class="text-medium-emphasis text-caption ms-1">({{ p.review_by_walker.rating }}/5)</span>
             </div>
-            <p v-if="p.review_by_walker.comment" class="mb-0 fst-italic">
+            <p v-if="p.review_by_walker.comment" class="mb-0 font-italic">
               "{{ p.review_by_walker.comment }}"
             </p>
           </div>
 
-          <div class="mt-4 border-top pt-3" v-if="reviewWalker?.id === p.id">
+          <div class="mt-4 border-t pt-3" v-if="reviewWalker?.id === p.id">
             <h5>Avaliar o tutor / passeio</h5>
 
             <div class="mb-3">
@@ -481,24 +494,24 @@ onMounted(async () => {
               v-model="comment"
             />
 
-            <div class="d-flex gap-2">
+            <div class="d-flex ga-2">
               <BaseButton
-                class="btn btn-success"
+                color="success"
                 :label="sending ? 'Enviando...' : 'Finalizar e enviar'"
                 @click="completeTour(p)"
                 :disabled="sending"
               >
                 {{ sending ? "Enviando..." : "Finalizar e enviar" }}
               </BaseButton>
-              <BaseButton class="btn btn-secondary" label="Cancelar" @click="cancelEvaluationWalker">
+              <BaseButton color="secondary" label="Cancelar" @click="cancelEvaluationWalker">
                 Cancelar
               </BaseButton>
             </div>
           </div>
-        </div>
-      </div>
+        </v-card-text>
+      </v-card>
     </template>
-  </div>
+  </v-container>
 </template>
 
 <style scoped>
