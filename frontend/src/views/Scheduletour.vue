@@ -50,7 +50,7 @@ async function save(): Promise<void> {
 
         <h2 class="page-title mb-4">🚶 Solicitar Passeio</h2>
 
-        <v-card elevation="1" class="pa-3">
+        <v-card elevation="1" class="pa-3 card" color="white">
 
           <ScheduletourForm
             :form="form"
@@ -71,5 +71,9 @@ async function save(): Promise<void> {
   text-align: left;
   font-size: 25px;
   font-weight: 600;
+}
+
+.card{
+  padding: 30px;
 }
 </style>
