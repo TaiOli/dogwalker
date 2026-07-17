@@ -13,13 +13,14 @@ function toggle(): void {
 
 <template>
   <aside :class="['sidebar', { collapsed }]">
-    <v-row no-gutters align="center" justify="space-between" class="header">
+    <v-row no-gutters align="center" :justify="collapsed ? 'center' : 'space-between'" class="header">
       <v-col v-if="!collapsed">
         <h2 class="m-0">🐶 Dog Walker</h2>
       </v-col>
-       <v-col>
+       <v-col cols="auto">
         <BaseButton
           class="toggle"
+          icon
           variant="outlined"
           color="white"
           size="small"
@@ -31,7 +32,7 @@ function toggle(): void {
       </v-col>
     </v-row>
 
-    <v-list nav class="nav mt-3" bg-color="transparent">
+    <v-list nav class="nav mt-3" bg-color="transparent" density="comfortable">
       <v-list-item
         to="/dashboard"
         class="nav-item"
@@ -84,35 +85,53 @@ function toggle(): void {
 }
 
 .sidebar.collapsed {
-  width: 70px;
+  width: 90px;
+  padding: 20px 8px;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 20px;
 }
 
-.nav-item {
-  color: white;
-  text-decoration: none;
-  padding: 10px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: 0.2s;
+.toggle {
   font-size: 16px;
-  margin-bottom: 8px;
 }
 
-.nav-item:hover {
+.nav :deep(.v-list-item) {
+  color: white;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  min-height: 44px;
+  transition: background-color 0.2s ease;
+}
+
+.nav :deep(.v-list-item:hover) {
   background: #34495e;
+}
+
+.nav :deep(.v-list-item:hover .v-icon) {
   color: #2ecc71;
 }
 
-.toggle {
-  font-size: 14px;
+.nav-item{
+  text-decoration: none;
+}
+
+.sidebar.collapsed .nav :deep(.v-list-item) {
+  --indent-padding: 0px !important;
+  padding-inline: 0 !important;
+  justify-content: center !important;
+}
+
+.sidebar.collapsed .nav :deep(.v-list-item__prepend) {
+  margin-inline: auto !important;
+}
+
+.sidebar.collapsed .nav :deep(.v-list-item__spacer) {
+  display: none !important;
+}
+
+.sidebar.collapsed .nav :deep(.v-list-item-title) {
+  display: none;
 }
 </style>
