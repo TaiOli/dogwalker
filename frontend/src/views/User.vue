@@ -22,7 +22,7 @@ async function salvar(): Promise<void> {
 </script>
 
 <template>
-  <div class="page-user">
+  <v-container class="page-user">
  
     <div class="register-wrapper text-center">
  
@@ -49,7 +49,7 @@ async function salvar(): Promise<void> {
  
     </div>
  
-  </div>
+  </v-container>
 </template>
 
 <style scoped>
