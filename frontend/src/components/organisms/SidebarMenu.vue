@@ -13,60 +13,65 @@ function toggle(): void {
 
 <template>
   <aside :class="['sidebar', { collapsed }]">
-    <v-row no-gutters align="center" :justify="collapsed ? 'center' : 'space-between'" class="header">
-      <v-col v-if="!collapsed">
-        <h2 class="m-0">🐶 Dog Walker</h2>
-      </v-col>
-       <v-col cols="auto">
-        <BaseButton
-          class="toggle"
-          icon
-          variant="outlined"
-          color="white"
-          size="small"
-          label="Menu"
-          @click="toggle"
-        >
-          ☰
-        </BaseButton>
-      </v-col>
-    </v-row>
 
-    <v-list nav class="nav mt-3" bg-color="transparent" density="comfortable">
+    <div class="header">
+      <h2 v-if="!collapsed" class="brand-title">🐶 Dog Walker</h2>
+      
+
+      <BaseButton
+        label="Menu"
+        icon
+        variant="text"
+        size="small"
+        color="white"
+        class="toggle-btn"
+        @click="toggle"
+      >
+        <v-icon>mdi-menu</v-icon>
+      </BaseButton>
+    </div>
+
+    <v-list nav class="sidebar-nav" bg-color="transparent" density="comfortable">
+      
+
       <v-list-item
         to="/dashboard"
         class="nav-item"
         prepend-icon="mdi-home"
-      >
-        <span v-if="!collapsed">Dashboard</span>
-      </v-list-item>
+        title="Dashboard"
+      />
 
       <v-list-item
         v-if="tutor"
         to="/cadastro-cachorro"
         class="nav-item"
         prepend-icon="mdi-dog"
-      >
-        <span v-if="!collapsed">Meus cachorros</span>
-      </v-list-item>
+        title="Meus cachorros"
+      />
 
       <v-list-item
         v-if="tutor"
         to="/agendar-passeio"
         class="nav-item"
         prepend-icon="mdi-plus"
-      >
-        <span v-if="!collapsed">Solicitar passeio</span>
-      </v-list-item>
+        title="Solicitar passeio"
+      />
+
 
       <v-list-item
         v-if="walker"
         to="/passeios"
-        class="nav-item text-nowrap"
+        class="nav-item"
         prepend-icon="mdi-walk"
-      >
-        <span v-if="!collapsed">Passeios disponíveis</span>
-      </v-list-item>
+        title="Passeios disponíveis"
+      />
+
+      <v-list-item
+        to="/meu-perfil"
+        class="nav-item"
+        prepend-icon="mdi-account"
+        title="Meu perfil"
+      />
     </v-list>
   </aside>
 </template>
@@ -74,64 +79,126 @@ function toggle(): void {
 <style scoped>
 .sidebar {
   width: 280px;
-  background: #01071F;
+  height: 100vh;
+  background: linear-gradient(135deg, #01071F 0%, #0a0e27 100%);
   color: white;
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  transition: 0.3s;
-  overflow-y: auto;
-  border-right: 1px solid #1a252f;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
 }
 
 .sidebar.collapsed {
-  width: 90px;
-  padding: 20px 8px;
+  width: 80px;
 }
 
 .header {
-  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 8px;
 }
 
-.toggle {
-  font-size: 16px;
+.brand-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
 }
 
-.nav :deep(.v-list-item) {
-  color: white;
-  border-radius: 6px;
+.sidebar.collapsed .brand-title {
+  display: none;
+}
+
+.toggle-btn {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.nav-item {
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-radius: 8px;
   margin-bottom: 8px;
   min-height: 44px;
-  transition: background-color 0.2s ease;
-}
-
-.nav :deep(.v-list-item:hover) {
-  background: #34495e;
-}
-
-.nav :deep(.v-list-item:hover .v-icon) {
-  color: #2ecc71;
-}
-
-.nav-item{
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
   text-decoration: none;
 }
+s
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.15) !important; 
+  color: #ffffff !important;              
+}
 
-.sidebar.collapsed .nav :deep(.v-list-item) {
-  --indent-padding: 0px !important;
-  padding-inline: 0 !important;
+.nav-item.logout {
+  color: rgba(231, 76, 60, 0.7) !important;
+}
+
+.nav-item.logout:hover {
+  background: rgba(231, 76, 60, 0.1) !important;
+  color: #e74c3c !important;
+}
+
+/* Icon customization */
+.nav-item :deep(.v-list-item__prepend) {
+  color: inherit;
+  margin-right: 16px;
+}
+
+.nav-item:hover :deep(.v-list-item__prepend) {
+  color: inherit;
+}
+
+.sidebar.collapsed .nav-item {
   justify-content: center !important;
+  --indent-padding: 0 !important;
+  padding-inline: 0 !important;
 }
 
-.sidebar.collapsed .nav :deep(.v-list-item__prepend) {
-  margin-inline: auto !important;
+.sidebar.collapsed .nav-item :deep(.v-list-item__prepend) {
+  margin-right: 0 !important;
 }
 
-.sidebar.collapsed .nav :deep(.v-list-item__spacer) {
-  display: none !important;
-}
-
-.sidebar.collapsed .nav :deep(.v-list-item-title) {
+.sidebar.collapsed .nav-item :deep(.v-list-item__content) {
   display: none;
+}
+
+.sidebar.collapsed .nav-item :deep(.v-list-item__spacer) {
+  display: none;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.spacer {
+  flex: 1;
 }
 </style>

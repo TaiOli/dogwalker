@@ -1,57 +1,143 @@
 <script setup lang="ts">
+import { computed } from "vue"
 import { useAuth } from "../../composables/userAuth"
+import { useRoute } from "vue-router"
 import { getPhoto } from "../../utils/image"
 
 const { user, logout } = useAuth()
+const route = useRoute()
+
+const routeTitles: Record<string, string> = {
+  "/dashboard": "Dashboard",
+  "/cadastro-cachorro": "Meus Cachorros",
+  "/agendar-passeio": "Agendar Passeio",
+  "/passeios": "Passeios Disponíveis",
+  "/meu-perfil": "Meu Perfil",
+}
+
+const pageTitle = computed(() => {
+  return routeTitles[route.path] || "Dog Walker"
+})
+
+function handleLogout(): void {
+  logout()
+}
 </script>
 
 <template>
   <header class="topbar">
 
-    <div></div>
+    <div class="page-info">
+      <h2 class="page-title">{{ pageTitle }}</h2>
+    </div>
 
-    <v-menu location="bottom end">
-      <template #activator="{ props }">
-        <v-avatar v-bind="props" size="42" class="profile-photo">
-          <v-img :src="getPhoto(user?.foto)" cover />
-        </v-avatar>
-      </template>
+    <div class="user-section">
+      <v-menu location="bottom end" offset="8">
+        <template #activator="{ props }">
+          <v-avatar
+            v-bind="props"
+            size="44"
+            class="profile-avatar"
+          >
+            <v-img :src="getPhoto(user?.foto)" cover />
+          </v-avatar>
+        </template>
 
-      <v-list bg-color="white" class="px-2 py-2 text-black rounded-lg min-width-menu" min-width="160">
-        
-        <v-list-item to="/meu-perfil" class="text-decoration-none rounded-md">
-          <template v-slot:prepend>
-            <span class="mr-2">👤</span>
-          </template>
-          Meu Perfil
-        </v-list-item>
+        <v-card elevation="2" rounded="lg" min-width="200">
+          
+          <v-card-text class="pa-3">
+            <div class="user-info">
+              <v-avatar size="48">
+                <v-img :src="getPhoto(user?.foto)" cover />
+              </v-avatar>
+              <div class="ml-3">
+                <p class="text-body-2 font-weight-600 mb-0">{{ user?.nome }}</p>
+                <p class="text-caption text-medium-emphasis mb-0">{{ user?.email }}</p>
+              </div>
+            </div>
+          </v-card-text>
 
-        <v-divider class="my-1 mx-2" />
+          <v-divider />
 
-        <v-list-item class="text-error rounded-md" @click="logout">
-          <template v-slot:prepend>
-            <span class="mr-2">🚪</span>
-          </template>
-          Sair
-        </v-list-item>
-      </v-list>
-    </v-menu>
+          <v-list class="pa-0" density="comfortable">
+            <v-list-item
+              to="/meu-perfil"
+              prepend-icon="mdi-account"
+              title="Meu Perfil"
+            />
+          </v-list>
 
+          <v-divider />
+
+          <v-list class="pa-0" density="comfortable">
+            <v-list-item
+              prepend-icon="mdi-logout"
+              title="Sair"
+              text-color="error"
+              @click="handleLogout"
+            />
+          </v-list>
+
+        </v-card>
+      </v-menu>
+    </div>
   </header>
 </template>
 
 <style scoped>
-.topbar{
-  height:60px;
-  background:white;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:0 25px;
-  border-bottom:1px solid #ddd;
+.topbar {
+  height: 70px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.profile-photo{
-  cursor:pointer;
+.page-info {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1f1f1f;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-avatar {
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 16px;
+  }
+
+  .page-title {
+    font-size: 1.25rem;
+  }
 }
 </style>
