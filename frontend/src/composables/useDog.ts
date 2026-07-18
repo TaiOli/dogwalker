@@ -65,7 +65,6 @@ async function buildFormData() {
     return await api.post(`/dogs/${formDog.id}`, formData);
   }
 
-  // recebe o dog vindo da API (nome, idade, raca...) e preenche o form
   function setDog(dog: Dog): void {
     formDog.id = dog.id
     formDog.name = dog.nome ?? ""

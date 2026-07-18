@@ -1,23 +1,8 @@
 <script setup lang="ts">
-import { computed } from "vue"
 import { useAuth } from "../../composables/userAuth"
-import { useRoute } from "vue-router"
 import { getPhoto } from "../../utils/image"
 
 const { user, logout } = useAuth()
-const route = useRoute()
-
-const routeTitles: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/cadastro-cachorro": "Meus Cachorros",
-  "/agendar-passeio": "Agendar Passeio",
-  "/passeios": "Passeios Disponíveis",
-  "/meu-perfil": "Meu Perfil",
-}
-
-const pageTitle = computed(() => {
-  return routeTitles[route.path] || "Dog Walker"
-})
 
 function handleLogout(): void {
   logout()
@@ -27,9 +12,7 @@ function handleLogout(): void {
 <template>
   <header class="topbar">
 
-    <div class="page-info">
-      <h2 class="page-title">{{ pageTitle }}</h2>
-    </div>
+    <div class="page-info"></div>
 
     <div class="user-section">
       <v-menu location="bottom end" offset="8">
@@ -47,9 +30,6 @@ function handleLogout(): void {
           
           <v-card-text class="pa-3">
             <div class="user-info">
-              <v-avatar size="48">
-                <v-img :src="getPhoto(user?.foto)" cover />
-              </v-avatar>
               <div class="ml-3">
                 <p class="text-body-2 font-weight-600 mb-0">{{ user?.nome }}</p>
                 <p class="text-caption text-medium-emphasis mb-0">{{ user?.email }}</p>
@@ -103,11 +83,9 @@ function handleLogout(): void {
   flex: 1;
 }
 
-.page-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0;
-  color: #1f1f1f;
+.v-list-item{
+  text-decoration: none;
+  padding: 15px;
 }
 
 .user-section {
@@ -129,15 +107,12 @@ function handleLogout(): void {
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 15px;
 }
 
 @media (max-width: 768px) {
   .topbar {
     padding: 0 16px;
-  }
-
-  .page-title {
-    font-size: 1.25rem;
   }
 }
 </style>

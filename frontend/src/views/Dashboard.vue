@@ -98,7 +98,6 @@ async function cancelConfirm(passeio: Tour): Promise<void> {
 
   try {
     await api.patch(`/tours/${passeio.id}/cancel`)
-
     passeio.status = "cancelado"
   } catch (err) {
     console.error(err)
@@ -115,7 +114,7 @@ function onXClickTutor(p: Tour): void {
   }
 }
 
-const toursTutor = computed(() => 
+const toursTutor = computed(() =>
   tours.value.filter(p => {
     if (dismissedIds.value.has(p.id)) return false
     if (p.status === "cancelado") return false
@@ -158,18 +157,18 @@ async function loadTours(): Promise<void> {
 
 function badgeStatus(status: TourStatus): string {
   switch (status) {
-    case "pendente":
-      return "warning"  
-    case "aceito":
-      return "success"   
-    case "recusado":
-      return "error"    
+    case "pendente":   
+      return "warning"
+    case "aceito":    
+      return "success"
+    case "recusado":  
+      return "error"
     case "finalizado":
-      return "primary"   
+      return "primary"
     case "cancelado":
-      return "secondary" 
+      return "secondary"
     default:
-      return "grey"   
+      return "grey"
   }
 }
 
@@ -210,7 +209,6 @@ async function completeTour(passeio: Tour): Promise<void> {
   try {
     await api.patch(`/tours/${passeio.id}/complete`)
 
-    // Envia avaliação do passeador sobre o tutor/passeio
     await api.post("/evaluation", {
       passeio_id: passeio.id,
       nota: rating.value,
@@ -288,7 +286,13 @@ onMounted(async () => {
         <v-col cols="12" md="4" v-for="w in walkers" :key="w.id">
           <v-card class="h-100 card" elevation="2" color="white">
             <v-card-text class="text-center">
-              <v-img :src="getPhoto(w.foto)" class="rounded-circle mx-auto mb-3" width="110" height="110" cover></v-img>
+              <v-img
+                :src="getPhoto(w.foto)"
+                class="rounded-circle mx-auto mb-3"
+                width="110"
+                height="110"
+                cover
+              />
               <h5>{{ w.nome }}</h5>
               <p>📱 {{ w.telefone }}</p>
               <p>
@@ -297,19 +301,21 @@ onMounted(async () => {
                 <span v-else>Sem avaliações</span>
               </p>
               <div class="d-flex flex-column ga-2">
-                <BaseButton label="Ver perfil" class="text-decoration-none text-white" :to="`/passeador-perfil/${w.id}`" color="success" block>
-                  Ver perfil
-                </BaseButton>
+                <BaseButton
+                  label="Ver perfil"
+                  class="text-decoration-none text-white"
+                  :to="`/passeador-perfil/${w.id}`"
+                  color="success"
+                  block
+                />
                 <BaseButton
                   :to="{ path: '/agendar-passeio', query: { walkerId: w.id, walkerNome: w.nome } }"
                   color="success"
-                   class="text-decoration-none"
+                  class="text-decoration-none"
                   variant="outlined"
-                  label="Solicitar Passeio"
+                  label="🐾 Solicitar Passeio"
                   block
-                >
-                  🐾 Solicitar Passeio
-                </BaseButton>
+                />
               </div>
             </v-card-text>
           </v-card>
@@ -322,7 +328,13 @@ onMounted(async () => {
         Você ainda não possui passeios.
       </v-alert>
 
-      <v-card class="mb-3 position-relative card" color="white" elevation="2" v-for="p in toursTutor" :key="p.id">
+      <v-card
+        v-for="p in toursTutor"
+        :key="p.id"
+        class="mb-3 position-relative card"
+        color="white"
+        elevation="2"
+      >
         <v-card-text>
 
           <BaseButton
@@ -341,20 +353,20 @@ onMounted(async () => {
             <h5>🐶 {{ p.dog?.nome }}</h5>
             <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
             <p>📍 {{ p.local }}</p>
-            
-            <p class="text-caption" v-if="p.walker">
+
+            <p class="text-medium-emphasis text-caption" v-if="p.walker">
               🚶 Passeador: <strong>{{ p.walker?.nome }}</strong>
             </p>
-            <p class="text-caption" v-else-if="p.status === 'recusado'">
+            <p class="text-medium-emphasis text-caption" v-else-if="p.status === 'recusado'">
               ❌ Nenhum passeador aceitou este passeio.
             </p>
-            <p class="text-caption" v-else>
+            <p class="text-medium-emphasis text-caption" v-else>
               ⏳ Aguardando um passeador aceitar
             </p>
           </div>
 
-          <v-chip 
-            :color="badgeStatus(p.status)" 
+          <v-chip
+            :color="badgeStatus(p.status)"
             variant="flat"
             size="small"
             class="text-capitalize text-white text-caption font-weight-medium px-4"
@@ -363,67 +375,77 @@ onMounted(async () => {
           </v-chip>
 
           <div class="mt-3" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
-            <BaseButton color="primary" label="Avaliar Passeador" @click="openEvaluationTutor(p)">
-              ⭐ Avaliar Passeador
-            </BaseButton>
+            <BaseButton
+              color="primary"
+              label="⭐ Avaliar Passeador"
+              @click="openEvaluationTutor(p)"
+            />
           </div>
 
-          <!-- AVALIAÇÃO ENVIADA PELO TUTOR-->
-          <div class="mt-3 avaliacao-box" v-if="p.review_by_tutor">
-            <h6 class="mb-2">✅ Sua avaliação sobre o passeador</h6>
+          <!-- AVALIAÇÃO ENVIADA PELO TUTOR -->
+          <v-sheet
+            v-if="p.review_by_tutor"
+            color="blue-lighten-5"
+            rounded="lg"
+            class="pa-3 mt-3"
+            border="s-lg"
+          >
+            <p class="text-body-2 font-weight-bold mb-2">✅ Sua avaliação sobre o passeador</p>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
                 {{ n <= p.review_by_tutor.rating ? "⭐" : "☆" }}
               </span>
               <span class="text-medium-emphasis text-caption ms-1">({{ p.review_by_tutor.rating }}/5)</span>
             </div>
-            <p v-if="p.review_by_tutor.comment" class="mb-0 font-italic">
+            <p v-if="p.review_by_tutor.comment" class="text-body-2 font-italic mb-0">
               "{{ p.review_by_tutor.comment }}"
             </p>
-          </div>
+          </v-sheet>
 
-          <div class="mt-4 border-t pt-3" v-if="reviewTutor?.id === p.id">
-            <h5>Como foi o passeador?</h5>
+          <v-expand-transition>
+            <div v-if="reviewTutor?.id === p.id" class="mt-4">
+              <v-divider class="mb-4" />
+              <h5 class="mb-3">Como foi o passeador?</h5>
 
-            <div class="mb-3">
-              <span
-                v-for="n in 5"
-                :key="n"
-                @click="rating = n"
-                class="rating"
-              >
-                {{ n <= rating ? "⭐" : "☆" }}
-            </span>
+              <div class="mb-3">
+                <span
+                  v-for="n in 5"
+                  :key="n"
+                  class="rating"
+                  @click="rating = n"
+                >
+                  {{ n <= rating ? "⭐" : "☆" }}
+                </span>
+              </div>
+
+              <BaseTextarea
+                class="mb-3"
+                :rows="3"
+                placeholder="Comentário (opcional)"
+                v-model="comment"
+              />
+
+              <div class="d-flex ga-2">
+                <BaseButton
+                  color="success"
+                  :label="sending ? 'Enviando...' : 'Enviar avaliação'"
+                  :disabled="sending"
+                  @click="sendEvaluation(p.id, 'tutor')"
+                />
+                <BaseButton
+                  color="secondary"
+                  label="Cancelar"
+                  @click="cancelEvaluationTutor"
+                />
+              </div>
             </div>
-
-            <BaseTextarea
-              class="mb-3"
-              :rows="3"
-              placeholder="Comentário (opcional)"
-              v-model="comment"
-            />
-
-            <div class="d-flex ga-2">
-              <BaseButton
-                color="success"
-                :label="sending ? 'Enviando...' : 'Enviar avaliação'"
-                @click="sendEvaluation(p.id, 'tutor')"
-                :disabled="sending"
-              >
-                {{ sending ? "Enviando..." : "Enviar avaliação" }}
-              </BaseButton>
-              <BaseButton color="secondary" label="Cancelar" @click="cancelEvaluationTutor">
-                Cancelar
-              </BaseButton>
-            </div>
-          </div>
+          </v-expand-transition>
 
         </v-card-text>
       </v-card>
 
     </template>
 
-    <!-- VISUALIZAÇÃO SOMENTE PASSEADOR -->
     <template v-else-if="walker">
 
       <h2 class="mb-4">🚶 Meus Passeios</h2>
@@ -432,20 +454,25 @@ onMounted(async () => {
         Você ainda não possui passeios aceitos.
       </v-alert>
 
-      <v-card class="mb-3 position-relative" elevation="2" v-for="p in toursWalker" :key="p.id">
+      <v-card
+        v-for="p in toursWalker"
+        :key="p.id"
+        class="mb-3 position-relative card"
+        elevation="2"
+      >
         <v-card-text>
 
           <BaseButton
-              v-if="p.status === 'aceito' || p.status === 'cancelado'"
-              icon="mdi-close"
-              size="small"
-              variant="text"
-              label=""
-              class="dismiss-btn"
-              aria-label="Remover do dashboard"
-              title="Remover do dashboard"
-              @click="dismissTour(p.id)"
-            />
+            v-if="p.status === 'aceito' || p.status === 'cancelado'"
+            icon="mdi-close"
+            size="small"
+            variant="text"
+            label=""
+            class="dismiss-btn"
+            aria-label="Remover do dashboard"
+            title="Remover do dashboard"
+            @click="dismissTour(p.id)"
+          />
 
           <h5>🐶 {{ p.dog?.nome }}</h5>
           <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
@@ -465,61 +492,71 @@ onMounted(async () => {
           <div class="mt-3" v-if="p.status === 'aceito'">
             <BaseButton
               color="primary"
-              label="Finalizar passeio"
-              @click="openEvaluationWalker(p)" >
-              ✔ Finalizar passeio
-            </BaseButton>
+              label="✔ Finalizar passeio"
+              @click="openEvaluationWalker(p)"
+            />
           </div>
 
           <!-- AVALIAÇÃO ENVIADA PELO PASSEADOR -->
-          <div class="mt-3 evaluation-box" v-if="p.review_by_walker">
-            <h6 class="mb-2">✅ Sua avaliação sobre o passeio</h6>
+          <v-sheet
+            v-if="p.review_by_walker"
+            color="blue-lighten-5"
+            rounded="lg"
+            class="pa-3 mt-3"
+            border="s-lg"
+          >
+            <p class="text-body-2 font-weight-bold mb-2">✅ Sua avaliação sobre o passeio</p>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
                 {{ n <= p.review_by_walker.rating ? "⭐" : "☆" }}
               </span>
               <span class="text-medium-emphasis text-caption ms-1">({{ p.review_by_walker.rating }}/5)</span>
             </div>
-            <p v-if="p.review_by_walker.comment" class="mb-0 font-italic">
+            <p v-if="p.review_by_walker.comment" class="text-body-2 font-italic mb-0">
               "{{ p.review_by_walker.comment }}"
             </p>
-          </div>
+          </v-sheet>
 
-          <div class="mt-4 border-t pt-3" v-if="reviewWalker?.id === p.id">
-            <h5>Avaliar o tutor / passeio</h5>
+          <!-- FORMULÁRIO FINALIZAR + AVALIAR -->
+          <v-expand-transition>
+            <div v-if="reviewWalker?.id === p.id" class="mt-4">
+              <v-divider class="mb-4" />
+              <h5 class="mb-3">Avaliar o tutor / passeio</h5>
 
-            <div class="mb-3">
-              <span
-                v-for="n in 5"
-                :key="n"
-                @click="rating = n"
-                class="rating"
-              >
-                {{ n <= rating ? "⭐" : "☆" }}
-            </span>
+              <div class="mb-3">
+                <span
+                  v-for="n in 5"
+                  :key="n"
+                  class="rating"
+                  @click="rating = n"
+                >
+                  {{ n <= rating ? "⭐" : "☆" }}
+                </span>
+              </div>
+
+              <BaseTextarea
+                class="mb-3"
+                :rows="3"
+                placeholder="Comentário (opcional)"
+                v-model="comment"
+              />
+
+              <div class="d-flex ga-2">
+                <BaseButton
+                  color="success"
+                  :label="sending ? 'Enviando...' : 'Finalizar e enviar'"
+                  :disabled="sending"
+                  @click="completeTour(p)"
+                />
+                <BaseButton
+                  color="secondary"
+                  label="Cancelar"
+                  @click="cancelEvaluationWalker"
+                />
+              </div>
             </div>
+          </v-expand-transition>
 
-            <BaseTextarea
-              class="mb-3"
-              :rows="3"
-              placeholder="Comentário (opcional)"
-              v-model="comment"
-            />
-
-            <div class="d-flex ga-2">
-              <BaseButton
-                color="success"
-                :label="sending ? 'Enviando...' : 'Finalizar e enviar'"
-                @click="completeTour(p)"
-                :disabled="sending"
-              >
-                {{ sending ? "Enviando..." : "Finalizar e enviar" }}
-              </BaseButton>
-              <BaseButton color="secondary" label="Cancelar" @click="cancelEvaluationWalker">
-                Cancelar
-              </BaseButton>
-            </div>
-          </div>
         </v-card-text>
       </v-card>
     </template>
@@ -549,31 +586,27 @@ onMounted(async () => {
   z-index: 2;
 }
 
-.badge {
-  font-size: 14px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  text-transform: capitalize;
-}
-
 textarea {
   resize: none;
 }
 
-.evaluation-box {
-  background: #f0f9ff;
-  border-left: 3px solid #3498db;
-  border-radius: 8px;
-  padding: 12px;
+.font-italic {
+  font-style: italic;
 }
 
 button {
   border-radius: 8px;
 }
 
-.rating{
-   font-size:28px;
-   cursor:pointer;
+.rating {
+  font-size: 28px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  user-select: none;
+}
+
+.rating:hover {
+  transform: scale(1.15);
 }
 
 :deep(.v-textarea .v-field__input) {
