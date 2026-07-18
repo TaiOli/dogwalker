@@ -92,19 +92,27 @@ onMounted(loadDogs)
 <template>
   <v-container class="py-4">
     <!-- HEADER -->
-    <v-row no-gutters align="center" justify="space-between" class="mb-3">
+    <v-row align="center" justify="space-between" class="mb-6">
       <v-col cols="auto">
-        <h2 class="text-h4 font-weight-bold">Cadastro do dog</h2>
+        <div class="d-flex align-center ga-2">
+          <v-icon color="primary">mdi-dog</v-icon>
+          <h3 class="text-h4 font-weight-bold">
+            Cadastro do Dog
+          </h3>
+        </div>
       </v-col>
-      <v-col cols="auto">
-        <BaseButton label="Novo" color="primary" @click="openModal">
-          Novo
-        </BaseButton>
+      <v-col cols="auto"> 
+        <BaseButton
+          label="Novo"
+          color="primary"
+          class="rounded-pill"
+          @click="openModal"
+        />
       </v-col>
     </v-row>
 
     <!-- FILTRO -->
-    <v-row class="mb-4">
+    <v-row class="mb-4 mt-3">
       <v-col cols="12">
         <BaseInput
           v-model="search"
@@ -116,7 +124,15 @@ onMounted(loadDogs)
     </v-row>
 
     <!-- LISTA -->
-    <h2 class="mt-5 mb-4 pure-text">🐕 Meus Doguinhos :</h2>
+    <div class="d-flex align-center ga-2 mt-6 mb-4">
+      <v-icon color="primary">
+        mdi-paw
+      </v-icon>
+
+      <h2 class="text-h5 font-weight-bold">
+        Meus Doguinhos
+      </h2>
+    </div>
 
     <div v-if="dogs.length === 0" class="text-center text-muted">
       Nenhum cachorro encontrado.
@@ -131,13 +147,16 @@ onMounted(loadDogs)
         md="4"
         lg="3"
       >
-        <v-card class="card h-100 dog-card position-relative text-black" theme="light">
-
+        <v-card
+          class="dog-card position-relative h-100"
+          elevation="3"
+          rounded="xl"
+        >
           <BaseButton
-            type="button"
-            class="btn-close dismiss-btn"
-            aria-label="Excluir cachorro"
-            label=""
+            icon="mdi-close"
+            variant="text"
+            size="small"
+            class="dismiss-btn"
             :disabled="excludingId === dog.id"
             @click="removeDog(dog)"
           />
@@ -154,8 +173,10 @@ onMounted(loadDogs)
             <v-card-text class="py-1 mb-2">📦 {{ dog.porte }}</v-card-text>
 
             <BaseButton
-              class="btn btn-sm btn-outline-secondary mt-2"
-              label="✏️ Editar"
+              label="Editar"
+              color="primary"
+              variant="outlined"
+              class="edit-btn mt-3"
               @click="editDog(dog)"
             />
           </v-card>
@@ -170,7 +191,15 @@ onMounted(loadDogs)
           <h5 class="modal-title pure-text">
             {{ formDog.id ? "Editar cachorro" : "Cadastrar cachorro" }}
           </h5>
-          <BaseButton class="btn-close" label="" @click="closeModal"/>
+          
+          <BaseButton
+            icon="mdi-close"
+            variant="text"
+            size="small"
+            class="modal-close-btn"
+            @click="closeModal"
+          />
+
         </div>
 
         <div class="modal-body mt-3">
@@ -194,6 +223,11 @@ onMounted(loadDogs)
 .dog-card {
   border-radius: 12px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-btn {
+  width: 100%;
+  border-radius: 999px !important;
 }
 
 .dog-card:hover {

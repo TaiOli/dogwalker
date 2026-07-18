@@ -58,7 +58,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
   <v-container class="pa-0">
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.username"
           required
@@ -70,7 +70,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.name"
           required
@@ -82,7 +82,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.email"
           required
@@ -94,7 +94,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.password"
           required
@@ -107,7 +107,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseSelect
           v-model="form.type_user"
           required
@@ -122,7 +122,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.phone"
           label="📞 Telefone"
@@ -131,7 +131,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           type="file"
           accept="image/*"
@@ -142,7 +142,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row v-if="preview">
-      <v-col cols="12" class="text-center">
+      <v-col cols="12" md="8" class="text-center mx-auto">
         <v-img
           :src="preview"
           max-height="200"
@@ -154,10 +154,10 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row class="mt-2">
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseButton
           :label="labelButton"
-          color="mustard"
+          class="btn-mustard"
           block
           @click="handleSubmit"
         />
@@ -182,14 +182,6 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 
 .clip-btn:hover {
   transform: scale(1.2);
-}
-
-.img-preview {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-  max-width: 100%;
 }
 
 .btn-mustard {

@@ -60,8 +60,9 @@ function handleSubmit(): void {
 <template>
   <v-container class="pa-0">
 
-    <v-row>
-      <v-col cols="12">
+    <v-row class="ga-2 mt-5">
+
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseSelect
           v-model="form.dog_id"
           label="🐶 Cachorro"
@@ -70,10 +71,8 @@ function handleSubmit(): void {
           valueKey="id"
         />
       </v-col>
-    </v-row>
 
-    <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseSelect
           v-model="form.walker_id"
           required
@@ -85,10 +84,8 @@ function handleSubmit(): void {
           @update:modelValue="walkerError = ''"
         />
       </v-col>
-    </v-row>
 
-    <v-row>
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.date"
           type="date"
@@ -96,7 +93,7 @@ function handleSubmit(): void {
         />
       </v-col>
 
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.hour"
           type="time"
@@ -104,7 +101,7 @@ function handleSubmit(): void {
         />
       </v-col>
 
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.duration"
           type="time"
@@ -112,7 +109,7 @@ function handleSubmit(): void {
         />
       </v-col>
 
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.value"
           type="number"
@@ -120,15 +117,14 @@ function handleSubmit(): void {
         />
       </v-col>
 
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.location"
           label="📍 Local"
         />
       </v-col>
     </v-row>
-
-    <v-row justify="center" class="mt-4">
+    <v-row justify="center" class="mt-4 mb-4">
       <v-col cols="12" sm="6">
         <BaseButton
           :label="labelButton"

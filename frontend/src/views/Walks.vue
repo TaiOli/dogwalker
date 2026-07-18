@@ -92,7 +92,15 @@ async function reject(id: number): Promise<void> {
 <template>
   <v-container class="py-4">
 
-    <h2 class="mb-4 text-start">🚶 Passeios Disponíveis:</h2>
+    <div class="d-flex align-center ga-2 mb-4">
+      <v-icon color="primary">
+        mdi-walk
+      </v-icon>
+
+      <h2 class="text-h5 font-weight-bold">
+        Passeios Disponíveis
+      </h2>
+    </div>
 
      <v-alert 
       v-if="availableTours.length === 0" 
@@ -105,63 +113,89 @@ async function reject(id: number): Promise<void> {
 
     <v-row gap="1.5rem">
 
-      <v-col v-for="p in availableTours" :key="p.id" cols="12" md="6" lg="4" xl="3">
+      <v-col v-for="p in availableTours" :key="p.id" cols="12" md="6" lg="3" xl="3">
         
         <v-card class="elevation-1 d-flex flex-column h-100">
 
           <v-card-item class="flex-grow-1">
             
-            <v-card-title class="text-h6 mb-2">
-              🐶 {{ p.dog?.nome }}
+            <v-card-title class="text-h6 font-weight-bold text-primary mt-2 mb-3">
+              <v-icon start color="primary">
+                mdi-dog
+              </v-icon>
+
+              {{ p.dog?.nome }}
             </v-card-title>
 
-            <v-card-text class="pa-0">
-              <p class="mb-2">
-                📅 {{ p.data }} - {{ p.hora }}
-              </p>
+            <v-card-text class="pa-0 text-center">
 
-              <p class="mb-4">
-                📍 {{ p.local }}
-              </p>
+              <div class="d-flex justify-center align-center ga-2 mb-2">
+                <v-icon size="18">
+                  mdi-calendar
+                </v-icon>
 
-              <!-- VER PERFIL DO TUTOR -->
-              <v-btn
-                v-if="p.tutor"
-                :to="`/tutores/${p.tutor.id}`"
-                variant="outlined"
-                color="secondary"
-                size="small"
-                block
-                class="mb-2"
-              >
-                👤 Ver Perfil do Tutor
-              </v-btn>
+                <span>{{ p.data }} - {{ p.hora }}</span>
+              </div>
+
+              <div class="d-flex justify-center align-center ga-2 mb-4">
+                <v-icon size="18">
+                  mdi-map-marker
+                </v-icon>
+
+                <span>{{ p.local }}</span>
+              </div>
+
+              <div class="d-flex justify-center">
+                <BaseButton
+                  v-if="p.tutor"
+                  label="Ver Perfil do Tutor"
+                  icon="mdi-account"
+                  color="primary"
+                  variant="tonal"
+                  size="small"
+                  class="profile-btn mb-2"
+                  :to="`/tutores/${p.tutor.id}`"
+                />
+              </div>
             </v-card-text>
 
           </v-card-item>
 
-          <v-card-actions class="pa-4 pt-0">
-            <div class="d-flex ga-2 w-100">
+          
+          <v-card-actions class="justify-center pa-4 pt-2 mb-3">
+            <div class="d-flex justify-center ga-2">
 
-              <v-btn
+              <BaseButton
                 color="success"
                 variant="flat"
-                class="flex-grow-1"
+                rounded="pill"
+                size="small"
+                class="action-btn"
                 :disabled="loadId === p.id"
                 @click="accept(p.id)"
               >
-                {{ loadId === p.id ? "⏳" : "Aceitar" }}
-              </v-btn>
+                <v-icon start>
+                  mdi-check
+                </v-icon>
 
-              <v-btn
+                {{ loadId === p.id ? "Aguarde..." : "Aceitar" }}
+              </BaseButton>
+
+              <BaseButton
                 color="error"
                 variant="flat"
-                class="flex-grow-1"
+                rounded="pill"
+                size="small"
+                class="action-btn"
                 :disabled="loadId === p.id"
                 @click="reject(p.id)"
               >
-                {{ loadId === p.id ? "⏳" : "Recusar" }}
-              </v-btn>
+                <v-icon start>
+                  mdi-close
+                </v-icon>
+
+                {{ loadId === p.id ? "Aguarde..." : "Recusar" }}
+              </BaseButton>
 
             </div>
           </v-card-actions>
@@ -175,5 +209,20 @@ async function reject(id: number): Promise<void> {
 <style scoped>
 h2{
   font-size: 25px;
+}
+
+.profile-btn {
+  min-width: 240px;     
+  min-height: 40px;      
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.action-btn {
+  width: 110px;
+  height: 36px;
+  border-radius: 999px !important;
 }
 </style>

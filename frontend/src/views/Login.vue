@@ -52,38 +52,46 @@ async function loginAccess(): Promise<void> {
 </script>
 
 <template>
-  <v-container fluid class="fill-height d-flex justify-center align-center">
- 
-    <v-card  class="login-card pa-4" elevation="4" color="white" rounded="xl">
- 
-      <div class="text-center">
- 
-        <h2 class="mb-3">🐶 Dog Walker</h2>
- 
-        <p class="text-medium-emphasis mb-4">
+  <v-container fluid class="fill-height d-flex justify-center align-center bg-grey-lighten-4">
+    <v-card
+      class="login-card"
+      elevation="4"
+      color="white"
+      rounded="xl"
+      max-width="420"
+      width="100%"
+    >
+      <v-card-text class="pa-6 text-center">
+
+        <v-icon size="56" color="primary" class="mb-3">
+          mdi-dog
+        </v-icon>
+
+        <h2 class="mb-2 text-primary">Dog Walker</h2>
+
+        <p class="text-medium-emphasis mb-6">
           Entrar no sistema
         </p>
- 
+
         <UserAuthForm
           :form="formLogin"
           labelButton="Entrar"
           @submit="loginAccess"
         />
- 
-        <p class="mt-3">
+
+        <p class="mt-4">
           Não tem conta?
-         <router-link 
-            to="/cadastro-usuario" 
+          <router-link
+            to="/cadastro-usuario"
             class="signup-link"
           >
             Criar conta
-         </router-link>
+          </router-link>
         </p>
- 
-      </div>
- 
+
+      </v-card-text>
     </v-card>
- 
+
   </v-container>
 </template>
 

@@ -20,7 +20,7 @@ function toggle(): void {
 
       <BaseButton
         label="Menu"
-        icon
+        con="mdi-menu"
         variant="text"
         size="small"
         color="white"
@@ -64,13 +64,6 @@ function toggle(): void {
         class="nav-item"
         prepend-icon="mdi-walk"
         title="Passeios disponíveis"
-      />
-
-      <v-list-item
-        to="/meu-perfil"
-        class="nav-item"
-        prepend-icon="mdi-account"
-        title="Meu perfil"
       />
     </v-list>
   </aside>

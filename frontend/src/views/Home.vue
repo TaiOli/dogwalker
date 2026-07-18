@@ -16,7 +16,7 @@ function start(): void {
 </script>
 
 <template>
-  <div class="home-screen">
+  <v-container fluid class="home-screen pa-0">
     <div class="brand-name">
       <img :src="dogPaw" alt="Pata" class="paw-icon" />
       <span>Dog Walker</span>
@@ -24,12 +24,13 @@ function start(): void {
 
     <div class="btn-wrapper">
       <BaseButton
-        class="btn-mustard"
         label="Começar"
+        size="large"
+        class="btn-mustard"
         @click="start"
       />
     </div>
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

@@ -42,6 +42,7 @@ const emit = defineEmits<{
 
   <v-text-field
     v-else
+    bg-color="white"
     :label="required ? `${label} *` : label"
     :model-value="modelValue"
     :placeholder="placeholder"
@@ -52,3 +53,21 @@ const emit = defineEmits<{
     @update:modelValue="emit('update:modelValue', $event)"
   />
 </template>
+
+<style scoped>
+:deep(.v-field) {
+  background-color: white !important;
+}
+
+:deep(.v-field:hover) {
+  background-color: white !important;
+}
+
+:deep(.v-field--focused) {
+  background-color: white !important;
+}
+
+:deep(.v-field__overlay) {
+  opacity: 0 !important;
+}
+</style>

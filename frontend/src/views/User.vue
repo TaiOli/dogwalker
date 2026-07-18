@@ -22,33 +22,48 @@ async function salvar(): Promise<void> {
 </script>
 
 <template>
-  <v-container class="page-user">
- 
-    <div class="register-wrapper text-center">
- 
-      <h2>🐶 Dog Walker</h2>
- 
-      <p class="text-medium-emphasis mb-4">
-         {{ formRegister.id ? "Editar cadastro" : "Criar conta de usuário" }}
-      </p>
- 
-      <UserCadastroForm
-        :form="formRegister"
-        :labelButton="formRegister.id ? 'Atualizar' : 'Salvar'"
-        @submit="salvar"
-      />
- 
-      <p class="mt-3">
-        <router-link
+  
+  <v-container fluid class="page-user d-flex justify-center py-8">
+
+    <v-card
+      class="register-card"
+      elevation="4"
+      color="white"
+      rounded="xl"
+      max-width="700"
+      width="100%"
+    >
+      <v-card-text class="pa-8 mt-4 text-center">
+        
+        <v-icon size="56" color="primary" class="mb-2">
+          mdi-dog
+        </v-icon>
+
+        <h2 class="mb-2 text-primary title">
+          Dog Walker
+        </h2>
+
+        <p class="text-medium-emphasis mb-4">
+          {{ formRegister.id ? "Editar cadastro" : "Criar conta de usuário" }}
+        </p>
+
+        <UserCadastroForm
+          :form="formRegister"
+          :labelButton="formRegister.id ? 'Atualizar' : 'Salvar'"
+          @submit="salvar"
+        />
+
+        <p class="mt-4">
+          <router-link
             to="/login"
-            class="back-link text-success"
-        >
-          Voltar
-        </router-link>
-      </p>
- 
-    </div>
- 
+            class="back-link"
+          >
+            Voltar
+          </router-link>
+        </p>
+
+      </v-card-text>
+    </v-card>
   </v-container>
 </template>
 

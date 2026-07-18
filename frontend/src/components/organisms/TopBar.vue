@@ -44,6 +44,7 @@ function handleLogout(): void {
               to="/meu-perfil"
               prepend-icon="mdi-account"
               title="Meu Perfil"
+              class="profile-item"
             />
           </v-list>
 
@@ -53,7 +54,7 @@ function handleLogout(): void {
             <v-list-item
               prepend-icon="mdi-logout"
               title="Sair"
-              text-color="error"
+              class="logout-item"
               @click="handleLogout"
             />
           </v-list>
@@ -97,6 +98,48 @@ function handleLogout(): void {
 .profile-avatar {
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-item {
+  color: rgb(var(--v-theme-primary)) !important;
+  border-radius: 12px;
+  transition: all .2s ease;
+}
+
+.profile-item:hover {
+  background-color: rgba(25, 118, 210, 0.08) !important;
+}
+
+.profile-item :deep(.v-icon) {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+
+.logout-item {
+  color: #d32f2f !important;
+  border-radius: 12px;
+  transition: all .2s ease;
+}
+
+.logout-item:hover {
+  background-color: rgba(211, 47, 47, 0.08) !important;
+}
+
+.logout-item :deep(.v-icon) {
+  color: #d32f2f !important;
+}
+
+.logout-item {
+  color: #d32f2f !important;
+}
+
+.logout-item:hover {
+  background-color: rgba(211, 47, 47, 0.08) !important;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.logout-item :deep(.v-icon) {
+  color: #d32f2f !important;
 }
 
 .profile-avatar:hover {

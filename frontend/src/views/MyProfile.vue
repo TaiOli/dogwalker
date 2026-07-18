@@ -45,24 +45,48 @@ onMounted(async () => {
 
     <div v-if="!loading && user" class="card p-4 shadow-sm text-center">
 
-      <v-img
-        :src="getPhoto(user?.foto)"
-        class="rounded-circle mb-3"
-        width="120"
-        height="120"
-        cover
-      />
+      <div class="d-flex justify-center mb-3">
+        <v-img
+          :src="getPhoto(user?.foto)"
+          width="120"
+          height="120"
+          max-width="120"
+          cover
+          class="rounded-circle"
+        />
+      </div>
 
       <h3>{{ user.nome }}</h3>
 
-      <p>📧 {{ user.email }}</p>
-      <p>📱 {{ user.telefone }}</p>
+      <p class="d-flex justify-center align-center ga-2">
+        <v-icon color="primary" size="18">
+          mdi-email-outline
+        </v-icon>
 
-      <p>👤 Tipo: {{ user.tipo_usuario }}</p>
+        {{ user.email }}
+      </p>
 
-      <BaseButton class="btn btn-primary mt-3 d-block mx-auto" label="Editar Cadastro" @click="editProfile">
-        Editar cadastro
-      </BaseButton>
+      <p class="d-flex justify-center align-center ga-2">
+        <v-icon color="primary" size="18">
+          mdi-phone-outline
+        </v-icon>
+
+        {{ user.telefone }}
+      </p>
+
+      <p class="d-flex justify-center align-center ga-2">
+        <v-icon color="primary" size="18">
+          mdi-account-outline
+        </v-icon>
+
+        Tipo: {{ user.tipo_usuario }}
+      </p>
+
+      <BaseButton
+        class="btn btn-primary mt-3 d-block mx-auto"
+        label="Editar Cadastro"
+        @click="editProfile"
+      />
 
     </div>
 

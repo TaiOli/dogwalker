@@ -50,7 +50,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
   <v-container class="pa-0">
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto mt-3">
         <BaseInput
           v-model="form.name"
           required
@@ -62,7 +62,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.age"
           type="number"
@@ -72,7 +72,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseSelect
           v-model="form.size"
           required
@@ -87,7 +87,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.breed"
           label="Raça"
@@ -96,7 +96,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.observations"
           label="Observações"
@@ -105,7 +105,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           type="file"
           accept="image/*"
@@ -116,7 +116,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row v-if="preview">
-      <v-col cols="12" class="text-center">
+      <v-col cols="12" md="8" class="text-center mx-auto">
         <v-img
           :src="preview"
           max-height="200"
@@ -129,7 +129,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row class="mt-2">
-      <v-col cols="12">
+      <v-col cols="12" md="8" class="mx-auto mb-3">
         <BaseButton
           class="btn-mustard"
           :label="labelButton"

@@ -44,67 +44,108 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-container>
-    <v-row class="justify-center">
-      <v-col cols="12" md="6">
+  <v-container class="py-6">
 
-          <v-img
-            :src="getPhoto(tutor.foto)"
-            class="profile-photo mx-auto mb-3"
-            alt="Foto do tutor">
-          </v-img>
+    <v-row justify="center">
+      <v-col cols="12" md="8" lg="6">
 
-          <h2>{{ tutor.nome }}</h2>
+        <v-card
+          elevation="3"
+          rounded="xl"
+          class="pa-6"
+        >
 
-          <p class="text-medium-emphasis mb-4">
-            Tutor
-          </p>
+          <div class="text-center">
 
-          <v-divider class="mb-4" />
+            <v-img
+              :src="getPhoto(tutor.foto)"
+              width="120"
+              height="120"
+              cover
+              class="mx-auto rounded-circle mb-4 mt-3"
+            />
 
-          <div class="text-start">
-            <p>
-              <strong>📧 Email:</strong><br>
+            <h3 class="text-h5 font-weight-bold">
+              {{ tutor.nome }}
+            </h3>
+
+            <v-chip
+              color="primary"
+              size="small" 
+              variant="tonal"
+              class="text-capitalize ext-white text-caption font-weight-medium px-4 mt-2">
+              Tutor
+            </v-chip>
+
+          </div>
+
+          <v-divider class="my-5" />
+
+          <div class="text-center">
+
+            <p class="d-flex justify-center align-center ga-2 mb-2">
+              <v-icon color="primary" size="18">
+                mdi-email-outline
+              </v-icon>
+
               {{ tutor.email }}
             </p>
 
-            <p>
-              <strong>📱 Telefone:</strong><br>
+            <p class="d-flex justify-center align-center ga-2 mb-0">
+              <v-icon color="primary" size="18">
+                mdi-phone-outline
+              </v-icon>
+
               {{ tutor.telefone }}
             </p>
+
           </div>
 
-          <v-divider class="my-4" />
+          <v-divider class="my-5" />
 
-          <div class="text-start">
-            <h5 class="mb-3">💬 Avaliações de Passeadores</h5>
+          <div class="d-flex justify-center align-center ga-2 mb-4">
+            
+            <v-icon color="primary" size="24">
+              mdi-star
+            </v-icon>
 
-            <v-alert v-if="!evaluations.length" type="info" variant="tonal">
-              Este tutor ainda não recebeu avaliações.
-            </v-alert>
+            <span class="text-h6 font-weight-bold">
+              Avaliações de Passeadores
+            </span>
+          </div>
 
-            <div
-              v-else
-              v-for="av in evaluations"
-              :key="av.id"
-              class="evaluation-item mb-3"
-            >
-              <div class="mb-1">
-                <span v-for="n in 5" :key="n">
-                  {{ n <= av.nota ? "⭐" : "☆" }}
-                </span>
-                <span class="text-medium-emphasis text-caption ms-1">({{ av.nota }}/5)</span>
-              </div>
+          <v-alert v-if="!evaluations.length" type="info" variant="tonal">
+            Este tutor ainda não recebeu avaliações.
+          </v-alert>
 
-              <p v-if="av.comentario" class="mb-1 font-italic">
-                "{{ av.comentario }}"
-              </p>
+          <div
+            v-else
+            v-for="av in evaluations"
+            :key="av.id"
+            class="evaluation-item mb-4"
+          >
+            <div class="mb-1">
+              <span v-for="n in 5" :key="n">
+                {{ n <= av.nota ? "⭐" : "☆" }}
+              </span>
 
-              <p class="text-medium-emphasis text-caption mb-0">
-                — {{ av.passeador?.nome ?? "Passeador" }} em {{ formatDate(av.created_at) }}
-              </p>
+              <span class="text-medium-emphasis text-caption ms-1">
+                ({{ av.nota }}/5)
+              </span>
             </div>
+
+            <p v-if="av.comentario" class="mb-1 font-italic">
+              "{{ av.comentario }}"
+            </p>
+
+            <p class="text-medium-emphasis text-caption mb-0">
+              — {{ av.passeador?.nome ?? "Passeador" }}
+              em {{ formatDate(av.created_at) }}
+            </p>
+
+            <v-divider class="mt-3" />
           </div>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>

@@ -43,15 +43,30 @@ async function save(): Promise<void> {
 </script>
 
 <template>
-  <v-container class="py-4 mt-5">
+  <v-container class="py-6">
 
-    <v-row class="justify-center">
-      <v-col cols="12" lg="11" xl="10">
+    <v-row justify="center">
+      <v-col
+        cols="12"
+        md="10"
+        lg="8"
+      >
 
-        <h2 class="page-title mb-4">🚶 Solicitar Passeio</h2>
+        <div class="d-flex align-center ga-2 mb-5">
+          <v-icon color="primary" size="32">
+            mdi-plus
+          </v-icon>
 
-        <v-card elevation="1" class="pa-3 card" color="white">
+          <h2 class="text-h4 font-weight-bold">
+            Solicitar Passeio
+          </h2>
+        </div>
 
+        <v-card
+          elevation="3"
+          rounded="xl"
+          class="pa-6"
+        >
           <ScheduletourForm
             :form="form"
             :dogs="dogs"
@@ -59,19 +74,14 @@ async function save(): Promise<void> {
             labelButton="Salvar"
             @submit="save"
           />
-
         </v-card>
+
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <style scoped>
-.page-title {
-  text-align: left;
-  font-size: 25px;
-  font-weight: 600;
-}
 
 .card{
   padding: 30px;

@@ -44,71 +44,106 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-container>
-    <v-row class="justify-center">
-      <v-col cols="12" md="6">
+<v-container class="py-6">
+
+  <v-row justify="center">
+    <v-col cols="12" md="8" lg="6">
+
+      <v-card
+        elevation="3"
+        rounded="xl"
+        class="pa-6"
+      >
+
+        <div class="text-center mt-3">
 
           <v-img
             :src="getPhoto(walker.foto)"
-            class="profile-photo mx-auto mb-3"
-            alt="Foto do passeador"
-          ></v-img>
+            width="120"
+            height="120"
+            cover
+            class="mx-auto rounded-circle mb-4"
+          />
 
-          <h2>{{ walker.nome }}</h2>
+          <h3 class="text-h5 font-weight-bold">
+            {{ walker.nome }}
+          </h3>
 
-          <p class="text-medium-emphasis mb-4">
+          <v-chip
+            color="primary"
+            variant="tonal"
+            size="small"
+            class="text-capitalize ext-white text-caption font-weight-medium px-4 mt-2"
+          >
             Passeador
+          </v-chip>
+
+        </div>
+
+        <v-divider class="my-5" />
+
+        <p>
+          <strong>📧 Email:</strong><br>
+          {{ walker.email }}
+        </p>
+
+        <p>
+          <strong>📱 Telefone:</strong><br>
+          {{ walker.telefone }}
+        </p>
+
+        <v-divider class="my-5" />
+
+        <div class="d-flex justify-center align-center ga-2 mb-4">
+          <v-icon color="primary">
+            mdi-star
+          </v-icon>
+
+          <h4 class="text-h6 mb-0">
+            Avaliações de Tutores
+          </h4>
+        </div>
+
+        <v-alert
+          v-if="!evaluations.length"
+          type="info"
+          variant="tonal"
+        >
+          Este tutor ainda não recebeu avaliações.
+        </v-alert>
+
+        <div
+          v-else
+          v-for="av in evaluations"
+          :key="av.id"
+          class="evaluation-item mb-4"
+        >
+          <div class="mb-1">
+            <span v-for="n in 5" :key="n">
+              {{ n <= av.nota ? "⭐" : "☆" }}
+            </span>
+
+            <span class="text-medium-emphasis text-caption ms-1">
+              ({{ av.nota }}/5)
+            </span>
+          </div>
+
+          <p v-if="av.comentario" class="mb-1 font-italic">
+            "{{ av.comentario }}"
           </p>
 
-          <v-divider class="mb-4" />
+          <p class="text-medium-emphasis text-caption mb-0">
+            — {{ av.tutor?.nome ?? "Tutor" }}
+            em {{ formatDate(av.created_at) }}
+          </p>
 
-          <div class="text-start">
-            <p>
-              <strong>📧 Email:</strong><br>
-              {{ walker.email }}
-            </p>
+          <v-divider class="mt-3" />
+        </div>
 
-            <p>
-              <strong>📱 Telefone:</strong><br>
-              {{ walker.telefone }}
-            </p>
-          </div>
-
-          <v-divider class="my-4" />
-
-          <div class="text-start">
-            <h5 class="mb-3">💬 Avaliações de Tutores</h5>
-
-            <v-alert v-if="!evaluations.length" type="info" variant="tonal">
-              Este tutor ainda não recebeu avaliações.
-            </v-alert>
-
-            <div
-              v-else
-              v-for="av in evaluations"
-              :key="av.id"
-              class="evaluation-item mb-3"
-            >
-              
-              <div class="mb-1">
-                <span v-for="n in 5" :key="n">
-                  {{ n <= av.nota ? "⭐" : "☆" }}
-                </span>
-                <span class="text-medium-emphasis text-caption ms-1">({{ av.nota }}/5)</span>
-              </div>
-
-              <p v-if="av.comentario" class="mb-1 fst-italic">
-                "{{ av.comentario }}"
-              </p>
-
-              <p class="text-medium-emphasis text-caption mb-0">
-                — {{ av.tutor?.nome ?? "Tutor" }} em {{ formatDate(av.created_at) }}
-              </p>
-            </div>
-          </div>
-      </v-col>
-    </v-row>
-  </v-container>
+      </v-card>
+    </v-col>
+  </v-row>
+</v-container>
       
 </template>
 

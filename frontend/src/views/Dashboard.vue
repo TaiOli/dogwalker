@@ -166,7 +166,7 @@ function badgeStatus(status: TourStatus): string {
     case "finalizado":
       return "primary"
     case "cancelado":
-      return "secondary"
+      return "error"
     default:
       return "grey"
   }
@@ -312,7 +312,7 @@ onMounted(async () => {
                   :to="{ path: '/agendar-passeio', query: { walkerId: w.id, walkerNome: w.nome } }"
                   color="success"
                   class="text-decoration-none"
-                  variant="outlined"
+                  variant="tonal"
                   label="🐾 Solicitar Passeio"
                   block
                 />
@@ -338,46 +338,104 @@ onMounted(async () => {
         <v-card-text>
 
           <BaseButton
-            v-if="p.status === 'pendente' || p.status === 'aceito' || p.status === 'recusado'"
+           v-if="['pendente', 'aceito', 'recusado'].includes(p.status)"
             icon="mdi-close"
             size="small"
             variant="text"
             label=""
             class="dismiss-btn"
-            :aria-label="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
-            :title="p.status === 'recusado' ? 'Remover do dashboard' : 'Cancelar passeio'"
+            :aria-label="
+              p.status === 'pendente' || p.status === 'aceito'
+                ? 'Cancelar passeio'
+                : 'Remover do dashboard'
+            "
+            :title="
+              p.status === 'pendente' || p.status === 'aceito'
+                ? 'Cancelar passeio'
+                : 'Remover do dashboard'
+            "
             @click="onXClickTutor(p)"
           />
 
-          <div class="text-black">
-            <h5>🐶 {{ p.dog?.nome }}</h5>
-            <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
-            <p>📍 {{ p.local }}</p>
+          <div class="text-black text-center">
 
-            <p class="text-medium-emphasis text-caption" v-if="p.walker">
-              🚶 Passeador: <strong>{{ p.walker?.nome }}</strong>
+            <h5 class="d-flex justify-center align-center ga-2">
+              <v-icon color="primary" size="20">
+                mdi-dog
+              </v-icon>
+
+              {{ p.dog?.nome }}
+            </h5>
+
+            <p class="d-flex justify-center align-center ga-2">
+              <v-icon size="18">
+                mdi-calendar
+              </v-icon>
+
+              {{ formatDate(p.data) }} - {{ p.hora }}
             </p>
-            <p class="text-medium-emphasis text-caption" v-else-if="p.status === 'recusado'">
-              ❌ Nenhum passeador aceitou este passeio.
+
+            <p class="d-flex justify-center align-center ga-2">
+              <v-icon size="18">
+                mdi-map-marker
+              </v-icon>
+
+              {{ p.local }}
             </p>
-            <p class="text-medium-emphasis text-caption" v-else>
-              ⏳ Aguardando um passeador aceitar
+
+            <p
+              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2"
+              v-if="p.walker"
+            >
+              <v-icon size="16">
+                mdi-walk
+              </v-icon>
+
+              Passeador:
+              <strong>{{ p.walker?.nome }}</strong>
             </p>
+
+            <p
+              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2"
+              v-else-if="p.status === 'recusado'"
+            >
+              <v-icon
+                size="16"
+                color="error"
+              >
+                mdi-close-circle
+              </v-icon>
+
+              Nenhum passeador aceitou este passeio.
+            </p>
+
+            <p
+              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2"
+              v-else
+            >
+              <v-icon size="16">
+                mdi-timer-sand
+              </v-icon>
+
+              Aguardando um passeador aceitar
+            </p>
+
           </div>
 
           <v-chip
             :color="badgeStatus(p.status)"
-            variant="flat"
+            variant="outlined"
             size="small"
             class="text-capitalize text-white text-caption font-weight-medium px-4"
           >
             {{ p.status }}
           </v-chip>
 
-          <div class="mt-3" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
+          <div class="text-center" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
             <BaseButton
               color="primary"
               label="⭐ Avaliar Passeador"
+              class="btn-evaluation"
               @click="openEvaluationTutor(p)"
             />
           </div>
@@ -404,10 +462,20 @@ onMounted(async () => {
 
           <v-expand-transition>
             <div v-if="reviewTutor?.id === p.id" class="mt-4">
-              <v-divider class="mb-4" />
-              <h5 class="mb-3">Como foi o passeador?</h5>
 
-              <div class="mb-3">
+              <v-divider class="mb-4" />
+
+              <div class="d-flex justify-center align-center ga-2 mb-4">
+                <v-icon color="primary">
+                  mdi-star
+                </v-icon>
+
+                <h5 class="mb-0">
+                  Como foi o passeador?
+                </h5>
+              </div>
+
+              <div class="text-center mb-4">
                 <span
                   v-for="n in 5"
                   :key="n"
@@ -419,25 +487,31 @@ onMounted(async () => {
               </div>
 
               <BaseTextarea
-                class="mb-3"
+                class="mb-4"
                 :rows="3"
-                placeholder="Comentário (opcional)"
+                placeholder=" Conte como foi sua experiência"
                 v-model="comment"
               />
 
-              <div class="d-flex ga-2">
+              <div class="d-flex justify-center ga-3">
                 <BaseButton
                   color="success"
+                  icon="mdi-send"
+                  class="btn-evaluation"
                   :label="sending ? 'Enviando...' : 'Enviar avaliação'"
                   :disabled="sending"
                   @click="sendEvaluation(p.id, 'tutor')"
                 />
+
                 <BaseButton
-                  color="secondary"
+                  color="error"
+                  icon="mdi-close"
+                  class="btn-evaluation"
                   label="Cancelar"
                   @click="cancelEvaluationTutor"
                 />
               </div>
+
             </div>
           </v-expand-transition>
 
@@ -485,7 +559,11 @@ onMounted(async () => {
             ❌ Este passeio foi cancelado pelo tutor.
           </p>
 
-          <v-chip :color="badgeStatus(p.status)" size="small" class="text-capitalize">
+          <v-chip 
+            :color="badgeStatus(p.status)" 
+            size="small" 
+            variant="tonal"
+            class="text-capitalize ext-white text-caption font-weight-medium px-4">
             {{ p.status }}
           </v-chip>
 
@@ -590,12 +668,16 @@ textarea {
   resize: none;
 }
 
-.font-italic {
-  font-style: italic;
+.btn-evaluation {
+  min-width: 220px;
+  min-height: 42px;
+  border-radius: 999px !important;
+  font-size: 14px !important;
+  font-weight: 600;
 }
 
-button {
-  border-radius: 8px;
+.font-italic {
+  font-style: italic;
 }
 
 .rating {
