@@ -118,7 +118,8 @@ onMounted(loadDogs)
           v-model="search"
           type="text"
           class="bg-white rounded px-4 elevation-1"
-          placeholder="🔎 Buscar cachorro por nome, raça..."
+          placeholder="Buscar cachorro por nome, raça"
+          prepend-inner-icon="mdi-magnify"
         />
       </v-col>
     </v-row>
@@ -164,14 +165,24 @@ onMounted(loadDogs)
 
           <v-img :src="dog.foto" class="card-img-top dog-img" alt="dog" />
 
-          <v-card class="card-body pa-4" rounded="xl" elevation="2">
+          <v-card class="card-body pa-4" color="white" elevation="2">
             <v-card-title class="text-h5 font-weight-bold pb-2">
               {{ dog.nome }}
             </v-card-title>
             
-            <v-card-text class="py-1">🐾 {{ dog.raca }}</v-card-text>
-            <v-card-text class="py-1">🎂 {{ dog.idade }} anos</v-card-text>
-            <v-card-text class="py-1 mb-2">📦 {{ dog.porte }}</v-card-text>
+            <v-card-text class="py-1">
+              <v-icon icon="mdi-paw" class="me-2" />
+              {{ dog.raca }}
+            </v-card-text>
+
+            <v-card-text class="py-1">
+              <v-icon icon="mdi-cake-variant" class="me-2"/>
+              {{ dog.idade }} anos
+            </v-card-text>
+            <v-card-text class="py-1 mb-2">
+              <v-icon icon="mdi-ruler" class="me-2" />
+              {{ dog.porte }}
+            </v-card-text>
 
             <BaseButton
               label="Editar"

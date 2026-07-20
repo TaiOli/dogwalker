@@ -8,6 +8,7 @@ interface BaseInputProps {
   required?: boolean
   readonly?: boolean
   errorMessage?: string
+  prependInnerIcon?: string
   
 }
 
@@ -19,6 +20,7 @@ withDefaults(defineProps<BaseInputProps>(), {
   required: false,
   readonly: false,
   errorMessage: "",
+  prependInnerIcon: "",
 })
 
 const emit = defineEmits<{
@@ -50,6 +52,7 @@ const emit = defineEmits<{
     :readonly="readonly"
     :error="!!errorMessage"
     :error-messages="errorMessage"
+    :prepend-inner-icon="prependInnerIcon"
     @update:modelValue="emit('update:modelValue', $event)"
   />
 </template>
