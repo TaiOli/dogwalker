@@ -102,12 +102,7 @@ async function reject(id: number): Promise<void> {
       </h2>
     </div>
 
-     <v-alert 
-      v-if="availableTours.length === 0" 
-      type="info" 
-      variant="tonal" 
-      class="mb-4"
-    >
+    <v-alert  v-if="availableTours.length === 0"  type="info" variant="tonal" class="mb-4">
       Nenhum passeio disponível.
     </v-alert>
 
@@ -161,7 +156,6 @@ async function reject(id: number): Promise<void> {
 
           </v-card-item>
 
-          
           <v-card-actions class="justify-center pa-4 pt-2 mb-3">
             <div class="d-flex justify-center ga-2">
 

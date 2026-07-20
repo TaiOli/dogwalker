@@ -118,15 +118,14 @@ onMounted(async () => {
             Este tutor ainda não recebeu avaliações.
           </v-alert>
 
-          <div
-            v-else
-            v-for="av in evaluations"
-            :key="av.id"
-            class="evaluation-item mb-4"
-          >
+          <div v-else v-for="av in evaluations" :key="av.id" class="evaluation-item mb-4">
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
-                {{ n <= av.nota ? "⭐" : "☆" }}
+                <v-icon
+                  :icon="n <= av.nota ?  'mdi-star' : 'mdi-star-outline'"
+                  color="amber"
+                  size="20"
+                />
               </span>
 
               <span class="text-medium-emphasis text-caption ms-1">

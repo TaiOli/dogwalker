@@ -65,7 +65,8 @@ function handleSubmit(): void {
       <v-col cols="12" md="8" class="mx-auto">
         <BaseSelect
           v-model="form.dog_id"
-          label="🐶 Cachorro"
+          label="Cachorro"
+          prepend-inner-icon="mdi-dog"
           :options="dogs"
           labelKey="nome"
           valueKey="id"
@@ -76,7 +77,8 @@ function handleSubmit(): void {
         <BaseSelect
           v-model="form.walker_id"
           required
-          label="🎯 Passeador"
+          label="Passeador"
+          prepend-inner-icon="mdi-account"
           :options="walkerOptions"
           labelKey="name"
           valueKey="id"
@@ -89,7 +91,8 @@ function handleSubmit(): void {
         <BaseInput
           v-model="form.date"
           type="date"
-          label="📅 Data"
+          label="Data"
+          prepend-inner-icon="mdi-calendar"
         />
       </v-col>
 
@@ -97,7 +100,8 @@ function handleSubmit(): void {
         <BaseInput
           v-model="form.hour"
           type="time"
-          label="⏰ Hora"
+          label="Hora"
+          prepend-inner-icon="mdi-clock-outline"
         />
       </v-col>
 
@@ -105,7 +109,8 @@ function handleSubmit(): void {
         <BaseInput
           v-model="form.duration"
           type="time"
-          label="⏳ Duração"
+          label="Duração"
+          prepend-inner-icon="mdi-timer-outline"
         />
       </v-col>
 
@@ -113,14 +118,16 @@ function handleSubmit(): void {
         <BaseInput
           v-model="form.value"
           type="number"
-          label="💰 Valor"
+          label="Valor"
+          prepend-inner-icon="mdi-cash"
         />
       </v-col>
 
       <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.location"
-          label="📍 Local"
+          label="Local"
+          prepend-inner-icon="mdi-map-marker"
         />
       </v-col>
     </v-row>

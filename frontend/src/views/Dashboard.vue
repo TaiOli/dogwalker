@@ -280,7 +280,10 @@ onMounted(async () => {
   <v-container class="py-4">
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
     <template v-if="tutor">
-      <h2 class="mb-4">👨‍🦱 Passeadores Disponíveis</h2>
+      <h2 class="mb-4">
+        <v-icon icon="mdi-account" size="23" class="me-2" />
+        Passeadores Disponíveis
+      </h2>
 
       <v-row class="mb-5">
         <v-col cols="12" md="4" v-for="w in walkers" :key="w.id">
@@ -296,7 +299,7 @@ onMounted(async () => {
               <h5>{{ w.nome }}</h5>
               <p>📱 {{ w.telefone }}</p>
               <p>
-                ⭐
+                <v-icon icon="mdi-star-four-points" />
                 <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
                 <span v-else>Sem avaliações</span>
               </p>
@@ -313,7 +316,8 @@ onMounted(async () => {
                   color="success"
                   class="text-decoration-none"
                   variant="tonal"
-                  label="🐾 Solicitar Passeio"
+                  label="Solicitar Passeio"
+                  prepend-icon="mdi-paw"
                   block
                 />
               </div>
@@ -322,7 +326,10 @@ onMounted(async () => {
         </v-col>
       </v-row>
 
-      <h2 class="mb-3">📋 Meus Passeios</h2>
+      <h2 class="mb-3">
+        <v-icon icon="mdi-note-text-outline" size="23" class="me-2"/>
+        Meus Passeios
+      </h2>
 
       <v-alert v-if="toursTutor.length === 0" type="info" variant="tonal">
         Você ainda não possui passeios.
@@ -383,40 +390,25 @@ onMounted(async () => {
               {{ p.local }}
             </p>
 
-            <p
-              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2"
-              v-if="p.walker"
-            >
+            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-if="p.walker">
               <v-icon size="16">
                 mdi-walk
               </v-icon>
-
               Passeador:
               <strong>{{ p.walker?.nome }}</strong>
             </p>
 
-            <p
-              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2"
-              v-else-if="p.status === 'recusado'"
-            >
-              <v-icon
-                size="16"
-                color="error"
-              >
+            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-else-if="p.status === 'recusado'">
+              <v-icon size="16" color="error">
                 mdi-close-circle
               </v-icon>
-
               Nenhum passeador aceitou este passeio.
             </p>
 
-            <p
-              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2"
-              v-else
-            >
+            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-else>
               <v-icon size="16">
                 mdi-timer-sand
               </v-icon>
-
               Aguardando um passeador aceitar
             </p>
 
@@ -434,7 +426,8 @@ onMounted(async () => {
           <div class="text-center" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
             <BaseButton
               color="primary"
-              label="⭐ Avaliar Passeador"
+              label="Avaliar Passeador"
+              prepend-icon="mdi-star-four-points"
               class="btn-evaluation"
               @click="openEvaluationTutor(p)"
             />
@@ -448,10 +441,17 @@ onMounted(async () => {
             class="pa-3 mt-3"
             border="s-lg"
           >
-            <p class="text-body-2 font-weight-bold mb-2">✅ Sua avaliação sobre o passeador</p>
+            <p class="text-body-2 font-weight-bold mb-2">
+              <v-icon icon="mdi-check" />
+              Sua avaliação sobre o passeador
+            </p>
             <div class="mb-1">
-              <span v-for="n in 5" :key="n">
-                {{ n <= p.review_by_tutor.rating ? "⭐" : "☆" }}
+              <span v-for="n in 5" :key="n">   
+                <v-icon
+                  :icon="n <= p.review_by_tutor.rating ? 'mdi-star' : 'mdi-star-outline'"
+                  color="amber"
+                  size="20"
+                />
               </span>
               <span class="text-medium-emphasis text-caption ms-1">({{ p.review_by_tutor.rating }}/5)</span>
             </div>
@@ -476,13 +476,12 @@ onMounted(async () => {
               </div>
 
               <div class="text-center mb-4">
-                <span
-                  v-for="n in 5"
-                  :key="n"
-                  class="rating"
-                  @click="rating = n"
-                >
-                  {{ n <= rating ? "⭐" : "☆" }}
+                <span v-for="n in 5" :key="n" class="rating" @click="rating = n">
+                  <v-icon
+                    :icon="n <= rating ? 'mdi-star' : 'mdi-star-outline'"
+                    color="amber"
+                    size="20"
+                  />
                 </span>
               </div>
 
@@ -522,7 +521,10 @@ onMounted(async () => {
 
     <template v-else-if="walker">
 
-      <h2 class="mb-4">🚶 Meus Passeios</h2>
+      <h2 class="mb-4">
+        <v-icon icon="mdi-walk" ize="23" class="me-2" />
+        Meus Passeios
+      </h2>
 
       <v-alert v-if="toursWalker.length === 0" type="info" variant="tonal">
         Você ainda não possui passeios aceitos.
@@ -548,15 +550,27 @@ onMounted(async () => {
             @click="dismissTour(p.id)"
           />
 
-          <h5>🐶 {{ p.dog?.nome }}</h5>
-          <p>📅 {{ formatDate(p.data) }} - {{ p.hora }}</p>
-          <p>📍 {{ p.local }}</p>
+          <h5>
+            <v-icon icon="mdi-dog-side" />
+             {{ p.dog?.nome }}
+          </h5>
+          <p>
+            <v-icon icon="mdi-calendar" class="me-2" />
+            {{ formatDate(p.data) }} - {{ p.hora }}
+          </p>
+          <p>
+            <v-icon icon="mdi-map-marker-outline" class="me-2" />
+            {{ p.local }}
+          </p>
           <p class="text-medium-emphasis text-caption">
-            👨‍🦱 Tutor: <strong>{{ p.tutor?.nome }}</strong>
+            <v-icon icon="mdi-account-outline" class="me-2" />
+            Tutor: 
+            <strong>{{ p.tutor?.nome }}</strong>
           </p>
 
           <p class="text-medium-emphasis text-caption" v-if="p.status === 'cancelado'">
-            ❌ Este passeio foi cancelado pelo tutor.
+            <v-icon icon="mdi-close" class="me-2" />
+            Este passeio foi cancelado pelo tutor.
           </p>
 
           <v-chip 
@@ -583,10 +597,16 @@ onMounted(async () => {
             class="pa-3 mt-3"
             border="s-lg"
           >
-            <p class="text-body-2 font-weight-bold mb-2">✅ Sua avaliação sobre o passeio</p>
+            <p class="text-body-2 font-weight-bold mb-2">
+              <v-icon icon="mdi-check" class="me-2" />
+              Sua avaliação sobre o passeio</p>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
-                {{ n <= p.review_by_walker.rating ? "⭐" : "☆" }}
+                <v-icon
+                  :icon="n <= p.review_by_walker.rating ? 'mdi-star' : 'mdi-star-outline'"
+                  size="20"
+                  color="amber"
+                />
               </span>
               <span class="text-medium-emphasis text-caption ms-1">({{ p.review_by_walker.rating }}/5)</span>
             </div>
@@ -602,13 +622,12 @@ onMounted(async () => {
               <h5 class="mb-3">Avaliar o tutor / passeio</h5>
 
               <div class="mb-3">
-                <span
-                  v-for="n in 5"
-                  :key="n"
-                  class="rating"
-                  @click="rating = n"
-                >
-                  {{ n <= rating ? "⭐" : "☆" }}
+                <span v-for="n in 5" :key="n" class="rating" @click="rating = n">
+                  <v-icon
+                    :icon="n <= rating ? 'mdi-star' : 'mdi-star-outline'"
+                    color="amber"
+                    size="20"
+                  />
                 </span>
               </div>
 

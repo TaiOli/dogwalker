@@ -46,11 +46,7 @@ async function save(): Promise<void> {
   <v-container class="py-6">
 
     <v-row justify="center">
-      <v-col
-        cols="12"
-        md="10"
-        lg="8"
-      >
+      <v-col cols="12" md="10" lg="8">
 
         <div class="d-flex align-center ga-2 mb-5">
           <v-icon color="primary" size="32">

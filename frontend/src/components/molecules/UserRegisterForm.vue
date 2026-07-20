@@ -125,7 +125,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
       <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
           v-model="form.phone"
-          label="📞 Telefone"
+          label="Telefone"
+          prepend-inner-icon="mdi-phone"
         />
       </v-col>
     </v-row>

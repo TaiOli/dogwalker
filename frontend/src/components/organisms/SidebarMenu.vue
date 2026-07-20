@@ -15,8 +15,10 @@ function toggle(): void {
   <aside :class="['sidebar', { collapsed }]">
 
     <div class="header">
-      <h2 v-if="!collapsed" class="brand-title">🐶 Dog Walker</h2>
-      
+      <h2 v-if="!collapsed" class="brand-title">
+        <v-icon icon="mdi-dog" color="white" class="me-2" />
+        Dog Walker
+      </h2>
 
       <BaseButton
         label="Menu"

@@ -17,6 +17,7 @@ interface BaseSelectProps {
   placeholder?: string
   required?: boolean
   errorMessage?: string
+  prependInnerIcon?: string
 }
 
 withDefaults(defineProps<BaseSelectProps>(), {
@@ -25,6 +26,7 @@ withDefaults(defineProps<BaseSelectProps>(), {
   placeholder: "",
   required: false,
   errorMessage: "",
+  prependInnerIcon: "",
 })
 
 const emit = defineEmits<{
@@ -42,6 +44,7 @@ const emit = defineEmits<{
     :model-value="modelValue"
     :error="!!errorMessage"
     :error-messages="errorMessage"
+    :prepend-inner-icon="prependInnerIcon"
     hide-details="auto"
     @update:modelValue="emit('update:modelValue', $event)"
   />

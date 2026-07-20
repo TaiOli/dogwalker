@@ -34,7 +34,8 @@ function handleSubmit(): void {
         <BaseInput
           v-model="form.email"
           required
-          label="📧 Email"
+          label="Email"
+          prepend-inner-icon="mdi-email"
           :error-message="emailError"
           @update:modelValue="emailError = ''"
         />
@@ -46,7 +47,8 @@ function handleSubmit(): void {
         <BaseInput
           v-model="form.password"
           required
-          label="🔒 Senha"
+          label="Senha"
+          prepend-inner-icon="mdi-lock"
           type="password"
           :error-message="passwordError"
           @update:modelValue="passwordError = ''"
