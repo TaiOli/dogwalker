@@ -96,11 +96,10 @@ onMounted(loadDogs)
       <v-col cols="auto">
         <div class="d-flex align-center ga-2">
           <v-icon color="primary">mdi-dog</v-icon>
-          <h3 class="text-h4 font-weight-bold">
-            Cadastro do Dog
-          </h3>
+          <h3 class="text-h4 font-weight-bold">Cadastro do Dog</h3>
         </div>
       </v-col>
+
       <v-col cols="auto"> 
         <BaseButton
           label="Novo"
@@ -127,13 +126,8 @@ onMounted(loadDogs)
 
     <!-- LISTA -->
     <div class="d-flex align-center ga-2 mt-6 mb-4">
-      <v-icon color="primary">
-        mdi-paw
-      </v-icon>
-
-      <h2 class="text-h5 font-weight-bold">
-        Meus Doguinhos
-      </h2>
+      <v-icon color="primary">mdi-paw</v-icon>
+      <h2 class="text-h5 font-weight-bold">Meus Doguinhos</h2>
     </div>
 
     <div v-if="dogs.length === 0" class="text-center text-muted">
@@ -158,7 +152,7 @@ onMounted(loadDogs)
             @click="removeDog(dog)"
           />
 
-          <v-img :src="dog.foto" class="card-img-top dog-img" alt="dog" />
+          <v-img :src="dog.foto" class="card-img-top dog-img" alt="Foto Dog" />
 
           <v-card class="card-body pa-4" color="white" elevation="2">
             <v-card-title class="text-h5 font-weight-bold pb-2">

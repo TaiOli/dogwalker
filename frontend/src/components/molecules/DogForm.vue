@@ -62,11 +62,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
-        <BaseInput
-          v-model="form.age"
-          type="number"
-          label="Idade"
-        />
+        <BaseInput v-model="form.age" type="number" label="Idade"/>
       </v-col>
     </v-row>
 
@@ -87,18 +83,13 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
-        <BaseInput
-          v-model="form.breed"
-          label="Raça"
-        />
+        <BaseInput v-model="form.breed" label="Raça"/>
       </v-col>
     </v-row>
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
-        <BaseInput
-          v-model="form.observations"
-          label="Observações"
+        <BaseInput v-model="form.observations" label="Observações"
         />
       </v-col>
     </v-row>
@@ -118,11 +109,10 @@ function handlePhoto(value: string | number | File | File[] | null): void {
       <v-col cols="12" md="8" class="text-center mx-auto">
         <v-img
           :src="preview"
-          max-height="200"
           cover
+          alt="Foto Dog"
           rounded="lg"
-          class="mx-auto"
-          style="max-width: 100%;"
+          class="mx-auto dog-photo"
         />
       </v-col>
     </v-row>
@@ -139,3 +129,10 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
   </v-container>
 </template>
+
+<style scoped>
+.dog-photo{
+max-width: 100%;
+max-height:200px;
+}
+</style>

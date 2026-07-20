@@ -40,7 +40,7 @@ interface Tour {
   review_by_walker?: Review | null
 }
 
-type Avaliador = "tutor" | "passeador"
+type Evaluator = "tutor" | "passeador"
 
 interface ApiErrorResponse {
   response?: {
@@ -230,7 +230,7 @@ async function completeTour(passeio: Tour): Promise<void> {
   }
 }
 
-async function sendEvaluation(passeioId: number, tipo: Avaliador): Promise<void> {
+async function sendEvaluation(passeioId: number, tipo: Evaluator): Promise<void> {
   if (!rating.value) {
     alert("Escolha uma nota.")
     return
@@ -287,13 +287,14 @@ onMounted(async () => {
 
       <v-row class="mb-5">
         <v-col cols="12" md="4" v-for="w in walkers" :key="w.id">
+
           <v-card class="h-100 card" elevation="2" color="white">
             <v-card-text class="text-center">
-              <v-img
-                :src="getPhoto(w.foto)"
-                class="rounded-circle mx-auto mb-3"
-                width="110"
-                height="110"
+              <v-img 
+                :src="getPhoto(w.foto)" 
+                class="rounded-circle mx-auto mb-3" 
+                width="110" 
+                height="110" 
                 cover
               />
               <h5>{{ w.nome }}</h5>
@@ -342,7 +343,7 @@ onMounted(async () => {
         color="white"
         elevation="2"
       >
-      
+
         <v-card-text>
           <BaseButton
            v-if="['pendente', 'aceito', 'recusado'].includes(p.status)"
@@ -366,51 +367,35 @@ onMounted(async () => {
 
           <div class="text-black text-center">
             <h5 class="d-flex justify-center align-center ga-2">
-              <v-icon size="20">
-                mdi-dog
-              </v-icon>
-
+              <v-icon size="20">mdi-dog</v-icon>
               {{ p.dog?.nome }}
             </h5>
 
             <p class="d-flex justify-center align-center ga-2">
-              <v-icon size="18">
-                mdi-calendar
-              </v-icon>
-
+              <v-icon size="18">mdi-calendar</v-icon>
               {{ formatDate(p.data) }} - {{ p.hora }}
             </p>
 
             <p class="d-flex justify-center align-center ga-2">
-              <v-icon size="18">
-                mdi-map-marker
-              </v-icon>
-
+              <v-icon size="18">mdi-map-marker</v-icon>
               {{ p.local }}
             </p>
 
             <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-if="p.walker">
-              <v-icon size="16">
-                mdi-walk
-              </v-icon>
+              <v-icon size="16">mdi-walk</v-icon>
               Passeador:
               <strong>{{ p.walker?.nome }}</strong>
             </p>
 
             <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-else-if="p.status === 'recusado'">
-              <v-icon size="16" color="error">
-                mdi-close-circle
-              </v-icon>
+              <v-icon size="16" color="error">mdi-close-circle</v-icon>
               Nenhum passeador aceitou este passeio.
             </p>
 
             <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-else>
-              <v-icon size="16" color="primary">
-                mdi-timer-sand
-              </v-icon>
+              <v-icon size="16" color="primary">mdi-timer-sand</v-icon>
               Aguardando um passeador aceitar
             </p>
-
           </div>
 
           <v-chip
@@ -462,15 +447,13 @@ onMounted(async () => {
 
           <v-expand-transition>
             <div v-if="reviewTutor?.id === p.id" class="mt-4">
-              <v-divider class="mb-4" />
-              <div class="d-flex justify-center align-center ga-2 mb-4">
-                <v-icon color="primary">
-                  mdi-star
-                </v-icon>
 
-                <h5 class="mb-0">
-                  Como foi o passeador?
-                </h5>
+              <v-divider class="mb-4" />
+
+              <div class="d-flex justify-center align-center ga-2 mb-4">
+                <v-icon color="primary">mdi-star</v-icon>
+
+                <h5 class="mb-0">Como foi o passeador?</h5>
               </div>
 
               <div class="text-center mb-4">
@@ -593,7 +576,8 @@ onMounted(async () => {
           >
             <p class="text-body-2 font-weight-bold mb-2">
               <v-icon icon="mdi-check" class="me-2" color="green-darken-4" />
-              Sua avaliação sobre o passeio</p>
+              Sua avaliação sobre o passeio
+            </p>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
                 <v-icon
@@ -628,7 +612,7 @@ onMounted(async () => {
               <BaseTextarea
                 class="mb-3"
                 :rows="3"
-                placeholder="Comentário (opcional)"
+                placeholder="Comentário"
                 v-model="comment"
               />
 

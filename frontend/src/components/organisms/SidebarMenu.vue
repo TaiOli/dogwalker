@@ -13,7 +13,7 @@ function toggle(): void {
 
 <template>
   <aside :class="['sidebar', { collapsed }]">
-    
+
     <div class="header">
       <h2 v-if="!collapsed" class="brand-title">
         <v-icon icon="mdi-dog" color="white" class="me-2" />
@@ -34,7 +34,6 @@ function toggle(): void {
     </div>
 
     <v-list nav class="sidebar-nav" bg-color="transparent" density="comfortable">
-      
       <v-list-item
         to="/dashboard"
         class="nav-item"

@@ -145,6 +145,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
       <v-col cols="12" md="8" class="text-center mx-auto">
         <v-img
           :src="preview"
+          alt="Foto Perfil"
           max-height="200"
           cover
           rounded="lg"

@@ -33,13 +33,8 @@ async function salvar(): Promise<void> {
     >
 
       <v-card-text class="pa-8 mt-4 text-center">
-        <v-icon size="56" color="primary" class="mb-2">
-          mdi-dog
-        </v-icon>
-
-        <h2 class="mb-2 text-primary title">
-          Dog Walker
-        </h2>
+        <v-icon size="56" color="primary" class="mb-2">mdi-dog</v-icon>
+        <h2 class="mb-2 text-primary title">Dog Walker</h2>
 
         <p class="text-medium-emphasis mb-4">
           {{ formRegister.id ? "Editar cadastro" : "Criar conta de usuário" }}
@@ -52,9 +47,7 @@ async function salvar(): Promise<void> {
         />
 
         <p class="mt-4">
-          <router-link to="/login" class="back-link">
-            Voltar
-          </router-link>
+          <router-link to="/login" class="back-link">Voltar</router-link>
         </p>
       </v-card-text>
     </v-card>

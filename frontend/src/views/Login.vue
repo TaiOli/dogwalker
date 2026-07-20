@@ -61,18 +61,13 @@ async function loginAccess(): Promise<void> {
       max-width="420"
       width="100%"
     >
+
       <v-card-text class="pa-6 text-center">
-
-        <v-icon size="56" color="primary" class="mb-3">
-          mdi-dog
-        </v-icon>
-
+        <v-icon size="56" color="primary" class="mb-3"> mdi-dog</v-icon>
         <h2 class="mb-2 text-primary">Dog Walker</h2>
 
-        <p class="text-medium-emphasis mb-6">
-          Entrar no sistema
-        </p>
-
+        <p class="text-medium-emphasis mb-6">Entrar no sistema</p>
+        
         <UserAuthForm
           :form="formLogin"
           labelButton="Entrar"
@@ -81,9 +76,7 @@ async function loginAccess(): Promise<void> {
 
         <p class="mt-4">
           Não tem conta?
-          <router-link to="/cadastro-usuario" class="signup-link">
-            Criar conta
-          </router-link>
+          <router-link to="/cadastro-usuario" class="signup-link">Criar conta</router-link>
         </p>
       </v-card-text>
     </v-card>

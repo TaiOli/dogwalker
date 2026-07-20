@@ -11,19 +11,12 @@ function handleLogout(): void {
 
 <template>
   <header class="topbar">
-
     <div class="page-info"/>
-
     <div class="user-section">
       <v-menu location="bottom end" offset="8">
-        
         <template #activator="{ props }">
-          <v-avatar
-            v-bind="props"
-            size="44"
-            class="profile-avatar"
-          >
-            <v-img :src="getPhoto(user?.foto)" cover />
+          <v-avatar v-bind="props" size="44" class="profile-avatar">
+            <v-img :src="getPhoto(user?.foto)" cover alt="Foto Perfil" />
           </v-avatar>
         </template>
 
@@ -59,7 +52,6 @@ function handleLogout(): void {
               @click="handleLogout"
             />
           </v-list>
-
         </v-card>
       </v-menu>
     </div>
@@ -67,6 +59,7 @@ function handleLogout(): void {
 </template>
 
 <style scoped>
+
 .topbar {
   height: 70px;
   background: white;

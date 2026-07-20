@@ -92,13 +92,8 @@ async function reject(id: number): Promise<void> {
 <template>
   <v-container class="py-4">
     <div class="d-flex align-center ga-2 mb-4">
-      <v-icon color="primary">
-        mdi-walk
-      </v-icon>
-
-      <h2 class="text-h5 font-weight-bold">
-        Passeios Disponíveis
-      </h2>
+      <v-icon color="primary">mdi-walk</v-icon>
+      <h2 class="text-h5 font-weight-bold">Passeios Disponíveis</h2>
     </div>
 
     <v-alert  v-if="availableTours.length === 0"  type="info" variant="tonal" class="mb-4">
@@ -107,30 +102,22 @@ async function reject(id: number): Promise<void> {
 
     <v-row gap="1.5rem">
       <v-col v-for="p in availableTours" :key="p.id" cols="12" md="6" lg="3" xl="3">
+
         <v-card class="elevation-1 d-flex flex-column h-100">
           <v-card-item class="flex-grow-1">
             <v-card-title class="text-h6 font-weight-bold text-primary mt-2 mb-3">
-              <v-icon start color="primary">
-                mdi-dog
-              </v-icon>
-
+              <v-icon start color="primary">mdi-dog</v-icon>
               {{ p.dog?.nome }}
             </v-card-title>
 
             <v-card-text class="pa-0 text-center">
               <div class="d-flex justify-center align-center ga-2 mb-2">
-                <v-icon size="18">
-                  mdi-calendar
-                </v-icon>
-
+                <v-icon size="18">mdi-calendar</v-icon>
                 <span>{{ p.data }} - {{ p.hora }}</span>
               </div>
 
               <div class="d-flex justify-center align-center ga-2 mb-4">
-                <v-icon size="18">
-                  mdi-map-marker
-                </v-icon>
-
+                <v-icon size="18">mdi-map-marker</v-icon>
                 <span>{{ p.local }}</span>
               </div>
 
@@ -158,12 +145,8 @@ async function reject(id: number): Promise<void> {
                 size="small"
                 class="action-btn"
                 :disabled="loadId === p.id"
-                @click="accept(p.id)"
-              >
-                <v-icon start>
-                  mdi-check
-                </v-icon>
-
+                @click="accept(p.id)">
+                <v-icon start>mdi-check</v-icon>
                 {{ loadId === p.id ? "Aguarde..." : "Aceitar" }}
               </BaseButton>
 
@@ -174,12 +157,8 @@ async function reject(id: number): Promise<void> {
                 size="small"
                 class="action-btn"
                 :disabled="loadId === p.id"
-                @click="reject(p.id)"
-              >
-                <v-icon start>
-                  mdi-close
-                </v-icon>
-
+                @click="reject(p.id)">
+                <v-icon start>mdi-close</v-icon>
                 {{ loadId === p.id ? "Aguarde..." : "Recusar" }}
               </BaseButton>
             </div>

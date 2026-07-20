@@ -45,8 +45,10 @@ onMounted(async () => {
 
 <template>
   <v-container class="py-6">
+    
     <v-row justify="center">
       <v-col cols="12" md="8" lg="6">
+
         <v-card elevation="3" rounded="xl" class="pa-6">
           <div class="text-center">
             <v-img
@@ -54,6 +56,7 @@ onMounted(async () => {
               width="120"
               height="120"
               cover
+              alt="Foto Perfil"
               class="mx-auto rounded-circle mb-4 mt-3"
             />
 
@@ -74,18 +77,12 @@ onMounted(async () => {
 
           <div class="text-center">
             <p class="d-flex justify-center align-center ga-2 mb-2">
-              <v-icon color="primary" size="18">
-                mdi-email-outline
-              </v-icon>
-
+              <v-icon color="primary" size="18">mdi-email-outline</v-icon>
               {{ tutor.email }}
             </p>
 
             <p class="d-flex justify-center align-center ga-2 mb-0">
-              <v-icon color="primary" size="18">
-                mdi-phone-outline
-              </v-icon>
-
+              <v-icon color="primary" size="18">mdi-phone-outline</v-icon>
               {{ tutor.telefone }}
             </p>
           </div>
@@ -93,10 +90,7 @@ onMounted(async () => {
           <v-divider class="my-5" />
 
           <div class="d-flex justify-center align-center ga-2 mb-4">
-            <v-icon color="primary" size="24">
-              mdi-star
-            </v-icon>
-
+            <v-icon color="primary" size="24">mdi-star</v-icon>
             <span class="text-h6 font-weight-bold">
               Avaliações de Passeadores
             </span>
@@ -115,15 +109,10 @@ onMounted(async () => {
                   size="20"
                 />
               </span>
-
-              <span class="text-medium-emphasis text-caption ms-1">
-                ({{ av.nota }}/5)
-              </span>
+              <span class="text-medium-emphasis text-caption ms-1">({{ av.nota }}/5)</span>
             </div>
 
-            <p v-if="av.comentario" class="mb-1 font-italic">
-              "{{ av.comentario }}"
-            </p>
+            <p v-if="av.comentario" class="mb-1 font-italic">"{{ av.comentario }}"</p>
 
             <p class="text-medium-emphasis text-caption mb-0">
               — {{ av.passeador?.nome ?? "Passeador" }}

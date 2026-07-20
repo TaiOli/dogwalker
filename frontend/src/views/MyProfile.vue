@@ -50,6 +50,7 @@ onMounted(async () => {
           height="120"
           max-width="120"
           cover
+          alt="Foto Perfil"
           class="rounded-circle"
         />
       </div>
@@ -57,26 +58,17 @@ onMounted(async () => {
       <h3>{{ user.nome }}</h3>
 
       <p class="d-flex justify-center align-center ga-2">
-        <v-icon color="primary" size="18">
-          mdi-email-outline
-        </v-icon>
-
+        <v-icon color="primary" size="18">mdi-email-outline</v-icon>
         {{ user.email }}
       </p>
 
       <p class="d-flex justify-center align-center ga-2">
-        <v-icon color="primary" size="18">
-          mdi-phone-outline
-        </v-icon>
-
+        <v-icon color="primary" size="18">mdi-phone-outline</v-icon>
         {{ user.telefone }}
       </p>
 
       <p class="d-flex justify-center align-center ga-2">
-        <v-icon color="primary" size="18">
-          mdi-account-outline
-        </v-icon>
-
+        <v-icon color="primary" size="18">mdi-account-outline</v-icon>
         Tipo: {{ user.tipo_usuario }}
       </p>
 
@@ -86,10 +78,7 @@ onMounted(async () => {
         @click="editProfile"
       />
     </div>
-
-    <div v-else class="text-center py-5">
-      Carregando...
-    </div>
+    <div v-else class="text-center py-5">Carregando...</div>
   </v-container>
 </template>
 

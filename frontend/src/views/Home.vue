@@ -18,7 +18,7 @@ function start(): void {
 <template>
   <v-container fluid class="home-screen pa-0">
     <div class="brand-name">
-      <img :src="dogPaw" alt="Pata" class="paw-icon" />
+      <v-img :src="dogPaw" alt="Pata" class="paw-icon" />
       <span>Dog Walker</span>
     </div>
 

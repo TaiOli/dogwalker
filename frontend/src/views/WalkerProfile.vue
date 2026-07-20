@@ -47,6 +47,7 @@ onMounted(async () => {
 <v-container class="py-6">
   <v-row justify="center">
     <v-col cols="12" md="8" lg="6">
+
       <v-card elevation="3" rounded="xl" class="pa-6" color="white">
         <div class="text-center mt-3">
           <v-img
@@ -54,19 +55,17 @@ onMounted(async () => {
             width="120"
             height="120"
             cover
+            alt="Foto Perfil"
             class="mx-auto rounded-circle mb-4"
           />
 
-          <h3 class="text-h5 font-weight-bold">
-            {{ walker.nome }}
-          </h3>
+          <h3 class="text-h5 font-weight-bold">{{ walker.nome }}</h3>
 
           <v-chip
             color="primary"
             variant="tonal"
             size="small"
-            class="text-capitalize ext-white text-caption font-weight-medium px-4 mt-2"
-          >
+            class="text-capitalize ext-white text-caption font-weight-medium px-4 mt-2">
             Passeador
           </v-chip>
         </div>
@@ -92,13 +91,8 @@ onMounted(async () => {
         <v-divider class="my-5" />
 
         <div class="d-flex justify-center align-center ga-2 mb-4">
-          <v-icon color="primary">
-            mdi-star
-          </v-icon>
-
-          <h4 class="text-h6 mb-0">
-            Avaliações de Tutores
-          </h4>
+          <v-icon color="primary">mdi-star</v-icon>
+          <h4 class="text-h6 mb-0">Avaliações de Tutores</h4>
         </div>
 
         <v-alert v-if="!evaluations.length" type="info" variant="tonal">
@@ -114,15 +108,10 @@ onMounted(async () => {
                 size="20"
               />
             </span>
-
-            <span class="text-medium-emphasis text-caption ms-1">
-              ({{ av.nota }}/5)
-            </span>
+            <span class="text-medium-emphasis text-caption ms-1">({{ av.nota }}/5)</span>
           </div>
 
-          <p v-if="av.comentario" class="mb-1 font-italic">
-            "{{ av.comentario }}"
-          </p>
+          <p v-if="av.comentario" class="mb-1 font-italic">"{{ av.comentario }}"</p>
 
           <p class="text-medium-emphasis text-caption mb-0">
             — {{ av.tutor?.nome ?? "Tutor" }}
