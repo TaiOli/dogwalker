@@ -58,6 +58,7 @@ const emit = defineEmits<{
 </template>
 
 <style scoped>
+
 :deep(.v-field) {
   background-color: white !important;
 }

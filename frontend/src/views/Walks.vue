@@ -91,7 +91,6 @@ async function reject(id: number): Promise<void> {
 
 <template>
   <v-container class="py-4">
-
     <div class="d-flex align-center ga-2 mb-4">
       <v-icon color="primary">
         mdi-walk
@@ -107,13 +106,9 @@ async function reject(id: number): Promise<void> {
     </v-alert>
 
     <v-row gap="1.5rem">
-
       <v-col v-for="p in availableTours" :key="p.id" cols="12" md="6" lg="3" xl="3">
-        
         <v-card class="elevation-1 d-flex flex-column h-100">
-
           <v-card-item class="flex-grow-1">
-            
             <v-card-title class="text-h6 font-weight-bold text-primary mt-2 mb-3">
               <v-icon start color="primary">
                 mdi-dog
@@ -123,7 +118,6 @@ async function reject(id: number): Promise<void> {
             </v-card-title>
 
             <v-card-text class="pa-0 text-center">
-
               <div class="d-flex justify-center align-center ga-2 mb-2">
                 <v-icon size="18">
                   mdi-calendar
@@ -153,12 +147,10 @@ async function reject(id: number): Promise<void> {
                 />
               </div>
             </v-card-text>
-
           </v-card-item>
 
           <v-card-actions class="justify-center pa-4 pt-2 mb-3">
             <div class="d-flex justify-center ga-2">
-
               <BaseButton
                 color="success"
                 variant="flat"
@@ -190,17 +182,16 @@ async function reject(id: number): Promise<void> {
 
                 {{ loadId === p.id ? "Aguarde..." : "Recusar" }}
               </BaseButton>
-
             </div>
           </v-card-actions>
         </v-card>
-        
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <style scoped>
+
 h2{
   font-size: 25px;
 }

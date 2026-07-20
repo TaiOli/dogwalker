@@ -22,9 +22,7 @@ async function salvar(): Promise<void> {
 </script>
 
 <template>
-  
   <v-container fluid class="page-user d-flex justify-center py-8">
-
     <v-card
       class="register-card"
       elevation="4"
@@ -33,8 +31,8 @@ async function salvar(): Promise<void> {
       max-width="700"
       width="100%"
     >
+
       <v-card-text class="pa-8 mt-4 text-center">
-        
         <v-icon size="56" color="primary" class="mb-2">
           mdi-dog
         </v-icon>
@@ -54,14 +52,10 @@ async function salvar(): Promise<void> {
         />
 
         <p class="mt-4">
-          <router-link
-            to="/login"
-            class="back-link"
-          >
+          <router-link to="/login" class="back-link">
             Voltar
           </router-link>
         </p>
-
       </v-card-text>
     </v-card>
   </v-container>

@@ -13,7 +13,7 @@ function toggle(): void {
 
 <template>
   <aside :class="['sidebar', { collapsed }]">
-
+    
     <div class="header">
       <h2 v-if="!collapsed" class="brand-title">
         <v-icon icon="mdi-dog" color="white" class="me-2" />
@@ -29,13 +29,12 @@ function toggle(): void {
         class="toggle-btn"
         @click="toggle"
       >
-        <v-icon>mdi-menu</v-icon>
+      <v-icon>mdi-menu</v-icon>
       </BaseButton>
     </div>
 
     <v-list nav class="sidebar-nav" bg-color="transparent" density="comfortable">
       
-
       <v-list-item
         to="/dashboard"
         class="nav-item"
@@ -59,7 +58,6 @@ function toggle(): void {
         title="Solicitar passeio"
       />
 
-
       <v-list-item
         v-if="walker"
         to="/passeios"
@@ -72,6 +70,7 @@ function toggle(): void {
 </template>
 
 <style scoped>
+
 .sidebar {
   width: 280px;
   height: 100vh;
@@ -148,7 +147,6 @@ s
   color: #e74c3c !important;
 }
 
-/* Icon customization */
 .nav-item :deep(.v-list-item__prepend) {
   color: inherit;
   margin-right: 16px;

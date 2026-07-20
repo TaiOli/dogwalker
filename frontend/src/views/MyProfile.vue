@@ -41,10 +41,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container py-5">
-
+  <v-container class="py-5">
     <div v-if="!loading && user" class="card p-4 shadow-sm text-center">
-
       <div class="d-flex justify-center mb-3">
         <v-img
           :src="getPhoto(user?.foto)"
@@ -87,17 +85,16 @@ onMounted(async () => {
         label="Editar Cadastro"
         @click="editProfile"
       />
-
     </div>
 
     <div v-else class="text-center py-5">
       Carregando...
     </div>
-
-  </div>
+  </v-container>
 </template>
 
 <style scoped>
+
 .btn-edit{
    width: 30%;
    background-color:#1976D2;

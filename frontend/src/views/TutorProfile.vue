@@ -45,18 +45,10 @@ onMounted(async () => {
 
 <template>
   <v-container class="py-6">
-
     <v-row justify="center">
       <v-col cols="12" md="8" lg="6">
-
-        <v-card
-          elevation="3"
-          rounded="xl"
-          class="pa-6"
-        >
-
+        <v-card elevation="3" rounded="xl" class="pa-6">
           <div class="text-center">
-
             <v-img
               :src="getPhoto(tutor.foto)"
               width="120"
@@ -76,13 +68,11 @@ onMounted(async () => {
               class="text-capitalize ext-white text-caption font-weight-medium px-4 mt-2">
               Tutor
             </v-chip>
-
           </div>
 
           <v-divider class="my-5" />
 
           <div class="text-center">
-
             <p class="d-flex justify-center align-center ga-2 mb-2">
               <v-icon color="primary" size="18">
                 mdi-email-outline
@@ -98,13 +88,11 @@ onMounted(async () => {
 
               {{ tutor.telefone }}
             </p>
-
           </div>
 
           <v-divider class="my-5" />
 
           <div class="d-flex justify-center align-center ga-2 mb-4">
-            
             <v-icon color="primary" size="24">
               mdi-star
             </v-icon>

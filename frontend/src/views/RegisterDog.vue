@@ -141,14 +141,7 @@ onMounted(loadDogs)
     </div>
 
     <v-row spacing="4">
-      <v-col
-        v-for="dog in dogs"
-        :key="dog.id"
-        cols="12"
-        sm="6"
-        md="4"
-        lg="3"
-      >
+      <v-col v-for="dog in dogs" :key="dog.id" cols="12" sm="6" md="4" lg="3">
         <v-card
           class="dog-card position-relative h-100"
           color="white"
@@ -181,6 +174,7 @@ onMounted(loadDogs)
               <v-icon icon="mdi-cake-variant" class="me-2" color="primary"/>
               {{ dog.idade }} anos
             </v-card-text>
+
             <v-card-text class="py-1 mb-2">
               <v-icon icon="mdi-ruler" class="me-2" color="primary" />
               {{ dog.porte }}
@@ -194,7 +188,6 @@ onMounted(loadDogs)
               @click="editDog(dog)"
             />
           </v-card>
-
         </v-card>
       </v-col>
     </v-row>
@@ -212,7 +205,6 @@ onMounted(loadDogs)
             size="small"
             @click="closeModal"
           />
-
         </div>
 
         <div class="modal-body mt-3">
@@ -228,6 +220,7 @@ onMounted(loadDogs)
 </template>
 
 <style scoped>
+
 .dog-img {
   height: 300px;
   object-fit: cover;

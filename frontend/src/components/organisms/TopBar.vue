@@ -12,10 +12,11 @@ function handleLogout(): void {
 <template>
   <header class="topbar">
 
-    <div class="page-info"></div>
+    <div class="page-info"/>
 
     <div class="user-section">
       <v-menu location="bottom end" offset="8">
+        
         <template #activator="{ props }">
           <v-avatar
             v-bind="props"

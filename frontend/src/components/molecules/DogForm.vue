@@ -48,7 +48,6 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 
 <template>
   <v-container class="pa-0">
-
     <v-row>
       <v-col cols="12" md="8" class="mx-auto mt-3">
         <BaseInput
@@ -138,6 +137,5 @@ function handlePhoto(value: string | number | File | File[] | null): void {
         />
       </v-col>
     </v-row>
-
   </v-container>
 </template>

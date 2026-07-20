@@ -342,8 +342,8 @@ onMounted(async () => {
         color="white"
         elevation="2"
       >
+      
         <v-card-text>
-
           <BaseButton
            v-if="['pendente', 'aceito', 'recusado'].includes(p.status)"
             icon="mdi-close"
@@ -365,7 +365,6 @@ onMounted(async () => {
           />
 
           <div class="text-black text-center">
-
             <h5 class="d-flex justify-center align-center ga-2">
               <v-icon size="20">
                 mdi-dog
@@ -441,6 +440,7 @@ onMounted(async () => {
             class="pa-3 mt-3"
             border="s-lg"
           >
+
             <p class="text-body-2 font-weight-bold mb-2">
               <v-icon icon="mdi-check" color="green-darken-4" />
               Sua avaliação sobre o passeador
@@ -462,9 +462,7 @@ onMounted(async () => {
 
           <v-expand-transition>
             <div v-if="reviewTutor?.id === p.id" class="mt-4">
-
               <v-divider class="mb-4" />
-
               <div class="d-flex justify-center align-center ga-2 mb-4">
                 <v-icon color="primary">
                   mdi-star
@@ -510,17 +508,13 @@ onMounted(async () => {
                   @click="cancelEvaluationTutor"
                 />
               </div>
-
             </div>
           </v-expand-transition>
-
         </v-card-text>
       </v-card>
-
     </template>
 
     <template v-else-if="walker">
-
       <h2 class="mb-4">
         <v-icon icon="mdi-walk" size="23" class="me-2" />
         Meus Passeios
@@ -536,8 +530,8 @@ onMounted(async () => {
         class="mb-3 position-relative card"
         elevation="2"
       >
-        <v-card-text>
 
+        <v-card-text>
           <BaseButton
             v-if="p.status === 'aceito' || p.status === 'cancelado'"
             icon="mdi-close"
@@ -653,7 +647,6 @@ onMounted(async () => {
               </div>
             </div>
           </v-expand-transition>
-
         </v-card-text>
       </v-card>
     </template>
@@ -661,6 +654,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+
 .card {
   border: none;
   border-radius: 12px;

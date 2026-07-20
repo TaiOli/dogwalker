@@ -81,21 +81,17 @@ async function loginAccess(): Promise<void> {
 
         <p class="mt-4">
           Não tem conta?
-          <router-link
-            to="/cadastro-usuario"
-            class="signup-link"
-          >
+          <router-link to="/cadastro-usuario" class="signup-link">
             Criar conta
           </router-link>
         </p>
-
       </v-card-text>
     </v-card>
-
   </v-container>
 </template>
 
 <style scoped>
+
 .login-card {
   width: 100%;
   max-width: 550px;

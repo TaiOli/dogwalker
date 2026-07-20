@@ -45,19 +45,10 @@ onMounted(async () => {
 
 <template>
 <v-container class="py-6">
-
   <v-row justify="center">
     <v-col cols="12" md="8" lg="6">
-
-      <v-card
-        elevation="3"
-        rounded="xl"
-        class="pa-6"
-        color="white"
-      >
-
+      <v-card elevation="3" rounded="xl" class="pa-6" color="white">
         <div class="text-center mt-3">
-
           <v-img
             :src="getPhoto(walker.foto)"
             width="120"
@@ -78,7 +69,6 @@ onMounted(async () => {
           >
             Passeador
           </v-chip>
-
         </div>
 
         <v-divider class="my-5" />
@@ -141,12 +131,10 @@ onMounted(async () => {
 
           <v-divider class="mt-3" />
         </div>
-
       </v-card>
     </v-col>
   </v-row>
 </v-container>
-      
 </template>
 
 <style scoped>

@@ -34,6 +34,7 @@ function start(): void {
 </template>
 
 <style scoped>
+
 .home-screen {
   position: relative;
   width: 100%;

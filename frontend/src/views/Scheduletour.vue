@@ -44,7 +44,6 @@ async function save(): Promise<void> {
 
 <template>
   <v-container class="py-6">
-
     <v-row justify="center">
       <v-col cols="12" md="10" lg="8">
 
@@ -72,14 +71,12 @@ async function save(): Promise<void> {
             @submit="save"
           />
         </v-card>
-
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <style scoped>
-
 .card{
   padding: 30px;
 }
