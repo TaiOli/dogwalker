@@ -85,7 +85,7 @@ onMounted(async () => {
 
         <p>
           <strong>
-            <v-icon icon="mdi-email-outline" />
+            <v-icon icon="mdi-email-outline" color="primary"/>
             Email:
           </strong><br>
           {{ walker.email }}
@@ -93,7 +93,7 @@ onMounted(async () => {
 
         <p>
           <strong>
-            <v-icon icon="mdi-cellphone" />
+            <v-icon icon="mdi-cellphone" color="primary"/>
             Telefone:
           </strong><br>
           {{ walker.telefone }}

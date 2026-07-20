@@ -281,7 +281,7 @@ onMounted(async () => {
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
     <template v-if="tutor">
       <h2 class="mb-4">
-        <v-icon icon="mdi-account" size="23" class="me-2" />
+        <v-icon color="primary" icon="mdi-account" size="23" class="me-2" />
         Passeadores Disponíveis
       </h2>
 
@@ -299,7 +299,7 @@ onMounted(async () => {
               <h5>{{ w.nome }}</h5>
               <p>📱 {{ w.telefone }}</p>
               <p>
-                <v-icon icon="mdi-star-four-points" />
+                <v-icon icon="mdi-star-four-points" color="primary" />
                 <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
                 <span v-else>Sem avaliações</span>
               </p>
@@ -327,7 +327,7 @@ onMounted(async () => {
       </v-row>
 
       <h2 class="mb-3">
-        <v-icon icon="mdi-note-text-outline" size="23" class="me-2"/>
+        <v-icon icon="mdi-note-text-outline" color="primary" size="23" class="me-2"/>
         Meus Passeios
       </h2>
 
@@ -367,7 +367,7 @@ onMounted(async () => {
           <div class="text-black text-center">
 
             <h5 class="d-flex justify-center align-center ga-2">
-              <v-icon color="primary" size="20">
+              <v-icon size="20">
                 mdi-dog
               </v-icon>
 
@@ -406,7 +406,7 @@ onMounted(async () => {
             </p>
 
             <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-else>
-              <v-icon size="16">
+              <v-icon size="16" color="primary">
                 mdi-timer-sand
               </v-icon>
               Aguardando um passeador aceitar
@@ -442,7 +442,7 @@ onMounted(async () => {
             border="s-lg"
           >
             <p class="text-body-2 font-weight-bold mb-2">
-              <v-icon icon="mdi-check" />
+              <v-icon icon="mdi-check" color="green-darken-4" />
               Sua avaliação sobre o passeador
             </p>
             <div class="mb-1">
@@ -522,7 +522,7 @@ onMounted(async () => {
     <template v-else-if="walker">
 
       <h2 class="mb-4">
-        <v-icon icon="mdi-walk" ize="23" class="me-2" />
+        <v-icon icon="mdi-walk" size="23" class="me-2" />
         Meus Passeios
       </h2>
 
@@ -559,7 +559,7 @@ onMounted(async () => {
             {{ formatDate(p.data) }} - {{ p.hora }}
           </p>
           <p>
-            <v-icon icon="mdi-map-marker-outline" class="me-2" />
+            <v-icon icon="mdi-map-marker-outline" class="me-2"/>
             {{ p.local }}
           </p>
           <p class="text-medium-emphasis text-caption">
@@ -569,7 +569,7 @@ onMounted(async () => {
           </p>
 
           <p class="text-medium-emphasis text-caption" v-if="p.status === 'cancelado'">
-            <v-icon icon="mdi-close" class="me-2" />
+            <v-icon icon="mdi-close" class="me-2" color="red-darken-4" />
             Este passeio foi cancelado pelo tutor.
           </p>
 
@@ -598,7 +598,7 @@ onMounted(async () => {
             border="s-lg"
           >
             <p class="text-body-2 font-weight-bold mb-2">
-              <v-icon icon="mdi-check" class="me-2" />
+              <v-icon icon="mdi-check" class="me-2" color="green-darken-4" />
               Sua avaliação sobre o passeio</p>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">

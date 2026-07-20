@@ -120,6 +120,7 @@ onMounted(loadDogs)
           class="bg-white rounded px-4 elevation-1"
           placeholder="Buscar cachorro por nome, raça"
           prepend-inner-icon="mdi-magnify"
+          color="primary"
         />
       </v-col>
     </v-row>
@@ -159,6 +160,7 @@ onMounted(loadDogs)
             variant="text"
             size="small"
             class="dismiss-btn"
+            color="red-darken-4"
             :disabled="excludingId === dog.id"
             @click="removeDog(dog)"
           />
@@ -171,16 +173,16 @@ onMounted(loadDogs)
             </v-card-title>
             
             <v-card-text class="py-1">
-              <v-icon icon="mdi-paw" class="me-2" />
+              <v-icon icon="mdi-paw" class="me-2" color="primary" />
               {{ dog.raca }}
             </v-card-text>
 
             <v-card-text class="py-1">
-              <v-icon icon="mdi-cake-variant" class="me-2"/>
+              <v-icon icon="mdi-cake-variant" class="me-2" color="primary"/>
               {{ dog.idade }} anos
             </v-card-text>
             <v-card-text class="py-1 mb-2">
-              <v-icon icon="mdi-ruler" class="me-2" />
+              <v-icon icon="mdi-ruler" class="me-2" color="primary" />
               {{ dog.porte }}
             </v-card-text>
 
@@ -208,7 +210,6 @@ onMounted(loadDogs)
             icon="mdi-close"
             variant="text"
             size="small"
-            class="modal-close-btn"
             @click="closeModal"
           />
 
