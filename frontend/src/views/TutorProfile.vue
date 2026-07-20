@@ -153,17 +153,11 @@ onMounted(async () => {
 
 <style scoped>
 .profile-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
   border: 4px solid #3498db;
 }
 
 .evaluation-item {
   background: #f0f9ff;
   border-left: 3px solid #3498db;
-  border-radius: 8px;
-  padding: 12px;
 }
 </style>

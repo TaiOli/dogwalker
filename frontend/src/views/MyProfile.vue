@@ -83,7 +83,7 @@ onMounted(async () => {
       </p>
 
       <BaseButton
-        class="btn btn-primary mt-3 d-block mx-auto"
+        class="btn btn-edit mt-3 d-block mx-auto text-white"
         label="Editar Cadastro"
         @click="editProfile"
       />
@@ -98,7 +98,8 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.btn-primary{
+.btn-edit{
    width: 30%;
+   background-color:#1976D2;
 }
 </style>
