@@ -66,6 +66,7 @@ async function save(): Promise<void> {
           elevation="3"
           rounded="xl"
           class="pa-6"
+          color="white"
         >
           <ScheduletourForm
             :form="form"

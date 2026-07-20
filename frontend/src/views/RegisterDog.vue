@@ -149,6 +149,7 @@ onMounted(loadDogs)
       >
         <v-card
           class="dog-card position-relative h-100"
+          color="white"
           elevation="3"
           rounded="xl"
         >
