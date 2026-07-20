@@ -26,7 +26,7 @@ function handleLogout(): void {
           </v-avatar>
         </template>
 
-        <v-card elevation="2" rounded="lg" min-width="200">
+        <v-card elevation="2" rounded="lg" min-width="200" color="white">
           
           <v-card-text class="pa-3">
             <div class="user-info">
@@ -97,53 +97,39 @@ function handleLogout(): void {
 
 .profile-avatar {
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
 }
 
 .profile-item {
   color: rgb(var(--v-theme-primary)) !important;
+  background-color: white;
   border-radius: 12px;
   transition: all .2s ease;
 }
 
 .profile-item:hover {
-  background-color: rgba(25, 118, 210, 0.08) !important;
-}
-
-.profile-item :deep(.v-icon) {
-  color: rgb(var(--v-theme-primary)) !important;
+  background: rgba(255, 255, 255, 0.20) !important;
+  color: #ffffff !important; 
+  cursor: pointer;
+  border-radius: 12px;
 }
 
 .logout-item {
   color: #d32f2f !important;
   border-radius: 12px;
   transition: all .2s ease;
+  background-color: white;
 }
 
 .logout-item:hover {
-  background-color: rgba(211, 47, 47, 0.08) !important;
-}
-
-.logout-item :deep(.v-icon) {
-  color: #d32f2f !important;
-}
-
-.logout-item {
-  color: #d32f2f !important;
-}
-
-.logout-item:hover {
-  background-color: rgba(211, 47, 47, 0.08) !important;
+  background: rgba(255, 255, 255, 0.20) !important;
+  color: #ffffff !important; 
   cursor: pointer;
   border-radius: 12px;
-}
-
-.logout-item :deep(.v-icon) {
-  color: #d32f2f !important;
-}
-
-.profile-avatar:hover {
-  transform: scale(1.05);
 }
 
 .user-info {

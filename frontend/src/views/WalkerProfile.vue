@@ -53,6 +53,7 @@ onMounted(async () => {
         elevation="3"
         rounded="xl"
         class="pa-6"
+        color="white"
       >
 
         <div class="text-center mt-3">
