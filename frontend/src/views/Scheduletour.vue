@@ -49,7 +49,7 @@ async function save(): Promise<void> {
       <v-col cols="12" md="10" lg="8"> 
         <div class="d-flex align-center ga-2 mb-5">
           <v-icon color="primary" size="32">mdi-plus</v-icon>
-          <h2 class="text-h4 font-weight-bold">
+          <h2 class="text-h4 font-weight-bold text-black">
             Solicitar Passeio
           </h2>
         </div>

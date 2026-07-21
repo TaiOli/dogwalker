@@ -78,7 +78,7 @@ onMounted(async () => {
         @click="editProfile"
       />
     </div>
-    <div v-else class="text-center py-5">Carregando...</div>
+    <div v-else class="text-center py-5 text-black">Carregando...</div>
   </v-container>
 </template>
 

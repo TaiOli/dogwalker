@@ -96,7 +96,7 @@ onMounted(loadDogs)
       <v-col cols="auto">
         <div class="d-flex align-center ga-2">
           <v-icon color="primary">mdi-dog</v-icon>
-          <h3 class="text-h4 font-weight-bold">Cadastro do Dog</h3>
+          <h3 class="text-h4 font-weight-bold text-black">Cadastro do Dog</h3>
         </div>
       </v-col>
 
@@ -127,10 +127,10 @@ onMounted(loadDogs)
     <!-- LISTA -->
     <div class="d-flex align-center ga-2 mt-6 mb-4">
       <v-icon color="primary">mdi-paw</v-icon>
-      <h2 class="text-h5 font-weight-bold">Meus Doguinhos</h2>
+      <h2 class="text-h5 font-weight-bold text-black">Meus Doguinhos</h2>
     </div>
 
-    <div v-if="dogs.length === 0" class="text-center text-muted">
+    <div v-if="dogs.length === 0" class="text-center text-muted text-black">
       Nenhum cachorro encontrado.
     </div>
 

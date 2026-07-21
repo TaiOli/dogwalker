@@ -280,7 +280,7 @@ onMounted(async () => {
   <v-container class="py-4">
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
     <template v-if="tutor">
-      <h2 class="mb-4">
+      <h2 class="mb-4 text-black">
         <v-icon color="primary" icon="mdi-account" size="23" class="me-2" />
         Passeadores Disponíveis
       </h2>
@@ -327,7 +327,7 @@ onMounted(async () => {
         </v-col>
       </v-row>
 
-      <h2 class="mb-3">
+      <h2 class="mb-3 text-black">
         <v-icon icon="mdi-note-text-outline" color="primary" size="23" class="me-2"/>
         Meus Passeios
       </h2>
@@ -381,18 +381,18 @@ onMounted(async () => {
               {{ p.local }}
             </p>
 
-            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-if="p.walker">
+            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black" v-if="p.walker">
               <v-icon size="16">mdi-walk</v-icon>
               Passeador:
               <strong>{{ p.walker?.nome }}</strong>
             </p>
 
-            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-else-if="p.status === 'recusado'">
+            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black" v-else-if="p.status === 'recusado'">
               <v-icon size="16" color="error">mdi-close-circle</v-icon>
               Nenhum passeador aceitou este passeio.
             </p>
 
-            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2" v-else>
+            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black" v-else>
               <v-icon size="16" color="primary">mdi-timer-sand</v-icon>
               Aguardando um passeador aceitar
             </p>
@@ -426,7 +426,7 @@ onMounted(async () => {
             border="s-lg"
           >
 
-            <p class="text-body-2 font-weight-bold mb-2">
+            <p class="text-body-2 font-weight-bold mb-2 text-black">
               <v-icon icon="mdi-check" color="green-darken-4" />
               Sua avaliação sobre o passeador
             </p>
@@ -453,7 +453,7 @@ onMounted(async () => {
               <div class="d-flex justify-center align-center ga-2 mb-4">
                 <v-icon color="primary">mdi-star</v-icon>
 
-                <h5 class="mb-0">Como foi o passeador?</h5>
+                <h5 class="mb-0 text-black">Como foi o passeador?</h5>
               </div>
 
               <div class="text-center mb-4">
@@ -498,7 +498,7 @@ onMounted(async () => {
     </template>
 
     <template v-else-if="walker">
-      <h2 class="mb-4">
+      <h2 class="mb-4 text-black">
         <v-icon icon="mdi-walk" size="23" class="me-2" />
         Meus Passeios
       </h2>
@@ -545,7 +545,7 @@ onMounted(async () => {
             <strong>{{ p.tutor?.nome }}</strong>
           </p>
 
-          <p class="text-medium-emphasis text-caption" v-if="p.status === 'cancelado'">
+          <p class="text-medium-emphasis text-caption text-black" v-if="p.status === 'cancelado'">
             <v-icon icon="mdi-close" class="me-2" color="red-darken-4" />
             Este passeio foi cancelado pelo tutor.
           </p>
@@ -574,7 +574,7 @@ onMounted(async () => {
             class="pa-3 mt-3"
             border="s-lg"
           >
-            <p class="text-body-2 font-weight-bold mb-2">
+            <p class="text-body-2 font-weight-bold mb-2 text-black">
               <v-icon icon="mdi-check" class="me-2" color="green-darken-4" />
               Sua avaliação sobre o passeio
             </p>
@@ -597,7 +597,7 @@ onMounted(async () => {
           <v-expand-transition>
             <div v-if="reviewWalker?.id === p.id" class="mt-4">
               <v-divider class="mb-4" />
-              <h5 class="mb-3">Avaliar o tutor / passeio</h5>
+              <h5 class="mb-3 text-black">Avaliar o tutor / passeio</h5>
 
               <div class="mb-3">
                 <span v-for="n in 5" :key="n" class="rating" @click="rating = n">
