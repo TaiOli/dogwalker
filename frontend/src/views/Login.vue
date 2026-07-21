@@ -3,6 +3,8 @@ import { useAuth } from "../composables/userAuth";
 import UserAuthForm from "../components/molecules/UserAuthForm.vue";
 import Mobile from "../components/molecules/Mobile.vue";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+import { useDisplay } from "vuetify";
 
 interface LoginResponse {
   user: {
@@ -23,30 +25,28 @@ interface ApiErrorResponse {
 }
 
 const router = useRouter();
-
 const { formLogin, login, clearLogin } = useAuth();
+const { mobile } = useDisplay();
+const started = ref(false);
+
+function handleStart(): void {
+  started.value = true;
+}
 
 async function loginAccess(): Promise<void> {
   try {
     const data = (await login()) as LoginResponse;
-
     alert("Login realizado com sucesso!");
-
     localStorage.setItem("user", JSON.stringify(data.user));
     localStorage.setItem("token", data.token);
-
     clearLogin();
-
     router.push("/dashboard");
   } catch (error) {
     const err = error as { response?: { data?: ApiErrorResponse } };
-
     console.log(err);
-
     const firstFieldError = err.response?.data?.errors
       ? Object.values(err.response.data.errors)[0]?.[0]
       : null;
-
     alert(
       firstFieldError ||
         err.response?.data?.message ||
@@ -61,9 +61,11 @@ async function loginAccess(): Promise<void> {
     fluid
     class="fill-height d-flex justify-center align-center bg-grey-lighten-4"
   >
-    <Mobile></Mobile>
+    <Mobile v-if="!mobile || !started" class="d-flex" @start="handleStart" />
+
     <v-card
-      class="login-card"
+      v-if="!mobile || started"
+      class="login-card d-none d-sm-flex"
       elevation="4"
       color="white"
       rounded="xl"
@@ -73,15 +75,12 @@ async function loginAccess(): Promise<void> {
       <v-card-text class="pa-6 text-center">
         <v-icon size="56" color="primary" class="mb-3"> mdi-dog</v-icon>
         <h2 class="mb-2 text-primary">Dog Walker</h2>
-
         <p class="text-medium-emphasis mb-6">Entrar no sistema</p>
-
         <UserAuthForm
           :form="formLogin"
           labelButton="Entrar"
           @submit="loginAccess"
         />
-
         <p class="mt-4">
           Não tem conta?
           <router-link to="/cadastro-usuario" class="signup-link"
@@ -99,12 +98,10 @@ async function loginAccess(): Promise<void> {
   max-width: 550px;
   padding: 20px;
 }
-
 .signup-link {
   text-decoration: none;
   font-weight: 700;
 }
-
 .signup-link:hover {
   text-decoration: underline;
 }
