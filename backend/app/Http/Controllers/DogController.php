@@ -27,6 +27,7 @@ class DogController extends Controller
             'message' => 'Cachorro cadastrado com sucesso',
             'dog'     => (new DogResponseDTO($dog))->toArray(),
         ], 201);
+        // Status 201: Sucesso na criação
     }
 
 
@@ -43,16 +44,17 @@ class DogController extends Controller
                 'message' => 'Cachorro atualizado com sucesso',
                 'dog'     => (new DogResponseDTO($dog))->toArray(),
             ], 200);
-            // Not Found : Página ou dado procurado não existe
+            // Status 200: Sucesso
         } catch (DogNotFoundException $e) {
             return response()->json([
                 'message' => $e->getMessage()
             ], 404);
-            // Forbidden: Tentou alterar mas não pode
+            // Status 404: Página ou dado procurado não existe
         } catch (DogUnauthorizedException $e) {
             return response()->json([
                 'message' => $e->getMessage()
             ], 403);
+            // Status 403: Tentou alterar mas não pode
         }
     }
 

@@ -26,7 +26,7 @@ class EvaluationController extends Controller
         } catch (TourNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         } catch (EvaluationTourNotFinishedException $e) {
-            return response()->json(['message' => $e->getMessage()], 409);
+            return response()->json(['message' => $e->getMessage()], 409); // Status 409: Conflito
         } catch (EvaluationAlreadyExistsException $e) {
             return response()->json(['message' => $e->getMessage()], 409);
         }

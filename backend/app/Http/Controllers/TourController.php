@@ -84,7 +84,7 @@ class TourController extends Controller
         } catch (TourNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         } catch (TourUnauthorizedException $e) {
-            return response()->json(['message' => $e->getMessage()], 403);
+            return response()->json(['message' => $e->getMessage()], 403); // Status 403: Não tem Permissão
         }
     }
 
