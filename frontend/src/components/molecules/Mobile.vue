@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import BaseButton from "../components/atoms/BaseButton.vue";
+import BaseButton from "../atoms/BaseButton.vue";
 import { useRouter } from "vue-router";
-import dogPaw from "../assets/images/pata-coracao.png";
-import dogImageUrl from "../assets/images/dog.png";
+import dogPaw from "../../assets/images/pata-coracao.png";
+import dogImageUrl from "../../assets/images/dog.png";
 import { ref, computed } from "vue";
 
 const router = useRouter();

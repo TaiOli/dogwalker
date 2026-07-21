@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAuth } from "../composables/userAuth";
 import UserAuthForm from "../components/molecules/UserAuthForm.vue";
+import Mobile from "../components/molecules/Mobile.vue";
 import { useRouter } from "vue-router";
 
 interface LoginResponse {
@@ -60,6 +61,7 @@ async function loginAccess(): Promise<void> {
     fluid
     class="fill-height d-flex justify-center align-center bg-grey-lighten-4"
   >
+    <Mobile></Mobile>
     <v-card
       class="login-card"
       elevation="4"

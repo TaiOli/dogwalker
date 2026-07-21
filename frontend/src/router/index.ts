@@ -8,16 +8,11 @@ import Walks from "../views/Walks.vue";
 import WalkerProfile from "../views/WalkerProfile.vue";
 import MyProfile from "../views/MyProfile.vue";
 import TutorProfile from "../views/TutorProfile.vue";
-import Home from "../views/Home.vue";
 
 const routes = [
   {
     path: "/",
     redirect: "/inicio",
-  },
-  {
-    path: "/inicio",
-    component: Home,
   },
   {
     path: "/login",
