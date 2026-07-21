@@ -1,279 +1,290 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue"
-import { useAuth } from "../composables/userAuth"
-import { api } from "../services/api"
-import { getPhoto } from "../utils/image"
-import BaseButton from "../components/atoms/BaseButton.vue"
-import BaseTextarea from "../components/atoms/BaseTextarea.vue"
+import { ref, computed, onMounted } from "vue";
+import { useAuth } from "../composables/userAuth";
+import { api } from "../services/api";
+import { getPhoto } from "../utils/image";
+import BaseButton from "../components/atoms/BaseButton.vue";
+import BaseTextarea from "../components/atoms/BaseTextarea.vue";
 
 interface Dog {
-  id: number
-  nome: string
+  id: number;
+  nome: string;
 }
 
 interface Person {
-  id: number
-  nome: string
-  telefone?: string
-  foto?: string
-  media_avaliacao?: number | null
+  id: number;
+  nome: string;
+  telefone?: string;
+  foto?: string;
+  media_avaliacao?: number | null;
 }
 
 interface Review {
-  rating: number
-  comment?: string | null
+  rating: number;
+  comment?: string | null;
 }
 
-type TourStatus = "pendente" | "aceito" | "recusado" | "finalizado" | "cancelado"
+type TourStatus =
+  | "pendente"
+  | "aceito"
+  | "recusado"
+  | "finalizado"
+  | "cancelado";
 
 interface Tour {
-  id: number
-  data: string
-  hora: string
-  local: string
-  status: TourStatus
-  dog?: Dog
-  tutor?: Person
-  walker?: Person
-  rated_by_tutor?: boolean
-  review_by_tutor?: Review | null
-  review_by_walker?: Review | null
+  id: number;
+  data: string;
+  hora: string;
+  local: string;
+  status: TourStatus;
+  dog?: Dog;
+  tutor?: Person;
+  walker?: Person;
+  rated_by_tutor?: boolean;
+  review_by_tutor?: Review | null;
+  review_by_walker?: Review | null;
 }
 
-type Evaluator = "tutor" | "passeador"
+type Evaluator = "tutor" | "passeador";
 
 interface ApiErrorResponse {
   response?: {
     data?: {
-      message?: string
-    }
-  }
+      message?: string;
+    };
+  };
 }
 
-const auth = useAuth()
+const auth = useAuth();
 
-const tutor = computed(() => auth.tutor.value)
-const walker = computed(() => auth.walker.value)
+const tutor = computed(() => auth.tutor.value);
+const walker = computed(() => auth.walker.value);
 
-const walkers = ref<Person[]>([])
-const tours = ref<Tour[]>([])
+const walkers = ref<Person[]>([]);
+const tours = ref<Tour[]>([]);
 
-const reviewTutor = ref<Tour | null>(null)
-const reviewWalker = ref<Tour | null>(null)
+const reviewTutor = ref<Tour | null>(null);
+const reviewWalker = ref<Tour | null>(null);
 
-const rating = ref<number>(0)
-const comment = ref<string>("")
-const sending = ref<boolean>(false)
+const rating = ref<number>(0);
+const comment = ref<string>("");
+const sending = ref<boolean>(false);
 
-const DISMISSED_KEY = "dashboard_dismissed_tours"
-const dismissedIds = ref<Set<number>>(new Set())
+const DISMISSED_KEY = "dashboard_dismissed_tours";
+const dismissedIds = ref<Set<number>>(new Set());
 
 function loadDismissed(): void {
   try {
-    const raw = localStorage.getItem(DISMISSED_KEY)
-    if (raw) dismissedIds.value = new Set(JSON.parse(raw))
+    const raw = localStorage.getItem(DISMISSED_KEY);
+    if (raw) dismissedIds.value = new Set(JSON.parse(raw));
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 
 function saveDismissed(): void {
   try {
-    localStorage.setItem(DISMISSED_KEY, JSON.stringify([...dismissedIds.value]))
+    localStorage.setItem(
+      DISMISSED_KEY,
+      JSON.stringify([...dismissedIds.value]),
+    );
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 
 function dismissTour(id: number): void {
-  dismissedIds.value.add(id)
+  dismissedIds.value.add(id);
 
-  dismissedIds.value = new Set(dismissedIds.value)
-  saveDismissed()
+  dismissedIds.value = new Set(dismissedIds.value);
+  saveDismissed();
 }
 
 async function cancelConfirm(passeio: Tour): Promise<void> {
-  const confirmed = window.confirm("Tem certeza que deseja cancelar este passeio?")
-  if (!confirmed) return
+  const confirmed = window.confirm(
+    "Tem certeza que deseja cancelar este passeio?",
+  );
+  if (!confirmed) return;
 
   try {
-    await api.patch(`/tours/${passeio.id}/cancel`)
-    passeio.status = "cancelado"
+    await api.patch(`/tours/${passeio.id}/cancel`);
+    passeio.status = "cancelado";
   } catch (err) {
-    console.error(err)
-    const error = err as ApiErrorResponse
-    alert(error.response?.data?.message || "Erro ao cancelar passeio.")
+    console.error(err);
+    const error = err as ApiErrorResponse;
+    alert(error.response?.data?.message || "Erro ao cancelar passeio.");
   }
 }
 
 function onXClickTutor(p: Tour): void {
   if (p.status === "pendente" || p.status === "aceito") {
-    cancelConfirm(p)
+    cancelConfirm(p);
   } else {
-    dismissTour(p.id)
+    dismissTour(p.id);
   }
 }
 
 const toursTutor = computed(() =>
-  tours.value.filter(p => {
-    if (dismissedIds.value.has(p.id)) return false
-    if (p.status === "cancelado") return false
+  tours.value.filter((p) => {
+    if (dismissedIds.value.has(p.id)) return false;
+    if (p.status === "cancelado") return false;
 
     return (
       p.status === "pendente" ||
       p.status === "aceito" ||
       p.status === "recusado" ||
       (p.status === "finalizado" && !p.rated_by_tutor)
-    )
-  })
-)
+    );
+  }),
+);
 
 const toursWalker = computed(() =>
-  tours.value.filter(p => {
-    if (dismissedIds.value.has(p.id)) return false
-    if (p.status === "finalizado") return false
+  tours.value.filter((p) => {
+    if (dismissedIds.value.has(p.id)) return false;
+    if (p.status === "finalizado") return false;
 
-    return p.status === "aceito" || p.status === "cancelado"
-  })
-)
+    return p.status === "aceito" || p.status === "cancelado";
+  }),
+);
 
 async function loadWalkers(): Promise<void> {
   try {
-    const res = await api.get("/walkers")
-    walkers.value = res.data
+    const res = await api.get("/walkers");
+    walkers.value = res.data;
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 
 async function loadTours(): Promise<void> {
   try {
-    const res = await api.get("/my-tours")
-    tours.value = res.data
+    const res = await api.get("/my-tours");
+    tours.value = res.data;
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 
 function badgeStatus(status: TourStatus): string {
   switch (status) {
-    case "pendente":   
-      return "warning"
-    case "aceito":    
-      return "success"
-    case "recusado":  
-      return "error"
+    case "pendente":
+      return "warning";
+    case "aceito":
+      return "success";
+    case "recusado":
+      return "error";
     case "finalizado":
-      return "primary"
+      return "primary";
     case "cancelado":
-      return "error"
+      return "error";
     default:
-      return "grey"
+      return "grey";
   }
 }
 
 function openEvaluationTutor(passeio: Tour): void {
-  reviewTutor.value = passeio
-  rating.value = 0
-  comment.value = ""
+  reviewTutor.value = passeio;
+  rating.value = 0;
+  comment.value = "";
 }
 
 function cancelEvaluationTutor(): void {
-  reviewTutor.value = null
-  rating.value = 0
-  comment.value = ""
+  reviewTutor.value = null;
+  rating.value = 0;
+  comment.value = "";
 }
 
 function openEvaluationWalker(passeio: Tour): void {
-  reviewWalker.value = passeio
-  rating.value = 0
-  comment.value = ""
+  reviewWalker.value = passeio;
+  rating.value = 0;
+  comment.value = "";
 }
 
 function cancelEvaluationWalker(): void {
-  reviewWalker.value = null
-  rating.value = 0
-  comment.value = ""
+  reviewWalker.value = null;
+  rating.value = 0;
+  comment.value = "";
 }
 
 async function completeTour(passeio: Tour): Promise<void> {
   if (rating.value === 0) {
-    alert("Escolha uma nota antes de finalizar.")
-    return
+    alert("Escolha uma nota antes de finalizar.");
+    return;
   }
 
-  if (!confirm("Deseja finalizar este passeio?")) return
+  if (!confirm("Deseja finalizar este passeio?")) return;
 
-  sending.value = true
+  sending.value = true;
 
   try {
-    await api.patch(`/tours/${passeio.id}/complete`)
+    await api.patch(`/tours/${passeio.id}/complete`);
 
     await api.post("/evaluation", {
       passeio_id: passeio.id,
       nota: rating.value,
       comentario: comment.value,
-      tipo_avaliador: "passeador"
-    })
+      tipo_avaliador: "passeador",
+    });
 
-    alert("Passeio finalizado e avaliação enviada!")
+    alert("Passeio finalizado e avaliação enviada!");
 
-    cancelEvaluationWalker()
-    await loadTours()
-
+    cancelEvaluationWalker();
+    await loadTours();
   } catch (err) {
-    console.error(err)
-    const error = err as ApiErrorResponse
-    alert(error.response?.data?.message || "Erro ao finalizar passeio.")
+    console.error(err);
+    const error = err as ApiErrorResponse;
+    alert(error.response?.data?.message || "Erro ao finalizar passeio.");
   } finally {
-    sending.value = false
+    sending.value = false;
   }
 }
 
-async function sendEvaluation(passeioId: number, tipo: Evaluator): Promise<void> {
+async function sendEvaluation(
+  passeioId: number,
+  tipo: Evaluator,
+): Promise<void> {
   if (!rating.value) {
-    alert("Escolha uma nota.")
-    return
+    alert("Escolha uma nota.");
+    return;
   }
 
-  sending.value = true
+  sending.value = true;
 
   try {
     await api.post("/evaluation", {
       passeio_id: passeioId,
       nota: rating.value,
       comentario: comment.value,
-      tipo_avaliador: tipo
-    })
+      tipo_avaliador: tipo,
+    });
 
-    alert("Avaliação enviada!")
+    alert("Avaliação enviada!");
 
-    cancelEvaluationTutor()
-    await loadWalkers()
-    await loadTours()
-
+    cancelEvaluationTutor();
+    await loadWalkers();
+    await loadTours();
   } catch (err) {
-    console.error(err)
-    const error = err as ApiErrorResponse
-    alert(error.response?.data?.message || "Erro ao enviar avaliação.")
+    console.error(err);
+    const error = err as ApiErrorResponse;
+    alert(error.response?.data?.message || "Erro ao enviar avaliação.");
   } finally {
-    sending.value = false
+    sending.value = false;
   }
 }
 
 function formatDate(data: string | null | undefined): string {
-  if (!data) return ""
-  const date = new Date(data)
-  return date.toLocaleDateString("pt-BR")
+  if (!data) return "";
+  const date = new Date(data);
+  return date.toLocaleDateString("pt-BR");
 }
 
 onMounted(async () => {
-  loadDismissed()
-  await loadTours()
+  loadDismissed();
+  await loadTours();
   if (tutor.value) {
-    await loadWalkers()
+    await loadWalkers();
   }
-})
+});
 </script>
 
 <template>
@@ -287,14 +298,13 @@ onMounted(async () => {
 
       <v-row class="mb-5">
         <v-col cols="12" md="4" v-for="w in walkers" :key="w.id">
-
           <v-card class="h-100 card" elevation="2" color="white">
             <v-card-text class="text-center">
-              <v-img 
-                :src="getPhoto(w.foto)" 
-                class="rounded-circle mx-auto mb-3" 
-                width="110" 
-                height="110" 
+              <v-img
+                :src="getPhoto(w.foto)"
+                class="rounded-circle mx-auto mb-3"
+                width="110"
+                height="110"
                 cover
               />
               <h5>{{ w.nome }}</h5>
@@ -313,7 +323,10 @@ onMounted(async () => {
                   block
                 />
                 <BaseButton
-                  :to="{ path: '/agendar-passeio', query: { walkerId: w.id, walkerNome: w.nome } }"
+                  :to="{
+                    path: '/agendar-passeio',
+                    query: { walkerId: w.id, walkerNome: w.nome },
+                  }"
                   color="success"
                   class="text-decoration-none"
                   variant="tonal"
@@ -328,7 +341,12 @@ onMounted(async () => {
       </v-row>
 
       <h2 class="mb-3 text-black">
-        <v-icon icon="mdi-note-text-outline" color="primary" size="23" class="me-2"/>
+        <v-icon
+          icon="mdi-note-text-outline"
+          color="primary"
+          size="23"
+          class="me-2"
+        />
         Meus Passeios
       </h2>
 
@@ -343,10 +361,9 @@ onMounted(async () => {
         color="white"
         elevation="2"
       >
-
         <v-card-text>
           <BaseButton
-           v-if="['pendente', 'aceito', 'recusado'].includes(p.status)"
+            v-if="['pendente', 'aceito', 'recusado'].includes(p.status)"
             icon="mdi-close"
             size="small"
             variant="text"
@@ -381,18 +398,27 @@ onMounted(async () => {
               {{ p.local }}
             </p>
 
-            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black" v-if="p.walker">
+            <p
+              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
+              v-if="p.walker"
+            >
               <v-icon size="16">mdi-walk</v-icon>
               Passeador:
               <strong>{{ p.walker?.nome }}</strong>
             </p>
 
-            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black" v-else-if="p.status === 'recusado'">
+            <p
+              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
+              v-else-if="p.status === 'recusado'"
+            >
               <v-icon size="16" color="error">mdi-close-circle</v-icon>
               Nenhum passeador aceitou este passeio.
             </p>
 
-            <p class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black" v-else>
+            <p
+              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
+              v-else
+            >
               <v-icon size="16" color="primary">mdi-timer-sand</v-icon>
               Aguardando um passeador aceitar
             </p>
@@ -407,7 +433,10 @@ onMounted(async () => {
             {{ p.status }}
           </v-chip>
 
-          <div class="text-center" v-if="p.status === 'finalizado' && !p.rated_by_tutor">
+          <div
+            class="text-center"
+            v-if="p.status === 'finalizado' && !p.rated_by_tutor"
+          >
             <BaseButton
               color="primary"
               label="Avaliar Passeador"
@@ -425,29 +454,36 @@ onMounted(async () => {
             class="pa-3 mt-3"
             border="s-lg"
           >
-
             <p class="text-body-2 font-weight-bold mb-2 text-black">
               <v-icon icon="mdi-check" color="green-darken-4" />
               Sua avaliação sobre o passeador
             </p>
             <div class="mb-1">
-              <span v-for="n in 5" :key="n">   
+              <span v-for="n in 5" :key="n">
                 <v-icon
-                  :icon="n <= p.review_by_tutor.rating ? 'mdi-star' : 'mdi-star-outline'"
+                  :icon="
+                    n <= p.review_by_tutor.rating
+                      ? 'mdi-star'
+                      : 'mdi-star-outline'
+                  "
                   color="amber"
                   size="20"
                 />
               </span>
-              <span class="text-medium-emphasis text-caption ms-1">({{ p.review_by_tutor.rating }}/5)</span>
+              <span class="text-medium-emphasis text-caption ms-1"
+                >({{ p.review_by_tutor.rating }}/5)</span
+              >
             </div>
-            <p v-if="p.review_by_tutor.comment" class="text-body-2 font-italic mb-0">
+            <p
+              v-if="p.review_by_tutor.comment"
+              class="text-body-2 font-italic mb-0"
+            >
               "{{ p.review_by_tutor.comment }}"
             </p>
           </v-sheet>
 
           <v-expand-transition>
             <div v-if="reviewTutor?.id === p.id" class="mt-4">
-
               <v-divider class="mb-4" />
 
               <div class="d-flex justify-center align-center ga-2 mb-4">
@@ -457,7 +493,12 @@ onMounted(async () => {
               </div>
 
               <div class="text-center mb-4">
-                <span v-for="n in 5" :key="n" class="rating" @click="rating = n">
+                <span
+                  v-for="n in 5"
+                  :key="n"
+                  class="rating"
+                  @click="rating = n"
+                >
                   <v-icon
                     :icon="n <= rating ? 'mdi-star' : 'mdi-star-outline'"
                     color="amber"
@@ -513,7 +554,6 @@ onMounted(async () => {
         class="mb-3 position-relative card"
         elevation="2"
       >
-
         <v-card-text>
           <BaseButton
             v-if="p.status === 'aceito' || p.status === 'cancelado'"
@@ -529,32 +569,36 @@ onMounted(async () => {
 
           <h5>
             <v-icon icon="mdi-dog-side" />
-             {{ p.dog?.nome }}
+            {{ p.dog?.nome }}
           </h5>
           <p>
             <v-icon icon="mdi-calendar" class="me-2" />
             {{ formatDate(p.data) }} - {{ p.hora }}
           </p>
           <p>
-            <v-icon icon="mdi-map-marker-outline" class="me-2"/>
+            <v-icon icon="mdi-map-marker-outline" class="me-2" />
             {{ p.local }}
           </p>
           <p class="text-medium-emphasis text-caption">
             <v-icon icon="mdi-account-outline" class="me-2" />
-            Tutor: 
+            Tutor:
             <strong>{{ p.tutor?.nome }}</strong>
           </p>
 
-          <p class="text-medium-emphasis text-caption text-black" v-if="p.status === 'cancelado'">
+          <p
+            class="text-medium-emphasis text-caption text-black"
+            v-if="p.status === 'cancelado'"
+          >
             <v-icon icon="mdi-close" class="me-2" color="red-darken-4" />
             Este passeio foi cancelado pelo tutor.
           </p>
 
-          <v-chip 
-            :color="badgeStatus(p.status)" 
-            size="small" 
+          <v-chip
+            :color="badgeStatus(p.status)"
+            size="small"
             variant="tonal"
-            class="text-capitalize ext-white text-caption font-weight-medium px-4">
+            class="text-capitalize ext-white text-caption font-weight-medium px-4"
+          >
             {{ p.status }}
           </v-chip>
 
@@ -581,14 +625,23 @@ onMounted(async () => {
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
                 <v-icon
-                  :icon="n <= p.review_by_walker.rating ? 'mdi-star' : 'mdi-star-outline'"
+                  :icon="
+                    n <= p.review_by_walker.rating
+                      ? 'mdi-star'
+                      : 'mdi-star-outline'
+                  "
                   size="20"
                   color="amber"
                 />
               </span>
-              <span class="text-medium-emphasis text-caption ms-1">({{ p.review_by_walker.rating }}/5)</span>
+              <span class="text-medium-emphasis text-caption ms-1"
+                >({{ p.review_by_walker.rating }}/5)</span
+              >
             </div>
-            <p v-if="p.review_by_walker.comment" class="text-body-2 font-italic mb-0">
+            <p
+              v-if="p.review_by_walker.comment"
+              class="text-body-2 font-italic mb-0"
+            >
               "{{ p.review_by_walker.comment }}"
             </p>
           </v-sheet>
@@ -600,7 +653,12 @@ onMounted(async () => {
               <h5 class="mb-3 text-black">Avaliar o tutor / passeio</h5>
 
               <div class="mb-3">
-                <span v-for="n in 5" :key="n" class="rating" @click="rating = n">
+                <span
+                  v-for="n in 5"
+                  :key="n"
+                  class="rating"
+                  @click="rating = n"
+                >
                   <v-icon
                     :icon="n <= rating ? 'mdi-star' : 'mdi-star-outline'"
                     color="amber"
@@ -638,11 +696,10 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
 .card {
   border: none;
   border-radius: 12px;
-  transition: .25s;
+  transition: 0.25s;
   padding: 20px;
 }
 

@@ -23,13 +23,13 @@ class StoreLoginRequest extends FormRequest
      */
     public function rules(): array
     {
-         return [
+        return [
             'email' => 'required|email',
             'password' => 'required|string'
         ];
     }
 
-     /**
+    /**
      * Get the validation messages that apply to the request.
      *
      * @return array<string, string>
@@ -45,9 +45,9 @@ class StoreLoginRequest extends FormRequest
 
     public function toDto(): CreateUserDTO
     {
-         /** @var array<string, mixed> $validated */
+        /** @var array<string, mixed> $validated */
         $validated = $this->validated();
 
-         return CreateUserDTO::fromRequest($validated);
+        return CreateUserDTO::fromRequest($validated);
     }
 }

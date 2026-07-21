@@ -46,13 +46,20 @@ async function loginAccess(): Promise<void> {
       ? Object.values(err.response.data.errors)[0]?.[0]
       : null;
 
-    alert(firstFieldError || err.response?.data?.message || "Email ou senha inválidos");
+    alert(
+      firstFieldError ||
+        err.response?.data?.message ||
+        "Email ou senha inválidos",
+    );
   }
 }
 </script>
 
 <template>
-  <v-container fluid class="fill-height d-flex justify-center align-center bg-grey-lighten-4">
+  <v-container
+    fluid
+    class="fill-height d-flex justify-center align-center bg-grey-lighten-4"
+  >
     <v-card
       class="login-card"
       elevation="4"
@@ -61,13 +68,12 @@ async function loginAccess(): Promise<void> {
       max-width="420"
       width="100%"
     >
-
       <v-card-text class="pa-6 text-center">
         <v-icon size="56" color="primary" class="mb-3"> mdi-dog</v-icon>
         <h2 class="mb-2 text-primary">Dog Walker</h2>
 
         <p class="text-medium-emphasis mb-6">Entrar no sistema</p>
-        
+
         <UserAuthForm
           :form="formLogin"
           labelButton="Entrar"
@@ -76,7 +82,9 @@ async function loginAccess(): Promise<void> {
 
         <p class="mt-4">
           Não tem conta?
-          <router-link to="/cadastro-usuario" class="signup-link">Criar conta</router-link>
+          <router-link to="/cadastro-usuario" class="signup-link"
+            >Criar conta</router-link
+          >
         </p>
       </v-card-text>
     </v-card>
@@ -84,18 +92,17 @@ async function loginAccess(): Promise<void> {
 </template>
 
 <style scoped>
-
 .login-card {
   width: 100%;
   max-width: 550px;
-  padding: 20px; 
+  padding: 20px;
 }
 
 .signup-link {
   text-decoration: none;
   font-weight: 700;
 }
- 
+
 .signup-link:hover {
   text-decoration: underline;
 }

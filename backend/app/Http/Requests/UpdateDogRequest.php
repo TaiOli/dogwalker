@@ -29,10 +29,10 @@ class UpdateDogRequest extends FormRequest
             'raca' => 'nullable|string',
             'foto' => 'nullable|string',
             'observacoes' => 'nullable|string',
-        ];   
+        ];
     }
 
-     /**
+    /**
      * Get the validation messages that apply to the request.
      *
      * @return array<string, string>
@@ -41,7 +41,7 @@ class UpdateDogRequest extends FormRequest
     {
         return [
             'nome.required' => 'Informe o nome completo é obrigatório.',
-            'nome.string' => 'O nome completo deve conter um texto válido.' 
+            'nome.string' => 'O nome completo deve conter um texto válido.'
         ];
     }
 }

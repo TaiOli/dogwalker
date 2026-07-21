@@ -59,12 +59,11 @@ class StoreUserRequest extends FormRequest
         ];
     }
 
-     public function toDto(): CreateUserDTO
-    {   
+    public function toDto(): CreateUserDTO
+    {
         /** @var array<string, mixed> $validated */
         $validated = $this->validated();
 
         return CreateUserDTO::fromRequest($validated);
-
     }
 }

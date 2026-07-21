@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { useAuth } from "../composables/userAuth"
-import UserCadastroForm from "../components/molecules/UserRegisterForm.vue"
+import { useAuth } from "../composables/userAuth";
+import UserCadastroForm from "../components/molecules/UserRegisterForm.vue";
 
-const { formRegister, register, updateRegister, clearRegister } = useAuth()
+const { formRegister, register, updateRegister, clearRegister } = useAuth();
 
 async function salvar(): Promise<void> {
   try {
     if (formRegister.id) {
-      await updateRegister()
-      alert("Cadastro atualizado com sucesso!")
+      await updateRegister();
+      alert("Cadastro atualizado com sucesso!");
     } else {
-      await register()
-      alert("Usuário criado com sucesso!")
+      await register();
+      alert("Usuário criado com sucesso!");
     }
-    clearRegister()
+    clearRegister();
   } catch (error) {
-    console.error(error)
-    alert("Erro ao salvar usuário")
+    console.error(error);
+    alert("Erro ao salvar usuário");
   }
 }
 </script>
@@ -31,7 +31,6 @@ async function salvar(): Promise<void> {
       max-width="700"
       width="100%"
     >
-
       <v-card-text class="pa-8 mt-4 text-center">
         <v-icon size="56" color="primary" class="mb-2">mdi-dog</v-icon>
         <h2 class="mb-2 text-primary title">Dog Walker</h2>
@@ -62,7 +61,7 @@ async function salvar(): Promise<void> {
   display: flex;
   justify-content: center;
   padding: 40px 15px;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 .register-wrapper {
@@ -78,7 +77,7 @@ h2 {
   text-decoration: none;
   font-weight: 700;
 }
- 
+
 .back-link:hover {
   text-decoration: underline;
 }

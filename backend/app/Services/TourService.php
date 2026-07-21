@@ -103,9 +103,9 @@ class TourService implements TourServiceInterface
                     ->first();
 
                 $tour->review_by_tutor = $review ? [
-                    'rating' => $review->nota, 
+                    'rating' => $review->nota,
                     'comment' => $review->comentario,
-                ]: null;
+                ] : null;
                 $tour->rated_by_tutor = (bool) $review;
 
                 return (new TourResponseDTO($tour))->toArray();
@@ -121,9 +121,9 @@ class TourService implements TourServiceInterface
                     ->first();
 
                 $tour->review_by_walker = $review ? [
-                    'rating' => $review->nota, 
+                    'rating' => $review->nota,
                     'comment' => $review->comentario
-                ]: null;
+                ] : null;
                 $tour->rated_by_walker = (bool) $review;
 
                 return (new TourResponseDTO($tour))->toArray();

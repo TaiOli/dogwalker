@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import { useAuth } from "../../composables/userAuth"
-import BaseButton from "../atoms/BaseButton.vue"
+import { ref } from "vue";
+import { useAuth } from "../../composables/userAuth";
+import BaseButton from "../atoms/BaseButton.vue";
 
-const { tutor, walker } = useAuth()
-const collapsed = ref(false)
+const { tutor, walker } = useAuth();
+const collapsed = ref(false);
 
 function toggle(): void {
-  collapsed.value = !collapsed.value
+  collapsed.value = !collapsed.value;
 }
 </script>
 
 <template>
   <aside :class="['sidebar', { collapsed }]">
-
     <div class="header">
       <h2 v-if="!collapsed" class="brand-title">
         <v-icon icon="mdi-dog" color="white" class="me-2" />
@@ -29,11 +28,16 @@ function toggle(): void {
         class="toggle-btn"
         @click="toggle"
       >
-      <v-icon>mdi-menu</v-icon>
+        <v-icon>mdi-menu</v-icon>
       </BaseButton>
     </div>
 
-    <v-list nav class="sidebar-nav" bg-color="transparent" density="comfortable">
+    <v-list
+      nav
+      class="sidebar-nav"
+      bg-color="transparent"
+      density="comfortable"
+    >
       <v-list-item
         to="/dashboard"
         class="nav-item"
@@ -69,11 +73,10 @@ function toggle(): void {
 </template>
 
 <style scoped>
-
 .sidebar {
   width: 280px;
   height: 100vh;
-  background: linear-gradient(135deg, #01071F 0%, #0a0e27 100%);
+  background: linear-gradient(135deg, #01071f 0%, #0a0e27 100%);
   color: white;
   padding: 16px;
   display: flex;
@@ -131,10 +134,9 @@ function toggle(): void {
   position: relative;
   text-decoration: none;
 }
-s
-.nav-item:hover {
-  background: rgba(255, 255, 255, 0.15) !important; 
-  color: #ffffff !important;              
+s .nav-item:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
 }
 
 .nav-item.logout {

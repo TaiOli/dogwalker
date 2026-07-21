@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useAuth } from "../../composables/userAuth"
-import { getPhoto } from "../../utils/image"
+import { useAuth } from "../../composables/userAuth";
+import { getPhoto } from "../../utils/image";
 
-const { user, logout } = useAuth()
+const { user, logout } = useAuth();
 
 function handleLogout(): void {
-  logout()
+  logout();
 }
 </script>
 
 <template>
   <header class="topbar">
-    <div class="page-info"/>
+    <div class="page-info" />
     <div class="user-section">
       <v-menu location="bottom end" offset="8">
         <template #activator="{ props }">
@@ -21,12 +21,13 @@ function handleLogout(): void {
         </template>
 
         <v-card elevation="2" rounded="lg" min-width="200" color="white">
-          
           <v-card-text class="pa-3">
             <div class="user-info">
               <div class="ml-3">
                 <p class="text-body-2 font-weight-600 mb-0">{{ user?.nome }}</p>
-                <p class="text-caption text-medium-emphasis mb-0">{{ user?.email }}</p>
+                <p class="text-caption text-medium-emphasis mb-0">
+                  {{ user?.email }}
+                </p>
               </div>
             </div>
           </v-card-text>
@@ -59,7 +60,6 @@ function handleLogout(): void {
 </template>
 
 <style scoped>
-
 .topbar {
   height: 70px;
   background: white;
@@ -78,7 +78,7 @@ function handleLogout(): void {
   flex: 1;
 }
 
-.v-list-item{
+.v-list-item {
   text-decoration: none;
   padding: 15px;
 }
@@ -91,7 +91,7 @@ function handleLogout(): void {
 
 .profile-avatar {
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .profile-avatar:hover {
@@ -102,12 +102,12 @@ function handleLogout(): void {
   color: rgb(var(--v-theme-primary)) !important;
   background-color: white;
   border-radius: 12px;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .profile-item:hover {
-  background: rgba(255, 255, 255, 0.20) !important;
-  color: #ffffff !important; 
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
   cursor: pointer;
   border-radius: 12px;
 }
@@ -115,13 +115,13 @@ function handleLogout(): void {
 .logout-item {
   color: #d32f2f !important;
   border-radius: 12px;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   background-color: white;
 }
 
 .logout-item:hover {
-  background: rgba(255, 255, 255, 0.20) !important;
-  color: #ffffff !important; 
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
   cursor: pointer;
   border-radius: 12px;
 }

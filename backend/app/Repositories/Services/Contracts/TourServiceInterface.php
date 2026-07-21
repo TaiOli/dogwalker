@@ -6,7 +6,8 @@ use App\DTOs\Tour\CreateTourDTO;
 use App\Models\Tour;
 use Illuminate\Database\Eloquent\Collection;
 
-interface TourServiceInterface{
+interface TourServiceInterface
+{
 
     public function create(CreateTourDTO $dto): Tour;
     public function listAvailable(?int $walkerId = null): Collection;

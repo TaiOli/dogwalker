@@ -1,56 +1,69 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import BaseInput from "../atoms/BaseInput.vue"
-import BaseButton from "../atoms/BaseButton.vue"
-import BaseSelect from "../atoms/BaseSelect.vue"
+import { ref } from "vue";
+import BaseInput from "../atoms/BaseInput.vue";
+import BaseButton from "../atoms/BaseButton.vue";
+import BaseSelect from "../atoms/BaseSelect.vue";
 
 interface RegisterForm {
-  username: string
-  name: string
-  email: string
-  password: string
-  phone: string
-  type_user: string
-  photo: File | string
+  username: string;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  type_user: string;
+  photo: File | string;
 }
 
 interface Props {
-  form: RegisterForm
-  labelButton: string
+  form: RegisterForm;
+  labelButton: string;
 }
 
-const props = defineProps<Props>()
-const emit = defineEmits<{ submit: [] }>()
+const props = defineProps<Props>();
+const emit = defineEmits<{ submit: [] }>();
 
-const preview = ref<string | null>(null)
-const usernameError = ref("")
-const nameError = ref("")
-const emailError = ref("")
-const passwordError = ref("")
-const typeuserError = ref("")
+const preview = ref<string | null>(null);
+const usernameError = ref("");
+const nameError = ref("");
+const emailError = ref("");
+const passwordError = ref("");
+const typeuserError = ref("");
 
 const typeUsers = [
   { label: "Tutor", value: "tutor" },
-  { label: "Passeador", value: "passeador" }
-]
+  { label: "Passeador", value: "passeador" },
+];
 
 function handleSubmit(): void {
-  usernameError.value = !props.form.username ? "Insira um username!" : ""
-  nameError.value = !props.form.name ? "Insira um nome!" : ""
-  emailError.value = !props.form.email ? "Insira um e-mail!" : ""
-  passwordError.value = !props.form.password ? "Insira uma senha!" : ""
-  typeuserError.value = !props.form.type_user ? "Selecione um tipo de usuário!" : ""
+  usernameError.value = !props.form.username ? "Insira um username!" : "";
+  nameError.value = !props.form.name ? "Insira um nome!" : "";
+  emailError.value = !props.form.email ? "Insira um e-mail!" : "";
+  passwordError.value = !props.form.password ? "Insira uma senha!" : "";
+  typeuserError.value = !props.form.type_user
+    ? "Selecione um tipo de usuário!"
+    : "";
 
-  if (usernameError.value || nameError.value || emailError.value || passwordError.value || typeuserError.value) return
+  if (
+    usernameError.value ||
+    nameError.value ||
+    emailError.value ||
+    passwordError.value ||
+    typeuserError.value
+  )
+    return;
 
-  emit("submit")
+  emit("submit");
 }
 
 function handlePhoto(value: string | number | File | File[] | null): void {
-  const file = Array.isArray(value) ? value[0] : value instanceof File ? value : null
-  if (!file) return
-  props.form.photo = file
-  preview.value = URL.createObjectURL(file)
+  const file = Array.isArray(value)
+    ? value[0]
+    : value instanceof File
+      ? value
+      : null;
+  if (!file) return;
+  props.form.photo = file;
+  preview.value = URL.createObjectURL(file);
 }
 </script>
 
@@ -168,7 +181,6 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 </template>
 
 <style scoped>
-
 .clip-btn {
   border: none;
   background: transparent;

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from "vue"
-import { useRoute } from "vue-router"
-import ScheduletourForm from "../components/molecules/ScheduletourForm.vue"
-import { useScheduletour } from "../composables/useScheduletour"
+import { onMounted } from "vue";
+import { useRoute } from "vue-router";
+import ScheduletourForm from "../components/molecules/ScheduletourForm.vue";
+import { useScheduletour } from "../composables/useScheduletour";
 
-const route = useRoute()
+const route = useRoute();
 
 const {
   form,
@@ -14,52 +14,43 @@ const {
   loadWalkers,
   setWalker,
   requestTour,
-  clearTour
-} = useScheduletour()
+  clearTour,
+} = useScheduletour();
 
 onMounted(async () => {
-  await Promise.all([loadDogs(), loadWalkers()])
+  await Promise.all([loadDogs(), loadWalkers()]);
 
-  const walkerId = route.query.walkerId
+  const walkerId = route.query.walkerId;
 
   if (walkerId) {
-    setWalker(Array.isArray(walkerId) ? walkerId[0] : walkerId)
+    setWalker(Array.isArray(walkerId) ? walkerId[0] : walkerId);
   }
-})
+});
 
 async function save(): Promise<void> {
   try {
-    await requestTour()
+    await requestTour();
 
-    alert("Passeio solicitado com sucesso!")
+    alert("Passeio solicitado com sucesso!");
 
-    clearTour()
-
+    clearTour();
   } catch (error) {
-    console.log(error)
-    alert("Erro ao solicitar passeio")
+    console.log(error);
+    alert("Erro ao solicitar passeio");
   }
 }
 </script>
 
 <template>
   <v-container class="py-6">
-
     <v-row justify="center">
-      <v-col cols="12" md="10" lg="8"> 
+      <v-col cols="12" md="10" lg="8">
         <div class="d-flex align-center ga-2 mb-5">
           <v-icon color="primary" size="32">mdi-plus</v-icon>
-          <h2 class="text-h4 font-weight-bold text-black">
-            Solicitar Passeio
-          </h2>
+          <h2 class="text-h4 font-weight-bold text-black">Solicitar Passeio</h2>
         </div>
 
-        <v-card
-          elevation="3"
-          rounded="xl"
-          class="pa-6"
-          color="white"
-        >
+        <v-card elevation="3" rounded="xl" class="pa-6" color="white">
           <ScheduletourForm
             :form="form"
             :dogs="dogs"
@@ -74,7 +65,7 @@ async function save(): Promise<void> {
 </template>
 
 <style scoped>
-.card{
+.card {
   padding: 30px;
 }
 </style>

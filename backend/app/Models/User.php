@@ -34,7 +34,7 @@ class User extends Authenticatable
         'tipo_usuario',
         'foto',
     ];
-    
+
     protected function casts(): array
     {
         return [

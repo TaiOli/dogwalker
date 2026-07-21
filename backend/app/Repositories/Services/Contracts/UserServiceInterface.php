@@ -6,7 +6,8 @@ use App\DTOs\User\CreateUserDTO;
 use App\DTOs\User\UpdateUserDTO;
 use App\Models\User;
 
-interface UserServiceInterface{
+interface UserServiceInterface
+{
 
     public function create(CreateUserDTO $dto): User;
     public function login(array $data): ?array;

@@ -9,11 +9,11 @@ class CreateEvaluationDTO
         public readonly int $nota,
         public readonly string $tipoAvaliador,
         public readonly ?string $comentario = null,
-    ){}
+    ) {}
 
     public static function fromRequest(array $validated): self
     {
-        return new self (
+        return new self(
             passeioId: $validated['passeio_id'],
             nota: $validated['nota'],
             tipoAvaliador: $validated['tipo_avaliador'],

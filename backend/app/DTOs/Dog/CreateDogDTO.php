@@ -1,6 +1,7 @@
 <?php
 
 namespace App\DTOs\Dog;
+
 use Illuminate\Http\UploadedFile;
 
 class CreateDogDTO
@@ -18,13 +19,13 @@ class CreateDogDTO
     public static function fromRequest(array $validated, int $userId): self
     {
         return new self(
-            userId:      $userId,
-            nome:        $validated['nome'],
-            idade:       $validated['idade'],
-            porte:       $validated['porte'],
-            raca:        $validated['raca'],
+            userId: $userId,
+            nome: $validated['nome'],
+            idade: $validated['idade'],
+            porte: $validated['porte'],
+            raca: $validated['raca'],
             observacoes: $validated['observacoes'] ?? null,
-            foto:        $validated['foto'] ?? null,
+            foto: $validated['foto'] ?? null,
         );
     }
 

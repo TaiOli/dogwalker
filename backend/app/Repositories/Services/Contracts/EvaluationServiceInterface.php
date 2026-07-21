@@ -8,5 +8,4 @@ use App\Models\Evaluation;
 interface EvaluationServiceInterface
 {
     public function create(CreateEvaluationDTO $dto): Evaluation;
-    
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tour extends Model
 {
     protected $table = 'passeios';
-    
+
     protected $fillable = [
         'dog_id',
         'tutor_id',

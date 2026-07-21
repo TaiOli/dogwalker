@@ -42,27 +42,27 @@ class UserController extends Controller
             'message' => 'Login realizado com sucesso',
             'user' => $result['user'],
             'token' => $result['token']
-        ],201);
+        ], 201);
     }
 
     public function walkers()
     {
         return response()->json(
-            $this->userService->walkers() 
+            $this->userService->walkers()
         );
     }
 
     public function show($id)
     {
         return response()->json(
-            $this->userService->show($id) 
+            $this->userService->show($id)
         );
     }
 
     public function showTutor($id)
     {
         return response()->json(
-            $this->userService->showTutor($id) 
+            $this->userService->showTutor($id)
         );
     }
 
@@ -70,18 +70,17 @@ class UserController extends Controller
     {
         try {
             $dto  = UpdateUserDTO::fromRequest($request->validated());
-            
+
             $user = $this->userService->update(
-                $id, 
-                $dto, 
+                $id,
+                $dto,
                 $request->user()->id
             );
 
             return response()->json([
                 'message' => 'Usuário atualizado com sucesso',
                 'user' => (new UserResponseDTO($user))->toArray(),
-            ],200);
-
+            ], 200);
         } catch (UserNotFoundException $e) {
             return response()->json([
                 'message' => $e->getMessage()

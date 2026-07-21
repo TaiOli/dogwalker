@@ -1,48 +1,52 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import BaseInput from "../atoms/BaseInput.vue"
-import BaseButton from "../atoms/BaseButton.vue"
-import BaseSelect from "../atoms/BaseSelect.vue"
+import { ref } from "vue";
+import BaseInput from "../atoms/BaseInput.vue";
+import BaseButton from "../atoms/BaseButton.vue";
+import BaseSelect from "../atoms/BaseSelect.vue";
 
 interface DogForm {
-  name: string
-  age: string | number
-  size: string
-  breed: string
-  observations: string
-  photo: File | string | null
+  name: string;
+  age: string | number;
+  size: string;
+  breed: string;
+  observations: string;
+  photo: File | string | null;
 }
 
 interface Props {
-  form: DogForm
-  labelButton: string
+  form: DogForm;
+  labelButton: string;
 }
 
-const props = defineProps<Props>()
-const emit = defineEmits<{ submit: [] }>()
-const nameError = ref("")
-const sizeError = ref("")
-const preview = ref<string | null>(null)
+const props = defineProps<Props>();
+const emit = defineEmits<{ submit: [] }>();
+const nameError = ref("");
+const sizeError = ref("");
+const preview = ref<string | null>(null);
 
 const sizeOptions = [
   { label: "Pequeno", value: "pequeno" },
-  { label: "Médio",   value: "médio" },
-  { label: "Grande",  value: "grande" }
-]
+  { label: "Médio", value: "médio" },
+  { label: "Grande", value: "grande" },
+];
 
 function handleSubmit(): void {
-  nameError.value = !props.form.name ? "Insira um nome!" : ""
-  sizeError.value = !props.form.size ? "Selecione um porte!" : ""
-  if (nameError.value || sizeError.value) return
-  emit("submit")
+  nameError.value = !props.form.name ? "Insira um nome!" : "";
+  sizeError.value = !props.form.size ? "Selecione um porte!" : "";
+  if (nameError.value || sizeError.value) return;
+  emit("submit");
 }
 
 function handlePhoto(value: string | number | File | File[] | null): void {
-  const file = Array.isArray(value) ? value[0] : value instanceof File ? value : null
-  if (!file) return
+  const file = Array.isArray(value)
+    ? value[0]
+    : value instanceof File
+      ? value
+      : null;
+  if (!file) return;
 
-  props.form.photo = file
-  preview.value = URL.createObjectURL(file)
+  props.form.photo = file;
+  preview.value = URL.createObjectURL(file);
 }
 </script>
 
@@ -62,7 +66,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
-        <BaseInput v-model="form.age" type="number" label="Idade"/>
+        <BaseInput v-model="form.age" type="number" label="Idade" />
       </v-col>
     </v-row>
 
@@ -83,14 +87,13 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
-        <BaseInput v-model="form.breed" label="Raça"/>
+        <BaseInput v-model="form.breed" label="Raça" />
       </v-col>
     </v-row>
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
-        <BaseInput v-model="form.observations" label="Observações"
-        />
+        <BaseInput v-model="form.observations" label="Observações" />
       </v-col>
     </v-row>
 
@@ -131,8 +134,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 </template>
 
 <style scoped>
-.dog-photo{
-max-width: 100%;
-max-height:200px;
+.dog-photo {
+  max-width: 100%;
+  max-height: 200px;
 }
 </style>

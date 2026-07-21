@@ -1,15 +1,14 @@
 <script setup lang="ts">
 interface BaseInputProps {
-  modelValue?: string | number | File | File[] | null
-  placeholder?: string
-  label?: string
-  type?: string
-  accept?: string
-  required?: boolean
-  readonly?: boolean
-  errorMessage?: string
-  prependInnerIcon?: string
-  
+  modelValue?: string | number | File | File[] | null;
+  placeholder?: string;
+  label?: string;
+  type?: string;
+  accept?: string;
+  required?: boolean;
+  readonly?: boolean;
+  errorMessage?: string;
+  prependInnerIcon?: string;
 }
 
 withDefaults(defineProps<BaseInputProps>(), {
@@ -21,14 +20,11 @@ withDefaults(defineProps<BaseInputProps>(), {
   readonly: false,
   errorMessage: "",
   prependInnerIcon: "",
-})
+});
 
 const emit = defineEmits<{
-  (
-    e: "update:modelValue",
-    value: string | number | File | File[] | null
-  ): void
-}>()
+  (e: "update:modelValue", value: string | number | File | File[] | null): void;
+}>();
 </script>
 
 <template>
@@ -58,7 +54,6 @@ const emit = defineEmits<{
 </template>
 
 <style scoped>
-
 :deep(.v-field) {
   background-color: white !important;
 }

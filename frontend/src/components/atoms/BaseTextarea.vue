@@ -1,19 +1,19 @@
 <script setup lang="ts">
 interface BaseTextareaProps {
-  modelValue: string
-  placeholder?: string
-  rows?: number
-  label?: string
+  modelValue: string;
+  placeholder?: string;
+  rows?: number;
+  label?: string;
 }
 
 withDefaults(defineProps<BaseTextareaProps>(), {
   placeholder: "",
-  rows: 3
-})
+  rows: 3,
+});
 
 const emit = defineEmits<{
-  "update:modelValue": [value: string]
-}>()
+  "update:modelValue": [value: string];
+}>();
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const emit = defineEmits<{
 
     <v-textarea
       :model-value="modelValue"
-      @update:model-value="value => emit('update:modelValue', value)"
+      @update:model-value="(value) => emit('update:modelValue', value)"
       :placeholder="placeholder"
       variant="outlined"
       density="comfortable"

@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import BaseInput from "../atoms/BaseInput.vue"
-import BaseButton from "../atoms/BaseButton.vue"
+import { ref } from "vue";
+import BaseInput from "../atoms/BaseInput.vue";
+import BaseButton from "../atoms/BaseButton.vue";
 
 interface UserAuthForm {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 interface Props {
-  form: UserAuthForm
-  labelButton: string
+  form: UserAuthForm;
+  labelButton: string;
 }
 
-const props = defineProps<Props>()
-const emit = defineEmits<{ submit: [] }>()
+const props = defineProps<Props>();
+const emit = defineEmits<{ submit: [] }>();
 
-const emailError = ref("")
-const passwordError = ref("")
+const emailError = ref("");
+const passwordError = ref("");
 
 function handleSubmit(): void {
-  emailError.value = !props.form.email ? "Insira um e-mail!" : ""
-  passwordError.value = !props.form.password ? "Insira uma senha!" : ""
-  if (emailError.value || passwordError.value) return
-  emit("submit")
+  emailError.value = !props.form.email ? "Insira um e-mail!" : "";
+  passwordError.value = !props.form.password ? "Insira uma senha!" : "";
+  if (emailError.value || passwordError.value) return;
+  emit("submit");
 }
 </script>
 

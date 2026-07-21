@@ -1,92 +1,93 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue"
-import DogForm from "../components/molecules/DogForm.vue"
-import { useDog } from "../composables/useDog"
-import { api } from "../services/api"
-import BaseInput from "../components/atoms/BaseInput.vue"
-import BaseButton from "../components/atoms/BaseButton.vue"
+import { ref, watch, onMounted } from "vue";
+import DogForm from "../components/molecules/DogForm.vue";
+import { useDog } from "../composables/useDog";
+import { api } from "../services/api";
+import BaseInput from "../components/atoms/BaseInput.vue";
+import BaseButton from "../components/atoms/BaseButton.vue";
 
 interface Dog {
-  id: number
-  nome: string
-  raca?: string
-  idade?: number
-  porte?: string
-  foto?: string
+  id: number;
+  nome: string;
+  raca?: string;
+  idade?: number;
+  porte?: string;
+  foto?: string;
 }
 
-const { formDog, registerDog, updateDog, setDog, clearDog } = useDog()
+const { formDog, registerDog, updateDog, setDog, clearDog } = useDog();
 
-const dogs = ref<Dog[]>([])
-const search = ref<string>("")
-const showModal = ref<boolean>(false)
-const excludingId = ref<number | null>(null)
+const dogs = ref<Dog[]>([]);
+const search = ref<string>("");
+const showModal = ref<boolean>(false);
+const excludingId = ref<number | null>(null);
 
 async function loadDogs(): Promise<void> {
   const res = await api.get("/dogs/my", {
-    params: { search: search.value }
-  })
-  dogs.value = res.data
+    params: { search: search.value },
+  });
+  dogs.value = res.data;
 }
 
 function openModal(): void {
-  clearDog()
-  showModal.value = true
+  clearDog();
+  showModal.value = true;
 }
 
 function editDog(dog: Dog): void {
-  setDog(dog)
-  showModal.value = true
+  setDog(dog);
+  showModal.value = true;
 }
 
 function closeModal(): void {
-  showModal.value = false
+  showModal.value = false;
 }
 
 async function removeDog(dog: Dog): Promise<void> {
-  const confirmar = confirm(`Tem certeza que deseja excluir o cadastro de "${dog.nome}"?`)
-  if (!confirmar) return
+  const confirmar = confirm(
+    `Tem certeza que deseja excluir o cadastro de "${dog.nome}"?`,
+  );
+  if (!confirmar) return;
 
-  excludingId.value = dog.id
+  excludingId.value = dog.id;
 
   try {
-    await api.delete(`/dogs/${dog.id}`)
+    await api.delete(`/dogs/${dog.id}`);
 
-    dogs.value = dogs.value.filter(d => d.id !== dog.id)
-    alert("Dog excluído com sucesso!")
-
+    dogs.value = dogs.value.filter((d) => d.id !== dog.id);
+    alert("Dog excluído com sucesso!");
   } catch (error: any) {
-    console.error("Erro ao excluir cachorro:", error)
-    alert(error.response?.data?.message || "Erro ao excluir cachorro")
+    console.error("Erro ao excluir cachorro:", error);
+    alert(error.response?.data?.message || "Erro ao excluir cachorro");
   } finally {
-    excludingId.value = null
+    excludingId.value = null;
   }
 }
 
 async function save(): Promise<void> {
   try {
     if (formDog.id) {
-      await updateDog()
-      alert("Cadastro atualizado com sucesso!")
+      await updateDog();
+      alert("Cadastro atualizado com sucesso!");
     } else {
-      await registerDog()
-      alert("Dog cadastrado com sucesso!")
+      await registerDog();
+      alert("Dog cadastrado com sucesso!");
     }
 
-    clearDog()
-    await loadDogs()
-    showModal.value = false
+    clearDog();
+    await loadDogs();
+    showModal.value = false;
   } catch (error) {
-    console.log(error)
-    alert("Erro ao salvar cachorro")
+    console.log(error);
+    alert("Erro ao salvar cachorro");
   }
 }
 
 watch(search, () => {
-  loadDogs()
-})
+  loadDogs();
+});
 
-onMounted(loadDogs)
+onMounted(loadDogs);
 </script>
 
 <template>
@@ -100,7 +101,7 @@ onMounted(loadDogs)
         </div>
       </v-col>
 
-      <v-col cols="auto"> 
+      <v-col cols="auto">
         <BaseButton
           label="Novo"
           color="primary"
@@ -158,14 +159,14 @@ onMounted(loadDogs)
             <v-card-title class="text-h5 font-weight-bold pb-2">
               {{ dog.nome }}
             </v-card-title>
-            
+
             <v-card-text class="py-1">
               <v-icon icon="mdi-paw" class="me-2" color="primary" />
               {{ dog.raca }}
             </v-card-text>
 
             <v-card-text class="py-1">
-              <v-icon icon="mdi-cake-variant" class="me-2" color="primary"/>
+              <v-icon icon="mdi-cake-variant" class="me-2" color="primary" />
               {{ dog.idade }} anos
             </v-card-text>
 
@@ -188,11 +189,13 @@ onMounted(loadDogs)
 
     <div v-if="showModal" class="modal-overlay">
       <div class="modal-box">
-        <div class="modal-header d-flex justify-content-between align-items-center">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center"
+        >
           <h5 class="modal-title pure-text">
             {{ formDog.id ? "Editar cachorro" : "Cadastrar cachorro" }}
           </h5>
-          
+
           <BaseButton
             icon="mdi-close"
             variant="text"
@@ -214,7 +217,6 @@ onMounted(loadDogs)
 </template>
 
 <style scoped>
-
 .dog-img {
   height: 300px;
   object-fit: cover;
@@ -222,7 +224,9 @@ onMounted(loadDogs)
 
 .dog-card {
   border-radius: 12px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .edit-btn {
@@ -266,7 +270,7 @@ h2 {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;

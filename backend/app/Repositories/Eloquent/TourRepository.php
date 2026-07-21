@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\Tour;
 use App\Repositories\Contracts\TourRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+
 class TourRepository implements TourRepositoryInterface
 {
     public function create(array $data): Tour

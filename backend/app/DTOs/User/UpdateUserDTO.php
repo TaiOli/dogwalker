@@ -17,11 +17,11 @@ class UpdateUserDTO
     public static function fromRequest(array $validated): self
     {
         return new self(
-            nome:     $validated['nome'] ?? null,
-            email:    $validated['email'] ?? null,
+            nome: $validated['nome'] ?? null,
+            email: $validated['email'] ?? null,
             password: $validated['password'] ?? null,
             telefone: $validated['telefone'] ?? null,
-            foto:     $validated['foto'] ?? null,
+            foto: $validated['foto'] ?? null,
         );
     }
 

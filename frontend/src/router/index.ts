@@ -4,66 +4,66 @@ import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard.vue";
 import RegisterDog from "../views/RegisterDog.vue";
 import ScheduleTour from "../views/Scheduletour.vue";
-import Walks from "../views/Walks.vue"
+import Walks from "../views/Walks.vue";
 import WalkerProfile from "../views/WalkerProfile.vue";
-import MyProfile from "../views/MyProfile.vue"
+import MyProfile from "../views/MyProfile.vue";
 import TutorProfile from "../views/TutorProfile.vue";
-import Home from "../views/Home.vue"
+import Home from "../views/Home.vue";
 
 const routes = [
   {
     path: "/",
-    redirect: "/inicio" 
+    redirect: "/inicio",
   },
   {
     path: "/inicio",
-    component: Home
+    component: Home,
   },
   {
     path: "/login",
-    component: Login
+    component: Login,
   },
   {
     path: "/cadastro-usuario",
-    component: User
+    component: User,
   },
   {
     path: "/usuario/editar",
-    component: User
+    component: User,
   },
   {
     path: "/dashboard",
-    component: Dashboard
+    component: Dashboard,
   },
   {
     path: "/cadastro-cachorro",
-    component: RegisterDog
+    component: RegisterDog,
   },
   {
     path: "/agendar-passeio",
-    component: ScheduleTour
+    component: ScheduleTour,
   },
   {
     path: "/passeios",
-    component: Walks
+    component: Walks,
   },
   {
     path: "/passeador-perfil/:id",
-    component: WalkerProfile
+    component: WalkerProfile,
   },
   {
     path: "/tutores/:id",
-    component: TutorProfile
+    component: TutorProfile,
   },
   {
     path: "/meu-perfil",
-    component: MyProfile
-  }
+    component: MyProfile,
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 });
 
 export default router;

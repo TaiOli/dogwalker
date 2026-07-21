@@ -34,7 +34,6 @@ class DogController extends Controller
     {
         try {
             $dto = UpdateDogDTO::fromRequest(
-                $request,
                 $request->validated()
             );
 
@@ -44,12 +43,12 @@ class DogController extends Controller
                 'message' => 'Cachorro atualizado com sucesso',
                 'dog'     => (new DogResponseDTO($dog))->toArray(),
             ], 200);
-        // Not Found : Página ou dado procurado não existe
+            // Not Found : Página ou dado procurado não existe
         } catch (DogNotFoundException $e) {
             return response()->json([
                 'message' => $e->getMessage()
             ], 404);
-        // Forbidden: Tentou alterar mas não pode
+            // Forbidden: Tentou alterar mas não pode
         } catch (DogUnauthorizedException $e) {
             return response()->json([
                 'message' => $e->getMessage()
@@ -63,7 +62,6 @@ class DogController extends Controller
             $this->dogService->delete($id, $request->user()->id);
 
             return response()->json(['message' => 'Cachorro removido com sucesso'], 200);
-
         } catch (DogNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         } catch (DogUnauthorizedException $e) {

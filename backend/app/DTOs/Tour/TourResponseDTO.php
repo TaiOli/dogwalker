@@ -27,7 +27,7 @@ class TourResponseDTO
         $this->status  = $tour->status;
         $this->data    = $tour->data;
         $this->hora    = $tour->hora;
-        $this->duracao = (int) $tour->duracao;   
+        $this->duracao = (int) $tour->duracao;
         $this->local   = $tour->local;
         $this->valor   = (float) $tour->valor;
 

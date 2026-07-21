@@ -1,23 +1,23 @@
 <script setup lang="ts">
 interface SelectOption {
-  id?: string | number
-  nome?: string
-  name?: string
-  label?: string
-  value?: string | number
-  [key: string]: unknown
+  id?: string | number;
+  nome?: string;
+  name?: string;
+  label?: string;
+  value?: string | number;
+  [key: string]: unknown;
 }
 
 interface BaseSelectProps {
-  modelValue?: string | number | null
-  options: SelectOption[]
-  labelKey?: string
-  valueKey?: string
-  label?: string
-  placeholder?: string
-  required?: boolean
-  errorMessage?: string
-  prependInnerIcon?: string
+  modelValue?: string | number | null;
+  options: SelectOption[];
+  labelKey?: string;
+  valueKey?: string;
+  label?: string;
+  placeholder?: string;
+  required?: boolean;
+  errorMessage?: string;
+  prependInnerIcon?: string;
 }
 
 withDefaults(defineProps<BaseSelectProps>(), {
@@ -27,11 +27,11 @@ withDefaults(defineProps<BaseSelectProps>(), {
   required: false,
   errorMessage: "",
   prependInnerIcon: "",
-})
+});
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: string | number | null): void
-}>()
+  (e: "update:modelValue", value: string | number | null): void;
+}>();
 </script>
 
 <template>

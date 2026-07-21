@@ -20,7 +20,7 @@ class DogRepository implements DogRepositoryInterface
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('nome', 'like', "%{$search}%")
-                    ->orWhere('raca', 'like', "%{$search}%");
+                        ->orWhere('raca', 'like', "%{$search}%");
                 });
             })
             ->get();
@@ -42,5 +42,4 @@ class DogRepository implements DogRepositoryInterface
     {
         Dog::findOrFail($id)->delete();
     }
-
 }

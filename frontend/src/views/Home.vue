@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import BaseButton from '../components/atoms/BaseButton.vue';
-import { useRouter } from "vue-router"
-import dogPaw from '../assets/images/pata-coracao.png'
-import dogImageUrl from '../assets/images/dog.png'; 
-import { ref, computed } from 'vue';
+import BaseButton from "../components/atoms/BaseButton.vue";
+import { useRouter } from "vue-router";
+import dogPaw from "../assets/images/pata-coracao.png";
+import dogImageUrl from "../assets/images/dog.png";
+import { ref, computed } from "vue";
 
-const router = useRouter()
+const router = useRouter();
 
 const dogImage = ref<string>(dogImageUrl);
 const bgImageStyle = computed<string>(() => `url(${dogImage.value})`);
 
 function start(): void {
-  router.push("/login")
+  router.push("/login");
 }
 </script>
 
@@ -34,7 +34,6 @@ function start(): void {
 </template>
 
 <style scoped>
-
 .home-screen {
   position: relative;
   width: 100%;
@@ -42,7 +41,7 @@ function start(): void {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-   background-image: v-bind(bgImageStyle); 
+  background-image: v-bind(bgImageStyle);
 }
 
 .brand-name {
@@ -53,7 +52,7 @@ function start(): void {
   align-items: center;
   gap: 6px;
   font-weight: 600;
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   font-size: 1.25rem;
   color: black;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);

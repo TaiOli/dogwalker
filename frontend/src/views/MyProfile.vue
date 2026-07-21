@@ -1,43 +1,43 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue"
-import { api } from "../services/api"
-import { getPhoto } from "../utils/image"
-import { useRouter } from "vue-router"
-import { useAuth } from "../composables/userAuth"
-import BaseButton from "../components/atoms/BaseButton.vue"
+import { ref, onMounted } from "vue";
+import { api } from "../services/api";
+import { getPhoto } from "../utils/image";
+import { useRouter } from "vue-router";
+import { useAuth } from "../composables/userAuth";
+import BaseButton from "../components/atoms/BaseButton.vue";
 
 interface User {
-  id: number
-  nome: string
-  email: string
-  telefone?: string
-  foto?: string
-  tipo_usuario: string
+  id: number;
+  nome: string;
+  email: string;
+  telefone?: string;
+  foto?: string;
+  tipo_usuario: string;
 }
 
-const user = ref<User | null>(null)
-const loading = ref<boolean>(true)
-const router = useRouter()
+const user = ref<User | null>(null);
+const loading = ref<boolean>(true);
+const router = useRouter();
 
-const { setRegister } = useAuth()
+const { setRegister } = useAuth();
 
 function editProfile(): void {
-  if (!user.value) return
-  setRegister(user.value)
-  
-  router.push("/usuario/editar")
+  if (!user.value) return;
+  setRegister(user.value);
+
+  router.push("/usuario/editar");
 }
 
 onMounted(async () => {
   try {
-    const res = await api.get("/me")
-    user.value = res.data
+    const res = await api.get("/me");
+    user.value = res.data;
   } catch (err) {
-    console.error("Erro ao carregar perfil", err)
+    console.error("Erro ao carregar perfil", err);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-})
+});
 </script>
 
 <template>
@@ -83,9 +83,8 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
-.btn-edit{
-   width: 30%;
-   background-color:#1976D2;
+.btn-edit {
+  width: 30%;
+  background-color: #1976d2;
 }
 </style>

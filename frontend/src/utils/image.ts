@@ -1,7 +1,7 @@
 export const getPhoto = (foto: string | null | undefined): string => {
-  if (!foto) return "https://placehold.co/120x120"
+  if (!foto) return "https://placehold.co/120x120";
 
-  if (foto.startsWith("http")) return foto
+  if (foto.startsWith("http")) return foto;
 
-  return `http://localhost:8000/storage/${foto}`
-}
+  return `http://localhost:8000/storage/${foto}`;
+};

@@ -21,8 +21,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserServiceInterface::class, UserService::class);
         $this->app->bind(DogServiceInterface::class, DogService::class);
-        $this->app->bind(TourServiceInterface::class,TourService::class);
-        $this->app->bind(EvaluationServiceInterface::class,EvaluationService::class);
+        $this->app->bind(TourServiceInterface::class, TourService::class);
+        $this->app->bind(EvaluationServiceInterface::class, EvaluationService::class);
     }
 
     /**

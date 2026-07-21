@@ -13,7 +13,7 @@ class UpdateDogDTO
         public readonly ?string $foto = null,
     ) {}
 
-    public static function fromRequest(array $validated): self 
+    public static function fromRequest(array $validated): self
     {
         return new self(
             nome: $validated['nome'] ?? null,

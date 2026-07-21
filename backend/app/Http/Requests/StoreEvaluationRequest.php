@@ -36,11 +36,11 @@ class StoreEvaluationRequest extends FormRequest
         ];
     }
 
-      public function toDto(): CreateEvaluationDTO
-      {
-         /** @var array<string, mixed> $validated */
+    public function toDto(): CreateEvaluationDTO
+    {
+        /** @var array<string, mixed> $validated */
         $validated = $this->validated();
 
-         return CreateEvaluationDTO::fromRequest($validated);
-      }
+        return CreateEvaluationDTO::fromRequest($validated);
+    }
 }

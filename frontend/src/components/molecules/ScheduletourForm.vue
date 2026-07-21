@@ -1,59 +1,59 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
-import BaseInput from "../atoms/BaseInput.vue"
-import BaseButton from "../atoms/BaseButton.vue"
-import BaseSelect from "../atoms/BaseSelect.vue"
+import { computed, ref } from "vue";
+import BaseInput from "../atoms/BaseInput.vue";
+import BaseButton from "../atoms/BaseButton.vue";
+import BaseSelect from "../atoms/BaseSelect.vue";
 
 interface DogOption {
-  id: string | number
-  nome: string
-  [key: string]: unknown
+  id: string | number;
+  nome: string;
+  [key: string]: unknown;
 }
 
 interface WalkerOption {
-  id: string | number
-  nome?: string
-  name?: string
-  [key: string]: unknown
+  id: string | number;
+  nome?: string;
+  name?: string;
+  [key: string]: unknown;
 }
 
 interface ScheduleTourForm {
-  dog_id: string | number
-  date: string
-  hour: string
-  duration: string
-  value: string | number
-  location: string
-  walker_id: string | number
+  dog_id: string | number;
+  date: string;
+  hour: string;
+  duration: string;
+  value: string | number;
+  location: string;
+  walker_id: string | number;
 }
 
 interface Props {
-  form: ScheduleTourForm
-  labelButton: string
-  dogs: DogOption[]
-  walkers?: WalkerOption[]
+  form: ScheduleTourForm;
+  labelButton: string;
+  dogs: DogOption[];
+  walkers?: WalkerOption[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  walkers: () => []
-})
+  walkers: () => [],
+});
 
-const emit = defineEmits<{ submit: [] }>()
+const emit = defineEmits<{ submit: [] }>();
 
-const walkerError = ref("")
+const walkerError = ref("");
 
 const walkerOptions = computed(() => [
   { id: "", name: "Selecione um passeador..." },
-  ...props.walkers.map(w => ({ id: w.id, name: w.nome ?? w.name ?? "" }))
-])
+  ...props.walkers.map((w) => ({ id: w.id, name: w.nome ?? w.name ?? "" })),
+]);
 
 function handleSubmit(): void {
   if (!props.form.walker_id) {
-    walkerError.value = "Selecione um passeador!"
-    return
+    walkerError.value = "Selecione um passeador!";
+    return;
   }
-  walkerError.value = ""
-  emit("submit")
+  walkerError.value = "";
+  emit("submit");
 }
 </script>
 

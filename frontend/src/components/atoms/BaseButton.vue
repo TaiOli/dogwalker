@@ -1,21 +1,21 @@
 <script setup lang="ts">
 interface BaseButtonProps {
-  label?: string
-  type?: "button" | "submit" | "reset"
-  color?: string
-  variant?: "flat" | "text" | "elevated" | "outlined" | "plain" | "tonal"
-  size?: "x-small" | "small" | "default" | "large" | "x-large"
-  icon?: string
-  disabled?: boolean
+  label?: string;
+  type?: "button" | "submit" | "reset";
+  color?: string;
+  variant?: "flat" | "text" | "elevated" | "outlined" | "plain" | "tonal";
+  size?: "x-small" | "small" | "default" | "large" | "x-large";
+  icon?: string;
+  disabled?: boolean;
 }
 
 withDefaults(defineProps<BaseButtonProps>(), {
   type: "button",
-})
+});
 
 const emit = defineEmits<{
-  (e: "click", event: MouseEvent): void
-}>()
+  (e: "click", event: MouseEvent): void;
+}>();
 </script>
 
 <template>

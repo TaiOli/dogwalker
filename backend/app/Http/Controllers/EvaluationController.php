@@ -17,13 +17,12 @@ class EvaluationController extends Controller
     public function store(StoreEvaluationRequest $request)
     {
         try {
-            
+
             $evaluation = $this->evaluationService->create($request->toDto());
             return response()->json([
                 'message' => 'Avaliação enviada com sucesso',
                 'avaliacao' => $evaluation
             ], 201);
-
         } catch (TourNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         } catch (EvaluationTourNotFinishedException $e) {

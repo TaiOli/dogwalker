@@ -10,18 +10,18 @@ class CreateUserDTO
         public readonly string  $password,
         public readonly string  $tipoUsuario,
         public readonly ?string $telefone = null,
-        public readonly mixed   $foto = null, 
+        public readonly mixed   $foto = null,
     ) {}
 
     public static function fromRequest(array $validated): self
     {
         return new self(
-            nome:        $validated['nome'],
-            email:       $validated['email'],
-            password:    $validated['password'],
+            nome: $validated['nome'],
+            email: $validated['email'],
+            password: $validated['password'],
             tipoUsuario: $validated['tipo_usuario'],
-            telefone:    $validated['telefone'] ?? null,
-            foto:        $validated['foto'] ?? null,
+            telefone: $validated['telefone'] ?? null,
+            foto: $validated['foto'] ?? null,
         );
     }
 }
