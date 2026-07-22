@@ -22,7 +22,7 @@ function start(): void {
       <span class="text-primary">Dog Walker</span>
     </div>
 
-    <div class="btn-wrapper">
+    <div class="btn-wrapper d-flex d-md-none">
       <BaseButton
         label="Começar"
         size="large"
@@ -44,8 +44,8 @@ function start(): void {
   background-image: v-bind(bgImageStyle);
 }
 
-.btn-mustard{
-  border: 2px solid #1F1F1F;
+.btn-mustard {
+  border: 2px solid #1f1f1f;
   box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.4);
 }
 

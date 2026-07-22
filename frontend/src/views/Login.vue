@@ -4,7 +4,6 @@ import UserAuthForm from "../components/molecules/UserAuthForm.vue";
 import Mobile from "../components/molecules/Mobile.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-import { useDisplay } from "vuetify";
 
 interface LoginResponse {
   user: {
@@ -26,7 +25,6 @@ interface ApiErrorResponse {
 
 const router = useRouter();
 const { formLogin, login, clearLogin } = useAuth();
-const { mobile } = useDisplay();
 const started = ref(false);
 
 function handleStart(): void {
@@ -61,11 +59,13 @@ async function loginAccess(): Promise<void> {
     fluid
     class="fill-height d-flex justify-center align-center bg-grey-lighten-4"
   >
-    <Mobile v-if="!mobile || !started" class="d-flex" @start="handleStart" />
+    <Mobile
+      :class="[started ? 'd-none' : 'd-flex', 'd-md-flex']"
+      @start="handleStart"
+    />
 
     <v-card
-      v-if="!mobile || started"
-      class="login-card d-none d-sm-flex"
+      :class="['login-card', started ? 'd-flex' : 'd-none', 'd-md-flex']"
       elevation="4"
       color="white"
       rounded="xl"
@@ -107,7 +107,7 @@ async function loginAccess(): Promise<void> {
   text-decoration: underline;
 }
 
-.container{
+.container {
   background-color: #ececec;
 }
 </style>
