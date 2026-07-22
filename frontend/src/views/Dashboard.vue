@@ -539,8 +539,8 @@ onMounted(async () => {
     </template>
 
     <template v-else-if="walker">
-      <h2 class="mb-4 text-black">
-        <v-icon icon="mdi-walk" size="23" class="me-2" />
+      <h2 class="mb-4">
+        <v-icon icon="mdi-walk" color="primary" size="23" class="me-2" />
         Meus Passeios
       </h2>
 
@@ -567,8 +567,8 @@ onMounted(async () => {
             @click="dismissTour(p.id)"
           />
 
-          <h5>
-            <v-icon icon="mdi-dog-side" />
+          <h5 class="text-primary"> 
+            <v-icon icon="mdi-dog" color="primary" />
             {{ p.dog?.nome }}
           </h5>
           <p>

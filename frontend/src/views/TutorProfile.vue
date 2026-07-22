@@ -49,7 +49,7 @@ onMounted(async () => {
   <v-container class="py-6">
     <v-row justify="center">
       <v-col cols="12" md="8" lg="6">
-        <v-card elevation="3" rounded="xl" class="pa-6">
+        <v-card elevation="3" rounded="xl" class="pa-6" color="white">
           <div class="text-center">
             <v-img
               :src="getPhoto(tutor.foto)"
