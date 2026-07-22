@@ -36,6 +36,7 @@ const activeTab = ref("recents");
 <style scoped>
 .bottom-navigation {
   background: linear-gradient(135deg, #01071f 0%, #0a0e27 100%);
+  border-radius: 50px;
 }
 
 .item {
