@@ -44,6 +44,11 @@ function start(): void {
   background-image: v-bind(bgImageStyle);
 }
 
+.btn-mustard{
+  border: 2px solid #1F1F1F;
+  box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.4);
+}
+
 .brand-name {
   position: absolute;
   top: 16px;
