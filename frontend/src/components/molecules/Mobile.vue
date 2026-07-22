@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BaseButton from "../atoms/BaseButton.vue";
-import dogPaw from "../../assets/images/pata-coracao.png";
 import dogImageUrl from "../../assets/images/dog.png";
 import { ref, computed } from "vue";
 
@@ -19,8 +18,8 @@ function start(): void {
 <template>
   <v-container fluid class="home-screen pa-0">
     <div class="brand-name d-flex d-md-none">
-      <v-img :src="dogPaw" alt="Pata" class="paw-icon" />
-      <span>Dog Walker</span>
+      <v-icon class="mr-2" color="primary">mdi-paw-outline</v-icon>
+      <span class="text-primary">Dog Walker</span>
     </div>
 
     <div class="btn-wrapper">
@@ -57,12 +56,6 @@ function start(): void {
   font-size: 1.25rem;
   color: black;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.paw-icon {
-  width: 30px;
-  height: 20px;
-  object-fit: contain;
 }
 
 .btn-wrapper {
