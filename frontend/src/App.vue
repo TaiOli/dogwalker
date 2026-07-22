@@ -10,8 +10,7 @@ const route = useRoute();
 const isLoginPage = computed<boolean>(() => {
   return (
     route.path === "/login" ||
-    route.path === "/cadastro-usuario" ||
-    route.path === "/inicio"
+    route.path === "/cadastro-usuario" 
   );
 });
 </script>
