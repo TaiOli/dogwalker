@@ -3,8 +3,11 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import SidebarMenu from "./components/organisms/SidebarMenu.vue";
 import Topbar from "./components/organisms/TopBar.vue";
+import BottomNavigation from "./components/organisms/BottomNavigation.vue";
+import { useDisplay } from 'vuetify'
 
 const route = useRoute();
+const { mobile } = useDisplay()
 
 // se está na página de login ou cadastro
 const isLoginPage = computed<boolean>(() => {
@@ -14,15 +17,16 @@ const isLoginPage = computed<boolean>(() => {
 
 <template>
   <div class="layout">
-    <SidebarMenu v-if="!isLoginPage" />
+    <SidebarMenu v-if="!isLoginPage && !mobile" />
 
     <div class="right-container">
-      <Topbar v-if="!isLoginPage" />
+      <Topbar v-if="!isLoginPage && !mobile"" />
 
       <div class="page-app">
         <router-view />
       </div>
     </div>
+    <BottomNavigation v-if="mobile && !isLoginPage"></BottomNavigation>
   </div>
 </template>
 
