@@ -12,7 +12,7 @@ import TutorProfile from "../views/TutorProfile.vue";
 const routes = [
   {
     path: "/",
-    redirect: "/inicio",
+    redirect: "/login",
   },
   {
     path: "/login",

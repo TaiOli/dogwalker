@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import BaseButton from "../atoms/BaseButton.vue";
-import { useRouter } from "vue-router";
 import dogPaw from "../../assets/images/pata-coracao.png";
 import dogImageUrl from "../../assets/images/dog.png";
 import { ref, computed } from "vue";
 
-const router = useRouter();
-
 const dogImage = ref<string>(dogImageUrl);
 const bgImageStyle = computed<string>(() => `url(${dogImage.value})`);
 
+const emit = defineEmits<{
+  start: [];
+}>();
+
 function start(): void {
-  router.push("/login");
+  emit("start");
 }
 </script>
 
