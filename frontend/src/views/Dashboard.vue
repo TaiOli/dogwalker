@@ -701,6 +701,8 @@ onMounted(async () => {
   border-radius: 12px;
   transition: 0.25s;
   padding: 20px;
+  max-width: 700px;
+  margin: 0 auto 16px auto;
 }
 
 .card:hover {
