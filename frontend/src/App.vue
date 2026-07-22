@@ -20,7 +20,7 @@ const isLoginPage = computed<boolean>(() => {
     <SidebarMenu v-if="!isLoginPage && !mobile" />
 
     <div class="right-container">
-      <Topbar v-if="!isLoginPage && !mobile"" />
+      <Topbar v-if="mobile && !isLoginPage"/>
 
       <div class="page-app">
         <router-view />
