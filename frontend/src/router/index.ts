@@ -27,7 +27,7 @@ const routes = [
     component: User,
   },
   {
-    path: "/dashboard",
+    path: "/inicio",
     component: Dashboard,
   },
   {

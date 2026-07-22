@@ -38,7 +38,7 @@ async function loginAccess(): Promise<void> {
     localStorage.setItem("user", JSON.stringify(data.user));
     localStorage.setItem("token", data.token);
     clearLogin();
-    router.push("/dashboard");
+    router.push("/inicio");
   } catch (error) {
     const err = error as { response?: { data?: ApiErrorResponse } };
     console.log(err);

@@ -39,7 +39,7 @@ function toggle(): void {
       density="comfortable"
     >
       <v-list-item
-        to="/dashboard"
+        to="/inicio"
         class="nav-item"
         prepend-icon="mdi-home"
         title="Dashboard"
