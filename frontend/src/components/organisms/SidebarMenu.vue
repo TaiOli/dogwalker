@@ -42,7 +42,7 @@ function toggle(): void {
         to="/inicio"
         class="nav-item"
         prepend-icon="mdi-home"
-        title="Dashboard"
+        title="Inicio"
       />
 
       <v-list-item
