@@ -66,7 +66,7 @@ function start(): void {
 .btn-wrapper {
   position: absolute;
   bottom: 32px;
-  left: 50%;
+  left: 58%;
   transform: translateX(-50%);
 }
 </style>
