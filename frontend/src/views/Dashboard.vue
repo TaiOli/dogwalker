@@ -604,8 +604,12 @@ onMounted(async () => {
 
           <div class="mt-3" v-if="p.status === 'aceito'">
             <BaseButton
-              color="primary"
-              label="✔ Finalizar passeio"
+              color="success"
+              variant="flat"
+              rounded="pill"
+              size="small"
+              class="finish"
+              label="Finalizar passeio"
               @click="openEvaluationWalker(p)"
             />
           </div>
@@ -718,6 +722,12 @@ onMounted(async () => {
   top: 14px;
   right: 14px;
   z-index: 2;
+}
+
+.finish{
+  width: 130px;
+  height: 36px;
+  border-radius: 999px !important;
 }
 
 textarea {
