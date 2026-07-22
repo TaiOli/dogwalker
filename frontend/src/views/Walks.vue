@@ -110,7 +110,7 @@ async function reject(id: number): Promise<void> {
         lg="3"
         xl="3"
       >
-        <v-card class="elevation-1 d-flex flex-column h-100">
+        <v-card class="elevation-1 d-flex flex-column h-100" color="white">
           <v-card-item class="flex-grow-1">
             <v-card-title
               class="text-h6 font-weight-bold text-primary mt-2 mb-3"
