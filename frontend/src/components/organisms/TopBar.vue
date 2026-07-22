@@ -62,7 +62,7 @@ function handleLogout(): void {
 <style scoped>
 .topbar {
   height: 70px;
-  background: linear-gradient(135deg, #01071f 0%, #0a0e27 100%);
+  background: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
