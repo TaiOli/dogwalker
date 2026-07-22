@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import BaseButton from "../atoms/BaseButton.vue";
+import { useAuth } from "../../composables/userAuth";
 
+const { tutor, walker } = useAuth();
 const activeTab = ref("recents");
 </script>
 
@@ -13,17 +15,17 @@ const activeTab = ref("recents");
         Inicio
       </BaseButton>
 
-      <BaseButton to="/cadastro-cachorro" class="item">
+      <BaseButton v-if="tutor" to="/cadastro-cachorro" class="item">
         <v-icon>mdi-dog</v-icon>
         Meus cachorros
       </BaseButton>
 
-      <BaseButton to="/agendar-passeio" class="item">
+      <BaseButton v-if="tutor" to="/agendar-passeio" class="item">
         <v-icon>mdi-plus</v-icon>
         Solicitar passeio
       </BaseButton>
 
-      <BaseButton to="/passeios" class="item">
+      <BaseButton v-if="walker" to="/passeios" class="item">
         <v-icon>mdi-walk</v-icon>
         Passeios disponíveis
       </BaseButton>
