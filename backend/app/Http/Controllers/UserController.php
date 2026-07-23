@@ -23,7 +23,7 @@ class UserController extends Controller
         $user = $this->userService->create($request->toDto());
 
         return response()->json([
-            'message' => 'Usuário criado com sucesso',
+            'message' => 'Usuário criado com sucesso!',
             'user'    => (new UserResponseDTO($user))->toArray(),
         ], 201);
     }
@@ -34,12 +34,12 @@ class UserController extends Controller
 
         if (!$result) {
             return response()->json([
-                'message' => 'Credenciais inválidas'
+                'message' => 'Credenciais inválidas!'
             ], 401);
         }
 
         return response()->json([
-            'message' => 'Login realizado com sucesso',
+            'message' => 'Login realizado com sucesso!',
             'user' => $result['user'],
             'token' => $result['token']
         ], 201);

@@ -22,7 +22,7 @@ class TourController extends Controller
         $tour = $this->tourService->create($request->toDto());
 
         return response()->json([
-            'message' => 'Passeio solicitado com sucesso',
+            'message' => 'Passeio solicitado com sucesso!',
             'passeio' => (new TourResponseDTO($tour))->toArray(),
         ], 201);
     }
@@ -39,7 +39,7 @@ class TourController extends Controller
             $tour = $this->tourService->accept($id, $request->user()->id);
 
             return response()->json([
-                'message' => 'Passeio aceito com sucesso',
+                'message' => 'Passeio aceito com sucesso!',
                 'passeio' => (new TourResponseDTO($tour))->toArray(),
             ], 200);
         } catch (TourNotFoundException $e) {
@@ -55,7 +55,7 @@ class TourController extends Controller
             $tour = $this->tourService->reject($id, $request->user()->id);
 
             return response()->json([
-                'message' => 'Passeio recusado',
+                'message' => 'Passeio recusado!',
                 'status' => $tour->status
             ], 200);
         } catch (TourNotFoundException $e) {
@@ -78,7 +78,7 @@ class TourController extends Controller
             $tour = $this->tourService->cancel($id, $request->user()->id);
 
             return response()->json([
-                'message' => 'Passeio cancelado com sucesso',
+                'message' => 'Passeio cancelado com sucesso!',
                 'passeio' => (new TourResponseDTO($tour))->toArray(),
             ], 200);
         } catch (TourNotFoundException $e) {
@@ -113,7 +113,7 @@ class TourController extends Controller
             $this->tourService->delete($id, $request->user()->id);
 
             return response()->json([
-                'message' => 'Passeio removido com sucesso'
+                'message' => 'Passeio removido com sucesso!'
             ], 200);
         } catch (TourNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], 404);

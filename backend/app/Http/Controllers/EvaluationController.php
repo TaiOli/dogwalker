@@ -20,7 +20,7 @@ class EvaluationController extends Controller
 
             $evaluation = $this->evaluationService->create($request->toDto());
             return response()->json([
-                'message' => 'Avaliação enviada com sucesso',
+                'message' => 'Avaliação enviada com sucesso!',
                 'avaliacao' => $evaluation
             ], 201);
         } catch (TourNotFoundException $e) {

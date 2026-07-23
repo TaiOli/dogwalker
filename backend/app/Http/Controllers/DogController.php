@@ -41,7 +41,7 @@ class DogController extends Controller
             $dog = $this->dogService->update($dto, $id, $request->user()->id);
 
             return response()->json([
-                'message' => 'Cachorro atualizado com sucesso',
+                'message' => 'Cadastro do cachorro atualizado com sucesso!',
                 'dog'     => (new DogResponseDTO($dog))->toArray(),
             ], 200);
             // Status 200: Sucesso
@@ -63,7 +63,7 @@ class DogController extends Controller
         try {
             $this->dogService->delete($id, $request->user()->id);
 
-            return response()->json(['message' => 'Cachorro removido com sucesso'], 200);
+            return response()->json(['message' => 'Cadastro do cachorro removido com sucesso!'], 200);
         } catch (DogNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         } catch (DogUnauthorizedException $e) {
