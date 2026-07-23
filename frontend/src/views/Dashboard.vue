@@ -387,17 +387,17 @@ onMounted(async () => {
 
           <div class="text-black text-center">
             <h5 class="d-flex justify-center align-center ga-2">
-              <v-icon size="20">mdi-dog</v-icon>
+              <v-icon size="20" color="amber">mdi-paw-outline</v-icon>
               {{ p.dog?.nome }}
             </h5>
 
             <p class="d-flex justify-center align-center ga-2">
-              <v-icon size="18">mdi-calendar</v-icon>
+              <v-icon size="18" color="primary">mdi-calendar-outline</v-icon>
               {{ formatDate(p.data) }} - {{ p.hora }}
             </p>
 
             <p class="d-flex justify-center align-center ga-2">
-              <v-icon size="18">mdi-map-marker</v-icon>
+              <v-icon size="18" color="red-darken-4">mdi-map-marker-outline</v-icon>
               {{ p.local }}
             </p>
 
@@ -422,7 +422,7 @@ onMounted(async () => {
               class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
               v-else
             >
-              <v-icon size="16" color="primary">mdi-timer-sand</v-icon>
+              <v-icon size="16" color="orange-darken-2">mdi-timer-sand</v-icon>
               Aguardando um passeador aceitar
             </p>
           </div>
