@@ -667,8 +667,9 @@ onMounted(async () => {
               color="success"
               variant="tonal"
               size="small"
-              class="finish"
+              class="finish text-success"
               label="Finalizar passeio"
+              prepend-icon="mdi-check-circle"
               @click="openEvaluationWalker(p)"
             />
           </div>
@@ -789,7 +790,7 @@ h4 {
 }
 
 .finish {
-  width: 140px;
+  width: 155px;
   height: 36px;
   border-radius: 999px !important;
 }
