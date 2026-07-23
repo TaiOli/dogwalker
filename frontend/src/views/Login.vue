@@ -73,7 +73,7 @@ async function loginAccess(): Promise<void> {
       width="100%"
     >
       <v-card-text class="pa-6 text-center">
-        <v-icon size="56" color="primary" class="mb-3"> mdi-dog</v-icon>
+        <v-icon size="56" color="primary" class="mb-3"> mdi-paw-outline</v-icon>
         <h2 class="mb-2 text-primary">Dog Walker</h2>
         <p class="text-medium-emphasis mb-6">Entrar no sistema</p>
         <UserAuthForm
