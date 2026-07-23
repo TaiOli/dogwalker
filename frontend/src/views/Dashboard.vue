@@ -612,20 +612,35 @@ onMounted(async () => {
             @click="dismissTour(p.id)"
           />
 
-          <h5 class="text-primary">
-            <v-icon icon="mdi-dog" color="primary" />
+          <h5>
+            <v-icon icon="mdi-paw-outline" color="amber" size="25" />
             {{ p.dog?.nome }}
           </h5>
           <p>
-            <v-icon icon="mdi-calendar" class="me-2" />
+            <v-icon
+              icon="mdi-calendar"
+              color="primary"
+              class="me-2"
+              size="18"
+            />
             {{ formatDate(p.data) }} - {{ p.hora }}
           </p>
           <p>
-            <v-icon icon="mdi-map-marker-outline" class="me-2" />
+            <v-icon
+              icon="mdi-map-marker-outline"
+              color="red-darken-4"
+              class="me-2"
+              size="18"
+            />
             {{ p.local }}
           </p>
-          <p class="text-medium-emphasis text-caption">
-            <v-icon icon="mdi-account-outline" class="me-2" />
+          <p class="text-medium-emphasis text-caption text-black">
+            <v-icon
+              icon="mdi-account-outline"
+              color="primary"
+              class="me-2"
+              size="18"
+            />
             Tutor:
             <strong>{{ p.tutor?.nome }}</strong>
           </p>
@@ -650,8 +665,7 @@ onMounted(async () => {
           <div class="mt-3" v-if="p.status === 'aceito'">
             <BaseButton
               color="success"
-              variant="flat"
-              rounded="pill"
+              variant="tonal"
               size="small"
               class="finish"
               label="Finalizar passeio"
@@ -754,7 +768,8 @@ onMounted(async () => {
   margin: 0 auto 16px auto;
 }
 
-h2, h4 {
+h2,
+h4 {
   font-size: 23px;
 }
 
@@ -774,7 +789,7 @@ h2, h4 {
 }
 
 .finish {
-  width: 130px;
+  width: 140px;
   height: 36px;
   border-radius: 999px !important;
 }

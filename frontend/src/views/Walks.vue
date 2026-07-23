@@ -107,26 +107,24 @@ async function reject(id: number): Promise<void> {
         :key="p.id"
         cols="12"
         md="6"
-        lg="3"
-        xl="3"
+        lg="4"
+        xl="4"
       >
         <v-card class="elevation-1 d-flex flex-column h-100" color="white">
           <v-card-item class="flex-grow-1">
-            <v-card-title
-              class="text-h6 font-weight-bold text-primary mt-2 mb-3"
-            >
-              <v-icon start color="primary">mdi-dog</v-icon>
+            <v-card-title class="mt-2 mb-3">
+              <v-icon start color="amber" size="25">mdi-paw-outline</v-icon>
               {{ p.dog?.nome }}
             </v-card-title>
 
             <v-card-text class="pa-0 text-center">
-              <div class="d-flex justify-center align-center ga-2 mb-2">
-                <v-icon size="18">mdi-calendar</v-icon>
+              <div class="d-flex justify-center align-center ga-1 mb-2">
+                <v-icon size="18" color="primary">mdi-calendar</v-icon>
                 <span>{{ p.data }} - {{ p.hora }}</span>
               </div>
 
-              <div class="d-flex justify-center align-center ga-2 mb-4">
-                <v-icon size="18">mdi-map-marker</v-icon>
+              <div class="d-flex justify-center align-center ga-1 mb-4">
+                <v-icon size="18" color="red-darken-4">mdi-map-marker</v-icon>
                 <span>{{ p.local }}</span>
               </div>
 
@@ -163,8 +161,6 @@ async function reject(id: number): Promise<void> {
               <BaseButton
                 color="error"
                 variant="flat"
-                rounded="pill"
-                size="small"
                 class="action-btn"
                 :disabled="loadId === p.id"
                 @click="reject(p.id)"
@@ -186,7 +182,7 @@ h2 {
 }
 
 .profile-btn {
-  min-width: 240px;
+  min-width: 150px;
   min-height: 40px;
   border-radius: 999px !important;
   font-size: 12px !important;
@@ -195,8 +191,9 @@ h2 {
 }
 
 .action-btn {
-  width: 110px;
+  width: 80px;
   height: 36px;
+  font-size: 13px;
   border-radius: 999px !important;
 }
 </style>
