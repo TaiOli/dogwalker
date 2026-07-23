@@ -182,7 +182,7 @@ async function reject(id: number): Promise<void> {
 
 <style scoped>
 h2 {
-  font-size: 25px;
+  font-size: 23px;
 }
 
 .profile-btn {

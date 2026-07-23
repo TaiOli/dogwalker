@@ -47,7 +47,7 @@ async function save(): Promise<void> {
       <v-col cols="12" md="10" lg="8">
         <div class="d-flex align-center ga-2 mb-5">
           <v-icon color="primary" size="32">mdi-plus</v-icon>
-          <h2 class="text-h4 font-weight-bold text-black">Solicitar Passeio</h2>
+          <h2 class="font-weight-bold text-black">Solicitar Passeio</h2>
         </div>
 
         <v-card elevation="3" rounded="xl" class="pa-6" color="white">
@@ -67,5 +67,9 @@ async function save(): Promise<void> {
 <style scoped>
 .card {
   padding: 30px;
+}
+
+h2 {
+  font-size: 23px;
 }
 </style>

@@ -245,7 +245,7 @@ onMounted(loadDogs);
 
 h2 {
   text-align: left;
-  font-size: 25px;
+  font-size: 23px;
 }
 
 .position-relative {

@@ -363,7 +363,7 @@ onMounted(async () => {
                   label="Ver perfil"
                   class="text-decoration-none text-white"
                   :to="`/passeador-perfil/${w.id}`"
-                  color="success"
+                  color="blue-lighten-1"
                   block
                 />
                 <BaseButton
@@ -752,6 +752,10 @@ onMounted(async () => {
   padding: 20px;
   max-width: 700px;
   margin: 0 auto 16px auto;
+}
+
+h2 {
+  font-size: 23px;
 }
 
 .card:hover {

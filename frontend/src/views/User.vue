@@ -70,7 +70,7 @@ async function salvar(): Promise<void> {
 }
 
 h2 {
-  font-size: 28px;
+  font-size: 23px;
 }
 
 .back-link {
