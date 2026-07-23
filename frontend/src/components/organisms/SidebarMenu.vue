@@ -15,7 +15,7 @@ function toggle(): void {
   <aside :class="['sidebar', { collapsed }]">
     <div class="header">
       <h2 v-if="!collapsed" class="brand-title">
-        <v-icon icon="mdi-dog" color="white" class="me-2" />
+        <v-icon icon="mdi-paw-outline" color="white" class="me-2" />
         Dog Walker
       </h2>
 
@@ -99,7 +99,7 @@ function toggle(): void {
 }
 
 .brand-title {
-  font-size: 1.5rem;
+  font-size: 1.0rem;
   font-weight: 600;
   margin: 0;
   white-space: nowrap;
@@ -113,6 +113,7 @@ function toggle(): void {
 .toggle-btn {
   flex-shrink: 0;
   transition: transform 0.3s ease;
+  padding-right: 10px;
 }
 
 .toggle-btn:hover {
@@ -134,9 +135,10 @@ function toggle(): void {
   position: relative;
   text-decoration: none;
 }
-s .nav-item:hover {
-  background: rgba(255, 255, 255, 0.15) !important;
-  color: #ffffff !important;
+
+.nav-item:hover {
+  background: rgba(255, 193, 7, 0.15) !important; 
+  color: #FFC107 !important;                    
 }
 
 .nav-item.logout {
