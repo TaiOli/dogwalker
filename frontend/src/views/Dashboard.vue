@@ -324,7 +324,7 @@ onMounted(async () => {
                 />
                 <BaseButton
                   :to="{
-                    path: '/agendar-passeio',
+                    path: '/solicitar-passeio',
                     query: { walkerId: w.id, walkerNome: w.nome },
                   }"
                   color="success"

@@ -55,7 +55,7 @@ function toggle(): void {
 
       <v-list-item
         v-if="tutor"
-        to="/agendar-passeio"
+        to="/solicitar-passeio"
         class="nav-item"
         prepend-icon="mdi-plus"
         title="Solicitar passeio"

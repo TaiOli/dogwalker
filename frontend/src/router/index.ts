@@ -35,7 +35,7 @@ const routes = [
     component: RegisterDog,
   },
   {
-    path: "/agendar-passeio",
+    path: "/solicitar-passeio",
     component: ScheduleTour,
   },
   {

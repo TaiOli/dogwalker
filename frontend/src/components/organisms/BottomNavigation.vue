@@ -20,7 +20,7 @@ const activeTab = ref("recents");
         Meus cachorros
       </BaseButton>
 
-      <BaseButton v-if="tutor" to="/agendar-passeio" class="item">
+      <BaseButton v-if="tutor" to="/solicitar-passeio" class="item">
         <v-icon>mdi-plus</v-icon>
         Solicitar passeio
       </BaseButton>
