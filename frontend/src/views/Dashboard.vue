@@ -308,9 +308,12 @@ onMounted(async () => {
                 cover
               />
               <h5>{{ w.nome }}</h5>
-              <p>📱 {{ w.telefone }}</p>
               <p>
-                <v-icon icon="mdi-star-four-points" color="primary" />
+                <v-icon icon="mdi-phone" color="primary"/>
+                {{ w.telefone }}
+              </p>
+              <p>
+                <v-icon icon="mdi-star-four-points" color="amber" />
                 <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
                 <span v-else>Sem avaliações</span>
               </p>
@@ -438,7 +441,7 @@ onMounted(async () => {
             v-if="p.status === 'finalizado' && !p.rated_by_tutor"
           >
             <BaseButton
-              color="primary"
+              color="amber"
               label="Avaliar Passeador"
               prepend-icon="mdi-star-four-points"
               class="btn-evaluation"
@@ -487,7 +490,7 @@ onMounted(async () => {
               <v-divider class="mb-4" />
 
               <div class="d-flex justify-center align-center ga-2 mb-4">
-                <v-icon color="primary">mdi-star</v-icon>
+                <v-icon color="amber">mdi-star</v-icon>
 
                 <h5 class="mb-0 text-black">Como foi o passeador?</h5>
               </div>

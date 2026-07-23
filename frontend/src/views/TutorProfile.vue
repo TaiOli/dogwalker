@@ -91,7 +91,7 @@ onMounted(async () => {
           <v-divider class="my-5" />
 
           <div class="d-flex justify-center align-center ga-2 mb-4">
-            <v-icon color="primary" size="24">mdi-star</v-icon>
+            <v-icon color="amber" size="24">mdi-star</v-icon>
             <span class="text-h6 font-weight-bold">
               Avaliações de Passeadores
             </span>

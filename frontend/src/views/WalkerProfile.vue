@@ -93,7 +93,7 @@ onMounted(async () => {
           <v-divider class="my-5" />
 
           <div class="d-flex justify-center align-center ga-2 mb-4">
-            <v-icon color="primary">mdi-star</v-icon>
+            <v-icon color="amber">mdi-star</v-icon>
             <h4 class="text-h6 mb-0">Avaliações de Tutores</h4>
           </div>
 
