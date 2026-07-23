@@ -148,7 +148,6 @@ onMounted(loadDogs);
             variant="text"
             size="small"
             class="dismiss-btn"
-            color="red-darken-4"
             :disabled="excludingId === dog.id"
             @click="removeDog(dog)"
           />
