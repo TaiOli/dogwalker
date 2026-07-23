@@ -69,4 +69,8 @@ const emit = defineEmits<{
 :deep(.v-field__overlay) {
   opacity: 0 !important;
 }
+
+:deep(.v-field-label--floating) {
+  transform: translateY(-10px) scale(0.9) !important;
+}
 </style>

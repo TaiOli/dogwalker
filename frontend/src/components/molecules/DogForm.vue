@@ -58,6 +58,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           v-model="form.name"
           required
           label="Nome do cachorro"
+          prepend-inner-icon="mdi-dog"
+          icon-color="primary mx-2"
           :error-message="nameError"
           @update:modelValue="nameError = ''"
         />
@@ -66,16 +68,27 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
-        <BaseInput v-model="form.age" type="number" label="Idade" />
+        <BaseInput
+          v-model="form.age"
+          type="number"
+          label="Idade"
+          prepend-inner-icon="mdi-cake-variant"
+          icon-color="primary mx-2"
+        />
       </v-col>
     </v-row>
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
+        <div class="text-left">
+          <label>
+            <v-icon class="me-2" color="primary">mdi-ruler</v-icon>
+            Porte <span>*</span>
+          </label>
+        </div>
         <BaseSelect
           v-model="form.size"
-          required
-          label="Porte"
+          class="mb-3"
           :options="sizeOptions"
           labelKey="label"
           valueKey="value"
@@ -87,13 +100,23 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
-        <BaseInput v-model="form.breed" label="Raça" />
+        <BaseInput
+          v-model="form.breed"
+          label="Raça"
+          prepend-inner-icon="mdi-paw-outline"
+          icon-color="amber mx-2"
+        />
       </v-col>
     </v-row>
 
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
-        <BaseInput v-model="form.observations" label="Observações" />
+        <BaseInput
+          v-model="form.observations"
+          label="Observações"
+          prepend-inner-icon="mdi-comment-text-outline"
+          icon-color="primary mx-2"
+        />
       </v-col>
     </v-row>
 
@@ -137,5 +160,9 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 .dog-photo {
   max-width: 100%;
   max-height: 200px;
+}
+
+label {
+  font-size: 12px;
 }
 </style>

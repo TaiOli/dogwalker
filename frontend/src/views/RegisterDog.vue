@@ -161,12 +161,16 @@ onMounted(loadDogs);
             </v-card-title>
 
             <v-card-text class="py-1">
-              <v-icon icon="mdi-paw" class="me-2" color="primary" />
+              <v-icon icon="mdi-paw-outline" class="me-2" color="amber" />
               {{ dog.raca }}
             </v-card-text>
 
             <v-card-text class="py-1">
-              <v-icon icon="mdi-cake-variant" class="me-2" color="primary" />
+              <v-icon
+                icon="mdi-cake-variant"
+                class="me-2"
+                color="brown-darken-4"
+              />
               {{ dog.idade }} anos
             </v-card-text>
 
@@ -243,7 +247,8 @@ onMounted(loadDogs);
   padding: 18px;
 }
 
-h2, h3 {
+h2,
+h3 {
   text-align: left;
   font-size: 23px;
 }
