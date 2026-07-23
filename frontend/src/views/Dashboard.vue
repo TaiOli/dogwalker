@@ -5,6 +5,7 @@ import { api } from "../services/api";
 import { getPhoto } from "../utils/image";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseTextarea from "../components/atoms/BaseTextarea.vue";
+import Color from "vuetify/directives/color";
 
 interface Dog {
   id: number;
@@ -165,20 +166,60 @@ async function loadTours(): Promise<void> {
   }
 }
 
-function badgeStatus(status: TourStatus): string {
+type BadgeStatus =
+  | { variant: "flat"; style: { backgroundColor: string; color: string } }
+  | { variant: "outlined"; color: string };
+
+function badgeStatus(status: TourStatus): BadgeStatus {
   switch (status) {
     case "pendente":
-      return "warning";
+      return {
+        variant: "flat",
+        style: {
+          backgroundColor: "#fbecdc",
+          color: "#9d673d",
+        },
+      };
     case "aceito":
-      return "success";
+      return {
+        variant: "flat",
+        style: {
+          backgroundColor: "#EAF3DE",
+          color: "#27500A",
+        },
+      };
     case "recusado":
-      return "error";
+      return {
+        variant: "flat",
+        style: {
+          backgroundColor: "#FCEBEB",
+          color: "#791F1F",
+        },
+      };
     case "finalizado":
-      return "primary";
+      return {
+        variant: "flat",
+        style: {
+          backgroundColor: "#E6F1FB",
+          color: "#0C447C",
+        },
+      };
     case "cancelado":
-      return "error";
+      return {
+        variant: "flat",
+        style: {
+          backgroundColor: "#F1EFE8",
+          color: "#444441",
+        },
+      };
     default:
-      return "grey";
+      return {
+        variant: "flat",
+        style: {
+          backgroundColor: "#F1EFE8",
+          color: "#444441",
+        },
+      };
   }
 }
 
@@ -309,7 +350,7 @@ onMounted(async () => {
               />
               <h5>{{ w.nome }}</h5>
               <p>
-                <v-icon icon="mdi-phone" color="primary"/>
+                <v-icon icon="mdi-phone" color="primary" />
                 {{ w.telefone }}
               </p>
               <p>
@@ -397,7 +438,9 @@ onMounted(async () => {
             </p>
 
             <p class="d-flex justify-center align-center ga-2">
-              <v-icon size="18" color="red-darken-4">mdi-map-marker-outline</v-icon>
+              <v-icon size="18" color="red-darken-4"
+                >mdi-map-marker-outline</v-icon
+              >
               {{ p.local }}
             </p>
 
@@ -405,7 +448,7 @@ onMounted(async () => {
               class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
               v-if="p.walker"
             >
-              <v-icon size="16">mdi-walk</v-icon>
+              <v-icon size="16" color="primary">mdi-walk</v-icon>
               Passeador:
               <strong>{{ p.walker?.nome }}</strong>
             </p>
@@ -428,10 +471,9 @@ onMounted(async () => {
           </div>
 
           <v-chip
-            :color="badgeStatus(p.status)"
-            variant="outlined"
+            v-bind="badgeStatus(p.status)"
             size="small"
-            class="text-capitalize text-white text-caption font-weight-medium px-4"
+            class="text-capitalize text-caption font-weight-medium px-4"
           >
             {{ p.status }}
           </v-chip>
@@ -570,7 +612,7 @@ onMounted(async () => {
             @click="dismissTour(p.id)"
           />
 
-          <h5 class="text-primary"> 
+          <h5 class="text-primary">
             <v-icon icon="mdi-dog" color="primary" />
             {{ p.dog?.nome }}
           </h5>
@@ -597,7 +639,7 @@ onMounted(async () => {
           </p>
 
           <v-chip
-            :color="badgeStatus(p.status)"
+            v-bind="badgeStatus(p.status)"
             size="small"
             variant="tonal"
             class="text-capitalize ext-white text-caption font-weight-medium px-4"
@@ -727,7 +769,7 @@ onMounted(async () => {
   z-index: 2;
 }
 
-.finish{
+.finish {
   width: 130px;
   height: 36px;
   border-radius: 999px !important;
