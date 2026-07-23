@@ -36,7 +36,7 @@ const emit = defineEmits<{
 
 <template>
   <v-select
-    :label="required ? `${label} *` : label"
+    :label="label"
     :items="options"
     :item-title="labelKey"
     :item-value="valueKey"

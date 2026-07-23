@@ -65,6 +65,7 @@ function handleSubmit(): void {
           v-model="form.dog_id"
           label="Cachorro"
           prepend-inner-icon="mdi-dog"
+          icon-color="primary mx-2"
           :options="dogs"
           labelKey="nome"
           valueKey="id"
@@ -75,8 +76,8 @@ function handleSubmit(): void {
         <BaseSelect
           v-model="form.walker_id"
           required
-          label="Passeador"
           prepend-inner-icon="mdi-account"
+          icon-color="primary mx-2"
           :options="walkerOptions"
           labelKey="name"
           valueKey="id"
@@ -91,6 +92,7 @@ function handleSubmit(): void {
           type="date"
           label="Data"
           prepend-inner-icon="mdi-calendar"
+          icon-color="primary mx-2"
         />
       </v-col>
 
@@ -100,6 +102,7 @@ function handleSubmit(): void {
           type="time"
           label="Hora"
           prepend-inner-icon="mdi-clock-outline"
+          icon-color="orange-darken-1 mx-2"
         />
       </v-col>
 
@@ -109,6 +112,7 @@ function handleSubmit(): void {
           type="time"
           label="Duração"
           prepend-inner-icon="mdi-timer-outline"
+          icon-color="primary mx-2"
         />
       </v-col>
 
@@ -118,6 +122,7 @@ function handleSubmit(): void {
           type="number"
           label="Valor"
           prepend-inner-icon="mdi-cash"
+          icon-color="green mx-2"
         />
       </v-col>
 
@@ -125,7 +130,8 @@ function handleSubmit(): void {
         <BaseInput
           v-model="form.location"
           label="Local"
-          prepend-inner-icon="mdi-map-marker"
+          prepend-inner-icon="mdi-map-marker-outline"
+          icon-color="red-darken-4 mx-2"
         />
       </v-col>
     </v-row>
