@@ -754,7 +754,7 @@ onMounted(async () => {
   margin: 0 auto 16px auto;
 }
 
-h2 {
+h2, h4 {
   font-size: 23px;
 }
 

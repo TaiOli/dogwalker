@@ -97,7 +97,7 @@ onMounted(loadDogs);
       <v-col cols="auto">
         <div class="d-flex align-center ga-2">
           <v-icon color="primary">mdi-dog</v-icon>
-          <h3 class="text-h4 font-weight-bold text-black">Cadastro do Dog</h3>
+          <h3 class="font-weight-bold text-black">Cadastro do Dog</h3>
         </div>
       </v-col>
 
@@ -243,7 +243,7 @@ onMounted(loadDogs);
   padding: 18px;
 }
 
-h2 {
+h2, h3 {
   text-align: left;
   font-size: 23px;
 }

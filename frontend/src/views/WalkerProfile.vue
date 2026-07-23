@@ -94,7 +94,7 @@ onMounted(async () => {
 
           <div class="d-flex justify-center align-center ga-2 mb-4">
             <v-icon color="amber">mdi-star</v-icon>
-            <h4 class="text-h6 mb-0">Avaliações de Tutores</h4>
+            <h4 class="mb-0">Avaliações de Tutores</h4>
           </div>
 
           <v-alert v-if="!evaluations.length" type="info" variant="tonal">
