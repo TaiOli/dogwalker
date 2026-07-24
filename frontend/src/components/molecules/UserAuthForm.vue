@@ -28,7 +28,7 @@ function handleSubmit(): void {
 </script>
 
 <template>
-  <v-container class="pa-0">
+  <v-container class="pa-0 mx-auto">
     <v-row justify="center">
       <v-col cols="12" sm="8">
         <BaseInput

@@ -58,8 +58,8 @@ function handleSubmit(): void {
 </script>
 
 <template>
-  <v-container class="pa-0">
-    <v-row class="ga-2 mt-5">
+  <v-container class="pa-0 mx-auto">
+    <v-row class="ga-2 mt-5" justify="center">
       <v-col cols="12" md="8" class="mx-auto">
         <BaseSelect
           v-model="form.dog_id"
