@@ -20,15 +20,13 @@ function toggle(): void {
       </h2>
 
       <BaseButton
-        label="Menu"
-        con="mdi-menu"
+        icon="mdi-menu"
         variant="text"
         size="small"
         color="white"
         class="toggle-btn"
         @click="toggle"
       >
-        <v-icon>mdi-menu</v-icon>
       </BaseButton>
     </div>
 
@@ -113,7 +111,7 @@ function toggle(): void {
 .toggle-btn {
   flex-shrink: 0;
   transition: transform 0.3s ease;
-  padding-right: 10px;
+  padding-right: 15px;
 }
 
 .toggle-btn:hover {
