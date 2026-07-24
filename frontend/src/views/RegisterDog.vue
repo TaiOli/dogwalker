@@ -143,14 +143,15 @@ onMounted(loadDogs);
           elevation="3"
           rounded="xl"
         >
-          <BaseButton
-            icon="mdi-close"
-            variant="text"
-            size="small"
-            class="dismiss-btn"
-            :disabled="excludingId === dog.id"
-            @click="removeDog(dog)"
-          />
+          <div class="d-flex justify-end mt-2">
+            <BaseButton
+              icon="mdi-close"
+              variant="text"
+              size="large"
+              :disabled="excludingId === dog.id"
+              @click="removeDog(dog)"
+            />
+          </div>
 
           <v-img :src="dog.foto" class="card-img-top dog-img" alt="Foto Dog" />
 
@@ -254,21 +255,6 @@ h3 {
 
 .position-relative {
   position: relative;
-}
-
-.dismiss-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 2;
-  background-color: #fff;
-  border-radius: 50%;
-  padding: 6px;
-  opacity: 0.9;
-}
-
-.dismiss-btn:hover {
-  opacity: 1;
 }
 
 .modal-overlay {

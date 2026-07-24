@@ -406,25 +406,26 @@ onMounted(async () => {
         elevation="2"
       >
         <v-card-text>
-          <BaseButton
-            v-if="['pendente', 'aceito', 'recusado'].includes(p.status)"
-            icon="mdi-close"
-            size="small"
-            variant="text"
-            label=""
-            class="dismiss-btn"
-            :aria-label="
-              p.status === 'pendente' || p.status === 'aceito'
-                ? 'Cancelar passeio'
-                : 'Remover do dashboard'
-            "
-            :title="
-              p.status === 'pendente' || p.status === 'aceito'
-                ? 'Cancelar passeio'
-                : 'Remover do dashboard'
-            "
-            @click="onXClickTutor(p)"
-          />
+          <div class="d-flex justify-end">
+            <BaseButton
+              v-if="['pendente', 'aceito', 'recusado'].includes(p.status)"
+              icon="mdi-close"
+              size="large"
+              variant="text"
+              label=""
+              :aria-label="
+                p.status === 'pendente' || p.status === 'aceito'
+                  ? 'Cancelar passeio'
+                  : 'Remover do dashboard'
+              "
+              :title="
+                p.status === 'pendente' || p.status === 'aceito'
+                  ? 'Cancelar passeio'
+                  : 'Remover do dashboard'
+              "
+              @click="onXClickTutor(p)"
+            />
+          </div>
 
           <div class="text-black text-center">
             <h5 class="d-flex justify-center align-center ga-2">
@@ -780,13 +781,6 @@ h4 {
 
 .position-relative {
   position: relative;
-}
-
-.dismiss-btn {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 2;
 }
 
 .finish {
