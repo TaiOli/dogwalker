@@ -144,7 +144,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row class="mt-2">
-      <v-col cols="12" md="8" class="mx-auto mb-3">
+      <v-col cols="12" md="6" sm="6" class="mx-auto mb-3">
         <BaseButton
           class="btn-mustard"
           :label="labelButton"
