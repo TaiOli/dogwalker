@@ -19,15 +19,22 @@ function toggle(): void {
         Dog Walker
       </h2>
 
-      <BaseButton
-        icon="mdi-menu"
-        variant="text"
-        size="small"
-        color="white"
-        class="toggle-btn"
-        @click="toggle"
-      >
-      </BaseButton>
+      <v-hover v-slot:default="{ isHovering, props }">
+        <BaseButton
+          v-bind="props"
+          icon="mdi-menu"
+          variant="text"
+          size="small"
+          color="white"
+          class="pe-3 flex-shrink-0"
+          :style="{
+            transition: 'transform 0.3s ease',
+            transform: isHovering ? 'scale(1.1)' : 'scale(1)'
+          }"
+          @click="toggle"
+        />
+      </v-hover>
+
     </div>
 
     <v-list
@@ -106,16 +113,6 @@ function toggle(): void {
 
 .sidebar.collapsed .brand-title {
   display: none;
-}
-
-.toggle-btn {
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
-  padding-right: 15px;
-}
-
-.toggle-btn:hover {
-  transform: scale(1.1);
 }
 
 .sidebar-nav {
