@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import BaseInput from "../atoms/BaseInput.vue";
 import BaseButton from "../atoms/BaseButton.vue";
 import BaseSelect from "../atoms/BaseSelect.vue";
@@ -42,11 +42,6 @@ const emit = defineEmits<{ submit: [] }>();
 
 const walkerError = ref("");
 
-const walkerOptions = computed(() => [
-  { id: "", name: "Selecione um passeador..." },
-  ...props.walkers.map((w) => ({ id: w.id, name: w.nome ?? w.name ?? "" })),
-]);
-
 function handleSubmit(): void {
   if (!props.form.walker_id) {
     walkerError.value = "Selecione um passeador!";
@@ -63,10 +58,10 @@ function handleSubmit(): void {
       <v-col cols="12" md="8" class="mx-auto">
         <BaseSelect
           v-model="form.dog_id"
-          label="Cachorro"
+          placeholder="Cachorro"
           prepend-inner-icon="mdi-dog"
-          icon-color="primary mx-2"
-          :options="dogs"
+          icon-color="primary mx-2 mt-2"
+          :items="[{ nome: 'Selecione um cachorro', id: '' }, ...dogs]"
           labelKey="nome"
           valueKey="id"
         />
@@ -77,8 +72,11 @@ function handleSubmit(): void {
           v-model="form.walker_id"
           required
           prepend-inner-icon="mdi-account"
-          icon-color="primary mx-2"
-          :options="walkerOptions"
+          icon-color="primary mx-2  mt-2"
+          :items="[
+            { id: '', name: 'Selecione um passeador...' },
+            ...walkers.map((w) => ({ id: w.id, name: w.nome ?? w.name ?? '' })),
+          ]"
           labelKey="name"
           valueKey="id"
           :error-message="walkerError"

@@ -29,11 +29,6 @@ const emailError = ref("");
 const passwordError = ref("");
 const typeuserError = ref("");
 
-const typeUsers = [
-  { label: "Tutor", value: "tutor" },
-  { label: "Passeador", value: "passeador" },
-];
-
 function handleSubmit(): void {
   usernameError.value = !props.form.username ? "Insira um username!" : "";
   nameError.value = !props.form.name ? "Insira um nome!" : "";
@@ -123,8 +118,12 @@ function handlePhoto(value: string | number | File | File[] | null): void {
         <BaseSelect
           v-model="form.type_user"
           required
-          label="Tipo de Usuário"
-          :options="typeUsers"
+          class="mb-3"
+          :items="[
+            { label: 'Selecione o tipo de usuário', value: '' },
+            { label: 'Tutor', value: 'tutor' },
+            { label: 'Passeador', value: 'passeador' },
+          ]"
           labelKey="label"
           valueKey="value"
           :error-message="typeuserError"

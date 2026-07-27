@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<BaseSelectProps>(), {
   required: false,
   errorMessage: "",
   prependInnerIcon: "",
-  variant: "outlined",
+  variant: "underlined",
 });
 
 const emit = defineEmits<{
@@ -49,6 +49,7 @@ const selectItems = computed(() => {
     :item-title="labelKey"
     :item-value="valueKey"
     :placeholder="placeholder"
+    persistent-placeholder
     :model-value="modelValue"
     :error="!!errorMessage"
     :error-messages="errorMessage"

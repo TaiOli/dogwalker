@@ -31,7 +31,7 @@ const formRegister = reactive<RegisterForm>({
   email: "",
   password: "",
   phone: "",
-  type_user: "tutor",
+  type_user: "",
   photo: "",
 });
 
