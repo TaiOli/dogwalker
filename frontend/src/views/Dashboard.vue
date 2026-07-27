@@ -732,7 +732,7 @@ onMounted(async () => {
               </div>
 
               <BaseTextarea
-                class="mb-3"
+                class="mb-3 no-resize"
                 :rows="3"
                 placeholder="Comentário"
                 v-model="comment"
@@ -783,10 +783,6 @@ h4 {
   width: 155px;
   height: 36px;
   border-radius: 999px !important;
-}
-
-textarea {
-  resize: none;
 }
 
 .btn-evaluation {

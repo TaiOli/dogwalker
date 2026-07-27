@@ -73,7 +73,7 @@ onMounted(async () => {
       </p>
 
       <BaseButton
-        class="btn btn-edit mt-3 d-block mx-auto text-white"
+        class="btn-edit mt-3 d-block mx-auto text-white"
         label="Editar Cadastro"
         @click="editProfile"
       />
