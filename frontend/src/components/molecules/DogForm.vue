@@ -24,12 +24,6 @@ const nameError = ref("");
 const sizeError = ref("");
 const preview = ref<string | null>(null);
 
-const sizeOptions = [
-  { label: "Pequeno", value: "pequeno" },
-  { label: "Médio", value: "médio" },
-  { label: "Grande", value: "grande" },
-];
-
 function handleSubmit(): void {
   nameError.value = !props.form.name ? "Insira um nome!" : "";
   sizeError.value = !props.form.size ? "Selecione um porte!" : "";
