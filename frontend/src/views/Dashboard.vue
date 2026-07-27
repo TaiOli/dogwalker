@@ -400,7 +400,7 @@ onMounted(async () => {
       <v-card
         v-for="p in toursTutor"
         :key="p.id"
-        class="mb-3 position-relative card"
+        class="mb-3 card"
         color="white"
         elevation="2"
       >
@@ -596,7 +596,7 @@ onMounted(async () => {
       <v-card
         v-for="p in toursWalker"
         :key="p.id"
-        class="mb-3 position-relative card"
+        class="mb-3 card"
         elevation="2"
       >
         <v-card-text>
@@ -761,6 +761,7 @@ onMounted(async () => {
 
 <style scoped>
 .card {
+  position: relative;
   border: none;
   border-radius: 12px;
   transition: 0.25s;
@@ -776,10 +777,6 @@ h4 {
 
 .card:hover {
   transform: translateY(-3px);
-}
-
-.position-relative {
-  position: relative;
 }
 
 .finish {

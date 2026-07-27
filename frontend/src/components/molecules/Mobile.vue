@@ -22,7 +22,7 @@ function start(): void {
       <span class="text-primary">Dog Walker</span>
     </div>
 
-    <div class="btn-wrapper d-flex d-md-none">
+    <div class="btn-wrapper d-flex d-md-none position-absolute">
       <BaseButton
         label="Começar"
         size="large"
@@ -49,22 +49,7 @@ function start(): void {
   box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.4);
 }
 
-.brand-name {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 600;
-  font-family: "Instrument Sans", sans-serif;
-  font-size: 1.25rem;
-  color: black;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
 .btn-wrapper {
-  position: absolute;
   bottom: 32px;
   left: 58%;
   transform: translateX(-50%);

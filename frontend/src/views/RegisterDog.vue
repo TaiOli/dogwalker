@@ -137,12 +137,7 @@ onMounted(loadDogs);
 
     <v-row spacing="4">
       <v-col v-for="dog in dogs" :key="dog.id" cols="12" sm="6" md="4" lg="3">
-        <v-card
-          class="dog-card position-relative h-100"
-          color="white"
-          elevation="3"
-          rounded="xl"
-        >
+        <v-card class="dog-card" color="white" elevation="3" rounded="xl">
           <div class="d-flex justify-end mt-2">
             <BaseButton
               icon="mdi-close"
@@ -227,6 +222,8 @@ onMounted(loadDogs);
 }
 
 .dog-card {
+  height: 100%;
+  position: relative;
   border-radius: 12px;
   transition:
     transform 0.2s ease,
@@ -243,18 +240,10 @@ onMounted(loadDogs);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.card-body {
-  padding: 18px;
-}
-
 h2,
 h3 {
   text-align: left;
   font-size: 23px;
-}
-
-.position-relative {
-  position: relative;
 }
 
 .modal-overlay {

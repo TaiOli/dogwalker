@@ -106,8 +106,4 @@ async function loginAccess(): Promise<void> {
 .signup-link:hover {
   text-decoration: underline;
 }
-
-.container {
-  background-color: #ececec;
-}
 </style>

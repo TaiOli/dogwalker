@@ -29,12 +29,11 @@ function toggle(): void {
           class="pe-3 flex-shrink-0"
           :style="{
             transition: 'transform 0.3s ease',
-            transform: isHovering ? 'scale(1.1)' : 'scale(1)'
+            transform: isHovering ? 'scale(1.1)' : 'scale(1)',
           }"
           @click="toggle"
         />
       </v-hover>
-
     </div>
 
     <v-list
@@ -104,7 +103,7 @@ function toggle(): void {
 }
 
 .brand-title {
-  font-size: 1.0rem;
+  font-size: 1rem;
   font-weight: 600;
   margin: 0;
   white-space: nowrap;
@@ -132,8 +131,8 @@ function toggle(): void {
 }
 
 .nav-item:hover {
-  background: rgba(255, 193, 7, 0.15) !important; 
-  color: #FFC107 !important;                    
+  background: rgba(255, 193, 7, 0.15) !important;
+  color: #ffc107 !important;
 }
 
 .nav-item.logout {
@@ -187,9 +186,5 @@ function toggle(): void {
 
 .sidebar-nav::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
-}
-
-.spacer {
-  flex: 1;
 }
 </style>
