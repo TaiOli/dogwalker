@@ -6,10 +6,10 @@ use App\DTOs\Evaluation\CreateEvaluationDTO;
 use App\Models\Evaluation;
 use App\Repositories\Contracts\EvaluationRepositoryInterface;
 use App\Repositories\Contracts\TourRepositoryInterface;
+use App\Repositories\Services\Contracts\EvaluationServiceInterface;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\EvaluationTourNotFinishedException;
 use App\Exceptions\EvaluationAlreadyExistsException;
-use App\Repositories\Services\Contracts\EvaluationServiceInterface;
 
 class EvaluationService implements EvaluationServiceInterface
 {

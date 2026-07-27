@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Services\Contracts;
 
-use App\DTOs\Evaluation\CreateEvaluationDTO;
 use App\Models\Evaluation;
+use App\DTOs\Evaluation\CreateEvaluationDTO;
 
 interface EvaluationServiceInterface
 {

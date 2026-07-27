@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 
 use App\DTOs\Dog\UpdateDogDTO;
 use App\DTOs\Dog\DogResponseDTO;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreDogRequest;
 use App\Http\Requests\UpdateDogRequest;
 use App\Http\Requests\SearchDogRequest;
 use App\Exceptions\DogNotFoundException;
 use App\Exceptions\DogUnauthorizedException;
 use App\Repositories\Services\Contracts\DogServiceInterface;
-use Illuminate\Http\Request;
 
 class DogController extends Controller
 {

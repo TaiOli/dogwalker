@@ -6,11 +6,11 @@ use App\DTOs\Dog\CreateDogDTO;
 use App\DTOs\Dog\UpdateDogDTO;
 use App\Models\Dog;
 use App\Repositories\Contracts\DogRepositoryInterface;
+use App\Repositories\Services\Contracts\DogServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\DogNotFoundException;
 use App\Exceptions\DogUnauthorizedException;
-use App\Repositories\Services\Contracts\DogServiceInterface;
 
 class DogService implements DogServiceInterface
 {

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\DTOs\User\UpdateUserDTO;
 use App\DTOs\User\UserResponseDTO;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserUnauthorizedException;
 use App\Repositories\Services\Contracts\UserServiceInterface;
-use Illuminate\Http\Request;
+
 
 class UserController extends Controller
 {

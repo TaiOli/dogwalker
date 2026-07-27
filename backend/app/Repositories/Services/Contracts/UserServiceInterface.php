@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Services\Contracts;
 
+use App\Models\User;
 use App\DTOs\User\CreateUserDTO;
 use App\DTOs\User\UpdateUserDTO;
-use App\Models\User;
 
 interface UserServiceInterface
 {

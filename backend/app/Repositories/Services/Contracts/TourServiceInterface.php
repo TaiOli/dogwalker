@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Services\Contracts;
 
-use App\DTOs\Tour\CreateTourDTO;
 use App\Models\Tour;
+use App\DTOs\Tour\CreateTourDTO;
 use Illuminate\Database\Eloquent\Collection;
 
 interface TourServiceInterface

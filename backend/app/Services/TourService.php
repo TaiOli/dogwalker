@@ -6,12 +6,13 @@ use App\DTOs\Tour\CreateTourDTO;
 use App\DTOs\Tour\TourResponseDTO;
 use App\Models\Evaluation;
 use App\Models\Tour;
-use App\Repositories\Contracts\TourRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\Contracts\TourRepositoryInterface;
+use App\Repositories\Services\Contracts\TourServiceInterface;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourUnauthorizedException;
 use App\Exceptions\TourInvalidStatusException;
-use App\Repositories\Services\Contracts\TourServiceInterface;
+
 
 class TourService implements TourServiceInterface
 {

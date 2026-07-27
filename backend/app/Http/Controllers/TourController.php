@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\Tour\TourResponseDTO;
-use App\Http\Requests\StoreTourRequest;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTourRequest;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourUnauthorizedException;
 use App\Exceptions\TourInvalidStatusException;

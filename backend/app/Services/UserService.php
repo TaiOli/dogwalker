@@ -2,17 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\DTOs\User\CreateUserDTO;
 use App\DTOs\User\UpdateUserDTO;
 use App\DTOs\User\UserResponseDTO;
-use App\DTOs\User\WalkerProfileResponseDTO;
 use App\DTOs\User\TutorProfileResponseDTO;
-use App\Models\User;
+use App\DTOs\User\WalkerProfileResponseDTO;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Services\Contracts\UserServiceInterface;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserUnauthorizedException;
-use App\Repositories\Services\Contracts\UserServiceInterface;
 
 class UserService implements UserServiceInterface
 {
