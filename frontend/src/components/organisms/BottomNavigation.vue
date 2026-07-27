@@ -10,22 +10,22 @@ const activeTab = ref("recents");
 <template>
   <v-app>
     <v-bottom-navigation v-model="activeTab" class="bottom-navigation" grow>
-      <BaseButton to="/inicio" class="item" value="recents">
+      <BaseButton to="/inicio" value="recents">
         <v-icon>mdi-home</v-icon>
         Inicio
       </BaseButton>
 
-      <BaseButton v-if="tutor" to="/cadastro-cachorro" class="item">
+      <BaseButton v-if="tutor" to="/cadastro-cachorro">
         <v-icon>mdi-dog</v-icon>
         Meus cachorros
       </BaseButton>
 
-      <BaseButton v-if="tutor" to="/solicitar-passeio" class="item">
+      <BaseButton v-if="tutor" to="/solicitar-passeio">
         <v-icon>mdi-plus</v-icon>
         Solicitar passeio
       </BaseButton>
 
-      <BaseButton v-if="walker" to="/passeios" class="item">
+      <BaseButton v-if="walker" to="/passeios">
         <v-icon>mdi-walk</v-icon>
         Passeios disponíveis
       </BaseButton>
@@ -39,7 +39,8 @@ const activeTab = ref("recents");
   border-radius: 50px;
 }
 
-.item {
+.bottom-navigation basebutton,
+.bottom-navigation a {
   color: white;
   text-decoration: none;
 }

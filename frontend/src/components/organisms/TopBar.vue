@@ -11,7 +11,7 @@ function handleLogout(): void {
 
 <template>
   <header class="topbar">
-    <div class="page-info" />
+    <div class="flex-grow-1" />
     <div class="user-section">
       <v-menu location="bottom end" offset="8">
         <template #activator="{ props }">
@@ -74,15 +74,6 @@ function handleLogout(): void {
   z-index: 10;
 }
 
-.page-info {
-  flex: 1;
-}
-
-.v-list-item {
-  text-decoration: none;
-  padding: 15px;
-}
-
 .user-section {
   display: flex;
   align-items: center;
@@ -117,6 +108,8 @@ function handleLogout(): void {
   border-radius: 12px;
   transition: all 0.2s ease;
   background-color: white;
+  text-decoration: none;
+  padding: 15px;
 }
 
 .logout-item:hover {

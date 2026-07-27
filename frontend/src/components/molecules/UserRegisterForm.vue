@@ -177,17 +177,3 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
   </v-container>
 </template>
-
-<style scoped>
-.clip-btn {
-  border: none;
-  background: transparent;
-  font-size: 22px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.clip-btn:hover {
-  transform: scale(1.2);
-}
-</style>

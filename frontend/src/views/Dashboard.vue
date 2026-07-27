@@ -793,10 +793,6 @@ h4 {
   font-weight: 600;
 }
 
-.font-italic {
-  font-style: italic;
-}
-
 .rating {
   font-size: 28px;
   cursor: pointer;

@@ -110,10 +110,6 @@ function toggle(): void {
   transition: opacity 0.3s ease;
 }
 
-.sidebar.collapsed .brand-title {
-  display: none;
-}
-
 .sidebar-nav {
   flex: 1;
   overflow-y: auto;
@@ -163,10 +159,8 @@ function toggle(): void {
   margin-right: 0 !important;
 }
 
-.sidebar.collapsed .nav-item :deep(.v-list-item__content) {
-  display: none;
-}
-
+.sidebar.collapsed .brand-title,
+.sidebar.collapsed .nav-item :deep(.v-list-item__content),
 .sidebar.collapsed .nav-item :deep(.v-list-item__spacer) {
   display: none;
 }

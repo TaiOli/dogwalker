@@ -17,7 +17,7 @@ function start(): void {
 
 <template>
   <v-container fluid class="home-screen pa-0">
-    <div class="brand-name d-flex d-md-none">
+    <div class="d-flex d-md-none">
       <v-icon class="mr-2" color="primary">mdi-paw-outline</v-icon>
       <span class="text-primary">Dog Walker</span>
     </div>
