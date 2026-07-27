@@ -148,7 +148,6 @@ function handlePhoto(value: string | number | File | File[] | null): void {
         <BaseButton
           class="btn-mustard"
           :label="labelButton"
-          block
           @click="handleSubmit"
         />
       </v-col>

@@ -84,7 +84,11 @@ onMounted(async () => {
 
 <style scoped>
 .btn-edit {
-  width: 30%;
+  min-width: 220px;
+  min-height: 42px;
   background-color: #1976d2;
+  border-radius: 999px !important;
+  font-size: 14px !important;
+  font-weight: 600;
 }
 </style>

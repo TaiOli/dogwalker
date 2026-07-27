@@ -124,6 +124,9 @@ p {
   max-width: 70%;
   border-radius: 50px;
   padding: 10px 32px;
+  min-width: 220px;
+  min-height: 42px;
+  font-size: 14px !important;
 }
 
 .btn-mustard:hover {

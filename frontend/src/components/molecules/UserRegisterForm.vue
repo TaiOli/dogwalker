@@ -167,11 +167,10 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     </v-row>
 
     <v-row class="mt-2">
-      <v-col cols="12" md="8" class="mx-auto">
+      <v-col cols="12" md="8" class="mx-auto text-center">
         <BaseButton
           :label="labelButton"
-          class="btn-mustard"
-          block
+          class="btn-mustard mx-auto"
           @click="handleSubmit"
         />
       </v-col>

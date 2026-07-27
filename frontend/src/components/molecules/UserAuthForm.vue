@@ -61,7 +61,6 @@ function handleSubmit(): void {
         <BaseButton
           :label="labelButton"
           class="btn-mustard"
-          block
           @click="handleSubmit"
         />
       </v-col>
