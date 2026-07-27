@@ -89,7 +89,7 @@ async function reject(id: number): Promise<void> {
   <v-container class="py-4">
     <div class="d-flex align-center ga-2 mb-4">
       <v-icon color="primary">mdi-walk</v-icon>
-      <h2 class="text-h5 font-weight-bold">Passeios Disponíveis</h2>
+      <h2 class="font-weight-bold title">Passeios Disponíveis</h2>
     </div>
 
     <v-alert
@@ -177,10 +177,6 @@ async function reject(id: number): Promise<void> {
 </template>
 
 <style scoped>
-h2 {
-  font-size: 23px;
-}
-
 .profile-btn {
   min-width: 150px;
   min-height: 40px;

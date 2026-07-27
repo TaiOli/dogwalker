@@ -69,10 +69,6 @@ async function salvar(): Promise<void> {
   max-width: 650px;
 }
 
-h2 {
-  font-size: 23px;
-}
-
 .back-link {
   text-decoration: none;
   font-weight: 700;

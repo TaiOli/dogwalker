@@ -138,10 +138,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.profile-photo {
-  border: 4px solid #3498db;
-}
-
 .evaluation-item {
   background: #f0f9ff;
   border-left: 3px solid #3498db;

@@ -75,7 +75,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
         <div class="text-left">
-          <label>
+          <label class="text-caption">
             <v-icon class="me-2" color="primary">mdi-ruler</v-icon>
             Porte <span>*</span>
           </label>
@@ -159,9 +159,5 @@ function handlePhoto(value: string | number | File | File[] | null): void {
 .dog-photo {
   max-width: 100%;
   max-height: 200px;
-}
-
-label {
-  font-size: 12px;
 }
 </style>
