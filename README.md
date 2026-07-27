@@ -1,6 +1,6 @@
 # 🐶 Dog Walker
 
-Sistema para agendamento de passeios de cães, permitindo que tutores encontrem passeadores, cadastrem seus cães e realizem avaliações após os passeios.
+Sistema de agendamento de passeios para cães que conecta tutores e passeadores de forma prática e segura. A plataforma permite que os tutores cadastrem seus cães, encontrem passeadores disponíveis e agendem passeios. Ao final de cada passeio, tanto os tutores quanto os passeadores podem realizar avaliações mútuas, promovendo transparência, confiança e a qualidade dos serviços oferecidos.
 
 ---
 
@@ -26,7 +26,7 @@ Sistema para agendamento de passeios de cães, permitindo que tutores encontrem 
 
 ## 1. Cadastro e Login de Usuários
 
-O usuário deve criar uma conta para acessar o sistema. Durante o cadastro é necessário escolher o tipo de usuário:
+O usuário deve criar uma conta para acessar o sistema na tela de **"Login"** tem a opção de **"Criar conta"**. Durante o preenchimento do cadastro é necessário escolher o tipo de usuário:
 
 - Tutor
 - Passeador
@@ -37,7 +37,7 @@ Após o login, cada tipo de usuário possui funcionalidades específicas.
 
 ## 2. Cadastro de Cachorros
 
-O tutor pode cadastrar um ou mais cachorros informando:
+O tutor pode cadastrar um ou mais cachorros na opção de menu **"Meus Cachorros"** preenchendo o formulário de cadastro com:
 
 - Nome
 - Raça
@@ -52,7 +52,7 @@ Caso nenhuma foto seja enviada, o sistema utiliza automaticamente uma imagem obt
 
 ## 3. Busca de Cachorros
 
-No menu **Meus Cachorros**, o tutor pode pesquisar seus cães utilizando:
+Ainda no menu **Meus Cachorros**, o tutor pode pesquisar seus cães utilizando:
 
 - Nome
 - Raça
@@ -61,7 +61,7 @@ No menu **Meus Cachorros**, o tutor pode pesquisar seus cães utilizando:
 
 ## 4. Listagem de Cachorros
 
-Os cachorros cadastrados são exibidos em formato de cards logo abaixo da área de pesquisa.
+Os cachorros cadastrados são exibidos em formato de cards logo abaixo da área de busca de cachorros.
 
 Cada card apresenta as principais informações do animal.
 
@@ -93,7 +93,7 @@ Ao acessar **Ver Perfil**, é possível visualizar:
 
 ## 8. Agendamento de Passeios
 
-O tutor pode solicitar um passeio selecionando:
+O tutor pode solicitar um passeio na opção **"Solicitar passeio"** do menu preenchendo o formulário com informações como:
 
 - Cachorro
 - Passeador
@@ -117,7 +117,7 @@ O tutor pode:
 
 ### Passeador
 
-O passeador pode:
+O passeador na opção de menu **"Passeios Disponíveis"** pode:
 
 - Aceitar passeio
 - Recusar passeio
@@ -134,7 +134,7 @@ Os status possíveis são:
 
 ## 10. Visualização do Tutor
 
-Antes de aceitar ou recusar um passeio, o passeador pode acessar o perfil do tutor e visualizar:
+Antes de aceitar ou recusar um passeio, o passeador pode acessar o perfil do tutor em **"Ver Perfil"** que ficam nos cards dos passeios solicitados e visualizar:
 
 - Dados do tutor
 - Avaliações recebidas
@@ -144,33 +144,33 @@ Antes de aceitar ou recusar um passeio, o passeador pode acessar o perfil do tut
 
 ## 11. Avaliação de Tutores e Passeadores
 
-Após a finalização do passeio:
+Após a conclusão do passeio, o passeador pode selecionar o passeio aceito e clicar em **"Finalizar Passeio"**. Em seguida, será exibida a tela de avaliação, e o status do passeio será atualizado para permitir que ambas as partes realizem suas avaliações.
 
-- O passeador pode avaliar o tutor.
+- O passeador pode avaliar o tutor;
 - O tutor pode avaliar o passeador.
 
-A avaliação possui:
+Cada avaliação é composta por:
 
-- Nota de 1 a 5
-- Comentário (opcional)
+- Nota de 1 a 5 estrelas;
+- Comentário (opcional).
 
 ---
 
 ## 12. Edição do Perfil
 
-Após realizar login, o usuário pode acessar seu perfil e atualizar informações como:
+O usuário pode acessar seu perfil por meio do menu superior. Ao clicar na foto de perfil, será exibida a opção **"Perfil"**, onde é possível visualizar e atualizar suas informações cadastrais, incluindo:
 
-- Nome de usuário
-- Nome
-- E-mail
-- Telefone
-- Foto
+- Nome de usuário;
+- Nome;
+- E-mail;
+- Telefone;
+- Foto de perfil.
 
 ---
 
 ## 13. Logout
 
-Ao clicar na foto de perfil localizada no canto superior direito, o usuário pode sair do sistema.
+Ao clicar na foto de perfil localizada no canto superior direito, será exibido a opção **"Sair"** o nde é o usuário pode sair do sistema.
 
 ---
 
