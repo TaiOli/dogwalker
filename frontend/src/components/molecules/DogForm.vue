@@ -83,9 +83,13 @@ function handlePhoto(value: string | number | File | File[] | null): void {
         <BaseSelect
           v-model="form.size"
           class="mb-3 mt-3"
-          label="Selecione um porte"
           variant="underlined"
-          :items="['Pequeno', 'Médio', 'Grande']"
+          :items="[
+            { label: 'Selecione um porte', value: '' },
+            { label: 'Pequeno', value: 'Pequeno' },
+            { label: 'Médio', value: 'Médio' },
+            { label: 'Grande', value: 'Grande' },
+          ]"
           labelKey="label"
           valueKey="value"
           :error-message="sizeError"
