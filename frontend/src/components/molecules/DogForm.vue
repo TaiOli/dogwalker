@@ -91,7 +91,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           class="mb-3 mt-3"
           label="Selecione um porte"
           variant="underlined"
-          :options="sizeOptions"
+          :items="['Pequeno', 'Médio', 'Grande']"
           labelKey="label"
           valueKey="value"
           :error-message="sizeError"
