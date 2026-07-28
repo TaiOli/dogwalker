@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import BaseButton from "../atoms/BaseButton.vue";
 import { useAuth } from "../../composables/userAuth";
+import BaseIcon from "../atoms/BaseIcon.vue";
 
 const { tutor, walker } = useAuth();
 const activeTab = ref("recents");
@@ -11,22 +12,22 @@ const activeTab = ref("recents");
   <v-app>
     <v-bottom-navigation v-model="activeTab" class="bottom-navigation" grow>
       <BaseButton to="/inicio" value="recents">
-        <v-icon>mdi-home</v-icon>
+        <BaseIcon name="mdi-home"/>
         Inicio
       </BaseButton>
 
       <BaseButton v-if="tutor" to="/cadastro-cachorro">
-        <v-icon>mdi-dog</v-icon>
+        <BaseIcon name="mdi-dog"/>
         Meus cachorros
       </BaseButton>
 
       <BaseButton v-if="tutor" to="/solicitar-passeio">
-        <v-icon>mdi-plus</v-icon>
+        <BaseIcon name="mdi-plus"/>
         Solicitar passeio
       </BaseButton>
 
       <BaseButton v-if="walker" to="/passeios">
-        <v-icon>mdi-walk</v-icon>
+        <BaseIcon name="mdi-walk"/>
         Passeios disponíveis
       </BaseButton>
     </v-bottom-navigation>

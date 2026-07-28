@@ -2,6 +2,7 @@
 import { onMounted, computed, ref } from "vue";
 import { useWalks } from "../composables/useWalks";
 import BaseButton from "../components/atoms/BaseButton.vue";
+import BaseIcon from "../components/atoms/BaseIcon.vue";
 
 interface Dog {
   id: number;
@@ -88,7 +89,7 @@ async function reject(id: number): Promise<void> {
 <template>
   <v-container class="py-4">
     <div class="d-flex align-center ga-2 mb-4">
-      <v-icon color="primary">mdi-walk</v-icon>
+      <BaseIcon name="mdi-walk" color="primary" />
       <h2 class="font-weight-bold title">Passeios Disponíveis</h2>
     </div>
 
@@ -113,18 +114,22 @@ async function reject(id: number): Promise<void> {
         <v-card class="elevation-1 d-flex flex-column h-100" color="white">
           <v-card-item class="flex-grow-1">
             <v-card-title class="mt-2 mb-3">
-              <v-icon start color="amber" size="25">mdi-paw-outline</v-icon>
+              <BaseIcon name="mdi-paw-outline" start color="amber" size="25" />
               {{ p.dog?.nome }}
             </v-card-title>
 
             <v-card-text class="pa-0 text-center">
               <div class="d-flex justify-center align-center ga-1 mb-2">
-                <v-icon size="18" color="primary">mdi-calendar</v-icon>
+                <BaseIcon name="mdi-calendar" size="18" color="primary" />
                 <span>{{ p.data }} - {{ p.hora }}</span>
               </div>
 
               <div class="d-flex justify-center align-center ga-1 mb-4">
-                <v-icon size="18" color="red-darken-4">mdi-map-marker</v-icon>
+                <BaseIcon
+                  name="mdi-map-marker"
+                  size="18"
+                  color="red-darken-4"
+                />
                 <span>{{ p.local }}</span>
               </div>
 
@@ -154,7 +159,7 @@ async function reject(id: number): Promise<void> {
                 :disabled="loadId === p.id"
                 @click="accept(p.id)"
               >
-                <v-icon start>mdi-check</v-icon>
+                <BaseIcon name="mdi-check" start />
                 {{ loadId === p.id ? "Aguarde..." : "Aceitar" }}
               </BaseButton>
 
@@ -165,7 +170,7 @@ async function reject(id: number): Promise<void> {
                 :disabled="loadId === p.id"
                 @click="reject(p.id)"
               >
-                <v-icon start>mdi-close</v-icon>
+                <BaseIcon name="mdi-close" start />
                 {{ loadId === p.id ? "Aguarde..." : "Recusar" }}
               </BaseButton>
             </div>

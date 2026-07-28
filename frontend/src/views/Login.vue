@@ -4,6 +4,7 @@ import UserAuthForm from "../components/molecules/UserAuthForm.vue";
 import Mobile from "../components/molecules/Mobile.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import BaseIcon from "../components/atoms/BaseIcon.vue";
 
 interface LoginResponse {
   user: {
@@ -73,7 +74,7 @@ async function loginAccess(): Promise<void> {
       width="100%"
     >
       <v-card-text class="pa-6 text-center">
-        <v-icon size="56" color="primary" class="mb-3"> mdi-paw-outline</v-icon>
+        <BaseIcon name="mdi-paw-outline" size="56" color="primary" class="mb-3"/>
         <h2 class="mb-2 text-primary">Dog Walker</h2>
         <p class="text-medium-emphasis mb-6">Entrar no sistema</p>
         <UserAuthForm

@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { api } from "../services/api";
 import { getPhoto } from "../utils/image";
+import BaseIcon from "../components/atoms/BaseIcon.vue";
 
 interface Review {
   id: number;
@@ -78,12 +79,12 @@ onMounted(async () => {
 
           <div class="text-center">
             <p class="d-flex justify-center align-center ga-2 mb-2">
-              <v-icon color="primary" size="18">mdi-email-outline</v-icon>
+              <BaseIcon name="mdi-email-outline" color="primary" size="18"/>
               {{ tutor.email }}
             </p>
 
             <p class="d-flex justify-center align-center ga-2 mb-0">
-              <v-icon color="primary" size="18">mdi-phone-outline</v-icon>
+              <BaseIcon name="mdi-phone-outline" color="primary" size="18"/>
               {{ tutor.telefone }}
             </p>
           </div>
@@ -91,7 +92,7 @@ onMounted(async () => {
           <v-divider class="my-5" />
 
           <div class="d-flex justify-center align-center ga-2 mb-4">
-            <v-icon color="amber" size="24">mdi-star</v-icon>
+            <BaseIcon name="mdi-star" color="amber" size="24"/>
             <span class="text-h6 font-weight-bold">
               Avaliações de Passeadores
             </span>
@@ -109,8 +110,8 @@ onMounted(async () => {
           >
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
-                <v-icon
-                  :icon="n <= av.nota ? 'mdi-star' : 'mdi-star-outline'"
+                <BaseIcon
+                  :name="n <= av.nota ? 'mdi-star' : 'mdi-star-outline'"
                   color="amber"
                   size="20"
                 />

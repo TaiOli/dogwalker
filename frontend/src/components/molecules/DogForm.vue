@@ -3,6 +3,7 @@ import { ref } from "vue";
 import BaseInput from "../atoms/BaseInput.vue";
 import BaseButton from "../atoms/BaseButton.vue";
 import BaseSelect from "../atoms/BaseSelect.vue";
+import BaseIcon from "../atoms/BaseIcon.vue";
 
 interface DogForm {
   name: string;
@@ -76,7 +77,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
       <v-col cols="12" md="8" class="mx-auto">
         <div class="text-left">
           <label class="text-caption">
-            <v-icon class="me-2" color="primary">mdi-ruler</v-icon>
+            <BaseIcon class="me-2" color="primary" name="mdi-ruler" />
             Porte <span>*</span>
           </label>
         </div>

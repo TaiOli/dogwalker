@@ -3,6 +3,7 @@ import { onMounted } from "vue";
 import { useRoute } from "vue-router";
 import ScheduletourForm from "../components/molecules/ScheduletourForm.vue";
 import { useScheduletour } from "../composables/useScheduletour";
+import BaseIcon from "../components/atoms/BaseIcon.vue";
 
 const route = useRoute();
 
@@ -46,7 +47,7 @@ async function save(): Promise<void> {
     <v-row justify="center">
       <v-col cols="12" md="10" lg="8">
         <div class="d-flex align-center ga-2 mb-5">
-          <v-icon color="primary" size="32">mdi-plus</v-icon>
+          <BaseIcon name="mdi-plus" color="primary" size="32"/>
           <h2>Solicitar Passeio</h2>
         </div>
 

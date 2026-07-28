@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import { api } from "../services/api";
 import BaseInput from "../components/atoms/BaseInput.vue";
 import BaseButton from "../components/atoms/BaseButton.vue";
+import BaseIcon from "../components/atoms/BaseIcon.vue";
 
 interface ApiErrorResponse {
   response?: {
@@ -60,8 +61,8 @@ async function handleSubmit(): Promise<void> {
     <v-card class="pa-6 card" max-width="440" elevation="3">
       <v-row>
         <v-col cols="12" class="text-center mb-2">
-          <v-icon
-            icon="mdi-lock-reset"
+          <BaseIcon
+            name="mdi-lock-reset"
             color="primary"
             size="40"
             class="mb-2 mt-3"

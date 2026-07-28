@@ -5,6 +5,7 @@ import { getPhoto } from "../utils/image";
 import { useRouter } from "vue-router";
 import { useAuth } from "../composables/userAuth";
 import BaseButton from "../components/atoms/BaseButton.vue";
+import BaseIcon from "../components/atoms/BaseIcon.vue";
 
 interface User {
   id: number;
@@ -58,17 +59,17 @@ onMounted(async () => {
       <h3>{{ user.nome }}</h3>
 
       <p class="d-flex justify-center align-center ga-2">
-        <v-icon color="primary" size="18">mdi-email-outline</v-icon>
+        <BaseIcon name="mdi-email-outline" color="primary" size="18"/>
         {{ user.email }}
       </p>
 
       <p class="d-flex justify-center align-center ga-2">
-        <v-icon color="primary" size="18">mdi-phone-outline</v-icon>
+        <BaseIcon name="mdi-phone-outline" color="primary" size="18"/>
         {{ user.telefone }}
       </p>
 
       <p class="d-flex justify-center align-center ga-2">
-        <v-icon color="primary" size="18">mdi-account-outline</v-icon>
+        <BaseIcon name="mdi-account-outline" color="primary" size="18"/>
         Tipo: {{ user.tipo_usuario }}
       </p>
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseButton from "../atoms/BaseButton.vue";
+import BaseIcon from "../atoms/BaseIcon.vue";
 import dogImageUrl from "../../assets/images/dog.png";
 import { ref, computed } from "vue";
 
@@ -18,7 +19,7 @@ function start(): void {
 <template>
   <v-container fluid class="home-screen pa-0">
     <div class="d-flex d-md-none">
-      <v-icon class="mr-2" color="primary">mdi-paw-outline</v-icon>
+      <BaseIcon name="mdi-paw-outline" class="mr-2" color="primary"/>
       <span class="text-primary">Dog Walker</span>
     </div>
 

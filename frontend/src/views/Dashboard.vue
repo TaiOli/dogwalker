@@ -5,6 +5,7 @@ import { api } from "../services/api";
 import { getPhoto } from "../utils/image";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseTextarea from "../components/atoms/BaseTextarea.vue";
+import BaseIcon from "../components/atoms/BaseIcon.vue";
 
 interface Dog {
   id: number;
@@ -332,7 +333,7 @@ onMounted(async () => {
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
     <template v-if="tutor">
       <h2 class="mb-4 text-black">
-        <v-icon color="primary" icon="mdi-account" size="23" class="me-2" />
+        <BaseIcon color="primary" name="mdi-account" size="23" class="me-2" />
         Passeadores Disponíveis
       </h2>
 
@@ -349,11 +350,11 @@ onMounted(async () => {
               />
               <h5>{{ w.nome }}</h5>
               <p>
-                <v-icon icon="mdi-phone" color="primary" />
+                <BaseIcon name="mdi-phone" color="primary" />
                 {{ w.telefone }}
               </p>
               <p>
-                <v-icon icon="mdi-star-four-points" color="amber" />
+                <BaseIcon name="mdi-star-four-points" color="amber" />
                 <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
                 <span v-else>Sem avaliações</span>
               </p>
@@ -384,8 +385,8 @@ onMounted(async () => {
       </v-row>
 
       <h2 class="mb-3 text-black">
-        <v-icon
-          icon="mdi-note-text-outline"
+        <BaseIcon
+          name="mdi-note-text-outline"
           color="primary"
           size="23"
           class="me-2"
@@ -428,19 +429,21 @@ onMounted(async () => {
 
           <div class="text-black text-center">
             <h5 class="d-flex justify-center align-center ga-2">
-              <v-icon size="20" color="amber">mdi-paw-outline</v-icon>
+              <BaseIcon name="mdi-paw-outline" size="20" color="amber" />
               {{ p.dog?.nome }}
             </h5>
 
             <p class="d-flex justify-center align-center ga-2">
-              <v-icon size="18" color="primary">mdi-calendar-outline</v-icon>
+              <BaseIcon name="mdi-calendar-outline" size="18" color="primary" />
               {{ formatDate(p.data) }} - {{ p.hora }}
             </p>
 
             <p class="d-flex justify-center align-center ga-2">
-              <v-icon size="18" color="red-darken-4"
-                >mdi-map-marker-outline</v-icon
-              >
+              <BaseIcon
+                name="mdi-map-marker-outline"
+                size="18"
+                color="red-darken-4"
+              />
               {{ p.local }}
             </p>
 
@@ -448,7 +451,7 @@ onMounted(async () => {
               class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
               v-if="p.walker"
             >
-              <v-icon size="16" color="primary">mdi-walk</v-icon>
+              <BaseIcon name="mdi-walk" size="16" color="primary"/>
               Passeador:
               <strong>{{ p.walker?.nome }}</strong>
             </p>
@@ -457,7 +460,7 @@ onMounted(async () => {
               class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
               v-else-if="p.status === 'recusado'"
             >
-              <v-icon size="16" color="error">mdi-close-circle</v-icon>
+              <BaseIcon name="mdi-close-circle" size="16" color="error"/>
               Nenhum passeador aceitou este passeio.
             </p>
 
@@ -465,7 +468,7 @@ onMounted(async () => {
               class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
               v-else
             >
-              <v-icon size="16" color="orange-darken-2">mdi-timer-sand</v-icon>
+              <BaseIcon name="mdi-timer-sand" size="16" color="orange-darken-2"/>
               Aguardando um passeador aceitar
             </p>
           </div>
@@ -500,13 +503,13 @@ onMounted(async () => {
             border="s-lg"
           >
             <p class="text-body-2 font-weight-bold mb-2 text-black">
-              <v-icon icon="mdi-check" color="green-darken-4" />
+              <BaseIcon name="mdi-check" color="green-darken-4" />
               Sua avaliação sobre o passeador
             </p>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
-                <v-icon
-                  :icon="
+                <BaseIcon
+                  :name="
                     n <= p.review_by_tutor.rating
                       ? 'mdi-star'
                       : 'mdi-star-outline'
@@ -532,7 +535,7 @@ onMounted(async () => {
               <v-divider class="mb-4" />
 
               <div class="d-flex justify-center align-center ga-2 mb-4">
-                <v-icon color="amber">mdi-star</v-icon>
+                <BaseIcon name="mdi-star" color="amber"/>
 
                 <h5 class="mb-0 text-black">Como foi o passeador?</h5>
               </div>
@@ -544,8 +547,8 @@ onMounted(async () => {
                   class="rating"
                   @click="rating = n"
                 >
-                  <v-icon
-                    :icon="n <= rating ? 'mdi-star' : 'mdi-star-outline'"
+                  <BaseIcon
+                    :name="n <= rating ? 'mdi-star' : 'mdi-star-outline'"
                     color="amber"
                     size="20"
                   />
@@ -585,7 +588,7 @@ onMounted(async () => {
 
     <template v-else-if="walker">
       <h2 class="mb-4">
-        <v-icon icon="mdi-walk" color="primary" size="23" class="me-2" />
+        <BaseIcon name="mdi-walk" color="primary" size="23" class="me-2" />
         Meus Passeios
       </h2>
 
@@ -613,12 +616,12 @@ onMounted(async () => {
           />
 
           <h5>
-            <v-icon icon="mdi-paw-outline" color="amber" size="25" />
+            <BaseIcon name="mdi-paw-outline" color="amber" size="25" />
             {{ p.dog?.nome }}
           </h5>
           <p>
-            <v-icon
-              icon="mdi-calendar"
+            <BaseIcon
+              name="mdi-calendar"
               color="primary"
               class="me-2"
               size="18"
@@ -626,8 +629,8 @@ onMounted(async () => {
             {{ formatDate(p.data) }} - {{ p.hora }}
           </p>
           <p>
-            <v-icon
-              icon="mdi-map-marker-outline"
+            <BaseIcon
+              name="mdi-map-marker-outline"
               color="red-darken-4"
               class="me-2"
               size="18"
@@ -635,8 +638,8 @@ onMounted(async () => {
             {{ p.local }}
           </p>
           <p class="text-medium-emphasis text-caption text-black">
-            <v-icon
-              icon="mdi-account-outline"
+            <BaseIcon
+              name="mdi-account-outline"
               color="primary"
               class="me-2"
               size="18"
@@ -649,7 +652,7 @@ onMounted(async () => {
             class="text-medium-emphasis text-caption text-black"
             v-if="p.status === 'cancelado'"
           >
-            <v-icon icon="mdi-close" class="me-2" color="red-darken-4" />
+            <BaseIcon name="mdi-close" class="me-2" color="red-darken-4" />
             Este passeio foi cancelado pelo tutor.
           </p>
 
@@ -683,13 +686,13 @@ onMounted(async () => {
             border="s-lg"
           >
             <p class="text-body-2 font-weight-bold mb-2 text-black">
-              <v-icon icon="mdi-check" class="me-2" color="green-darken-4" />
+              <BaseIcon name="mdi-check" class="me-2" color="green-darken-4" />
               Sua avaliação sobre o passeio
             </p>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
-                <v-icon
-                  :icon="
+                <BaseIcon
+                  :name="
                     n <= p.review_by_walker.rating
                       ? 'mdi-star'
                       : 'mdi-star-outline'
@@ -723,8 +726,8 @@ onMounted(async () => {
                   class="rating"
                   @click="rating = n"
                 >
-                  <v-icon
-                    :icon="n <= rating ? 'mdi-star' : 'mdi-star-outline'"
+                  <BaseIcon
+                    :name="n <= rating ? 'mdi-star' : 'mdi-star-outline'"
                     color="amber"
                     size="20"
                   />

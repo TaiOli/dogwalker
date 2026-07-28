@@ -5,6 +5,7 @@ import { useDog } from "../composables/useDog";
 import { api } from "../services/api";
 import BaseInput from "../components/atoms/BaseInput.vue";
 import BaseButton from "../components/atoms/BaseButton.vue";
+import BaseIcon from "../components/atoms/BaseIcon.vue";
 
 interface Dog {
   id: number;
@@ -96,7 +97,7 @@ onMounted(loadDogs);
     <v-row align="center" justify="space-between" class="mb-6">
       <v-col cols="auto">
         <div class="d-flex align-center ga-2">
-          <v-icon color="primary">mdi-dog</v-icon>
+          <BaseIcon name="mdi-dog" color="primary"/>
           <h3 class="font-weight-bold text-black">Cadastro do Dog</h3>
         </div>
       </v-col>
@@ -127,7 +128,7 @@ onMounted(loadDogs);
 
     <!-- LISTA -->
     <div class="d-flex align-center ga-2 mt-6 mb-4">
-      <v-icon color="primary">mdi-paw</v-icon>
+      <BaseIcon name="mdi-paw" color="primary"/>
       <h2 class="text-h5 font-weight-bold text-black">Meus Doguinhos</h2>
     </div>
 
@@ -156,13 +157,13 @@ onMounted(loadDogs);
             </v-card-title>
 
             <v-card-text class="py-1">
-              <v-icon icon="mdi-paw-outline" class="me-2" color="amber" />
+              <BaseIcon name="mdi-paw-outline" class="me-2" color="amber" />
               {{ dog.raca }}
             </v-card-text>
 
             <v-card-text class="py-1">
-              <v-icon
-                icon="mdi-cake-variant"
+              <BaseIcon
+                name="mdi-cake-variant"
                 class="me-2"
                 color="brown-darken-4"
               />
@@ -170,7 +171,7 @@ onMounted(loadDogs);
             </v-card-text>
 
             <v-card-text class="py-1 mb-2">
-              <v-icon icon="mdi-ruler" class="me-2" color="primary" />
+              <BaseIcon name="mdi-ruler" class="me-2" color="primary" />
               {{ dog.porte }}
             </v-card-text>
 
