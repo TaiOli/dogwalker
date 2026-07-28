@@ -7,6 +7,7 @@ use App\Repositories\Services\Contracts\UserServiceInterface;
 use App\Repositories\Services\Contracts\DogServiceInterface;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 use App\Repositories\Services\Contracts\EvaluationServiceInterface;
+use Illuminate\Auth\Notifications\ResetPassword;
 use App\Services\UserService;
 use App\Services\DogService;
 use App\Services\TourService;
@@ -30,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            return config('app.frontend_url') . '/reset-password?token=' . $token . '&email=' . urlencode($user->email);
+        });
     }
 }

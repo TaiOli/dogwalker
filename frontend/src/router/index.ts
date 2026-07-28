@@ -9,6 +9,7 @@ import WalkerProfile from "../views/WalkerProfile.vue";
 import MyProfile from "../views/MyProfile.vue";
 import TutorProfile from "../views/TutorProfile.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
+import ResetPassword from "../views/ResetPassword.vue";
 
 const routes = [
   {
@@ -22,6 +23,10 @@ const routes = [
   {
     path:"/recuperar-senha",
     component: ForgotPassword
+  },
+  {
+    path:"/resetar-senha",
+    component:ResetPassword
   },
   {
     path: "/cadastro-usuario",
