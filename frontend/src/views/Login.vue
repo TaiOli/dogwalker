@@ -83,7 +83,7 @@ async function loginAccess(): Promise<void> {
         />
         <p class="mt-4">
           Não tem conta?
-          <router-link to="/cadastro-usuario" class="signup-link"
+          <router-link to="/cadastro-usuario" class="text-decoration-none"
             >Criar conta</router-link
           >
         </p>
@@ -98,12 +98,5 @@ async function loginAccess(): Promise<void> {
   max-width: 550px;
   padding: 20px;
   background-color: #ececec;
-}
-.signup-link {
-  text-decoration: none;
-  font-weight: 700;
-}
-.signup-link:hover {
-  text-decoration: underline;
 }
 </style>

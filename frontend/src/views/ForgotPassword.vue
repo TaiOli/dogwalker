@@ -1,0 +1,134 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { api } from "../services/api";
+import BaseInput from "../components/atoms/BaseInput.vue";
+import BaseButton from "../components/atoms/BaseButton.vue";
+
+interface ApiErrorResponse {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
+const router = useRouter();
+
+const email = ref<string>("");
+const emailError = ref<string>("");
+const sending = ref<boolean>(false);
+const sent = ref<boolean>(false);
+
+function validateEmail(): boolean {
+  if (!email.value) {
+    emailError.value = "Insira um e-mail!";
+    return false;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.value)) {
+    emailError.value = "Insira um e-mail válido!";
+    return false;
+  }
+
+  emailError.value = "";
+  return true;
+}
+
+async function handleSubmit(): Promise<void> {
+  if (!validateEmail()) return;
+
+  sending.value = true;
+
+  try {
+    await api.post("/forgot-password", { email: email.value });
+    sent.value = true;
+  } catch (err) {
+    console.error(err);
+    const error = err as ApiErrorResponse;
+    emailError.value =
+      error.response?.data?.message || "Erro ao enviar o link de recuperação.";
+  } finally {
+    sending.value = false;
+  }
+}
+</script>
+
+<template>
+  <div class="page-wrapper">
+    <v-card class="pa-6 card" max-width="440" elevation="3">
+      <v-row>
+        <v-col cols="12" class="text-center mb-2">
+          <v-icon
+            icon="mdi-lock-reset"
+            color="primary"
+            size="40"
+            class="mb-2 mt-3"
+          />
+          <h2 class="text-black">Recuperar senha</h2>
+          <p class="text-medium-emphasis text-body-2 text-black">
+            Informe seu e-mail e enviaremos um link para redefinir sua senha.
+          </p>
+        </v-col>
+      </v-row>
+
+      <template v-if="!sent">
+        <v-row justify="center">
+          <v-col cols="12" md="8">
+            <BaseInput
+              v-model="email"
+              required
+              label="Email"
+              :error-message="emailError"
+              @update:modelValue="emailError = ''"
+            />
+          </v-col>
+        </v-row>
+
+        <v-row class="mt-2" justify="center">
+          <v-col cols="12" md="8">
+            <BaseButton
+              :label="sending ? 'Enviando...' : 'Enviar link de recuperação'"
+              class="btn-mustard"
+              :disabled="sending"
+              @click="handleSubmit"
+            />
+          </v-col>
+        </v-row>
+      </template>
+
+      <v-alert v-else type="success" variant="tonal" class="mt-2">
+        Se o e-mail informado estiver cadastrado, você receberá um link de
+        recuperação em instantes.
+      </v-alert>
+
+      <v-row class="mt-4">
+        <v-col cols="12" class="text-center mb-3">
+          <BaseButton
+            label="Voltar ao login"
+            variant="text"
+            class="text-primary text-decoration-none"
+            @click="router.push('/login')"
+          />
+        </v-col>
+      </v-row>
+    </v-card>
+  </div>
+</template>
+
+<style scoped>
+.page-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+.card {
+  border-radius: 12px;
+  background-color: white;
+  font-size: 15px;
+}
+</style>

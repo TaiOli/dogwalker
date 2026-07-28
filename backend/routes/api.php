@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 Route::controller(UserController::class)->group(function(){
     Route::post('/users','store');
     Route::post('/login','login');
+    Route::post('/forgot-password','forgotPassword');
+    Route::post('/reset-password','resetPassword');
  });
 
 // Protegidas
