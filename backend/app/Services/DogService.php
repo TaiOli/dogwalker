@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
+use App\Models\Dog;
 use App\DTOs\Dog\CreateDogDTO;
 use App\DTOs\Dog\UpdateDogDTO;
-use App\Models\Dog;
 use App\Repositories\Contracts\DogRepositoryInterface;
 use App\Repositories\Services\Contracts\DogServiceInterface;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use App\Exceptions\DogNotFoundException;
 use App\Exceptions\DogUnauthorizedException;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
+
 
 class DogService implements DogServiceInterface
 {

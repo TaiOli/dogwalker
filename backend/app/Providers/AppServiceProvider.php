@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Repositories\Services\Contracts\UserServiceInterface;
 use App\Repositories\Services\Contracts\DogServiceInterface;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 use App\Repositories\Services\Contracts\EvaluationServiceInterface;
-use Illuminate\Auth\Notifications\ResetPassword;
 use App\Services\UserService;
 use App\Services\DogService;
 use App\Services\TourService;
 use App\Services\EvaluationService;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 class AppServiceProvider extends ServiceProvider
 {

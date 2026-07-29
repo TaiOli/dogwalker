@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
-use App\DTOs\Tour\CreateTourDTO;
-use App\DTOs\Tour\TourResponseDTO;
 use App\Models\Evaluation;
 use App\Models\Tour;
-use Illuminate\Database\Eloquent\Collection;
+use App\DTOs\Tour\CreateTourDTO;
+use App\DTOs\Tour\TourResponseDTO;
 use App\Repositories\Contracts\TourRepositoryInterface;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourUnauthorizedException;
 use App\Exceptions\TourInvalidStatusException;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class TourService implements TourServiceInterface
