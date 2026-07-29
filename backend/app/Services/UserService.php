@@ -23,17 +23,19 @@ class UserService implements UserServiceInterface
     public function create(CreateUserDTO $dto): User
     {
         $foto = null;
+
         if ($dto->foto) {
             $foto = $dto->foto->store('users', 'public');
         }
 
         return $this->userRepository->create([
-            'nome'        => $dto->nome,
-            'email'       => $dto->email,
-            'password'    => Hash::make($dto->password),
+            'username'     => $dto->username,
+            'nome'         => $dto->nome,
+            'email'        => $dto->email,
+            'password'     => Hash::make($dto->password),
             'tipo_usuario' => $dto->tipoUsuario,
-            'telefone'    => $dto->telefone,
-            'foto'        => $foto,
+            'telefone'     => $dto->telefone,
+            'foto'         => $foto,
         ]);
     }
 

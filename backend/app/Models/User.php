@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['username', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements CanResetPasswordContract
 {
@@ -27,7 +27,7 @@ class User extends Authenticatable implements CanResetPasswordContract
     protected $table = 'users';
 
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
         'nome',

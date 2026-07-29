@@ -5,6 +5,7 @@ namespace App\DTOs\User;
 class CreateUserDTO
 {
     public function __construct(
+        public readonly string  $username,
         public readonly string  $nome,
         public readonly string  $email,
         public readonly string  $password,
@@ -16,6 +17,7 @@ class CreateUserDTO
     public static function fromRequest(array $validated): self
     {
         return new self(
+            username: $validated['username'],
             nome: $validated['nome'],
             email: $validated['email'],
             password: $validated['password'],

@@ -55,6 +55,11 @@ function handleSubmit(): void {
         />
       </v-col>
     </v-row>
+    <p>
+      <router-link to="/recuperar-senha" class="text-decoration-none"
+        >Esqueci a senha</router-link
+      >
+    </p>
 
     <v-row justify="center" class="mt-2">
       <v-col cols="12" sm="8">
