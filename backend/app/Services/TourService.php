@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Enums\TourStatus;
 use App\Models\Evaluation;
 use App\Models\Tour;
 use App\DTOs\Tour\CreateTourDTO;
 use App\DTOs\Tour\TourResponseDTO;
+use App\Enums\TipoUsuario;
 use App\Repositories\Contracts\TourRepositoryInterface;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 use App\Exceptions\TourNotFoundException;
@@ -35,18 +37,18 @@ class TourService implements TourServiceInterface
     {
         $tour = $this->findOrFail($id);
 
-        if ($tour->status !== 'pendente') {
-            throw new TourInvalidStatusException('Este passeio já foi respondido');
+        if ($tour->status !== TourStatus::PENDENTE) {
+            throw new TourInvalidStatusException('Este passeio já foi respondido!');
         }
 
         // se o passeio foi direcionado a um passeador específico, só ele pode aceitar
         if ($tour->passeador_id !== null && $tour->passeador_id !== $walkerId) {
-            throw new TourInvalidStatusException('Este passeio foi direcionado a outro passeador');
+            throw new TourInvalidStatusException('Este passeio foi direcionado a outro passeador!');
         }
 
         return $this->tourRepository->update($tour, [
             'passeador_id' => $walkerId,
-            'status' => 'aceito',
+            'status' => TourStatus::ACEITO->value,
         ]);
     }
 
@@ -54,12 +56,12 @@ class TourService implements TourServiceInterface
     {
         $tour = $this->findOrFail($id);
 
-        if ($tour->status !== 'pendente') {
-            throw new TourInvalidStatusException('Este passeio já foi respondido');
+        if ($tour->status !== TourStatus::PENDENTE) {
+            throw new TourInvalidStatusException('Este passeio já foi respondido!');
         }
 
         return $this->tourRepository->update($tour, [
-            'status' => 'recusado',
+            'status' => TourStatus::RECUSADO->value,
         ]);
     }
 
@@ -68,11 +70,11 @@ class TourService implements TourServiceInterface
         $tour = $this->findOrFail($id);
 
         if ($tour->tutor_id !== $userId) {
-            throw new TourUnauthorizedException('Apenas o tutor que solicitou pode cancelar este passeio');
+            throw new TourUnauthorizedException('Apenas o tutor que solicitou pode cancelar este passeio!');
         }
 
         return $this->tourRepository->update($tour, [
-            'status' => 'cancelado',
+            'status' => TourStatus::CANCELADO->value,
         ]);
     }
 
@@ -81,21 +83,21 @@ class TourService implements TourServiceInterface
         $tour = $this->findOrFail($id);
 
         if ($tour->passeador_id !== $userId) {
-            throw new TourUnauthorizedException('Apenas o passeador responsável pode finalizar este passeio');
+            throw new TourUnauthorizedException('Apenas o passeador responsável pode finalizar este passeio!');
         }
 
-        if ($tour->status !== 'aceito') {
-            throw new TourInvalidStatusException('Este passeio não está em andamento');
+        if ($tour->status !== TourStatus::ACEITO) {
+            throw new TourInvalidStatusException('Este passeio não está em andamento!');
         }
 
         return $this->tourRepository->update($tour, [
-            'status' => 'finalizado',
+            'status' => TourStatus::FINALIZADO->value,
         ]);
     }
 
     public function myTours($user): array
     {
-        if ($user->tipo_usuario === 'tutor') {
+        if ($user->tipo_usuario === TipoUsuario::TUTOR) {
             $tours = $this->tourRepository->findByTutor($user->id);
 
             return $tours->map(function (Tour $tour) {
@@ -113,7 +115,7 @@ class TourService implements TourServiceInterface
             })->values()->all();
         }
 
-        if ($user->tipo_usuario === 'passeador') {
+        if ($user->tipo_usuario === TipoUsuario::PASSEADOR) {
             $tours = $this->tourRepository->findByWalker($user->id);
 
             return $tours->map(function (Tour $tour) {

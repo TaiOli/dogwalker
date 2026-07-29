@@ -33,7 +33,7 @@ class UserService implements UserServiceInterface
             'nome'         => $dto->nome,
             'email'        => $dto->email,
             'password'     => Hash::make($dto->password),
-            'tipo_usuario' => $dto->tipoUsuario,
+            'tipo_usuario' => $dto->tipoUsuario->value,
             'telefone'     => $dto->telefone,
             'foto'         => $foto,
         ]);

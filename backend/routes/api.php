@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
             'nome' => $user->nome,
             'email' => $user->email,
             'telefone' => $user->telefone,
-            'tipo_usuario' => $user->tipo_usuario,
+            'tipo_usuario' => $user->tipo_usuario->value,
             'foto' => $user->foto
         ];
     });
