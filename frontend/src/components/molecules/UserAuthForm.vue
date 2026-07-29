@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import BaseInput from "../atoms/BaseInput.vue";
 import BaseButton from "../atoms/BaseButton.vue";
+import BaseTypography from "../atoms/BaseTypography.vue";
 
 interface UserAuthForm {
   email: string;
@@ -55,11 +56,11 @@ function handleSubmit(): void {
         />
       </v-col>
     </v-row>
-    <p>
+    <BaseTypography variant="subtitle-1">
       <router-link to="/recuperar-senha" class="text-decoration-none"
         >Esqueci a senha</router-link
       >
-    </p>
+    </BaseTypography>
 
     <v-row justify="center" class="mt-2">
       <v-col cols="12" sm="8">

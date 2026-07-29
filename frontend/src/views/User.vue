@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAuth } from "../composables/userAuth";
 import UserCadastroForm from "../components/molecules/UserRegisterForm.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 const { formRegister, register, updateRegister, clearRegister } = useAuth();
 
@@ -33,11 +34,11 @@ async function salvar(): Promise<void> {
     >
       <v-card-text class="pa-8 mt-4 text-center">
         <BaseIco name="mdi-paw-outline" size="56" color="primary" class="mb-2"/>
-        <h2 class="mb-2 text-primary title">Dog Walker</h2>
+        <BaseTypography variant="h2" class="mb-2 text-primary title">Dog Walker</BaseTypography>
 
-        <p class="text-medium-emphasis mb-4">
+        <BaseTypography variant="subtitle-1"  class="mb-4">
           {{ formRegister.id ? "Editar cadastro" : "Criar conta de usuário" }}
-        </p>
+        </BaseTypography>
 
         <UserCadastroForm
           :form="formRegister"
@@ -45,9 +46,9 @@ async function salvar(): Promise<void> {
           @submit="salvar"
         />
 
-        <p class="mt-4">
+        <BaseTypography variant="subtitle-1"  class="mt-4">
           <router-link to="/login" class="back-link">Voltar</router-link>
-        </p>
+        </BaseTypography>
       </v-card-text>
     </v-card>
   </v-container>

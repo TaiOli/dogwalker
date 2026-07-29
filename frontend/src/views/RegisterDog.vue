@@ -6,6 +6,7 @@ import { api } from "../services/api";
 import BaseInput from "../components/atoms/BaseInput.vue";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface Dog {
   id: number;
@@ -97,8 +98,8 @@ onMounted(loadDogs);
     <v-row align="center" justify="space-between" class="mb-6">
       <v-col cols="auto">
         <div class="d-flex align-center ga-2">
-          <BaseIcon name="mdi-dog" color="primary"/>
-          <h3 class="font-weight-bold text-black">Cadastro do Dog</h3>
+          <BaseIcon name="mdi-dog" color="primary" />
+          <BaseTypography variant="h3" class="title">Cadastro do Dog</BaseTypography>
         </div>
       </v-col>
 
@@ -128,8 +129,10 @@ onMounted(loadDogs);
 
     <!-- LISTA -->
     <div class="d-flex align-center ga-2 mt-6 mb-4">
-      <BaseIcon name="mdi-paw" color="primary"/>
-      <h2 class="text-h5 font-weight-bold text-black">Meus Doguinhos</h2>
+      <BaseIcon name="mdi-paw" color="primary" />
+      <BaseTypography variant="h2" class="title"
+        >Meus Doguinhos</BaseTypography
+      >
     </div>
 
     <div v-if="dogs.length === 0" class="text-center text-muted text-black">
@@ -192,9 +195,9 @@ onMounted(loadDogs);
         <div
           class="modal-header d-flex justify-content-between align-items-center"
         >
-          <h5 class="modal-title pure-text">
+          <BaseTypography variant="h5" class="text-black text-start">
             {{ formDog.id ? "Editar cachorro" : "Cadastrar cachorro" }}
-          </h5>
+          </BaseTypography>
 
           <BaseButton
             icon="mdi-close"
@@ -239,12 +242,6 @@ onMounted(loadDogs);
 .dog-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-h2,
-h3 {
-  text-align: left;
-  font-size: 23px;
 }
 
 .modal-overlay {

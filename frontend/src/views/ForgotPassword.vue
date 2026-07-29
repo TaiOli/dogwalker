@@ -5,6 +5,7 @@ import { api } from "../services/api";
 import BaseInput from "../components/atoms/BaseInput.vue";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface ApiErrorResponse {
   response?: {
@@ -67,10 +68,10 @@ async function handleSubmit(): Promise<void> {
             size="40"
             class="mb-2 mt-3"
           />
-          <h2 class="text-black">Recuperar senha</h2>
-          <p class="text-medium-emphasis text-body-2 text-black">
+          <BaseTypography variant="h2" class="text-black">Recuperar senha</BaseTypography>
+          <BaseTypography variant="subtitle-1" class="text-black">
             Informe seu e-mail e enviaremos um link para redefinir sua senha.
-          </p>
+          </BaseTypography>
         </v-col>
       </v-row>
 

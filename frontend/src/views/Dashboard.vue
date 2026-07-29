@@ -6,6 +6,7 @@ import { getPhoto } from "../utils/image";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseTextarea from "../components/atoms/BaseTextarea.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface Dog {
   id: number;
@@ -332,10 +333,10 @@ onMounted(async () => {
   <v-container class="py-4">
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
     <template v-if="tutor">
-      <h2 class="mb-4 text-black">
+      <BaseTypography variant="h2" class="title mb-4 text-black">
         <BaseIcon color="primary" name="mdi-account" size="23" class="me-2" />
         Passeadores Disponíveis
-      </h2>
+      </BaseTypography>
 
       <v-row class="mb-5">
         <v-col cols="12" md="4" v-for="w in walkers" :key="w.id">
@@ -348,16 +349,16 @@ onMounted(async () => {
                 height="110"
                 cover
               />
-              <h5>{{ w.nome }}</h5>
-              <p>
+              <BaseTypography variant="h5">{{ w.nome }}</BaseTypography>
+              <BaseTypography variant="subtitle-1">
                 <BaseIcon name="mdi-phone" color="primary" />
                 {{ w.telefone }}
-              </p>
-              <p>
+              </BaseTypography>
+              <BaseTypography variant="subtitle-1">
                 <BaseIcon name="mdi-star-four-points" color="amber" />
                 <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
                 <span v-else>Sem avaliações</span>
-              </p>
+              </BaseTypography>
               <div class="d-flex flex-column ga-2">
                 <BaseButton
                   label="Ver perfil"
@@ -384,7 +385,7 @@ onMounted(async () => {
         </v-col>
       </v-row>
 
-      <h2 class="mb-3 text-black">
+      <BaseTypography variant="h2" class="title mb-3">
         <BaseIcon
           name="mdi-note-text-outline"
           color="primary"
@@ -392,7 +393,7 @@ onMounted(async () => {
           class="me-2"
         />
         Meus Passeios
-      </h2>
+      </BaseTypography>
 
       <v-alert v-if="toursTutor.length === 0" type="info" variant="tonal">
         Você ainda não possui passeios.
@@ -428,49 +429,65 @@ onMounted(async () => {
           </div>
 
           <div class="text-black text-center">
-            <h5 class="d-flex justify-center align-center ga-2">
+            <BaseTypography
+              variant="h5"
+              class="d-flex justify-center align-center ga-2"
+            >
               <BaseIcon name="mdi-paw-outline" size="20" color="amber" />
               {{ p.dog?.nome }}
-            </h5>
+            </BaseTypography>
 
-            <p class="d-flex justify-center align-center ga-2">
+            <BaseTypography
+              variant="subtitle-1"
+              class="d-flex justify-center align-center ga-2"
+            >
               <BaseIcon name="mdi-calendar-outline" size="18" color="primary" />
               {{ formatDate(p.data) }} - {{ p.hora }}
-            </p>
+            </BaseTypography>
 
-            <p class="d-flex justify-center align-center ga-2">
+            <BaseTypography
+              variant="subtitle-1"
+              class="d-flex justify-center align-center ga-2"
+            >
               <BaseIcon
                 name="mdi-map-marker-outline"
                 size="18"
                 color="red-darken-4"
               />
               {{ p.local }}
-            </p>
+            </BaseTypography>
 
-            <p
-              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
+            <BaseTypography
+              variant="subtitle-1"
+              class="d-flex justify-center align-center ga-2 text-black"
               v-if="p.walker"
             >
-              <BaseIcon name="mdi-walk" size="16" color="primary"/>
+              <BaseIcon name="mdi-walk" size="16" color="primary" />
               Passeador:
-              <strong>{{ p.walker?.nome }}</strong>
-            </p>
+              <BaseTypography variant="body-1" weight="bold">{{ p.walker?.nome }}</BaseTypography>
+            </BaseTypography>
 
-            <p
-              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
+            <BaseTypography
+              variant="subtitle-1"
+              class="d-flex justify-center align-center ga-2 text-black"
               v-else-if="p.status === 'recusado'"
             >
-              <BaseIcon name="mdi-close-circle" size="16" color="error"/>
+              <BaseIcon name="mdi-close-circle" size="16" color="error" />
               Nenhum passeador aceitou este passeio.
-            </p>
+            </BaseTypography>
 
-            <p
-              class="text-medium-emphasis text-caption d-flex justify-center align-center ga-2 text-black"
+            <BaseTypography
+              variant="subtitle-1"
+              class="d-flex justify-center align-center ga-2 text-black"
               v-else
             >
-              <BaseIcon name="mdi-timer-sand" size="16" color="orange-darken-2"/>
+              <BaseIcon
+                name="mdi-timer-sand"
+                size="16"
+                color="orange-darken-2"
+              />
               Aguardando um passeador aceitar
-            </p>
+            </BaseTypography>
           </div>
 
           <v-chip
@@ -502,10 +519,10 @@ onMounted(async () => {
             class="pa-3 mt-3"
             border="s-lg"
           >
-            <p class="text-body-2 font-weight-bold mb-2 text-black">
+            <BaseTypography variant="subtitle-1" class="mb-2 text-black">
               <BaseIcon name="mdi-check" color="green-darken-4" />
               Sua avaliação sobre o passeador
-            </p>
+            </BaseTypography>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
                 <BaseIcon
@@ -522,12 +539,13 @@ onMounted(async () => {
                 >({{ p.review_by_tutor.rating }}/5)</span
               >
             </div>
-            <p
+            <BaseTypography
+              variant="subtitle-1"
               v-if="p.review_by_tutor.comment"
-              class="text-body-2 font-italic mb-0"
+              class="font-italic mb-0"
             >
               "{{ p.review_by_tutor.comment }}"
-            </p>
+            </BaseTypography>
           </v-sheet>
 
           <v-expand-transition>
@@ -535,9 +553,11 @@ onMounted(async () => {
               <v-divider class="mb-4" />
 
               <div class="d-flex justify-center align-center ga-2 mb-4">
-                <BaseIcon name="mdi-star" color="amber"/>
+                <BaseIcon name="mdi-star" color="amber" />
 
-                <h5 class="mb-0 text-black">Como foi o passeador?</h5>
+                <BaseTypography variant="h5" class="mb-0 text-black"
+                  >Como foi o passeador?</BaseTypography
+                >
               </div>
 
               <div class="text-center mb-4">
@@ -587,10 +607,10 @@ onMounted(async () => {
     </template>
 
     <template v-else-if="walker">
-      <h2 class="mb-4">
+      <BaseTypography variant="h2" class="title mb-4">
         <BaseIcon name="mdi-walk" color="primary" size="23" class="me-2" />
         Meus Passeios
-      </h2>
+      </BaseTypography>
 
       <v-alert v-if="toursWalker.length === 0" type="info" variant="tonal">
         Você ainda não possui passeios aceitos.
@@ -615,11 +635,11 @@ onMounted(async () => {
             @click="dismissTour(p.id)"
           />
 
-          <h5>
+          <BaseTypography variant="h5">
             <BaseIcon name="mdi-paw-outline" color="amber" size="25" />
             {{ p.dog?.nome }}
-          </h5>
-          <p>
+          </BaseTypography>
+          <BaseTypography variant="subtitle-1">
             <BaseIcon
               name="mdi-calendar"
               color="primary"
@@ -627,8 +647,8 @@ onMounted(async () => {
               size="18"
             />
             {{ formatDate(p.data) }} - {{ p.hora }}
-          </p>
-          <p>
+          </BaseTypography>
+          <BaseTypography variant="subtitle-1">
             <BaseIcon
               name="mdi-map-marker-outline"
               color="red-darken-4"
@@ -636,8 +656,8 @@ onMounted(async () => {
               size="18"
             />
             {{ p.local }}
-          </p>
-          <p class="text-medium-emphasis text-caption text-black">
+          </BaseTypography>
+          <BaseTypography variant="subtitle-1" class="text-black">
             <BaseIcon
               name="mdi-account-outline"
               color="primary"
@@ -645,16 +665,17 @@ onMounted(async () => {
               size="18"
             />
             Tutor:
-            <strong>{{ p.tutor?.nome }}</strong>
-          </p>
+            <BaseTypography variant="body-1" weight="bold">{{ p.tutor?.nome }}</BaseTypography>
+          </BaseTypography>
 
-          <p
+          <BaseTypography
+            variant="subtitle-1"
             class="text-medium-emphasis text-caption text-black"
             v-if="p.status === 'cancelado'"
           >
             <BaseIcon name="mdi-close" class="me-2" color="red-darken-4" />
             Este passeio foi cancelado pelo tutor.
-          </p>
+          </BaseTypography>
 
           <v-chip
             v-bind="badgeStatus(p.status)"
@@ -685,10 +706,10 @@ onMounted(async () => {
             class="pa-3 mt-3"
             border="s-lg"
           >
-            <p class="text-body-2 font-weight-bold mb-2 text-black">
+            <BaseTypography variant="subtitle-1" class="mb-2 text-black">
               <BaseIcon name="mdi-check" class="me-2" color="green-darken-4" />
               Sua avaliação sobre o passeio
-            </p>
+            </BaseTypography>
             <div class="mb-1">
               <span v-for="n in 5" :key="n">
                 <BaseIcon
@@ -705,19 +726,22 @@ onMounted(async () => {
                 >({{ p.review_by_walker.rating }}/5)</span
               >
             </div>
-            <p
+            <BaseTypography
+              variant="subtitle-1"
               v-if="p.review_by_walker.comment"
-              class="text-body-2 font-italic mb-0"
+              class="font-italic mb-0"
             >
               "{{ p.review_by_walker.comment }}"
-            </p>
+            </BaseTypography>
           </v-sheet>
 
           <!-- FORMULÁRIO FINALIZAR + AVALIAR -->
           <v-expand-transition>
             <div v-if="reviewWalker?.id === p.id" class="mt-4">
               <v-divider class="mb-4" />
-              <h5 class="mb-3 text-black">Avaliar o tutor / passeio</h5>
+              <BaseTypography variant="h5" class="mb-3 text-black"
+                >Avaliar o tutor / passeio</BaseTypography
+              >
 
               <div class="mb-3">
                 <span
@@ -771,11 +795,6 @@ onMounted(async () => {
   padding: 20px;
   max-width: 700px;
   margin: 0 auto 16px auto;
-}
-
-h2,
-h4 {
-  font-size: 23px;
 }
 
 .card:hover {

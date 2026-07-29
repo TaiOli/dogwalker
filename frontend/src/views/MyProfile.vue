@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 import { useAuth } from "../composables/userAuth";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface User {
   id: number;
@@ -56,22 +57,22 @@ onMounted(async () => {
         />
       </div>
 
-      <h3>{{ user.nome }}</h3>
+      <BaseTypography variant="h3">{{ user.nome }}</BaseTypography>
 
-      <p class="d-flex justify-center align-center ga-2">
+      <BaseTypography variant="subtitle-1" class="d-flex justify-center align-center ga-2">
         <BaseIcon name="mdi-email-outline" color="primary" size="18"/>
         {{ user.email }}
-      </p>
+      </BaseTypography>
 
-      <p class="d-flex justify-center align-center ga-2">
+      <BaseTypography variant="subtitle-1" class="d-flex justify-center align-center ga-2">
         <BaseIcon name="mdi-phone-outline" color="primary" size="18"/>
         {{ user.telefone }}
-      </p>
+      </BaseTypography>
 
-      <p class="d-flex justify-center align-center ga-2">
+      <BaseTypography variant="subtitle-1" class="d-flex justify-center align-center ga-2">
         <BaseIcon name="mdi-account-outline" color="primary" size="18"/>
         Tipo: {{ user.tipo_usuario }}
-      </p>
+      </BaseTypography>
 
       <BaseButton
         class="btn-edit mt-3 d-block mx-auto text-white"

@@ -5,6 +5,7 @@ import { api } from "../services/api";
 import BaseInput from "../components/atoms/BaseInput.vue";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface ApiErrorResponse {
   response?: {
@@ -95,10 +96,10 @@ async function handleSubmit(): Promise<void> {
             size="40"
             class="mb-2 mt-3"
           />
-          <h2 class="text-black">Redefinir senha</h2>
-          <p class="text-medium-emphasis text-body-2 text-black">
+          <BaseTypography variant="h2" class="text-black">Redefinir senha</BaseTypography>
+          <BaseTypography variant="subtitle-1" class="text-medium-emphasis text-body-2 text-black">
             Escolha uma nova senha para sua conta.
-          </p>
+          </BaseTypography>
         </v-col>
       </v-row>
 

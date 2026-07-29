@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useAuth } from "../../composables/userAuth";
 import BaseButton from "../atoms/BaseButton.vue";
 import BaseIcon from "../atoms/BaseIcon.vue";
+import BaseTypography from "../atoms/BaseTypography.vue";
 
 const { tutor, walker } = useAuth();
 const collapsed = ref(false);
@@ -15,10 +16,10 @@ function toggle(): void {
 <template>
   <aside :class="['sidebar', { collapsed }]">
     <div class="header">
-      <h2 v-if="!collapsed" class="brand-title">
+      <BaseTypography variant="h2" v-if="!collapsed" class="brand-title">
         <BaseIcon name="mdi-paw-outline" color="white" class="me-2" />
         Dog Walker
-      </h2>
+      </BaseTypography>
 
       <v-hover v-slot:default="{ isHovering, props }">
         <BaseButton

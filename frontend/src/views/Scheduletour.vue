@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import ScheduletourForm from "../components/molecules/ScheduletourForm.vue";
 import { useScheduletour } from "../composables/useScheduletour";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 const route = useRoute();
 
@@ -48,7 +49,7 @@ async function save(): Promise<void> {
       <v-col cols="12" md="10" lg="8">
         <div class="d-flex align-center ga-2 mb-5">
           <BaseIcon name="mdi-plus" color="primary" size="32"/>
-          <h2>Solicitar Passeio</h2>
+          <BaseTypography variant="h2" class="text-black">Solicitar Passeio</BaseTypography>
         </div>
 
         <v-card elevation="3" rounded="xl" class="pa-6" color="white">
@@ -64,11 +65,3 @@ async function save(): Promise<void> {
     </v-row>
   </v-container>
 </template>
-
-<style scoped>
-h2 {
-  font-size: 23px;
-  font-weight: bold; 
-  color: black; 
-}
-</style>

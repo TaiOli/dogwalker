@@ -3,6 +3,7 @@ import { onMounted, computed, ref } from "vue";
 import { useWalks } from "../composables/useWalks";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface Dog {
   id: number;
@@ -90,7 +91,7 @@ async function reject(id: number): Promise<void> {
   <v-container class="py-4">
     <div class="d-flex align-center ga-2 mb-4">
       <BaseIcon name="mdi-walk" color="primary" />
-      <h2 class="font-weight-bold title">Passeios Disponíveis</h2>
+      <BaseTypography variant="h2" class="title">Passeios Disponíveis</BaseTypography>
     </div>
 
     <v-alert

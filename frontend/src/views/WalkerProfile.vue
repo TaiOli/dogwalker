@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import { api } from "../services/api";
 import { getPhoto } from "../utils/image";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface Review {
   id: number;
@@ -61,7 +62,9 @@ onMounted(async () => {
               class="mx-auto rounded-circle mb-4"
             />
 
-            <h3 class="text-h5 font-weight-bold">{{ walker.nome }}</h3>
+            <BaseTypography variant="h3" weight="bold">{{
+              walker.nome
+            }}</BaseTypography>
 
             <v-chip
               color="primary"
@@ -75,27 +78,29 @@ onMounted(async () => {
 
           <v-divider class="my-5" />
 
-          <p>
-            <strong>
+          <BaseTypography variant="subtitle-1">
+            <BaseTypography variant="body-1" weight="bold">
               <BaseIcon name="mdi-email-outline" color="primary" />
-              Email: </strong
+              Email: </BaseTypography
             ><br />
             {{ walker.email }}
-          </p>
+          </BaseTypography>
 
-          <p>
-            <strong>
+          <BaseTypography variant="subtitle-1">
+            <BaseTypography variant="body-1" weight="bold">
               <BaseIcon name="mdi-cellphone" color="primary" />
-              Telefone: </strong
+              Telefone: </BaseTypography
             ><br />
             {{ walker.telefone }}
-          </p>
+          </BaseTypography>
 
           <v-divider class="my-5" />
 
           <div class="d-flex justify-center align-center ga-2 mb-4">
-            <BaseIcon name="mdi-star" color="amber"/>
-            <h4 class="mb-0">Avaliações de Tutores</h4>
+            <BaseIcon name="mdi-star" color="amber" />
+            <BaseTypography variant="h4" class="mb-0"
+              >Avaliações de Tutores</BaseTypography
+            >
           </div>
 
           <v-alert v-if="!evaluations.length" type="info" variant="tonal">
@@ -121,14 +126,18 @@ onMounted(async () => {
               >
             </div>
 
-            <p v-if="av.comentario" class="mb-1 font-italic">
+            <BaseTypography
+              variant="subtitle-1"
+              v-if="av.comentario"
+              class="mb-1 font-italic"
+            >
               "{{ av.comentario }}"
-            </p>
+            </BaseTypography>
 
-            <p class="text-medium-emphasis text-caption mb-0">
+            <BaseTypography variant="subtitle-1" class="mb-0">
               — {{ av.tutor?.nome ?? "Tutor" }} em
               {{ formatDate(av.created_at) }}
-            </p>
+            </BaseTypography>
 
             <v-divider class="mt-3" />
           </div>

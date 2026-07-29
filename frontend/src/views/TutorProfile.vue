@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import { api } from "../services/api";
 import { getPhoto } from "../utils/image";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface Review {
   id: number;
@@ -61,9 +62,9 @@ onMounted(async () => {
               class="mx-auto rounded-circle mb-4 mt-3"
             />
 
-            <h3 class="text-h5 font-weight-bold">
+            <BaseTypography variant="h3" weight="bold">
               {{ tutor.nome }}
-            </h3>
+            </BaseTypography>
 
             <v-chip
               color="primary"
@@ -78,15 +79,15 @@ onMounted(async () => {
           <v-divider class="my-5" />
 
           <div class="text-center">
-            <p class="d-flex justify-center align-center ga-2 mb-2">
+            <BaseTypography variant="subtitle-1" class="d-flex justify-center align-center ga-2 mb-2">
               <BaseIcon name="mdi-email-outline" color="primary" size="18"/>
               {{ tutor.email }}
-            </p>
+            </BaseTypography>
 
-            <p class="d-flex justify-center align-center ga-2 mb-0">
+            <BaseTypography variant="subtitle-1" class="d-flex justify-center align-center ga-2 mb-0">
               <BaseIcon name="mdi-phone-outline" color="primary" size="18"/>
               {{ tutor.telefone }}
-            </p>
+            </BaseTypography>
           </div>
 
           <v-divider class="my-5" />
@@ -121,14 +122,14 @@ onMounted(async () => {
               >
             </div>
 
-            <p v-if="av.comentario" class="mb-1 font-italic">
+            <BaseTypography variant="subtitle-1" v-if="av.comentario" class="mb-1 font-italic">
               "{{ av.comentario }}"
-            </p>
+            </BaseTypography>
 
-            <p class="text-medium-emphasis text-caption mb-0">
+            <BaseTypography variant="subtitle-1" class="mb-0">
               — {{ av.passeador?.nome ?? "Passeador" }} em
               {{ formatDate(av.created_at) }}
-            </p>
+            </BaseTypography>
 
             <v-divider class="mt-3" />
           </div>

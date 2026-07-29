@@ -5,6 +5,7 @@ import Mobile from "../components/molecules/Mobile.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface LoginResponse {
   user: {
@@ -74,20 +75,29 @@ async function loginAccess(): Promise<void> {
       width="100%"
     >
       <v-card-text class="pa-6 text-center">
-        <BaseIcon name="mdi-paw-outline" size="56" color="primary" class="mb-3"/>
-        <h2 class="mb-2 text-primary">Dog Walker</h2>
-        <p class="text-medium-emphasis mb-6">Entrar no sistema</p>
+        <BaseIcon
+          name="mdi-paw-outline"
+          size="56"
+          color="primary"
+          class="mb-3"
+        />
+        <BaseTypography variant="h2" class="mb-2 text-primary"
+          >Dog Walker</BaseTypography
+        >
+        <BaseTypography variant="subtitle-1" class="mb-6"
+          >Entrar no sistema</BaseTypography
+        >
         <UserAuthForm
           :form="formLogin"
           labelButton="Entrar"
           @submit="loginAccess"
         />
-        <p class="mt-4">
+        <BaseTypography variant="subtitle-1" class="mt-4">
           Não tem conta?
           <router-link to="/cadastro-usuario" class="text-decoration-none"
             >Criar conta</router-link
           >
-        </p>
+        </BaseTypography>
       </v-card-text>
     </v-card>
   </v-container>
