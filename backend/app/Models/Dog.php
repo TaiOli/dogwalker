@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\DogPorte;
 
 class Dog extends Model
 {
@@ -17,6 +18,14 @@ class Dog extends Model
         'observacoes',
         'foto',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'idade' => 'integer',
+            'porte' => DogPorte::class,
+        ];
+    }
 
     public function user()
     {

@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use App\DTOs\User\CreateUserDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\TipoUsuario;
+use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -29,7 +31,7 @@ class StoreUserRequest extends FormRequest
             'password' => 'required|min:6',
             'nome' => 'required|string',
             'telefone' => 'nullable|string',
-            'tipo_usuario' => 'required|in:tutor,passeador',
+            'tipo_usuario' => ['required', Rule::enum(TipoUsuario::class)],
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }

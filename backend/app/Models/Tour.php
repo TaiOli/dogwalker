@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\TourStatus;
 
 class Tour extends Model
 {
@@ -19,6 +20,14 @@ class Tour extends Model
         'valor',
         'status',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'data' => 'date',
+            'status' => TourStatus::class
+        ];
+    }
 
     public function dog()
     {

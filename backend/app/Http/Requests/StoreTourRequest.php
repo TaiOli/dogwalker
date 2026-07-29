@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use App\DTOs\Tour\CreateTourDTO;
+use App\Enums\TourStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTourRequest extends FormRequest
 {
@@ -27,6 +29,7 @@ class StoreTourRequest extends FormRequest
             'dog_id' => 'required|exists:dogs,id',
             'passeador_id' => 'required|exists:users,id',
             'data' => 'required|date|after_or_equal:today',
+            'status' => ['required', Rule::enum(TourStatus::class)],
             'hora' => 'required',
             'duracao' => 'required|date_format:H:i',
             'local' => 'required|string|max:255',

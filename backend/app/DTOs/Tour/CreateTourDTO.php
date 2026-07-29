@@ -2,6 +2,8 @@
 
 namespace App\DTOs\Tour;
 
+use App\Enums\TourStatus;
+
 class CreateTourDTO
 {
     public function __construct(
@@ -9,6 +11,7 @@ class CreateTourDTO
         public readonly int    $dogId,
         public readonly string $data,
         public readonly string $hora,
+        public readonly TourStatus $status,
         public readonly int    $duracao,
         public readonly string $local,
         public readonly float  $valor,
@@ -22,6 +25,7 @@ class CreateTourDTO
             dogId: (int) $validated['dog_id'],
             data: $validated['data'],
             hora: $validated['hora'],
+            status: TourStatus::from($validated['status']),
             duracao: (int) $validated['duracao'],
             local: $validated['local'],
             valor: (float) $validated['valor'],

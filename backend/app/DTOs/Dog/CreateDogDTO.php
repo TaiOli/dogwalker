@@ -3,6 +3,7 @@
 namespace App\DTOs\Dog;
 
 use Illuminate\Http\UploadedFile;
+use App\Enums\DogPorte;
 
 class CreateDogDTO
 {
@@ -10,7 +11,7 @@ class CreateDogDTO
         public readonly int           $userId,
         public readonly string        $nome,
         public readonly int           $idade,
-        public readonly string        $porte,
+        public readonly DogPorte      $porte,
         public readonly string        $raca,
         public readonly ?string       $observacoes = null,
         public readonly ?UploadedFile $foto = null,
@@ -22,7 +23,7 @@ class CreateDogDTO
             userId: $userId,
             nome: $validated['nome'],
             idade: $validated['idade'],
-            porte: $validated['porte'],
+            porte: DogPorte::from($validated['porte']),
             raca: $validated['raca'],
             observacoes: $validated['observacoes'] ?? null,
             foto: $validated['foto'] ?? null,
@@ -35,7 +36,7 @@ class CreateDogDTO
             'user_id'     => $this->userId,
             'nome'        => $this->nome,
             'idade'       => $this->idade,
-            'porte'       => $this->porte,
+            'porte'       => $this->porte->value,
             'raca'        => $this->raca,
             'observacoes' => $this->observacoes,
             'foto'        => $this->foto,

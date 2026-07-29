@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use App\DTOs\Dog\CreateDogDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\DogPorte;
+use Illuminate\Validation\Rule;
 
 class StoreDogRequest extends FormRequest
 {
@@ -26,7 +28,7 @@ class StoreDogRequest extends FormRequest
         return [
             'nome' => 'required|string',
             'idade' => 'nullable|integer',
-            'porte' => 'required|string',
+            'porte' => ['required', Rule::enum(DogPorte::class)],
             'raca' => 'nullable|string',
             'foto' => 'nullable|string',
             'observacoes' => 'nullable|string',
