@@ -36,7 +36,8 @@ function handleSubmit(): void {
           v-model="form.email"
           required
           label="Email"
-          prepend-inner-icon="mdi-email"
+          prepend-inner-icon="mdi-email-outline"
+          icon-color="primary mx-2"
           :error-message="emailError"
           @update:modelValue="emailError = ''"
         />
@@ -49,7 +50,8 @@ function handleSubmit(): void {
           v-model="form.password"
           required
           label="Senha"
-          prepend-inner-icon="mdi-lock"
+          prepend-inner-icon="mdi-lock-outline"
+          icon-color="primary mx-2"
           type="password"
           :error-message="passwordError"
           @update:modelValue="passwordError = ''"

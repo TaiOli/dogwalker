@@ -70,6 +70,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           v-model="form.username"
           required
           label="Username"
+          prepend-inner-icon="mdi-account-outline"
+          icon-color="primary mx-2"
           :error-message="usernameError"
           @update:modelValue="usernameError = ''"
         />
@@ -82,6 +84,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           v-model="form.name"
           required
           label="Nome Completo"
+          prepend-inner-icon="mdi-account-outline"
+          icon-color="primary mx-2"
           :error-message="nameError"
           @update:modelValue="nameError = ''"
         />
@@ -94,6 +98,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           v-model="form.email"
           required
           label="Email"
+          prepend-inner-icon="mdi-email-outline"
+          icon-color="primary mx-2"
           :error-message="emailError"
           @update:modelValue="emailError = ''"
         />
@@ -107,6 +113,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           required
           type="password"
           label="Senha"
+          prepend-inner-icon="mdi-lock-outline"
+          icon-color="primary mx-2"
           :error-message="passwordError"
           @update:modelValue="passwordError = ''"
         />
@@ -126,6 +134,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           ]"
           labelKey="label"
           valueKey="value"
+          prepend-inner-icon="mdi-account-outline"
+          icon-color="primary mx-2 mt-2"
           :error-message="typeuserError"
           @update:modelValue="typeuserError = ''"
         />
@@ -137,7 +147,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
         <BaseInput
           v-model="form.phone"
           label="Telefone"
-          prepend-inner-icon="mdi-phone"
+          prepend-inner-icon="mdi-phone-outline"
+          icon-color="primary mx-2"
         />
       </v-col>
     </v-row>
@@ -148,6 +159,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           type="file"
           accept="image/*"
           label="Foto"
+          icon-color="primary mx-2"
           @update:modelValue="handlePhoto"
         />
       </v-col>

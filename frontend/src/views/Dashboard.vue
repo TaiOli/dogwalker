@@ -431,7 +431,7 @@ onMounted(async () => {
           <div class="text-black text-center">
             <BaseTypography
               variant="h5"
-              class="d-flex justify-center align-center ga-2"
+              class="d-flex justify-center align-center ga-2 mb-2"
             >
               <BaseIcon name="mdi-paw-outline" size="20" color="amber" />
               {{ p.dog?.nome }}
@@ -439,7 +439,7 @@ onMounted(async () => {
 
             <BaseTypography
               variant="subtitle-1"
-              class="d-flex justify-center align-center ga-2"
+              class="d-flex justify-center align-center ga-2 mb-2"
             >
               <BaseIcon name="mdi-calendar-outline" size="18" color="primary" />
               {{ formatDate(p.data) }} - {{ p.hora }}
@@ -447,7 +447,7 @@ onMounted(async () => {
 
             <BaseTypography
               variant="subtitle-1"
-              class="d-flex justify-center align-center ga-2"
+              class="d-flex justify-center align-center ga-2  mb-2"
             >
               <BaseIcon
                 name="mdi-map-marker-outline"
@@ -459,12 +459,14 @@ onMounted(async () => {
 
             <BaseTypography
               variant="subtitle-1"
-              class="d-flex justify-center align-center ga-2 text-black"
+              class="d-flex justify-center align-center ga-2 text-black mb-2"
               v-if="p.walker"
             >
               <BaseIcon name="mdi-walk" size="16" color="primary" />
               Passeador:
-              <BaseTypography variant="body-1" weight="bold">{{ p.walker?.nome }}</BaseTypography>
+              <BaseTypography variant="body-1" weight="bold">{{
+                p.walker?.nome
+              }}</BaseTypography>
             </BaseTypography>
 
             <BaseTypography
@@ -478,7 +480,7 @@ onMounted(async () => {
 
             <BaseTypography
               variant="subtitle-1"
-              class="d-flex justify-center align-center ga-2 text-black"
+              class="d-flex justify-center align-center ga-2 text-black mb-3"
               v-else
             >
               <BaseIcon
@@ -665,7 +667,9 @@ onMounted(async () => {
               size="18"
             />
             Tutor:
-            <BaseTypography variant="body-1" weight="bold">{{ p.tutor?.nome }}</BaseTypography>
+            <BaseTypography variant="body-1" weight="bold">{{
+              p.tutor?.nome
+            }}</BaseTypography>
           </BaseTypography>
 
           <BaseTypography

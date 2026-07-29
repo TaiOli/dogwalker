@@ -155,7 +155,7 @@ onMounted(loadDogs);
           <v-img :src="dog.foto" class="card-img-top dog-img" alt="Foto Dog" />
 
           <v-card class="card-body pa-4" color="white" elevation="2">
-            <v-card-title class="text-h5 font-weight-bold pb-2">
+            <v-card-title class="text-title-small font-weight-bold mt-2 mb-2">
               {{ dog.nome }}
             </v-card-title>
 
@@ -182,7 +182,7 @@ onMounted(loadDogs);
               label="Editar"
               color="primary"
               variant="outlined"
-              class="edit-btn mt-3"
+              class="edit-btn mt-3 mb-3"
               @click="editDog(dog)"
             />
           </v-card>
@@ -235,7 +235,7 @@ onMounted(loadDogs);
 }
 
 .edit-btn {
-  width: 100%;
+  width: 50%;
   border-radius: 999px !important;
 }
 

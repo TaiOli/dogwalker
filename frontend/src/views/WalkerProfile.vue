@@ -78,26 +78,26 @@ onMounted(async () => {
 
           <v-divider class="my-5" />
 
-          <BaseTypography variant="subtitle-1">
+          <BaseTypography variant="subtitle-1" class="mb-4">
             <BaseTypography variant="body-1" weight="bold">
-              <BaseIcon name="mdi-email-outline" color="primary" />
-              Email: </BaseTypography
-            ><br />
+              <BaseIcon name="mdi-email-outline"  size="18" color="primary" />
+              Email:
+            </BaseTypography>
             {{ walker.email }}
           </BaseTypography>
 
           <BaseTypography variant="subtitle-1">
             <BaseTypography variant="body-1" weight="bold">
-              <BaseIcon name="mdi-cellphone" color="primary" />
-              Telefone: </BaseTypography
-            ><br />
+              <BaseIcon name="mdi-cellphone" size="18" color="primary" />
+              Telefone:
+            </BaseTypography>
             {{ walker.telefone }}
           </BaseTypography>
 
           <v-divider class="my-5" />
 
           <div class="d-flex justify-center align-center ga-2 mb-4">
-            <BaseIcon name="mdi-star" color="amber" />
+            <BaseIcon name="mdi-star" size="22" color="amber" />
             <BaseTypography variant="h4" class="mb-0"
               >Avaliações de Tutores</BaseTypography
             >

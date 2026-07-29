@@ -68,7 +68,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           type="number"
           label="Idade"
           prepend-inner-icon="mdi-cake-variant"
-          icon-color="primary mx-2"
+          icon-color="brown mx-2"
         />
       </v-col>
     </v-row>
@@ -116,7 +116,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           v-model="form.observations"
           label="Observações"
           prepend-inner-icon="mdi-comment-text-outline"
-          icon-color="primary mx-2"
+          icon-color="orange mx-2"
         />
       </v-col>
     </v-row>
@@ -126,6 +126,7 @@ function handlePhoto(value: string | number | File | File[] | null): void {
         <BaseInput
           type="file"
           accept="image/*"
+          icon-color="primary"
           label="Foto"
           @update:modelValue="handlePhoto"
         />

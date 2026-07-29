@@ -81,12 +81,10 @@ async function loginAccess(): Promise<void> {
           color="primary"
           class="mb-3"
         />
-        <BaseTypography variant="h2" class="mb-2 text-primary"
+        <BaseTypography variant="h2" weight="bold" class="mb-2 text-primary"
           >Dog Walker</BaseTypography
         >
-        <BaseTypography variant="subtitle-1" class="mb-6"
-          >Entrar no sistema</BaseTypography
-        >
+
         <UserAuthForm
           :form="formLogin"
           labelButton="Entrar"

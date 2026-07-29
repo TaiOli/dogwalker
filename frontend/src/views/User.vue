@@ -34,7 +34,7 @@ async function salvar(): Promise<void> {
     >
       <v-card-text class="pa-8 mt-4 text-center">
         <BaseIco name="mdi-paw-outline" size="56" color="primary" class="mb-2"/>
-        <BaseTypography variant="h2" class="mb-2 text-primary title">Dog Walker</BaseTypography>
+        <BaseTypography variant="h2" weight="bold" class="mb-2 text-primary title">Dog Walker</BaseTypography>
 
         <BaseTypography variant="subtitle-1"  class="mb-4">
           {{ formRegister.id ? "Editar cadastro" : "Criar conta de usuário" }}
@@ -46,7 +46,7 @@ async function salvar(): Promise<void> {
           @submit="salvar"
         />
 
-        <BaseTypography variant="subtitle-1"  class="mt-4">
+        <BaseTypography variant="subtitle-1"  class="mt-4 mb-3" weight="bold">
           <router-link to="/login" class="back-link">Voltar</router-link>
         </BaseTypography>
       </v-card-text>

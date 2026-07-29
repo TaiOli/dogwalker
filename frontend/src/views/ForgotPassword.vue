@@ -59,7 +59,7 @@ async function handleSubmit(): Promise<void> {
 
 <template>
   <div class="page-wrapper">
-    <v-card class="pa-6 card" max-width="440" elevation="3">
+    <v-card class="pa-6 card w-100" max-width="440" elevation="3">
       <v-row>
         <v-col cols="12" class="text-center mb-2">
           <BaseIcon
@@ -68,9 +68,9 @@ async function handleSubmit(): Promise<void> {
             size="40"
             class="mb-2 mt-3"
           />
-          <BaseTypography variant="h2" class="text-black">Recuperar senha</BaseTypography>
-          <BaseTypography variant="subtitle-1" class="text-black">
-            Informe seu e-mail e enviaremos um link para redefinir sua senha.
+          <BaseTypography variant="h2" weight="bold" class="text-title-large text-black mb-2">Recuperar senha</BaseTypography>
+          <BaseTypography variant="overline" class="text-black">
+            Digite seu e-mail para receber um link de redefinição
           </BaseTypography>
         </v-col>
       </v-row>
