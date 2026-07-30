@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tour;
 use App\DTOs\Tour\TourResponseDTO;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTourRequest;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourInvalidStatusException;
-use App\Models\Tour;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 
 class TourController extends Controller
@@ -50,7 +50,7 @@ class TourController extends Controller
         }
     }
 
-    public function reject($id, Request $request)
+    public function reject($id)
     {
         try {
             $tour = $this->tourService->reject($id);
@@ -73,7 +73,7 @@ class TourController extends Controller
         );
     }
 
-    public function cancel($id, Request $request)
+    public function cancel($id)
     {
         $tour = Tour::findOrFail($id);
         $this->authorize('cancel', $tour);
@@ -86,7 +86,7 @@ class TourController extends Controller
         ], 200);
     }
 
-    public function complete($id, Request $request)
+    public function complete($id)
     {
         $tour = Tour::findOrFail($id);
         $this->authorize('complete', $tour);
@@ -104,7 +104,7 @@ class TourController extends Controller
     }
 
     // Excluir Passeio
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
         $tour = Tour::findOrFail($id);
         $this->authorize('delete', $tour);
