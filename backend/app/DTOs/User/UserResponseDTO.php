@@ -20,7 +20,7 @@ class UserResponseDTO
         $this->nome         = $user->nome;
         $this->email        = $user->email;
         $this->telefone     = $user->telefone;
-        $this->tipoUsuario  = $user->tipo_usuario;
+        $this->tipoUsuario  = $user->tipo_usuario->value;
         $this->foto         = $user->foto;
 
         $this->mediaAvaliacao = isset($user->received_evaluations_avg_nota)

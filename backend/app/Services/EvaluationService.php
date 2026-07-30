@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Evaluation;
+use App\Enums\TourStatus;
 use App\DTOs\Evaluation\CreateEvaluationDTO;
 use App\Repositories\Contracts\EvaluationRepositoryInterface;
 use App\Repositories\Contracts\TourRepositoryInterface;
@@ -26,7 +27,7 @@ class EvaluationService implements EvaluationServiceInterface
             throw new TourNotFoundException();
         }
 
-        if ($tour->status !== 'finalizado') {
+        if ($tour->status !== TourStatus::FINALIZADO) {
             throw new EvaluationTourNotFinishedException();
         }
 

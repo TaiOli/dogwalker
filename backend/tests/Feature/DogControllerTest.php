@@ -5,8 +5,10 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Dog;
 use App\Models\User;
+use App\Enums\DogPorte;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Repositories\Services\Contracts\DogServiceInterface;
 
 class DogControllerTest extends TestCase
@@ -22,11 +24,25 @@ class DogControllerTest extends TestCase
         $this->dogServiceMock = $this->mock(DogServiceInterface::class);
     }
 
-    public function create_dog_test()
+    public function test_create_dog()
     {
-        $dogData = ['name' => 'Rex', 'breed' => 'Labrador'];
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $casos = DogPorte::cases();
+        $porteString = isset($casos[0]) ? $casos[0]->value : 'medio';
+
+        $dogData = [
+            'nome' => 'Rex',
+            'raca' => 'Labrador',
+            'porte' => $porteString,
+            'idade' => 3
+        ];
+
         $createdDog = new Dog($dogData);
         $createdDog->id = 1;
+        $createdDog->user_id = $user->id;
+        $createdDog->porte = $porteString; 
 
         $this->dogServiceMock
             ->shouldReceive('create')
@@ -36,18 +52,30 @@ class DogControllerTest extends TestCase
         $response = $this->postJson('/api/dogs', $dogData);
 
         $response->assertStatus(201)
-            ->assertJsonFragment(['message' => 'Cachorro cadastrado com sucesso!']);
+            ->assertJsonFragment(['message' => 'Cachorro cadastrado com sucesso']);
     }
 
-    public function dog_editing_test()
+    public function test_dog_editing()
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
 
         $dog = Dog::factory()->create(['user_id' => $user->id]);
-        $updateData = ['name' => 'Max'];
+
+        $casos = DogPorte::cases();
+        $porteString = isset($casos[0]) ? $casos[0]->value : 'medio';
+
+        $updateData = [
+            'nome' => 'Max',
+            'raca' => 'Labrador',
+            'porte' => $porteString,
+            'idade' => 4
+        ];
 
         $updatedDog = new Dog(array_merge($dog->toArray(), $updateData));
+        $updatedDog->id = $dog->id;
+        $updatedDog->user_id = $user->id;
+        $updatedDog->porte = $porteString;
 
         $this->dogServiceMock
             ->shouldReceive('update')
@@ -60,7 +88,7 @@ class DogControllerTest extends TestCase
             ->assertJsonFragment(['message' => 'Cadastro do cachorro atualizado com sucesso!']);
     }
 
-    public function dog_removal_test()
+    public function test_dog_removal()
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -79,16 +107,34 @@ class DogControllerTest extends TestCase
             ->assertJson(['message' => 'Cadastro do cachorro removido com sucesso!']);
     }
 
-    public function dog_list_test()
+
+    public function test_dog_list()
     {
-        $dogs = collect([new Dog(['name' => 'Rex'])]);
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $casos = DogPorte::cases();
+        $porteString = isset($casos[0]) ? $casos[0]->value : 'medio';
+
+        $dogData = [
+            'nome' => 'Rex',
+            'raca' => 'Poodle',
+            'porte' => $porteString,
+            'idade' => 2,
+            'user_id' => $user->id
+        ];
+
+        $dog = new Dog($dogData);
+        $dog->id = 1;
+
+        $dogs = new EloquentCollection([$dog]);
 
         $this->dogServiceMock
             ->shouldReceive('myDogs')
             ->once()
             ->andReturn($dogs);
 
-        $response = $this->getJson('/api/dogs');
+        $response = $this->getJson('/api/dogs/my');
 
         $response->assertStatus(200);
     }

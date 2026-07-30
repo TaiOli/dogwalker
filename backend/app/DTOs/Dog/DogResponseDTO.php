@@ -21,7 +21,7 @@ class DogResponseDTO
         $this->userId      = $dog->user_id;
         $this->nome        = $dog->nome;
         $this->idade       = $dog->idade;
-        $this->porte       = $dog->porte;
+        $this->porte       = $dog->porte->value;
         $this->raca        = $dog->raca;
         $this->observacoes = $dog->observacoes;
         $this->foto        = $dog->foto;

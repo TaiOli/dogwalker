@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\DogPorte;
 
 class Dog extends Model
 {
+    use HasFactory;
+
     protected $table = 'dogs';
 
     protected $fillable = [
