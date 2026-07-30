@@ -14,5 +14,5 @@ interface UserServiceInterface
     public function walkers(): array;
     public function show(int $id): array;
     public function showTutor(int $id): array;
-    public function update(int $id, UpdateUserDTO $dto, int $authUserId): User;
+    public function update(int $id, UpdateUserDTO $dto): User;
 }

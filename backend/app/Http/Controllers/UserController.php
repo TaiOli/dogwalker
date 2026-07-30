@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\DTOs\User\UpdateUserDTO;
 use App\DTOs\User\UserResponseDTO;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Exceptions\UserNotFoundException;
-use App\Exceptions\UserUnauthorizedException;
-use App\Models\User;
+
 use App\Repositories\Services\Contracts\UserServiceInterface;
+use App\Exceptions\UserNotFoundException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -73,27 +73,19 @@ class UserController extends Controller
 
     public function update($id, UpdateUserRequest $request)
     {
+        $targetUser = User::findOrFail($id);
+        $this->authorize('update', $targetUser);
+
         try {
             $dto  = UpdateUserDTO::fromRequest($request->validated());
-
-            $user = $this->userService->update(
-                $id,
-                $dto,
-                $request->user()->id
-            );
+            $user = $this->userService->update($id, $dto);
 
             return response()->json([
                 'message' => 'Usuário atualizado com sucesso',
                 'user' => (new UserResponseDTO($user))->toArray(),
             ], 200);
         } catch (UserNotFoundException $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 404);
-        } catch (UserUnauthorizedException $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 403);
+            return response()->json(['message' => $e->getMessage()], 404);
         }
     }
 
