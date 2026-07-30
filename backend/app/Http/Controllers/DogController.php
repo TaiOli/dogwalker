@@ -16,6 +16,7 @@ class DogController extends Controller
         private DogServiceInterface $dogService
     ) {}
 
+    // Cadastrar cachorro
     public function store(StoreDogRequest $request)
     {
         $dog = $this->dogService->create($request->toDto());
@@ -28,6 +29,7 @@ class DogController extends Controller
     }
 
 
+    // Editar dados do cachorro
     public function edit(UpdateDogRequest $request, $id)
     {
         $dog = Dog::findOrFail($id);
@@ -42,6 +44,7 @@ class DogController extends Controller
         ], 200);
     }
 
+    // Excluir cadastro do cachorro
     public function destroy($id)
     {
         $dog = Dog::findOrFail($id);
@@ -52,6 +55,7 @@ class DogController extends Controller
         return response()->json(['message' => 'Cadastro do cachorro removido com sucesso!'], 200);
     }
 
+    // Listar dados do cachorro
     public function myDogs(SearchDogRequest $request)
     {
         $dogs = $this->dogService->myDogs($request->validated());

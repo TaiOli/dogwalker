@@ -12,6 +12,7 @@ class EvaluationController extends Controller
         private EvaluationServiceInterface $evaluationService
     ) {}
 
+    // Avaliação do passeio
     public function store(StoreEvaluationRequest $request)
     {
         $dto  = $request->toDto();

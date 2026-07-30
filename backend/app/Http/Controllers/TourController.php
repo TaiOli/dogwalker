@@ -14,7 +14,7 @@ class TourController extends Controller
         private TourServiceInterface $tourService
     ) {}
 
-    // Criar Passeio
+    // Criar passeio
     public function store(StoreTourRequest $request)
     {
         $tour = $this->tourService->create($request->toDto());
@@ -25,12 +25,13 @@ class TourController extends Controller
         ], 201);
     }
 
-    // Listar Passeio
+    // Listar passeio
     public function index(Request $request)
     {
         return $this->tourService->listAvailable($request->user()->id);
     }
 
+    // Status aceitar passeio
     public function accept($id, Request $request)
     {
         $tour = Tour::findOrFail($id);
@@ -44,6 +45,7 @@ class TourController extends Controller
         ], 200);
     }
 
+    // Status recusar passeio
     public function reject($id)
     {
 
@@ -55,6 +57,7 @@ class TourController extends Controller
         ], 200);
     }
 
+    // Listar passeios
     public function myTours(Request $request)
     {
         return response()->json(
@@ -62,6 +65,7 @@ class TourController extends Controller
         );
     }
 
+    // Cancelar passeio
     public function cancel($id)
     {
         $tour = Tour::findOrFail($id);
@@ -75,6 +79,7 @@ class TourController extends Controller
         ], 200);
     }
 
+    // Status finalizar passeio
     public function complete($id)
     {
         $tour = Tour::findOrFail($id);
@@ -88,7 +93,7 @@ class TourController extends Controller
         ], 200);
     }
 
-    // Excluir Passeio
+    // Excluir passeio
     public function destroy($id)
     {
         $tour = Tour::findOrFail($id);

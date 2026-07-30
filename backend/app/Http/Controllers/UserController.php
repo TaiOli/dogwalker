@@ -21,6 +21,7 @@ class UserController extends Controller
         private UserServiceInterface $userService
     ) {}
 
+    // Criar usuário
     public function store(StoreUserRequest $request)
     {
         $user = $this->userService->create($request->toDto());
@@ -31,6 +32,7 @@ class UserController extends Controller
         ], 201);
     }
 
+    // Validando credencias para login
     public function login(StoreLoginRequest $request)
     {
         $result = $this->userService->login($request->validated());
@@ -69,6 +71,7 @@ class UserController extends Controller
         );
     }
 
+    // Atualizando dados do usuário
     public function update($id, UpdateUserRequest $request)
     {
         $targetUser = User::findOrFail($id);
@@ -90,6 +93,7 @@ class UserController extends Controller
         );
     }
 
+    // Envia link para resetar senha
     public function forgotPassword(Request $request)
     {
         $request->validate([
@@ -100,6 +104,7 @@ class UserController extends Controller
         return response()->json(status: Response::HTTP_OK);
     }
 
+    // Redefine senha
     public function resetPassword(Request $request)
     {
         $request->validate([
