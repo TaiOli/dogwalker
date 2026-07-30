@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\DTOs\Tour\CreateTourDTO;
 use App\Enums\TourStatus;
+use App\DTOs\Tour\CreateTourDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

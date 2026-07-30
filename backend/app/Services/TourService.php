@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App\Enums\TourStatus;
+use App\Enums\TipoUsuario;
 use App\Models\Evaluation;
 use App\Models\Tour;
 use App\DTOs\Tour\CreateTourDTO;
 use App\DTOs\Tour\TourResponseDTO;
-use App\Enums\TipoUsuario;
 use App\Repositories\Contracts\TourRepositoryInterface;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 use App\Exceptions\TourNotFoundException;

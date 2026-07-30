@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\DogPorte;
 use App\DTOs\Dog\CreateDogDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Enums\DogPorte;
 use Illuminate\Validation\Rule;
 
 class StoreDogRequest extends FormRequest

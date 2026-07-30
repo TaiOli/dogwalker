@@ -2,8 +2,8 @@
 
 namespace App\DTOs\Dog;
 
-use Illuminate\Http\UploadedFile;
 use App\Enums\DogPorte;
+use Illuminate\Http\UploadedFile;
 
 class CreateDogDTO
 {

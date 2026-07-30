@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Enums\TourStatus;
+use Illuminate\Database\Eloquent\Model;
 
 class Tour extends Model
 {

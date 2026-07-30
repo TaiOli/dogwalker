@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-
 use App\Repositories\Services\Contracts\UserServiceInterface;
 use App\Exceptions\UserNotFoundException;
 use Illuminate\Http\Response;

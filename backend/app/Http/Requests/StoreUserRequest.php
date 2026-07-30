@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\TipoUsuario;
 use App\DTOs\User\CreateUserDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Enums\TipoUsuario;
 use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
