@@ -9,12 +9,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Repositories\Services\Contracts\UserServiceInterface;
-use App\Exceptions\UserNotFoundException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use App\Repositories\Services\Contracts\UserServiceInterface;
 
 class UserController extends Controller
 {
@@ -75,17 +74,13 @@ class UserController extends Controller
         $targetUser = User::findOrFail($id);
         $this->authorize('update', $targetUser);
 
-        try {
-            $dto  = UpdateUserDTO::fromRequest($request->validated());
-            $user = $this->userService->update($id, $dto);
+        $dto  = UpdateUserDTO::fromRequest($request->validated());
+        $user = $this->userService->update($id, $dto);
 
-            return response()->json([
-                'message' => 'Usuário atualizado com sucesso',
-                'user' => (new UserResponseDTO($user))->toArray(),
-            ], 200);
-        } catch (UserNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        }
+        return response()->json([
+            'message' => 'Usuário atualizado com sucesso',
+            'user' => (new UserResponseDTO($user))->toArray(),
+        ], 200);
     }
 
     public function me(Request $request)

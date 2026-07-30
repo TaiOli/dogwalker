@@ -2,9 +2,12 @@
 
 namespace App\Exceptions;
 
-use Exception;
-
-class EvaluationAlreadyExistsException extends Exception
+class EvaluationAlreadyExistsException extends AppException
 {
-    protected $message = 'Este passeio já foi avaliado por você';
+    protected int $httpStatus = 409;
+
+    public function __construct(string $message = 'Este passeio já foi avaliado por você!')
+    {
+        parent::__construct($message);
+    }
 }

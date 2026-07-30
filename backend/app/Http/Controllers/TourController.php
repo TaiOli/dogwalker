@@ -6,8 +6,6 @@ use App\Models\Tour;
 use App\DTOs\Tour\TourResponseDTO;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTourRequest;
-use App\Exceptions\TourNotFoundException;
-use App\Exceptions\TourInvalidStatusException;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 
 class TourController extends Controller
@@ -38,32 +36,23 @@ class TourController extends Controller
         $tour = Tour::findOrFail($id);
         $this->authorize('accept', $tour);
 
-        try {
-            $tour = $this->tourService->accept($id, $request->user()->id);
+        $tour = $this->tourService->accept($id, $request->user()->id);
 
-            return response()->json([
-                'message' => 'Passeio aceito com sucesso!',
-                'passeio' => (new TourResponseDTO($tour))->toArray(),
-            ], 200);
-        } catch (TourInvalidStatusException $e) {
-            return response()->json(['message' => $e->getMessage()], 409);
-        }
+        return response()->json([
+            'message' => 'Passeio aceito com sucesso!',
+            'passeio' => (new TourResponseDTO($tour))->toArray(),
+        ], 200);
     }
 
     public function reject($id)
     {
-        try {
-            $tour = $this->tourService->reject($id);
 
-            return response()->json([
-                'message' => 'Passeio recusado!',
-                'status' => $tour->status->value
-            ], 200);
-        } catch (TourNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        } catch (TourInvalidStatusException $e) {
-            return response()->json(['message' => $e->getMessage()], 409);
-        }
+        $tour = $this->tourService->reject($id);
+
+        return response()->json([
+            'message' => 'Passeio recusado!',
+            'status' => $tour->status->value
+        ], 200);
     }
 
     public function myTours(Request $request)
@@ -91,16 +80,12 @@ class TourController extends Controller
         $tour = Tour::findOrFail($id);
         $this->authorize('complete', $tour);
 
-        try {
-            $tour = $this->tourService->complete($id);
+        $tour = $this->tourService->complete($id);
 
-            return response()->json([
-                'message' => 'Passeio finalizado com sucesso',
-                'passeio' => (new TourResponseDTO($tour))->toArray(),
-            ], 200);
-        } catch (TourInvalidStatusException $e) {
-            return response()->json(['message' => $e->getMessage()], 409);
-        }
+        return response()->json([
+            'message' => 'Passeio finalizado com sucesso',
+            'passeio' => (new TourResponseDTO($tour))->toArray(),
+        ], 200);
     }
 
     // Excluir Passeio

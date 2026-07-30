@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Dog;
 use App\DTOs\Dog\UpdateDogDTO;
 use App\DTOs\Dog\DogResponseDTO;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreDogRequest;
 use App\Http\Requests\UpdateDogRequest;
 use App\Http\Requests\SearchDogRequest;
-use App\Exceptions\DogNotFoundException;
-use App\Exceptions\DogUnauthorizedException;
 use App\Repositories\Services\Contracts\DogServiceInterface;
 
 class DogController extends Controller
@@ -45,17 +42,14 @@ class DogController extends Controller
         ], 200);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        try {
-            $this->dogService->delete($id, $request->user()->id);
+        $dog = Dog::findOrFail($id);
+        $this->authorize('delete', $dog);
 
-            return response()->json(['message' => 'Cadastro do cachorro removido com sucesso!'], 200);
-        } catch (DogNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        } catch (DogUnauthorizedException $e) {
-            return response()->json(['message' => $e->getMessage()], 403);
-        }
+        $this->dogService->delete($id);
+
+        return response()->json(['message' => 'Cadastro do cachorro removido com sucesso!'], 200);
     }
 
     public function myDogs(SearchDogRequest $request)

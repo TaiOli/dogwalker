@@ -2,9 +2,12 @@
 
 namespace App\Exceptions;
 
-use Exception;
-
-class DogUnauthorizedException extends Exception
+class DogUnauthorizedException extends AppException
 {
-    protected $message = 'Cachorro não encontrado para atualização';
+    protected int $httpStatus = 403;
+
+    public function __construct(string $message = 'Cachorro não encontrado para atualização!')
+    {
+        parent::__construct($message);
+    }
 }

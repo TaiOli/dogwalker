@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions;;
 
-use Exception;
-
-class UserNotFoundException extends Exception
+class UserNotFoundException extends AppException
 {
-    protected $message = 'Cachorro não encontrado';
+
+    protected int $httpStatus = 404;
+
+    public function __construct(string $message = 'Cachorro não encontrado!')
+    {
+        parent::__construct($message);
+    }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Exceptions;
 
-use Exception;
-
-class EvaluationTourNotFinishedException extends Exception
+class EvaluationTourNotFinishedException extends AppException
 {
-    protected $message = 'Só é possível avaliar passeios finalizados';
+    protected int $httpStatus = 409;
+
+    public function __construct(string $message = 'Só é possível avaliar passeios finalizados!')
+    {
+        parent::__construct($message);
+    }
 }
