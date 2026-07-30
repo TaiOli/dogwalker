@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Dog;
 use App\DTOs\Dog\UpdateDogDTO;
 use App\DTOs\Dog\DogResponseDTO;
 use Illuminate\Http\Request;
@@ -33,29 +33,16 @@ class DogController extends Controller
 
     public function edit(UpdateDogRequest $request, $id)
     {
-        try {
-            $dto = UpdateDogDTO::fromRequest(
-                $request->validated()
-            );
+        $dog = Dog::findOrFail($id);
+        $this->authorize('update', $dog);
 
-            $dog = $this->dogService->update($dto, $id, $request->user()->id);
+        $dto = UpdateDogDTO::fromRequest($request->validated());
+        $dog = $this->dogService->update($dto, $id);
 
-            return response()->json([
-                'message' => 'Cadastro do cachorro atualizado com sucesso!',
-                'dog'     => (new DogResponseDTO($dog))->toArray(),
-            ], 200);
-            // Status 200: Sucesso
-        } catch (DogNotFoundException $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 404);
-            // Status 404: Página ou dado procurado não existe
-        } catch (DogUnauthorizedException $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 403);
-            // Status 403: Tentou alterar mas não pode
-        }
+        return response()->json([
+            'message' => 'Cadastro do cachorro atualizado com sucesso!',
+            'dog'     => (new DogResponseDTO($dog))->toArray(),
+        ], 200);
     }
 
     public function destroy(Request $request, $id)

@@ -11,6 +11,6 @@ interface DogServiceInterface
 {
     public function create(CreateDogDTO $dto): Dog;
     public function myDogs(array $data): Collection;
-    public function update(UpdateDogDTO $dto, int $dogId, int $userId): Dog;
-    public function delete(int $dogId, int $userId): void;
+    public function update(UpdateDogDTO $dto, int $dogId): Dog;
+    public function delete(int $dogId): void;
 }

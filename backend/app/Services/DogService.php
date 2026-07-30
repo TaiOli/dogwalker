@@ -8,7 +8,6 @@ use App\DTOs\Dog\UpdateDogDTO;
 use App\Repositories\Contracts\DogRepositoryInterface;
 use App\Repositories\Services\Contracts\DogServiceInterface;
 use App\Exceptions\DogNotFoundException;
-use App\Exceptions\DogUnauthorizedException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,16 +33,12 @@ class DogService implements DogServiceInterface
         );
     }
 
-    public function update(UpdateDogDTO $dto, int $dogId, int $userId): Dog
+    public function update(UpdateDogDTO $dto, int $dogId): Dog
     {
         $dog = $this->dogRepository->findById($dogId);
 
         if (!$dog) {
             throw new DogNotFoundException();
-        }
-
-        if ($dog->user_id !== $userId) {
-            throw new DogUnauthorizedException();
         }
 
         $data = $dto->toArray();
@@ -51,16 +46,12 @@ class DogService implements DogServiceInterface
         return $this->dogRepository->update($dogId, $data);
     }
 
-    public function delete(int $dogId, int $userId): void
+    public function delete(int $dogId): void
     {
         $dog = $this->dogRepository->findById($dogId);
 
         if (!$dog) {
             throw new DogNotFoundException();
-        }
-
-        if ($dog->user_id !== $userId) {
-            throw new DogUnauthorizedException();
         }
 
         $this->dogRepository->delete($dogId);

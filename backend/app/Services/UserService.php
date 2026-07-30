@@ -11,7 +11,6 @@ use App\DTOs\User\WalkerProfileResponseDTO;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Services\Contracts\UserServiceInterface;
 use App\Exceptions\UserNotFoundException;
-use App\Exceptions\UserUnauthorizedException;
 use Illuminate\Support\Facades\Hash;
 
 class UserService implements UserServiceInterface
@@ -76,16 +75,12 @@ class UserService implements UserServiceInterface
         return (new TutorProfileResponseDTO($user))->toArray();
     }
 
-    public function update(int $id, UpdateUserDTO $dto, int $authUserId): User
+    public function update(int $id, UpdateUserDTO $dto): User
     {
         $user = $this->userRepository->findById($id);
 
         if (!$user) {
             throw new UserNotFoundException();
-        }
-
-        if ($user->id !== $authUserId) {
-            throw new UserUnauthorizedException();
         }
 
         $data = $dto->toArray();
