@@ -11,17 +11,14 @@ use App\Enums\TipoUsuario;
 use App\Repositories\Contracts\TourRepositoryInterface;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 use App\Exceptions\TourNotFoundException;
-use App\Exceptions\TourUnauthorizedException;
 use App\Exceptions\TourInvalidStatusException;
 use Illuminate\Database\Eloquent\Collection;
-
 
 class TourService implements TourServiceInterface
 {
     public function __construct(
         private TourRepositoryInterface $tourRepository
     ) {}
-
 
     public function create(CreateTourDTO $dto): Tour
     {
@@ -41,7 +38,6 @@ class TourService implements TourServiceInterface
             throw new TourInvalidStatusException('Este passeio já foi respondido!');
         }
 
-        // se o passeio foi direcionado a um passeador específico, só ele pode aceitar
         if ($tour->passeador_id !== null && $tour->passeador_id !== $walkerId) {
             throw new TourInvalidStatusException('Este passeio foi direcionado a outro passeador!');
         }
@@ -65,26 +61,18 @@ class TourService implements TourServiceInterface
         ]);
     }
 
-    public function cancel(int $id, int $userId): Tour
+    public function cancel(int $id): Tour
     {
         $tour = $this->findOrFail($id);
-
-        if ($tour->tutor_id !== $userId) {
-            throw new TourUnauthorizedException('Apenas o tutor que solicitou pode cancelar este passeio!');
-        }
 
         return $this->tourRepository->update($tour, [
             'status' => TourStatus::CANCELADO->value,
         ]);
     }
 
-    public function complete(int $id, int $userId): Tour
+    public function complete(int $id): Tour
     {
         $tour = $this->findOrFail($id);
-
-        if ($tour->passeador_id !== $userId) {
-            throw new TourUnauthorizedException('Apenas o passeador responsável pode finalizar este passeio!');
-        }
 
         if ($tour->status !== TourStatus::ACEITO) {
             throw new TourInvalidStatusException('Este passeio não está em andamento!');
@@ -136,14 +124,9 @@ class TourService implements TourServiceInterface
         return [];
     }
 
-    public function delete(int $id, int $userId): void
+    public function delete(int $id): void
     {
         $tour = $this->findOrFail($id);
-
-        if ($tour->tutor_id !== $userId) {
-            throw new TourUnauthorizedException('Apenas o tutor que solicitou pode remover este passeio');
-        }
-
         $this->tourRepository->delete($tour);
     }
 

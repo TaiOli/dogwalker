@@ -24,7 +24,7 @@ class TourResponseDTO
     public function __construct(Tour $tour)
     {
         $this->id      = (int) $tour->id;
-        $this->status  = $tour->status;
+        $this->status  = $tour->status->value;
         $this->data    = $tour->data;
         $this->hora    = $tour->hora;
         $this->duracao = (int) $tour->duracao;

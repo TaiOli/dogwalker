@@ -6,8 +6,8 @@ use App\DTOs\Tour\TourResponseDTO;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTourRequest;
 use App\Exceptions\TourNotFoundException;
-use App\Exceptions\TourUnauthorizedException;
 use App\Exceptions\TourInvalidStatusException;
+use App\Models\Tour;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 
 class TourController extends Controller
@@ -35,6 +35,9 @@ class TourController extends Controller
 
     public function accept($id, Request $request)
     {
+        $tour = Tour::findOrFail($id);
+        $this->authorize('accept', $tour);
+
         try {
             $tour = $this->tourService->accept($id, $request->user()->id);
 
@@ -42,8 +45,6 @@ class TourController extends Controller
                 'message' => 'Passeio aceito com sucesso!',
                 'passeio' => (new TourResponseDTO($tour))->toArray(),
             ], 200);
-        } catch (TourNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
         } catch (TourInvalidStatusException $e) {
             return response()->json(['message' => $e->getMessage()], 409);
         }
@@ -52,11 +53,11 @@ class TourController extends Controller
     public function reject($id, Request $request)
     {
         try {
-            $tour = $this->tourService->reject($id, $request->user()->id);
+            $tour = $this->tourService->reject($id);
 
             return response()->json([
                 'message' => 'Passeio recusado!',
-                'status' => $tour->status
+                'status' => $tour->status->value
             ], 200);
         } catch (TourNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], 404);
@@ -74,33 +75,29 @@ class TourController extends Controller
 
     public function cancel($id, Request $request)
     {
-        try {
-            $tour = $this->tourService->cancel($id, $request->user()->id);
+        $tour = Tour::findOrFail($id);
+        $this->authorize('cancel', $tour);
 
-            return response()->json([
-                'message' => 'Passeio cancelado com sucesso!',
-                'passeio' => (new TourResponseDTO($tour))->toArray(),
-            ], 200);
-        } catch (TourNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        } catch (TourUnauthorizedException $e) {
-            return response()->json(['message' => $e->getMessage()], 403); // Status 403: Não tem Permissão
-        }
+        $tour = $this->tourService->cancel($id);
+
+        return response()->json([
+            'message' => 'Passeio cancelado com sucesso!',
+            'passeio' => (new TourResponseDTO($tour))->toArray(),
+        ], 200);
     }
 
     public function complete($id, Request $request)
     {
+        $tour = Tour::findOrFail($id);
+        $this->authorize('complete', $tour);
+
         try {
-            $tour = $this->tourService->complete($id, $request->user()->id);
+            $tour = $this->tourService->complete($id);
 
             return response()->json([
                 'message' => 'Passeio finalizado com sucesso',
                 'passeio' => (new TourResponseDTO($tour))->toArray(),
             ], 200);
-        } catch (TourNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        } catch (TourUnauthorizedException $e) {
-            return response()->json(['message' => $e->getMessage()], 403);
         } catch (TourInvalidStatusException $e) {
             return response()->json(['message' => $e->getMessage()], 409);
         }
@@ -109,16 +106,13 @@ class TourController extends Controller
     // Excluir Passeio
     public function destroy($id, Request $request)
     {
-        try {
-            $this->tourService->delete($id, $request->user()->id);
+        $tour = Tour::findOrFail($id);
+        $this->authorize('delete', $tour);
 
-            return response()->json([
-                'message' => 'Passeio removido com sucesso!'
-            ], 200);
-        } catch (TourNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        } catch (TourUnauthorizedException $e) {
-            return response()->json(['message' => $e->getMessage()], 403);
-        }
+        $this->tourService->delete($id);
+
+        return response()->json([
+            'message' => 'Passeio removido com sucesso!'
+        ], 200);
     }
 }
