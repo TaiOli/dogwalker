@@ -12,6 +12,7 @@ use App\Repositories\Contracts\TourRepositoryInterface;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourInvalidStatusException;
+use App\Notifications\TourAcceptedNotification;
 use Illuminate\Database\Eloquent\Collection;
 
 class TourService implements TourServiceInterface
@@ -42,10 +43,14 @@ class TourService implements TourServiceInterface
             throw new TourInvalidStatusException('Este passeio foi direcionado a outro passeador!');
         }
 
-        return $this->tourRepository->update($tour, [
+        $tour = $this->tourRepository->update($tour, [
             'passeador_id' => $walkerId,
             'status' => TourStatus::ACEITO->value,
         ]);
+
+        $tour->tutor->notify(new TourAcceptedNotification($tour));
+
+        return $tour;
     }
 
     public function reject(int $id): Tour
