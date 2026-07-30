@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use App\Models\Tour;
 use App\Repositories\Services\Contracts\TourServiceInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class TourControllerTest extends TestCase {
 
