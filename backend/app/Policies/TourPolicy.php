@@ -44,4 +44,13 @@ class TourPolicy
 
         return $tour->passeador_id === null || $tour->passeador_id === $user->id;
     }
+
+    public function evaluate(User $user, Tour $tour, string $tipoAvaliador): bool
+    {
+        return match ($tipoAvaliador) {
+            'tutor'     => $tour->tutor_id === $user->id,
+            'passeador' => $tour->passeador_id === $user->id,
+            default     => false,
+        };
+    }
 }
