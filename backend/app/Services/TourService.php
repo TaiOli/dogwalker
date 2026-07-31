@@ -13,6 +13,8 @@ use App\Repositories\Services\Contracts\TourServiceInterface;
 use App\Exceptions\TourNotFoundException;
 use App\Exceptions\TourInvalidStatusException;
 use App\Notifications\TourAcceptedNotification;
+use App\Notifications\TourCompletedNotification;
+use App\Notifications\TourCancelledNotification;
 use Illuminate\Database\Eloquent\Collection;
 
 class TourService implements TourServiceInterface
@@ -70,9 +72,15 @@ class TourService implements TourServiceInterface
     {
         $tour = $this->findOrFail($id);
 
-        return $this->tourRepository->update($tour, [
+        $tour = $this->tourRepository->update($tour, [
             'status' => TourStatus::CANCELADO->value,
         ]);
+
+        if ($tour->walker) {
+            $tour->walker->notify(new TourCancelledNotification($tour));
+        }
+
+        return $tour;
     }
 
     public function complete(int $id): Tour
@@ -86,6 +94,10 @@ class TourService implements TourServiceInterface
         return $this->tourRepository->update($tour, [
             'status' => TourStatus::FINALIZADO->value,
         ]);
+
+        $tour->tutor->notify(new TourCompletedNotification($tour));
+
+        return $tour;
     }
 
     public function myTours($user): array
