@@ -22,7 +22,7 @@ class TourFactory extends Factory
         return [
             'dog_id'       => Dog::factory(),
             'tutor_id'     => User::factory(),
-            'passeador_id' => null,
+            'passeador_id' => User::factory(),
             'data'         => fake()->date(),
             'hora'         => fake()->time('H:i:s'),
             'duracao'      => '01:00:00',
