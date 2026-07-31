@@ -51,7 +51,7 @@ class EvaluationReceivedNotification extends Notification
     {
         return [
             'evaluation_id' =>$this->evaluation->id,
-            'message' => "Você recebeu uma avaliação de {$this->evaluation->nota}/5!"
+            'message' => 'Olá ' . $notifiable->name . ', você recebeu uma avaliação de ' . $this->evaluation->nota . '/5!'
         ];
     }
 }

@@ -48,7 +48,7 @@ class TourCancelledNotification extends Notification
     {
         return [
             'tour_id' => $this->tour->id,
-            'message' => "O passeio de {$this->tour->dog->nome} foi cancelado pelo tutor"
+            'message' => "Olá {$notifiable->name}, o passeio de {$this->tour->dog->nome} foi cancelado pelo tutor."
         ];
     }
 }
