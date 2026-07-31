@@ -42,7 +42,7 @@ class TourAcceptedNotification extends Notification implements ShouldQueue
     {
         return [
             'tour_id' => $this->tour->id,
-            'message' => 'Olá ' . $notifiable->name . ', seu passeio foi aceito por ' . $this->tour->walker->nome . '!'
+            'message' => 'Olá ' . $notifiable->nome . ', seu passeio foi aceito por ' . $this->tour->walker->nome . '!'
         ];
     }
 }

@@ -56,7 +56,7 @@ class TourCompletedNotification extends Notification
     {
         return [
             'tour_id' => $this->tour->id,
-            'message' => "Olá {$notifiable->name}, Passeio com {$this->tour->walker->nome} finalizado. Avalie sua experiência!"
+            'message' => "Olá {$notifiable->nome}, Passeio com {$this->tour->walker->nome} finalizado. Avalie sua experiência!"
 
         ];
     }
