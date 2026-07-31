@@ -23,8 +23,15 @@ class TourCompletedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        // Envia por e-mail apenas se o usuário tiver o e-mail verificado
+        if ($notifiable->email_verified_at) {
+            return ['mail', 'database'];
+        }
+
+        // Caso contrário, envia apenas para o banco de dados
+        return ['database'];
     }
+
 
     /**
      * Get the mail representation of the notification.
