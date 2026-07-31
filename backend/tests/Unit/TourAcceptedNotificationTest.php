@@ -5,26 +5,26 @@ namespace Tests\Unit\Notifications;
 use App\Models\Dog;
 use App\Models\Tour;
 use App\Models\User;
-use App\Notifications\TourCompletedNotification;
+use App\Notifications\TourAcceptedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TourCompletedNotificationTest extends TestCase
+class TourAcceptedNotificationTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function test_notification_returns_correct_channels(): void
+    public function test_notification_correct_channels(): void
     {
         $tour = Tour::factory()->create();
-        $notification = new TourCompletedNotification($tour);
+        $notification = new TourAcceptedNotification($tour);
+
         $channels = $notification->via($tour->tutor);
 
         $this->assertContains('mail', $channels);
         $this->assertContains('database', $channels);
     }
 
-    public function test_email_message_contains_names_of_the_dog_and_dog_walker(): void
+    public function test_mail_message_contains_walker_and_dog_name(): void
     {
         $tutor = User::factory()->create();
         $walker = User::factory()->create();
@@ -36,14 +36,14 @@ class TourCompletedNotificationTest extends TestCase
             'dog_id' => $dog->id
         ]);
 
-        $notification = new TourCompletedNotification($tour);
+        $notification = new TourAcceptedNotification($tour);
         $mail = $notification->toMail($tutor);
 
         $this->assertStringContainsString($dog->nome, $mail->render());
         $this->assertStringContainsString($walker->nome, $mail->render());
     }
 
-    public function test_array_contains_expected_keys(): void
+    public function test_array_representation_expected_keys(): void
     {
         $tutor = User::factory()->create();
         $walker = User::factory()->create();
@@ -58,7 +58,7 @@ class TourCompletedNotificationTest extends TestCase
             'dog_id' => $dog->id,
         ]);
 
-        $notification = new TourCompletedNotification($tour);
+        $notification = new TourAcceptedNotification($tour);
 
         $array = $notification->toArray($tutor);
 
