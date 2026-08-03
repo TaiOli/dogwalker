@@ -28,7 +28,7 @@ class EvaluationControllerTest extends TestCase
             'comentario'     => 'Ótimo passeio!',
         ];
 
-        $response = $this->postJson('/api/evaluation', $payload);
+        $response = $this->postJson('/api/evaluations', $payload);
 
         $response->assertStatus(201)
             ->assertJsonFragment([
@@ -58,7 +58,7 @@ class EvaluationControllerTest extends TestCase
             'nota'           => 5,
         ];
 
-        $response = $this->postJson('/api/evaluation', $payload);
+        $response = $this->postJson('/api/evaluations', $payload);
 
         $response->assertStatus(401);
     }

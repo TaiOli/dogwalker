@@ -91,7 +91,7 @@ class TourService implements TourServiceInterface
             throw new TourInvalidStatusException('Este passeio não está em andamento!');
         }
 
-        return $this->tourRepository->update($tour, [
+        $tour = $this->tourRepository->update($tour, [
             'status' => TourStatus::FINALIZADO->value,
         ]);
 
