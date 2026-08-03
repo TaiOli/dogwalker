@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 use App\Enums\TipoUsuario;
-use Tests\TestCase;
 use App\Models\Tour;
 use App\Models\User;
 use App\Notifications\TourAcceptedNotification;

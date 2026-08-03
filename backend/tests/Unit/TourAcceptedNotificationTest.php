@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Notifications;
 
+use Tests\TestCase;
 use App\Models\Dog;
 use App\Models\Tour;
 use App\Models\User;
 use App\Notifications\TourAcceptedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class TourAcceptedNotificationTest extends TestCase
 {
