@@ -37,7 +37,8 @@ function handleSubmit(): void {
           required
           label="Email"
           prepend-inner-icon="mdi-email-outline"
-          icon-color="primary mx-2"
+          class="mx-2"
+          size="small"
           :error-message="emailError"
           @update:modelValue="emailError = ''"
         />
@@ -51,7 +52,8 @@ function handleSubmit(): void {
           required
           label="Senha"
           prepend-inner-icon="mdi-lock-outline"
-          icon-color="primary mx-2"
+          class="mx-2"
+          size="small"
           type="password"
           :error-message="passwordError"
           @update:modelValue="passwordError = ''"
