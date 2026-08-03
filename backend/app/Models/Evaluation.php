@@ -20,7 +20,6 @@ class Evaluation extends Model
         'tipo_avaliador',
     ];
 
-    // RELACIONAMENTOS
 
     public function tours()
     {
