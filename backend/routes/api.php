@@ -8,22 +8,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Rotas Públicas
+Route::post('/users', [UserController::class, 'store'])
+    ->middleware('throttle:register');
 
-Route::controller(UserController::class)->group(function () {
-    Route::post('/users', 'store');
-    Route::post('/login', 'login');
-    Route::post('/forgot-password', 'forgotPassword');
-    Route::post('/reset-password', 'resetPassword');
-});
+Route::post('/login', [UserController::class, 'login'])
+    ->middleware('throttle:login');
+
+Route::post('/forgot-password', [UserController::class, 'forgotPassword'])
+    ->middleware('throttle:password-reset');
+
+Route::post('/reset-password', [UserController::class, 'resetPassword'])
+    ->middleware('throttle:password-reset');
 
 // Rotas Protegidas
+Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
 
-Route::middleware('auth:sanctum')->group(function () {
-
-    // Usuário autenticado
     Route::get('/me', function (Request $request) {
         $user = $request->user();
-
         return [
             'id'            => $user->id,
             'username'      => $user->username,
@@ -35,8 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
         ];
     });
 
-    // Usuários
-
     Route::prefix('users')->controller(UserController::class)->group(function () {
         Route::put('/{id}', 'update');
     });
@@ -47,8 +46,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/tutors/{id}', 'showTutor');
     });
 
-    // Cães
-
     Route::prefix('dogs')->controller(DogController::class)->group(function () {
         Route::post('/', 'store');
         Route::get('/my', 'myDogs');
@@ -56,29 +53,21 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', 'destroy');
     });
 
-    // Passeios
-
     Route::prefix('tours')->controller(TourController::class)->group(function () {
         Route::post('/', 'store');
         Route::get('/', 'index');
-
         Route::put('/{id}/accept', 'accept');
         Route::patch('/{id}/reject', 'reject');
         Route::patch('/{id}/cancel', 'cancel');
         Route::patch('/{id}/complete', 'complete');
-
         Route::delete('/{id}', 'destroy');
     });
 
     Route::get('/my-tours', [TourController::class, 'myTours']);
 
-    // Avaliações
-
     Route::prefix('evaluations')->controller(EvaluationController::class)->group(function () {
         Route::post('/', 'store');
     });
-
-    // Notificações
 
     Route::get('/notifications', function (Request $request) {
         return response()->json(
