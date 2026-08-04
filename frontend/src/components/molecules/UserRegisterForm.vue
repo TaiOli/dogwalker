@@ -28,22 +28,54 @@ const nameError = ref("");
 const emailError = ref("");
 const passwordError = ref("");
 const typeuserError = ref("");
+const phoneError = ref("");
 
 function handleSubmit(): void {
   usernameError.value = !props.form.username ? "Insira um username!" : "";
   nameError.value = !props.form.name ? "Insira um nome!" : "";
-  emailError.value = !props.form.email ? "Insira um e-mail!" : "";
-  passwordError.value = !props.form.password ? "Insira uma senha!" : "";
   typeuserError.value = !props.form.type_user
     ? "Selecione um tipo de usuário!"
     : "";
+  phoneError.value = "";
+
+  // Validação de e-mail (Checa se está vazio, depois valida o formato)
+  emailError.value = !props.form.email
+    ? "Insira um e-mail!"
+    : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(props.form.email)
+      ? "Insira um e-mail válido!"
+      : "";
+
+  // Validação de senha tamanho mínimo para 8 caracteres
+  //Exige letras maiúsculas e minúsculas
+  // Exige pelo meno um número e um caracter especial
+  passwordError.value = !props.form.password
+    ? "Insira uma senha!"
+    : !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+          props.form.password,
+        )
+      ? "A senha deve ter 8+ caracteres, letras (maius./minús.), números e símbolos!"
+      : "";
+
+  // Validacão de telefone com DDD Brasileiro
+  // Aceita celular (11 dígitos, começando com 9)
+  // Aceita telefone fixo (10 dígitos, começando entre 2 e 5)
+  if (props.form.phone) {
+    const phone = props.form.phone.replace(/\D/g, "");
+    const regex =
+      /^(1[1-9]|2[12478]|3[1-8]|4[1-9]|5[1345]|6[1-9]|7[134579]|8[1-9]|9[1-9])(9\d{8}|[2-5]\d{7})$/;
+
+    if (!regex.test(phone)) {
+      phoneError.value = "Informe um telefone com DDD válido.";
+    }
+  }
 
   if (
     usernameError.value ||
     nameError.value ||
     emailError.value ||
     passwordError.value ||
-    typeuserError.value
+    typeuserError.value ||
+    phoneError.value
   )
     return;
 
@@ -149,6 +181,8 @@ function handlePhoto(value: string | number | File | File[] | null): void {
           label="Telefone"
           prepend-inner-icon="mdi-phone-outline"
           icon-color="primary mx-2"
+          :error-message="phoneError"
+          @update:modelValue="phoneError = ''"
         />
       </v-col>
     </v-row>
