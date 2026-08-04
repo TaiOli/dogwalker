@@ -3,16 +3,16 @@ import { ref } from "vue";
 import BaseInput from "../atoms/BaseInput.vue";
 import BaseButton from "../atoms/BaseButton.vue";
 import BaseSelect from "../atoms/BaseSelect.vue";
-
-interface RegisterForm {
-  username: string;
-  name: string;
-  email: string;
-  password: string;
-  phone: string;
-  type_user: string;
-  photo: File | string;
-}
+import {
+  type RegisterForm,
+  validateUsername,
+  validateName,
+  validateEmail,
+  validatePassword,
+  validateTypeUser,
+  validatePhone,
+  onlyDigits,
+} from "../../utils/validations/userValidations";
 
 interface Props {
   form: RegisterForm;
@@ -31,43 +31,12 @@ const typeuserError = ref("");
 const phoneError = ref("");
 
 function handleSubmit(): void {
-  usernameError.value = !props.form.username ? "Insira um username!" : "";
-  nameError.value = !props.form.name ? "Insira um nome!" : "";
-  typeuserError.value = !props.form.type_user
-    ? "Selecione um tipo de usuário!"
-    : "";
-  phoneError.value = "";
-
-  // Validação de e-mail (Checa se está vazio, depois valida o formato)
-  emailError.value = !props.form.email
-    ? "Insira um e-mail!"
-    : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(props.form.email)
-      ? "Insira um e-mail válido!"
-      : "";
-
-  // Validação de senha tamanho mínimo para 8 caracteres
-  // Exige letras maiúsculas e minúsculas
-  // Exige pelo meno um número e um caracter especial
-  passwordError.value = !props.form.password
-    ? "Insira uma senha!"
-    : !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-          props.form.password,
-        )
-      ? "A senha deve ter 8+ caracteres, letras (maius./minús.), números e símbolos!"
-      : "";
-
-  // Validacão de telefone com DDD Brasileiro
-  // Aceita celular (11 dígitos, começando com 9)
-  // Aceita telefone fixo (10 dígitos, começando entre 2 e 5)
-  if (props.form.phone) {
-    const phone = props.form.phone.replace(/\D/g, "");
-    const regex =
-      /^(1[1-9]|2[12478]|3[1-8]|4[1-9]|5[1345]|6[1-9]|7[134579]|8[1-9]|9[1-9])(9\d{8}|[2-5]\d{7})$/;
-
-    if (!regex.test(phone)) {
-      phoneError.value = "Informe um telefone com DDD válido.";
-    }
-  }
+  usernameError.value = validateUsername(props.form.username);
+  nameError.value = validateName(props.form.name);
+  emailError.value = validateEmail(props.form.email);
+  passwordError.value = validatePassword(props.form.password);
+  typeuserError.value = validateTypeUser(props.form.type_user);
+  phoneError.value = validatePhone(props.form.phone);
 
   if (
     usernameError.value ||
@@ -93,20 +62,9 @@ function handlePhoto(value: string | number | File | File[] | null): void {
   preview.value = URL.createObjectURL(file);
 }
 
-function blockNonDigit(event: KeyboardEvent): void {
-  const allowedKeys = [
-    "Backspace",
-    "Delete",
-    "ArrowLeft",
-    "ArrowRight",
-    "Tab",
-    "Home",
-    "End",
-  ];
-  if (allowedKeys.includes(event.key)) return;
-  if (!/^\d$/.test(event.key)) {
-    event.preventDefault();
-  }
+function handlePhone(value: string | number | File | File[] | null): void {
+  props.form.phone = onlyDigits(value as string | number | null);
+  phoneError.value = "";
 }
 </script>
 
@@ -198,13 +156,7 @@ function blockNonDigit(event: KeyboardEvent): void {
           prepend-inner-icon="mdi-phone-outline"
           icon-color="primary mx-2"
           :error-message="phoneError"
-          @keydown="blockNonDigit"
-          @update:modelValue="
-            () => {
-              form.phone = form.phone.replace(/\D/g, '');
-              phoneError = '';
-            }
-          "
+          @update:modelValue="handlePhone"
         />
       </v-col>
     </v-row>

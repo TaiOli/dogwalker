@@ -6,6 +6,7 @@ import BaseInput from "../components/atoms/BaseInput.vue";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
 import BaseTypography from "../components/atoms/BaseTypography.vue";
+import { validateEmail } from "../utils/validations/userValidations";
 
 interface ApiErrorResponse {
   response?: {
@@ -22,24 +23,9 @@ const emailError = ref<string>("");
 const sending = ref<boolean>(false);
 const sent = ref<boolean>(false);
 
-function validateEmail(): boolean {
-  if (!email.value) {
-    emailError.value = "Insira um e-mail!";
-    return false;
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email.value)) {
-    emailError.value = "Insira um e-mail válido!";
-    return false;
-  }
-
-  emailError.value = "";
-  return true;
-}
-
 async function handleSubmit(): Promise<void> {
-  if (!validateEmail()) return;
+  emailError.value = validateEmail(email.value);
+  if (emailError.value) return;
 
   sending.value = true;
 
