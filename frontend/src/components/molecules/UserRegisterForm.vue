@@ -46,7 +46,7 @@ function handleSubmit(): void {
       : "";
 
   // Validação de senha tamanho mínimo para 8 caracteres
-  //Exige letras maiúsculas e minúsculas
+  // Exige letras maiúsculas e minúsculas
   // Exige pelo meno um número e um caracter especial
   passwordError.value = !props.form.password
     ? "Insira uma senha!"
