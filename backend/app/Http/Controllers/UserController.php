@@ -6,13 +6,13 @@ use App\Models\User;
 use App\DTOs\User\UpdateUserDTO;
 use App\DTOs\User\UserResponseDTO;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 use App\Repositories\Services\Contracts\UserServiceInterface;
 
 class UserController extends Controller
