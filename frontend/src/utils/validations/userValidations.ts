@@ -17,16 +17,16 @@ export interface RegisterFormErrors {
   phoneError: string;
 }
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Exige 8 ou mais caracteres, letras maiúsculas e minúsculas, número e símbolo
-const PASSWORD_REGEX =
+const password_regex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 // Telefone com DDD Brasileiro
 // Aceita celular (11 dígitos, começando com 9)
 // Aceita telefone fixo (10 dígitos, começando entre 2 e 5)
-const PHONE_REGEX =
+const phone_regex =
   /^(1[1-9]|2[12478]|3[1-8]|4[1-9]|5[1345]|6[1-9]|7[134579]|8[1-9]|9[1-9])(9\d{8}|[2-5]\d{7})$/;
 
 export function validateUsername(username: string): string {
@@ -43,13 +43,13 @@ export function validateTypeUser(typeUser: string): string {
 
 export function validateEmail(email: string): string {
   if (!email) return "Insira um e-mail!";
-  if (!EMAIL_REGEX.test(email)) return "Insira um e-mail válido!";
+  if (!email_regex.test(email)) return "Insira um e-mail válido!";
   return "";
 }
 
 export function validatePassword(password: string): string {
   if (!password) return "Insira uma senha!";
-  if (!PASSWORD_REGEX.test(password)) {
+  if (!password_regex.test(password)) {
     return "A senha deve ter 8+ caracteres, letras (maius./minús.), números e símbolos!";
   }
   return "";
@@ -58,7 +58,9 @@ export function validatePassword(password: string): string {
 export function validatePhone(phone: string): string {
   if (!phone) return "";
   const digitsOnly = phone.replace(/\D/g, "");
-  return PHONE_REGEX.test(digitsOnly) ? "" : "Informe um telefone com DDD válido.";
+  return phone_regex.test(digitsOnly)
+    ? ""
+    : "Informe um telefone com DDD válido.";
 }
 
 export function validateRegisterForm(form: RegisterForm): RegisterFormErrors {
