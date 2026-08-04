@@ -156,7 +156,16 @@ p {
 
 .evaluation-item {
   border-radius: 8px;
+  background: #f0f9ff;
   padding: 12px;
+}
+
+.page-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 16px;
 }
 
 code,

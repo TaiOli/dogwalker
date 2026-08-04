@@ -149,7 +149,6 @@ onMounted(async () => {
 
 <style scoped>
 .evaluation-item {
-  background: #f0f9ff;
   border-left: 3px solid #198754;
 }
 </style>

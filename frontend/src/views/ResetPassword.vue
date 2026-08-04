@@ -96,8 +96,13 @@ async function handleSubmit(): Promise<void> {
             size="40"
             class="mb-2 mt-3"
           />
-          <BaseTypography variant="h2" class="text-black">Redefinir senha</BaseTypography>
-          <BaseTypography variant="subtitle-1" class="text-medium-emphasis text-body-2 text-black">
+          <BaseTypography variant="h2" class="text-black"
+            >Redefinir senha</BaseTypography
+          >
+          <BaseTypography
+            variant="subtitle-1"
+            class="text-medium-emphasis text-body-2 text-black"
+          >
             Escolha uma nova senha para sua conta.
           </BaseTypography>
         </v-col>
@@ -159,14 +164,6 @@ async function handleSubmit(): Promise<void> {
 </template>
 
 <style scoped>
-.page-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 16px;
-}
-
 .card {
   border-radius: 12px;
   background-color: white;
