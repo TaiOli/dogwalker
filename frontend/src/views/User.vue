@@ -46,7 +46,7 @@ async function salvar(): Promise<void> {
           @submit="salvar"
         />
 
-        <BaseTypography variant="subtitle-1"  class="mt-4 mb-3" weight="bold">
+        <BaseTypography v-if="!formRegister.id" variant="subtitle-1"  class="mt-4 mb-3" weight="bold">
           <router-link to="/login" class="back-link">Voltar</router-link>
         </BaseTypography>
       </v-card-text>
