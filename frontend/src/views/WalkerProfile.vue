@@ -103,7 +103,7 @@ onMounted(async () => {
             >
           </div>
 
-          <v-alert v-if="!evaluations.length" type="info" variant="tonal">
+          <v-alert v-if="!evaluations.length" type="info" variant="tonal" class="mb-4">
             Este tutor ainda não recebeu avaliações.
           </v-alert>
 

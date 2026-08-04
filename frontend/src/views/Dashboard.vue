@@ -354,7 +354,7 @@ onMounted(async () => {
                 <BaseIcon name="mdi-phone" color="primary" />
                 {{ w.telefone }}
               </BaseTypography>
-              <BaseTypography variant="subtitle-1">
+              <BaseTypography variant="subtitle-1" class="mb-2">
                 <BaseIcon name="mdi-star-four-points" color="amber" />
                 <span v-if="w.media_avaliacao">{{ w.media_avaliacao }}/5</span>
                 <span v-else>Sem avaliações</span>
