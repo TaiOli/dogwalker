@@ -92,6 +92,22 @@ function handlePhoto(value: string | number | File | File[] | null): void {
   props.form.photo = file;
   preview.value = URL.createObjectURL(file);
 }
+
+function blockNonDigit(event: KeyboardEvent): void {
+  const allowedKeys = [
+    "Backspace",
+    "Delete",
+    "ArrowLeft",
+    "ArrowRight",
+    "Tab",
+    "Home",
+    "End",
+  ];
+  if (allowedKeys.includes(event.key)) return;
+  if (!/^\d$/.test(event.key)) {
+    event.preventDefault();
+  }
+}
 </script>
 
 <template>
@@ -177,12 +193,18 @@ function handlePhoto(value: string | number | File | File[] | null): void {
     <v-row>
       <v-col cols="12" md="8" class="mx-auto">
         <BaseInput
-          v-model="form.phone"
+          :model-value="form.phone"
           label="Telefone"
           prepend-inner-icon="mdi-phone-outline"
           icon-color="primary mx-2"
           :error-message="phoneError"
-          @update:modelValue="phoneError = ''"
+          @keydown="blockNonDigit"
+          @update:modelValue="
+            () => {
+              form.phone = form.phone.replace(/\D/g, '');
+              phoneError = '';
+            }
+          "
         />
       </v-col>
     </v-row>
