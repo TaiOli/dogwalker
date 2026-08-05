@@ -15,6 +15,14 @@ export default defineConfig({
             ],
         }),
         tailwindcss(),
+        vue({
+            template:{
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            }
+        })
     ],
     server: {
         watch: {
