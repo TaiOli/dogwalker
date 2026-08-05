@@ -5,12 +5,20 @@ namespace App\Models;
 use App\Enums\TourStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class Tour extends Model
+class Tour extends Model implements Auditable
 {
     use HasFactory;
+    use AuditableTrait;
 
     protected $table = 'passeios';
+
+    protected $auditExclude = [
+        'created_at',
+        'updated_at',
+    ];
 
     protected $fillable = [
         'dog_id',

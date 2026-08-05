@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\DogController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\UserController;
+use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -72,6 +74,13 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::get('/notifications', function (Request $request) {
         return response()->json(
             $request->user()->notifications()->latest()->get()
+        );
+    });
+
+    Route::get('/public-logs', function () {
+
+        return response()->json(
+            Log::with('user:id,name,email')->latest()->paginate(10)
         );
     });
 });

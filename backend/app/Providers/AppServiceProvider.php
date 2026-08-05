@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Tour;
+use App\Observers\TourObserver;
 use App\Repositories\Services\Contracts\UserServiceInterface;
 use App\Repositories\Services\Contracts\DogServiceInterface;
 use App\Repositories\Services\Contracts\TourServiceInterface;
@@ -33,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        
         ResetPassword::createUrlUsing(function ($user, string $token) {
             return config('app.frontend_url') . '/resetar-senha?token=' . $token . '&email=' . urlencode($user->email);
         });
@@ -52,5 +55,7 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+
+        Tour::observe(TourObserver::class);
     }
 }

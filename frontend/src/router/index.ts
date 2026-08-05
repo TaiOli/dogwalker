@@ -10,6 +10,7 @@ import MyProfile from "../views/MyProfile.vue";
 import TutorProfile from "../views/TutorProfile.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
+import LogList from "../views/LogsList.vue";
 
 const routes = [
   {
@@ -64,6 +65,10 @@ const routes = [
     path: "/meu-perfil",
     component: MyProfile,
   },
+  {
+    path: "/logs",
+    component: LogList,
+  }
 ];
 
 const router = createRouter({
