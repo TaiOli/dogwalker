@@ -50,9 +50,7 @@ class StoreUserRequest extends FormRequest
                     ->mixedCase()
                     ->numbers()
                     ->symbols()
-                    ->uncompromised(),
             ],
-            // uncompromissed garante que a senha digitada pelo usuário não vazou.
             'nome' => 'required|string',
             'telefone' => [
                 'nullable',
