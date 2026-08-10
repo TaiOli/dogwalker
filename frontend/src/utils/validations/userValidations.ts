@@ -5,7 +5,7 @@ export interface RegisterForm {
   password: string;
   phone: string;
   type_user: string;
-  photo: File | string;
+  photo: File | string | null;
 }
 
 export interface RegisterFormErrors {
