@@ -21,7 +21,7 @@ interface RegisterForm {
   password: string;
   phone: string;
   type_user: string;
-  photo: string;
+  photo: File | null;
 }
 
 const formRegister = reactive<RegisterForm>({
@@ -32,7 +32,7 @@ const formRegister = reactive<RegisterForm>({
   password: "",
   phone: "",
   type_user: "",
-  photo: "",
+  photo: null,
 });
 
 export function useAuth() {
@@ -68,17 +68,21 @@ export function useAuth() {
   }
 
   async function updateRegister() {
-    const data = {
-      username: formRegister.username,
-      nome: formRegister.name,
-      email: formRegister.email,
-      password: formRegister.password,
-      telefone: formRegister.phone,
-      tipo_usuario: formRegister.type_user,
-      foto: formRegister.photo,
-    };
-    console.log(data);
-    return await api.put(`/users/${formRegister.id}`, data);
+    const formData = new FormData();
+    formData.append("username", formRegister.username);
+    formData.append("nome", formRegister.name);
+    formData.append("email", formRegister.email);
+    formData.append("password", formRegister.password);
+    formData.append("telefone", formRegister.phone || "");
+    formData.append("tipo_usuario", formRegister.type_user);
+    if (formRegister.photo) {
+      formData.append("foto", formRegister.photo);
+    }
+    return await api.put(`/users/${formRegister.id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 
   function setRegister(user: User): void {
@@ -89,7 +93,7 @@ export function useAuth() {
     formRegister.password = "";
     formRegister.phone = user.telefone ?? "";
     formRegister.type_user = user.tipo_usuario ?? "tutor";
-    formRegister.photo = user.foto ?? "";
+    formRegister.photo = null;
   }
 
   async function register() {
@@ -120,7 +124,7 @@ export function useAuth() {
       password: "",
       phone: "",
       type_user: "tutor",
-      photo: "",
+      photo: null,
     });
   }
 
