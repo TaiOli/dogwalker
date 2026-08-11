@@ -3,6 +3,7 @@ import { useAuth } from "../composables/userAuth";
 import { useRouter } from "vue-router";
 import UserCadastroForm from "../components/molecules/UserRegisterForm.vue";
 import BaseTypography from "../components/atoms/BaseTypography.vue";
+import BaseIcon from "../components/atoms/BaseIcon.vue";
 
 const { formRegister, register, updateRegister, clearRegister } = useAuth();
 const router = useRouter();
@@ -36,7 +37,7 @@ async function salvar(): Promise<void> {
       width="100%"
     >
       <v-card-text class="pa-8 mt-4 text-center">
-        <BaseIco name="mdi-paw-outline" size="56" color="primary" class="mb-2"/>
+        <BaseIcon name="mdi-paw-outline" size="56" color="primary" class="mb-2"/>
         <BaseTypography variant="h2" weight="bold" class="mb-2 text-primary title">Dog Walker</BaseTypography>
 
         <BaseTypography variant="subtitle-1"  class="mb-4">
