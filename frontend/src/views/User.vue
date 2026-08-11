@@ -63,9 +63,4 @@ async function salvar(): Promise<void> {
   padding: 40px 15px;
   overflow-y: auto;
 }
-
-.register-wrapper {
-  width: 100%;
-  max-width: 650px;
-}
 </style>
