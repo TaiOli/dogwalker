@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useAuth } from "../composables/userAuth";
+import { useRouter } from "vue-router";
 import UserCadastroForm from "../components/molecules/UserRegisterForm.vue";
 import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 const { formRegister, register, updateRegister, clearRegister } = useAuth();
+const router = useRouter();
 
 async function salvar(): Promise<void> {
   try {
@@ -13,6 +15,7 @@ async function salvar(): Promise<void> {
     } else {
       await register();
       alert("Usuário criado com sucesso!");
+      router.push('/login');
     }
     clearRegister();
   } catch (error) {
@@ -45,10 +48,6 @@ async function salvar(): Promise<void> {
           :labelButton="formRegister.id ? 'Atualizar' : 'Salvar'"
           @submit="salvar"
         />
-
-        <BaseTypography v-if="!formRegister.id" variant="subtitle-1"  class="mt-4 mb-3" weight="bold">
-          <router-link to="/login" class="back-link">Voltar</router-link>
-        </BaseTypography>
       </v-card-text>
     </v-card>
   </v-container>
@@ -68,14 +67,5 @@ async function salvar(): Promise<void> {
 .register-wrapper {
   width: 100%;
   max-width: 650px;
-}
-
-.back-link {
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.back-link:hover {
-  text-decoration: underline;
 }
 </style>
