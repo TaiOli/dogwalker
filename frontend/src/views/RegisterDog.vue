@@ -4,6 +4,7 @@ import DogForm from "../components/molecules/DogForm.vue";
 import { useDog } from "../composables/useDog";
 import { api } from "../services/api";
 import BaseInput from "../components/atoms/BaseInput.vue";
+import BaseAlert from "../components/atoms/BaseAlert.vue";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
 import BaseTypography from "../components/atoms/BaseTypography.vue";
@@ -23,6 +24,16 @@ const dogs = ref<Dog[]>([]);
 const search = ref<string>("");
 const showModal = ref<boolean>(false);
 const excludingId = ref<number | null>(null);
+
+const alert = ref({
+  show: false,
+  type: "success" as "success" | "error",
+  message: "",
+});
+
+function showFeedback(type: "success" | "error", message: string) {
+  alert.value = { show: true, type, message };
+}
 
 async function loadDogs(): Promise<void> {
   const res = await api.get("/dogs/my", {
@@ -57,10 +68,13 @@ async function removeDog(dog: Dog): Promise<void> {
     await api.delete(`/dogs/${dog.id}`);
 
     dogs.value = dogs.value.filter((d) => d.id !== dog.id);
-    alert("Dog excluído com sucesso!");
+    showFeedback("success", "Dog excluído com sucesso!");
   } catch (error: any) {
     console.error("Erro ao excluir cachorro:", error);
-    alert(error.response?.data?.message || "Erro ao excluir cachorro");
+    showFeedback(
+      "error",
+      error.response?.data?.message || "Erro ao excluir cachorro",
+    );
   } finally {
     excludingId.value = null;
   }
@@ -70,10 +84,10 @@ async function save(): Promise<void> {
   try {
     if (formDog.id) {
       await updateDog();
-      alert("Cadastro atualizado com sucesso!");
+      showFeedback("success", "Cadastro atualizado com sucesso!");
     } else {
       await registerDog();
-      alert("Dog cadastrado com sucesso!");
+      showFeedback("success", "Dog cadastrado com sucesso!");
     }
 
     clearDog();
@@ -81,7 +95,7 @@ async function save(): Promise<void> {
     showModal.value = false;
   } catch (error) {
     console.log(error);
-    alert("Erro ao salvar cachorro");
+    showFeedback("error", "Erro ao salvar cachorro");
   }
 }
 
@@ -94,12 +108,15 @@ onMounted(loadDogs);
 
 <template>
   <v-container class="py-4">
-    <!-- HEADER -->
+    <BaseAlert v-model="alert.show" :type="alert.type" :text="alert.message" />
+
     <v-row align="center" justify="space-between" class="mb-6">
       <v-col cols="auto">
         <div class="d-flex align-center ga-2">
           <BaseIcon name="mdi-dog" color="primary" />
-          <BaseTypography variant="h3" class="title">Cadastro do Dog</BaseTypography>
+          <BaseTypography variant="h3" class="title"
+            >Cadastro do Dog</BaseTypography
+          >
         </div>
       </v-col>
 
@@ -130,9 +147,7 @@ onMounted(loadDogs);
     <!-- LISTA -->
     <div class="d-flex align-center ga-2 mt-6 mb-4">
       <BaseIcon name="mdi-paw" color="primary" />
-      <BaseTypography variant="h2" class="title"
-        >Meus Doguinhos</BaseTypography
-      >
+      <BaseTypography variant="h2" class="title">Meus Doguinhos</BaseTypography>
     </div>
 
     <div v-if="dogs.length === 0" class="text-center text-muted text-black">

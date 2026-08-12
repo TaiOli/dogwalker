@@ -4,6 +4,7 @@ import { useWalks } from "../composables/useWalks";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
 import BaseTypography from "../components/atoms/BaseTypography.vue";
+import BaseAlert from "../components/atoms/BaseAlert.vue";
 
 interface Dog {
   id: number;
@@ -47,6 +48,15 @@ const loadId = ref<number | null>(null);
 const availableTours = computed<Tour[]>(() =>
   tours.value.filter((p: Tour) => !p.status || p.status === "pendente"),
 );
+const alert = ref({
+  show: false,
+  type: "success" as "success" | "error",
+  message: "",
+});
+
+function showFeedback(type: "success" | "error", message: string) {
+  alert.value = { show: true, type, message };
+}
 
 onMounted(loadTours);
 
@@ -60,7 +70,10 @@ async function accept(id: number): Promise<void> {
   } catch (err) {
     console.error("Erro ao aceitar:", err);
     const error = err as ApiErrorResponse;
-    alert(error.response?.data?.message || "Erro ao aceitar passeio");
+    showFeedback(
+      "error",
+      error.response?.data?.message || "Erro ao aceitar passeio",
+    );
   } finally {
     loadId.value = null;
   }
@@ -80,7 +93,10 @@ async function reject(id: number): Promise<void> {
   } catch (err) {
     console.error("Erro ao recusar:", err);
     const error = err as ApiErrorResponse;
-    alert(error.response?.data?.message || "Erro ao recusar passeio");
+    showFeedback(
+      "error",
+      error.response?.data?.message || "Erro ao recusar passeio",
+    );
   } finally {
     loadId.value = null;
   }
@@ -89,9 +105,12 @@ async function reject(id: number): Promise<void> {
 
 <template>
   <v-container class="py-4">
+    <BaseAlert v-model="alert.show" :type="alert.type" :text="alert.message" />
     <div class="d-flex align-center ga-2 mb-4">
       <BaseIcon name="mdi-walk" color="primary" />
-      <BaseTypography variant="h2" class="title">Passeios Disponíveis</BaseTypography>
+      <BaseTypography variant="h2" class="title"
+        >Passeios Disponíveis</BaseTypography
+      >
     </div>
 
     <v-alert
