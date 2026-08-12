@@ -5,6 +5,7 @@ import Mobile from "../components/molecules/Mobile.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
+import BaseAlert from "../components/atoms/BaseAlert.vue";
 import BaseTypography from "../components/atoms/BaseTypography.vue";
 
 interface LoginResponse {
@@ -29,6 +30,16 @@ const router = useRouter();
 const { formLogin, login, clearLogin } = useAuth();
 const started = ref(false);
 
+const alert = ref({
+  show: false,
+  type: "success" as "success" | "error",
+  message: "",
+});
+
+function showFeedback(type: "success" | "error", message: string) {
+  alert.value = { show: true, type, message };
+}
+
 function handleStart(): void {
   started.value = true;
 }
@@ -36,7 +47,7 @@ function handleStart(): void {
 async function loginAccess(): Promise<void> {
   try {
     const data = (await login()) as LoginResponse;
-    alert("Login realizado com sucesso!");
+    showFeedback("success", "Login realizado com sucesso!");
     localStorage.setItem("user", JSON.stringify(data.user));
     localStorage.setItem("token", data.token);
     clearLogin();
@@ -47,7 +58,8 @@ async function loginAccess(): Promise<void> {
     const firstFieldError = err.response?.data?.errors
       ? Object.values(err.response.data.errors)[0]?.[0]
       : null;
-    alert(
+    showFeedback(
+      "error",
       firstFieldError ||
         err.response?.data?.message ||
         "Email ou senha inválidos",
@@ -61,6 +73,7 @@ async function loginAccess(): Promise<void> {
     fluid
     class="fill-height d-flex justify-center align-center bg-grey-lighten-4"
   >
+    <BaseAlert v-model="alert.show" :type="alert.type" :text="alert.message" />
     <Mobile
       :class="[started ? 'd-none' : 'd-flex', 'd-md-flex']"
       @start="handleStart"

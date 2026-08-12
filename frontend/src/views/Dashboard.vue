@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from "vue";
 import { useAuth } from "../composables/userAuth";
 import { api } from "../services/api";
 import { getPhoto } from "../utils/image";
+import BaseAlert from "../components/atoms/BaseAlert.vue";
 import BaseButton from "../components/atoms/BaseButton.vue";
 import BaseTextarea from "../components/atoms/BaseTextarea.vue";
 import BaseIcon from "../components/atoms/BaseIcon.vue";
@@ -75,6 +76,16 @@ const sending = ref<boolean>(false);
 const DISMISSED_KEY = "dashboard_dismissed_tours";
 const dismissedIds = ref<Set<number>>(new Set());
 
+const alert = ref({
+  show: false,
+  type: "success" as "success" | "error" | "warning",
+  message: "",
+});
+
+function showFeedback(type: "success" | "error" | "warning", message: string) {
+  alert.value = { show: true, type, message };
+}
+
 function loadDismissed(): void {
   try {
     const raw = localStorage.getItem(DISMISSED_KEY);
@@ -111,10 +122,16 @@ async function cancelConfirm(passeio: Tour): Promise<void> {
   try {
     await api.patch(`/tours/${passeio.id}/cancel`);
     passeio.status = "cancelado";
+
+    showFeedback("success", "Passeio cancelado com sucesso!");
   } catch (err) {
     console.error(err);
     const error = err as ApiErrorResponse;
-    alert(error.response?.data?.message || "Erro ao cancelar passeio.");
+
+    showFeedback(
+      "error",
+      error.response?.data?.message || "Erro ao cancelar passeio.",
+    );
   }
 }
 
@@ -250,7 +267,7 @@ function cancelEvaluationWalker(): void {
 
 async function completeTour(passeio: Tour): Promise<void> {
   if (rating.value === 0) {
-    alert("Escolha uma nota antes de finalizar.");
+    showFeedback("warning", "Escolha uma nota antes de finalizar.");
     return;
   }
 
@@ -268,14 +285,17 @@ async function completeTour(passeio: Tour): Promise<void> {
       tipo_avaliador: "passeador",
     });
 
-    alert("Passeio finalizado e avaliação enviada!");
+    showFeedback("success", "Passeio finalizado e avaliação enviada!");
 
     cancelEvaluationWalker();
     await loadTours();
   } catch (err) {
     console.error(err);
     const error = err as ApiErrorResponse;
-    alert(error.response?.data?.message || "Erro ao finalizar passeio.");
+    showFeedback(
+      "error",
+      error.response?.data?.message || "Erro ao finalizar passeio.",
+    );
   } finally {
     sending.value = false;
   }
@@ -286,7 +306,7 @@ async function sendEvaluation(
   tipo: Evaluator,
 ): Promise<void> {
   if (!rating.value) {
-    alert("Escolha uma nota.");
+    showFeedback("warning", "Escolha uma nota.");
     return;
   }
 
@@ -300,7 +320,7 @@ async function sendEvaluation(
       tipo_avaliador: tipo,
     });
 
-    alert("Avaliação enviada!");
+    showFeedback("success", "Avaliação enviada!");
 
     cancelEvaluationTutor();
     await loadWalkers();
@@ -308,7 +328,10 @@ async function sendEvaluation(
   } catch (err) {
     console.error(err);
     const error = err as ApiErrorResponse;
-    alert(error.response?.data?.message || "Erro ao enviar avaliação.");
+    showFeedback(
+      "error",
+      error.response?.data?.message || "Erro ao enviar avaliação.",
+    );
   } finally {
     sending.value = false;
   }
@@ -331,6 +354,7 @@ onMounted(async () => {
 
 <template>
   <v-container class="py-4">
+    <BaseAlert v-model="alert.show" :type="alert.type" :text="alert.message" />
     <!-- VISUALIZAÇÃO SOMENTE TUTOR -->
     <template v-if="tutor">
       <BaseTypography variant="h2" class="title mb-4 text-black">
@@ -447,7 +471,7 @@ onMounted(async () => {
 
             <BaseTypography
               variant="subtitle-1"
-              class="d-flex justify-center align-center ga-2  mb-2"
+              class="d-flex justify-center align-center ga-2 mb-2"
             >
               <BaseIcon
                 name="mdi-map-marker-outline"
